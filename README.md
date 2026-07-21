@@ -139,7 +139,7 @@ repository material is licensed by Samuil Petkov under
 [`LICENSE_SCOPE.md`](LICENSE_SCOPE.md) for the exact scope.
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking and finding
-the exact coordinate construction used for the graph. Samuil Petkov is the sole
+the exact graph construction. Samuil Petkov is the sole
 author and accepts full responsibility for the mathematics, citations,
 attribution, and conclusions. Reproducible checks are not peer review or
 journal acceptance.
