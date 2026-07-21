@@ -90,19 +90,21 @@ It is 7-regular, has girth five, and has distance spectrum
 \]
 Consequently its minimum dual degree is \(7\), whereas the negative of its
 least distance eigenvalue is \(4\).  The strict gap is therefore \(3\).  The
-graph is the Hoffman--Singleton graph, but the proof uses no classification or
-named-graph property: a direct common-neighbor certificate yields
-connectedness, girth, and the full spectrum.  Exact verification code builds
-the distance matrix independently by breadth-first search and checks the
-characteristic polynomial over the integers.
+graph is the Hoffman--Singleton graph, but no classification or named-graph
+property enters the proof.  A coordinate common-neighbor certificate yields
+connectedness and girth, and a matrix calculation gives the full spectrum.
+Exact code constructs the distance matrix directly by breadth-first search,
+without using the analytic distance identity, and checks its characteristic
+polynomial over the integers.
 \end{abstract}
 
 \maketitle
 
 \section*{Introduction}
 
-Let \(G\) be a finite simple connected graph.  Write \(D(G)\) for its
-distance matrix and order its distance eigenvalues as
+Let \(G\) be a finite simple connected graph on \(n\ge2\) vertices.  Its
+distance matrix is \(D(G)=(d_G(u,v))_{u,v\in V(G)}\), where \(d_G\) is graph
+distance.  This matrix is real symmetric; order its real eigenvalues as
 \[
   \partial_1(G)\ge \partial_2(G)\ge\cdots\ge\partial_n(G).
 \]
@@ -113,11 +115,14 @@ neighbors,
   \qquad
   \delta^*(G)=\min_{v\in V(G)}d^*(v).
 \]
+Write \(g(G)\) for the shortest-cycle length, with \(g(G)=\infty\) for an
+acyclic graph; spectral superscripts indicate algebraic multiplicity.
+
 Aouchiche and Hansen record the following Graffiti conjecture in their survey
-of distance spectra \cite[Conjecture~7.16]{AouchicheHansen2014}; they attribute
-it to Fajtlowicz's 1998 \emph{Written on the Wall} report
-\cite{Fajtlowicz1998}.  The associated public catalogue is DeLaVi\~na's
-\emph{Written on the Wall II} site \cite{DeLaVinaWOWII}.
+of distance spectra \cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}; they
+attribute it to Fajtlowicz's 1998 \emph{Written on the Wall} report
+\cite{Fajtlowicz1998}.  For related historical context, see DeLaVi\~na's
+separate \emph{Written on the Wall II} catalogue \cite{DeLaVinaWOWII}.
 
 \begin{conjecture}[WOW-284]\label{conj:wow284}
 If \(G\) is connected, has \(n\ge3\) vertices, and has girth
@@ -127,9 +132,11 @@ If \(G\) is connected, has \(n\ge3\) vertices, and has girth
 \]
 \end{conjecture}
 
-The same survey states that the conjecture was open there and notes equality
-for the Petersen graph.  The degree-7 Moore graph constructed by Hoffman and
-Singleton \cite{HoffmanSingleton1960} gives a strict violation.
+In that 2014 survey, the authors reported that the conjecture remained open
+and noted equality for the Petersen graph
+\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}.  The degree-7 Moore graph
+constructed by Hoffman and Singleton \cite{HoffmanSingleton1960} gives a
+strict violation.
 
 There is an important prior spectral calculation.  Howlader and Panigrahi
 explicitly give the distance spectrum
@@ -172,6 +179,11 @@ representatives in \(\{0,1,2,3,4\}\), use
  \qquad
  Q_{k,\ell}\longleftrightarrow 25+5k+\ell.
 \]
+
+After reindexing the \(Q\)-layers by \(k\mapsto-k\), these are exactly
+Hafner's affine-coordinate form of Robertson's pentagon-and-pentagram
+construction \cite[Section~2 and Theorem~2.1]{Hafner2003}.  Thus \(G\) is the
+Hoffman--Singleton graph; all properties needed here are proved directly.
 
 The complete neighborhood formulas are
 \begin{align}
@@ -293,18 +305,26 @@ matrix, and let \(J\) be the all-ones matrix.  Proposition
 Indeed, the diagonal entries on both sides are 7, the entries indexed by
 edges are 0, and all other off-diagonal entries are 1.
 
-Since the graph is connected and 7-regular, \(A\one=7\one\), with this
-eigenvalue simple.  On \(\one^\perp\), equation~\eqref{eq:a-square} becomes
+Since the graph is 7-regular, \(A\one=7\one\).  This eigenvalue is simple:
+if \(Ax=7x\), then
+\[
+  0=x^{\mathsf T}(7I-A)x
+   =\sum_{\{u,v\}\in E(G)}(x_u-x_v)^2,
+\]
+so connectedness forces \(x\) to be constant.  Since \(A\) is real symmetric,
+\(\one^\perp\) is \(A\)-invariant and has an orthonormal eigenbasis.  On this
+subspace, equation~\eqref{eq:a-square} becomes
 \[
  A^2+A-6I=0.
 \]
-Thus the other adjacency eigenvalues are \(2\) and \(-3\).  If their
+Thus every other adjacency eigenvalue is \(2\) or \(-3\).  If their
 multiplicities are \(m_2\) and \(m_{-3}\), then
 \[
  m_2+m_{-3}=49,
  \qquad
- 7+2m_2-3m_{-3}=\tr A=0.
+ 7+2m_2-3m_{-3}=\tr A=0,
 \]
+where \(\tr A=0\) because the graph is loopless.
 Consequently
 \begin{equation}\label{eq:adjacency-spectrum}
  \Spec(A)=\{7^{(1)},2^{(28)},(-3)^{(21)}\}.
@@ -349,9 +369,10 @@ for every \(v\), and hence \(\delta^*(G)=7\).  Equation
 This is a strict counterexample to WOW-284.
 \end{proof}
 
-As a further exact certificate, the eigenvalues of \(D+7I\) are
+Equivalently, \(D+\delta^*(G)I=D+7I\) has eigenvalues
 \(98\), \(8\) with multiplicity 21, and \(3\) with multiplicity 28.  Thus
-\(D+7I\) is positive definite.
+it is positive definite, which is the matrix form of the strict inequality
+\(\delta^*(G)>-\partial_{50}(G)\).
 
 \section{Computational certificate}
 
@@ -393,7 +414,8 @@ certificates, and build instructions are available in the public repository
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
 
 \begingroup
-\small
+\scriptsize
+\setlength{\bibsep}{0pt}
 \renewcommand{\bibsection}{\section*{References}}
 \bibliographystyle{unsrtnat}
 \bibliography{references}

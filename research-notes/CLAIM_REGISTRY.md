@@ -12,6 +12,6 @@
 | Distance spectrum is `{91^1,1^21,(-4)^28}`. | Diameter-two matrix formula; symbolic BFS charpoly; prior publication. | Proved, checked, and attributed. |
 | Minimum dual degree is 7. | Regularity and definition; exact fractions. | Proved and checked. |
 | WOW-284 fails by strict gap 3. | `7 > 4`, with `partial_50=-4`. | Proved and checked. |
-| The graph is a Hoffman-Singleton realization. | Parameters `(50,7,0,1)` and historical literature. | Context only; not needed for proof. |
+| The graph is a Hoffman-Singleton realization. | Exact agreement, after `k -> -k` on the `Q`-layers, with Hafner's Theorem 2.1; independently, parameters `(50,7,0,1)` and Hoffman-Singleton uniqueness. | Published construction cited; named-graph identification is not needed for the counterexample proof. |
 | This is the smallest counterexample. | No exhaustive search performed. | Not claimed. |
 | This is the first observation of the counterexample. | Targeted search found no explicit prior connection, but cannot prove priority. | Not claimed. |

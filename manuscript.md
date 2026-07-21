@@ -9,7 +9,7 @@ Ecole normale superieure, Universite PSL, Paris, France<br>
 
 # Introduction
 
-Let $`G`$ be a finite simple connected graph. Write $`D(G)`$ for its distance matrix and order its distance eigenvalues as
+Let $`G`$ be a finite simple connected graph on $`n\ge2`$ vertices. Its distance matrix is $`D(G)=(d_G(u,v))_{u,v\in V(G)}`$, where $`d_G`$ is graph distance. This matrix is real symmetric; order its real eigenvalues as
 ``` math
 \partial_1(G)\ge \partial_2(G)\ge\cdots\ge\partial_n(G).
 ```
@@ -19,7 +19,9 @@ d^*(v)=\frac{1}{d(v)}\sum_{u\in N(v)}d(u),
   \qquad
   \delta^*(G)=\min_{v\in V(G)}d^*(v).
 ```
-Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)). The associated public catalogue is DeLaViña’s *Written on the Wall II* site ([DeLaViña n.d.](#ref-DeLaVinaWOWII)).
+Write $`g(G)`$ for the shortest-cycle length, with $`g(G)=\infty`$ for an acyclic graph; spectral superscripts indicate algebraic multiplicity.
+
+Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)). For related historical context, see DeLaViña’s separate *Written on the Wall II* catalogue ([DeLaViña n.d.](#ref-DeLaVinaWOWII)).
 
 <div id="conj:wow284" class="conjecture">
 
@@ -30,7 +32,7 @@ Aouchiche and Hansen record the following Graffiti conjecture in their survey of
 
 </div>
 
-The same survey states that the conjecture was open there and notes equality for the Petersen graph. The degree-7 Moore graph constructed by Hoffman and Singleton ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) gives a strict violation.
+In that 2014 survey, the authors reported that the conjecture remained open and noted equality for the Petersen graph ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370). The degree-7 Moore graph constructed by Hoffman and Singleton ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) gives a strict violation.
 
 There is an important prior spectral calculation. Howlader and Panigrahi explicitly give the distance spectrum $`\{91,(-4)^{(28)},1^{(21)}\}`$ of the Hoffman–Singleton graph ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorem 2.5(1b)). Combining that calculation with 7-regularity already disproves Conjecture <a href="#conj:wow284" data-reference-type="ref" data-reference="conj:wow284">1</a>. The present note records this connection and supplies a self-contained coordinate certificate, so neither the graph identification nor the earlier spectral formula is needed as a premise. No claim is made that the spectrum is new, that this observation has priority over every unpublished observation, or that 50 is the smallest possible order.
 
@@ -65,6 +67,8 @@ P_{i,j}\longleftrightarrow 5i+j,
  \qquad
  Q_{k,\ell}\longleftrightarrow 25+5k+\ell.
 ```
+
+After reindexing the $`Q`$-layers by $`k\mapsto-k`$, these are exactly Hafner’s affine-coordinate form of Robertson’s pentagon-and-pentagram construction ([Hafner 2003, sec. 2](#ref-Hafner2003) and Theorem 2.1). Thus $`G`$ is the Hoffman–Singleton graph; all properties needed here are proved directly.
 
 The complete neighborhood formulas are
 ``` math
@@ -171,17 +175,22 @@ Let $`A`$ be the adjacency matrix, let $`I`$ be the $`50\times50`$ identity matr
 ```
 Indeed, the diagonal entries on both sides are 7, the entries indexed by edges are 0, and all other off-diagonal entries are 1.
 
-Since the graph is connected and 7-regular, $`A\mathbf 1=7\mathbf 1`$, with this eigenvalue simple. On $`\mathbf 1^\perp`$, equation <a href="#eq:a-square" data-reference-type="eqref" data-reference="eq:a-square">[eq:a-square]</a> becomes
+Since the graph is 7-regular, $`A\mathbf 1=7\mathbf 1`$. This eigenvalue is simple: if $`Ax=7x`$, then
+``` math
+0=x^{\mathsf T}(7I-A)x
+   =\sum_{\{u,v\}\in E(G)}(x_u-x_v)^2,
+```
+so connectedness forces $`x`$ to be constant. Since $`A`$ is real symmetric, $`\mathbf 1^\perp`$ is $`A`$-invariant and has an orthonormal eigenbasis. On this subspace, equation <a href="#eq:a-square" data-reference-type="eqref" data-reference="eq:a-square">[eq:a-square]</a> becomes
 ``` math
 A^2+A-6I=0.
 ```
-Thus the other adjacency eigenvalues are $`2`$ and $`-3`$. If their multiplicities are $`m_2`$ and $`m_{-3}`$, then
+Thus every other adjacency eigenvalue is $`2`$ or $`-3`$. If their multiplicities are $`m_2`$ and $`m_{-3}`$, then
 ``` math
 m_2+m_{-3}=49,
  \qquad
- 7+2m_2-3m_{-3}=\operatorname{tr}A=0.
+ 7+2m_2-3m_{-3}=\operatorname{tr}A=0,
 ```
-Consequently
+where $`\operatorname{tr}A=0`$ because the graph is loopless. Consequently
 ``` math
 \begin{equation}
 \label{eq:adjacency-spectrum}
@@ -232,7 +241,7 @@ This is a strict counterexample to WOW-284. ◻
 
 </div>
 
-As a further exact certificate, the eigenvalues of $`D+7I`$ are $`98`$, $`8`$ with multiplicity 21, and $`3`$ with multiplicity 28. Thus $`D+7I`$ is positive definite.
+Equivalently, $`D+\delta^*(G)I=D+7I`$ has eigenvalues $`98`$, $`8`$ with multiplicity 21, and $`3`$ with multiplicity 28. Thus it is positive definite, which is the matrix form of the strict inequality $`\delta^*(G)>-\partial_{50}(G)`$.
 
 # Computational certificate
 
@@ -248,7 +257,7 @@ The proof above is entirely analytic. The accompanying Python code supplies a se
 
 5.  computes an exact rational $`LDL^{\mathsf T}`$ decomposition of $`D+7I`$ and checks that all 50 pivots are positive.
 
-The symbolic steps use SymPy ([Meurer et al. 2017](#ref-MeurerEtAl2017)). The expected output is
+The symbolic steps use SymPy ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The expected output is
 ``` math
 (x-91)(x-1)^{21}(x+4)^{28}
 ```
@@ -282,6 +291,12 @@ Fajtlowicz, Siemion. 1998. *Written on the Wall: Conjectures Derived on the Basi
 
 </div>
 
+<div id="ref-Hafner2003" class="csl-entry">
+
+Hafner, Paul R. 2003. “The Hoffman–Singleton Graph and Its Automorphisms.” *Journal of Algebraic Combinatorics* 18 (1): 7–12. <https://doi.org/10.1023/A:1025136524481>.
+
+</div>
+
 <div id="ref-HoffmanSingleton1960" class="csl-entry">
 
 Hoffman, Alan J., and Robert R. Singleton. 1960. “On Moore Graphs with Diameters 2 and 3.” *IBM Journal of Research and Development* 4 (5): 497–504. <https://doi.org/10.1147/rd.45.0497>.
@@ -296,7 +311,7 @@ Howlader, Aditi, and Pratima Panigrahi. 2022. “On the Distance Spectrum of Min
 
 <div id="ref-MeurerEtAl2017" class="csl-entry">
 
-Meurer, Aaron, Christopher P. Smith, Mateusz Paprocki, et al. 2017. “SymPy: Symbolic Computing in Python.” *PeerJ Computer Science* 3: e103. <https://doi.org/10.7717/peerj-cs.103>.
+<span class="nocase">Meurer, Aaron et al.</span> 2017. “SymPy: Symbolic Computing in Python.” *PeerJ Computer Science* 3: e103. <https://doi.org/10.7717/peerj-cs.103>.
 
 </div>
 

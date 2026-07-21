@@ -1,4 +1,4 @@
-\begin{thebibliography}{6}
+\begin{thebibliography}{7}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -11,7 +11,6 @@ Mustapha Aouchiche and Pierre Hansen.
 \newblock \emph{Linear Algebra and its Applications}, 458:\penalty0 301--386,
   2014.
 \newblock \doi{10.1016/j.laa.2014.06.010}.
-\newblock URL \url{https://doi.org/10.1016/j.laa.2014.06.010}.
 
 \bibitem[Fajtlowicz(1998)]{Fajtlowicz1998}
 Siemion Fajtlowicz.
@@ -33,7 +32,6 @@ Alan~J. Hoffman and Robert~R. Singleton.
 \newblock \emph{IBM Journal of Research and Development}, 4\penalty0
   (5):\penalty0 497--504, 1960.
 \newblock \doi{10.1147/rd.45.0497}.
-\newblock URL \url{https://doi.org/10.1147/rd.45.0497}.
 
 \bibitem[Howlader and Panigrahi(2022)]{HowladerPanigrahi2022}
 Aditi Howlader and Pratima Panigrahi.
@@ -42,22 +40,18 @@ Aditi Howlader and Pratima Panigrahi.
 \newblock \emph{Linear Algebra and its Applications}, 636:\penalty0 115--133,
   2022.
 \newblock \doi{10.1016/j.laa.2021.11.014}.
-\newblock URL \url{https://doi.org/10.1016/j.laa.2021.11.014}.
 
-\bibitem[Meurer et~al.(2017)Meurer, Smith, Paprocki, \v{C}ert\'{i}k, Kirpichev,
-  Rocklin, Kumar, Ivanov, Moore, Singh, Rathnayake, Vig, Granger, Muller,
-  Bonazzi, Gupta, Vats, Johansson, Pedregosa, Curry, Terrel, Rou\v{c}ka, Saboo,
-  Fernando, Kulal, Cimrman, and Scopatz]{MeurerEtAl2017}
-Aaron Meurer, Christopher~P. Smith, Mateusz Paprocki, Ond\v{r}ej
-  \v{C}ert\'{i}k, Sergey~B. Kirpichev, Matthew Rocklin, Amit Kumar, Sergiu
-  Ivanov, Jason~K. Moore, Sartaj Singh, Thilina Rathnayake, Sean Vig, Brian~E.
-  Granger, Richard~P. Muller, Francesco Bonazzi, Harsh Gupta, Shivam Vats,
-  Fredrik Johansson, Fabian Pedregosa, Matthew~J. Curry, Andy~R. Terrel,
-  \v{S}t\v{e}p\'{a}n Rou\v{c}ka, Ashutosh Saboo, Isuru Fernando, Sumith Kulal,
-  Robert Cimrman, and Anthony Scopatz.
+\bibitem[Hafner(2003)]{Hafner2003}
+Paul~R. Hafner.
+\newblock The hoffman--singleton graph and its automorphisms.
+\newblock \emph{Journal of Algebraic Combinatorics}, 18\penalty0 (1):\penalty0
+  7--12, 2003.
+\newblock \doi{10.1023/A:1025136524481}.
+
+\bibitem[Meurer et~al.(2017)]{MeurerEtAl2017}
+Aaron Meurer et~al.
 \newblock {SymPy}: Symbolic computing in {Python}.
 \newblock \emph{PeerJ Computer Science}, 3:\penalty0 e103, 2017.
 \newblock \doi{10.7717/peerj-cs.103}.
-\newblock URL \url{https://doi.org/10.7717/peerj-cs.103}.
 
 \end{thebibliography}

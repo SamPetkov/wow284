@@ -13,12 +13,15 @@ and Hansen. The coordinate graph is a simple connected 7-regular graph on 50
 vertices with girth five. Its least distance eigenvalue is -4, so its minimum
 dual degree 7 strictly violates the conjectured upper bound 4.
 
-No theorem-breaking gap was found. The two substantive editorial corrections
-were provenance corrections rather than mathematical corrections:
+No theorem-breaking gap was found. The three substantive editorial corrections
+were attribution and proof-clarity corrections rather than changes to the
+counterexample:
 
 1. the manuscript now cites the precise published WOW-284 formulation; and
 2. it credits Howlader and Panigrahi's 2022 prior publication of the same
-   Hoffman-Singleton distance spectrum.
+   Hoffman-Singleton distance spectrum; and
+3. it credits Hafner's published affine-coordinate presentation of the exact
+   Robertson construction used in the manuscript.
 
 ## Combinatorial audit
 
@@ -85,7 +88,9 @@ orthogonal complement, (J=0), so
 A^2+A-6I=(A-2I)(A+3I)=0.
 \]
 
-The remaining multiplicities satisfy
+The eigenvalue 7 is simple because
+\(x^{\mathsf T}(7I-A)x=\sum_{\{u,v\}\in E}(x_u-x_v)^2\), and connectedness
+forces equality only for constant \(x\). The remaining multiplicities satisfy
 
 \[
 m_2+m_{-3}=49,

@@ -53,7 +53,7 @@ PASS  All four pages rendered at 150 dpi and inspected at original render
       or broken bibliography/address layout.
 
 Verified PDF SHA-256:
-  406ebd0a1d93ba28f5bf7706c81c691cf0de3335dbc3b7c665ed53d57e047a97  main.pdf
+  ec638d224756a1e433d37a4aa4daad3e7383a007ea3c4866519ec56c2a3f8f9f  main.pdf
 
 ARXIV PACKAGE
 -------------
@@ -65,7 +65,7 @@ PASS  A fresh extraction of the ZIP compiled independently to a four-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  3db826e70a24639824f9b4296648a36dd131adc8d39fb22d839e063a08530b5e
+  a1d2a0d7b59702bfd1e56fc88899d77eb57a5c4a274f974ec8875b409e2eacbf
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT
@@ -74,6 +74,8 @@ PASS  Published WOW-284 wording checked against Aouchiche--Hansen (2014),
       Conjecture 7.16.
 PASS  Prior Hoffman--Singleton distance spectrum credited to
       Howlader--Panigrahi (2022), Theorem 2.5(1b).
+PASS  Exact coordinate rules matched, after the stated reindexing, to Hafner's
+      published affine-coordinate construction (2003), Theorem 2.1.
 PASS  User-supplied Written on the Wall II catalogue URL recorded. Its server
       timed out during this audit, so the exact wording is sourced from the
       peer-reviewed survey.
