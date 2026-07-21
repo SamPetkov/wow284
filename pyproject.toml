@@ -1,0 +1,10 @@
+[project]
+name = "wow284-certificate"
+version = "1.0.0"
+description = "Exact verification package for the Hoffman-Singleton counterexample to WOW-284"
+requires-python = ">=3.11"
+dependencies = ["sympy==1.14.0"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

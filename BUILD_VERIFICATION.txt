@@ -1,0 +1,90 @@
+WOW-284 RELEASE VERIFICATION
+============================
+
+Manuscript version: 19 July 2026
+Verification run: 21 July 2026
+Author: Samuil Petkov
+
+MATHEMATICAL CERTIFICATE
+------------------------
+PASS  Coordinate construction: 50 vertices, 175 edges, degree set {7}.
+PASS  Pair certificate: 0 common neighbors on 175 adjacent pairs and exactly
+      1 common neighbor on 1,050 nonadjacent pairs.
+PASS  Independent BFS: connected, diameter 2, girth 5.
+PASS  Exact identities: A^2 = 6I - A + J and D = 2J - 2I - A.
+PASS  Adjacency characteristic polynomial:
+      (x - 7)(x - 2)^28(x + 3)^21.
+PASS  Distance characteristic polynomial:
+      (x - 91)(x - 1)^21(x + 4)^28.
+PASS  D + 7I: exact rational LDL^T factorization with 50 positive pivots;
+      smallest pivot in the chosen ordering is 2352/563.
+PASS  WOW-284 values: delta* = 7, least distance eigenvalue = -4,
+      and strict violation gap 7 - 4 = 3.
+
+AUTOMATED CHECKS
+----------------
+PASS  pytest: 6 tests passed.
+PASS  scripts/verify_exact.py generated results/verification.json.
+PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
+      distance CSV files.
+PASS  scripts/validate_repository.py.
+PASS  scripts/sync_manuscript_artifacts.py --check.
+PASS  CITATION.cff parsed as YAML and contains the required author, date,
+      repository, and CC-BY-4.0 fields.
+
+Toolchain used:
+  Python 3.14.3
+  SymPy 1.14.0
+  pytest 8.4.1
+  MiKTeX 26.2 / pdfTeX 1.40.29
+  latexmk 4.88
+  Pandoc 3.9.0.2
+
+MANUSCRIPT AND PDF
+------------------
+PASS  Clean multi-pass LaTeX/BibTeX build: no final warnings, undefined
+      citations/references, overfull/underfull boxes, or missing glyphs.
+PASS  PDF metadata: title, Samuil Petkov, and fixed creation/modification date
+      19 July 2026.
+PASS  Four pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
+PASS  Every reported font is embedded and subset.
+PASS  All four pages rendered at 150 dpi and inspected at original render
+      resolution: no clipping, overlap, malformed glyphs, blank spill pages,
+      or broken bibliography/address layout.
+
+Verified PDF SHA-256:
+  0f089ddc754c2d6c337296be727b7ffcdec6ddebe62acf05686b9121466ee855  main.pdf
+
+ARXIV PACKAGE
+-------------
+PASS  arxiv/wow284_arxiv_source.zip contains exactly, in this order:
+      main.tex, references.bib, main.bbl.
+PASS  Archive members are byte-identical to the canonical repository files
+      and carry the fixed timestamp 19 July 2026 12:00:00.
+PASS  A fresh extraction of the ZIP compiled independently to a four-page
+      PDF with latexmk/BibTeX.
+
+Verified arXiv ZIP SHA-256:
+  ce146baf03a5caebe7b919c18f89ff15f8f87d1d9adddc8a56415ca632a00c3c
+  arxiv/wow284_arxiv_source.zip
+
+SOURCE AND NOVELTY AUDIT
+------------------------
+PASS  Published WOW-284 wording checked against Aouchiche--Hansen (2014),
+      Conjecture 7.16.
+PASS  Prior Hoffman--Singleton distance spectrum credited to
+      Howlader--Panigrahi (2022), Theorem 2.5(1b).
+PASS  User-supplied Written on the Wall II catalogue URL recorded. Its server
+      timed out during this audit, so the exact wording is sourced from the
+      peer-reviewed survey.
+PASS  Targeted web, Crossref, arXiv, source-text, and public GitHub searches
+      found no accessible earlier source explicitly making the WOW-284 /
+      Hoffman--Singleton connection. This is not an exhaustive priority proof,
+      and the manuscript makes no first-discovery, new-spectrum, or minimality
+      claim.
+
+LICENSING
+---------
+PASS  Canonical Creative Commons Attribution 4.0 International legal code is
+      in LICENSE; LICENSE_SCOPE.md identifies covered and excluded material;
+      CITATION.cff declares CC-BY-4.0.

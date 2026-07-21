@@ -1,0 +1,55 @@
+name: Exact and manuscript verification
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+      - name: Install pinned Python dependencies
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt
+      - name: Run exhaustive and symbolic tests
+        run: python -m pytest -q
+      - name: Run the exact certificate
+        run: python scripts/verify_exact.py --output tmp/ci-verification.json
+      - name: Regenerate graph data and compare
+        run: |
+          python scripts/export_graph_data.py --output-dir tmp/export
+          cmp tmp/export/edges.csv results/edges.csv
+          cmp tmp/export/adjacency_matrix.csv results/adjacency_matrix.csv
+          cmp tmp/export/distance_matrix.csv results/distance_matrix.csv
+      - name: Check synchronized release files
+        run: |
+          python scripts/sync_manuscript_artifacts.py --check
+          python scripts/validate_repository.py
+
+  manuscript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-extra texlive-fonts-recommended texlive-bibtex-extra
+      - name: Compile the arXiv source in isolation
+        run: |
+          build_dir="$(mktemp -d)"
+          unzip -q arxiv/wow284_arxiv_source.zip -d "$build_dir"
+          cd "$build_dir"
+          latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
+          test -s main.pdf
+          ! grep -E "undefined citations|undefined references|There were undefined" main.log

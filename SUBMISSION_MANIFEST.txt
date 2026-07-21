@@ -1,0 +1,41 @@
+ARXIV UPLOAD
+============
+arxiv/wow284_arxiv_source.zip
+
+ZIP CONTENTS
+============
+main.tex
+references.bib
+main.bbl
+
+PUBLIC REPOSITORY, NOT ARXIV UPLOAD
+===================================
+main.pdf
+manuscript.md
+README.md
+REVIEW.md
+SOURCE_LEDGER.md
+PROVENANCE.md
+BUILD_VERIFICATION.txt
+CITATION.cff
+LICENSE
+LICENSE_SCOPE.md
+src/
+scripts/
+tests/
+results/
+.github/
+MANIFEST.txt
+SHA256SUMS
+
+EXCLUDE EVERYWHERE
+==================
+.git/
+.venv/
+.pytest_cache/
+__pycache__/
+tmp/
+*.aux
+*.log
+*.out
+*.synctex.gz

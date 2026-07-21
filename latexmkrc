@@ -1,0 +1,5 @@
+$pdf_mode = 1;
+$bibtex_use = 2;
+$interaction = 'nonstopmode';
+$halt_on_error = 1;
+$recorder = 1;

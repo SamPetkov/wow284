@@ -1,0 +1,403 @@
+\documentclass[a4paper,11pt,reqno]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\usepackage{xurl}
+\usepackage[hidelinks,pdfencoding=auto,psdextra]{hyperref}
+\usepackage{bookmark}
+
+\setcounter{secnumdepth}{1}
+\setcounter{tocdepth}{1}
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=2em,itemsep=0.12em,topsep=0.35em}
+\setlist[enumerate]{leftmargin=2.2em,itemsep=0.12em,topsep=0.35em}
+\allowdisplaybreaks[2]
+\raggedbottom
+\Urlmuskip=0mu plus 1mu
+\frenchspacing
+\tolerance=1800
+\pretolerance=500
+\ifdefined\pdfgentounicode
+  \pdfgentounicode=1
+\fi
+
+\theoremstyle{plain}
+\newtheorem*{theoremA}{Theorem A}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\BeforeBeginEnvironment{theoremA}{\Needspace{8\baselineskip}}
+\BeforeBeginEnvironment{theorem}{\Needspace{6\baselineskip}}
+\BeforeBeginEnvironment{proposition}{\Needspace{6\baselineskip}}
+\BeforeBeginEnvironment{lemma}{\Needspace{6\baselineskip}}
+\BeforeBeginEnvironment{corollary}{\Needspace{5\baselineskip}}
+\BeforeBeginEnvironment{conjecture}{\Needspace{6\baselineskip}}
+\BeforeBeginEnvironment{definition}{\Needspace{5\baselineskip}}
+\BeforeBeginEnvironment{remark}{\Needspace{4\baselineskip}}
+\BeforeBeginEnvironment{proof}{\Needspace{4\baselineskip}}
+
+\newcommand{\F}{\mathbb F_5}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\tr}{\operatorname{tr}}
+
+\hypersetup{
+  pdftitle={The Hoffman--Singleton Graph Refutes WOW-284},
+  pdfauthor={Samuil Petkov},
+  pdfsubject={A 50-vertex counterexample to the minimum-dual-degree and least-distance-eigenvalue conjecture WOW-284},
+  pdfkeywords={WOW-284, Hoffman-Singleton graph, distance spectrum, dual degree, girth, counterexample, spectral graph theory},
+  pdfcreator={LaTeX with amsart},
+  pdfproducer={pdfTeX},
+  pdfdisplaydoctitle=true
+}
+
+\title[The Hoffman--Singleton graph refutes WOW-284]
+{The Hoffman--Singleton Graph Refutes WOW-284}
+\author{Samuil Petkov}
+\address{\'Ecole normale sup\'erieure, Universit\'e PSL, Paris, France}
+\email{samuil.petkov@ens.psl.eu}
+\date{19 July 2026}
+\subjclass[2020]{Primary 05C50; Secondary 05C12}
+\keywords{distance spectrum, dual degree, girth, Hoffman--Singleton graph,
+WOW-284, strongly regular graph}
+
+\begin{document}
+
+\begin{abstract}
+WOW-284 asserts that the minimum dual degree of every connected graph of
+order at least three and girth at least five is at most the negative of its
+least distance eigenvalue.  We record a counterexample on 50 vertices.  The
+graph is given by an explicit coordinate construction over \(\mathbb F_5\).
+It is 7-regular, has girth five, and has distance spectrum
+\[
+  \{91^{(1)},1^{(21)},(-4)^{(28)}\}.
+\]
+Consequently its minimum dual degree is \(7\), whereas the negative of its
+least distance eigenvalue is \(4\).  The strict gap is therefore \(3\).  The
+graph is the Hoffman--Singleton graph, but the proof uses no classification or
+named-graph property: a direct common-neighbor certificate yields
+connectedness, girth, and the full spectrum.  Exact verification code builds
+the distance matrix independently by breadth-first search and checks the
+characteristic polynomial over the integers.
+\end{abstract}
+
+\maketitle
+
+\section*{Introduction}
+
+Let \(G\) be a finite simple connected graph.  Write \(D(G)\) for its
+distance matrix and order its distance eigenvalues as
+\[
+  \partial_1(G)\ge \partial_2(G)\ge\cdots\ge\partial_n(G).
+\]
+For a vertex \(v\), its \emph{dual degree} is the average degree of its
+neighbors,
+\[
+  d^*(v)=\frac{1}{d(v)}\sum_{u\in N(v)}d(u),
+  \qquad
+  \delta^*(G)=\min_{v\in V(G)}d^*(v).
+\]
+Aouchiche and Hansen record the following Graffiti conjecture in their survey
+of distance spectra \cite[Conjecture~7.16]{AouchicheHansen2014}; they attribute
+it to Fajtlowicz's 1998 \emph{Written on the Wall} report
+\cite{Fajtlowicz1998}.  The associated public catalogue is DeLaVi\~na's
+\emph{Written on the Wall II} site \cite{DeLaVinaWOWII}.
+
+\begin{conjecture}[WOW-284]\label{conj:wow284}
+If \(G\) is connected, has \(n\ge3\) vertices, and has girth
+\(g(G)\ge5\), then
+\[
+  \delta^*(G)\le -\partial_n(G).
+\]
+\end{conjecture}
+
+The same survey states that the conjecture was open there and notes equality
+for the Petersen graph.  The degree-7 Moore graph constructed by Hoffman and
+Singleton \cite{HoffmanSingleton1960} gives a strict violation.
+
+There is an important prior spectral calculation.  Howlader and Panigrahi
+explicitly give the distance spectrum
+\(\{91,(-4)^{(28)},1^{(21)}\}\) of the Hoffman--Singleton graph
+\cite[Theorem~2.5(1b)]{HowladerPanigrahi2022}.  Combining that calculation
+with 7-regularity already disproves Conjecture~\ref{conj:wow284}.  The present
+note records this connection and supplies a self-contained coordinate
+certificate, so neither the graph identification nor the earlier spectral
+formula is needed as a premise.  No claim is made that the spectrum is new,
+that this observation has priority over every unpublished observation, or
+that 50 is the smallest possible order.
+
+\begin{theoremA}
+There is a simple connected graph \(G\) on 50 vertices such that
+\[
+  g(G)=5,\qquad \delta^*(G)=7,\qquad \partial_{50}(G)=-4.
+\]
+In particular, \(G\) violates WOW-284 by the strict gap
+\(\delta^*(G)+\partial_{50}(G)=3\).
+\end{theoremA}
+
+\section{Coordinate construction}
+
+All subscripts in this section lie in the field
+\(\F=\mathbb Z/5\mathbb Z\).  Introduce vertices
+\[
+ V(G)=\{P_{i,j}:i,j\in\F\}\mathbin{\dot\cup}
+      \{Q_{k,\ell}:k,\ell\in\F\}.
+\]
+Thus \(|V(G)|=50\).  The edges are the following unordered pairs:
+\begin{align*}
+ E_P&=\bigl\{\{P_{i,j},P_{i,j+1}\}:i,j\in\F\bigr\},\\
+ E_Q&=\bigl\{\{Q_{k,\ell},Q_{k,\ell+2}\}:k,\ell\in\F\bigr\},\\
+ E_X&=\bigl\{\{P_{i,j},Q_{k,ik+j}\}:i,j,k\in\F\bigr\}.
+\end{align*}
+Set \(E(G)=E_P\cup E_Q\cup E_X\).  For a fixed numerical labeling, with
+representatives in \(\{0,1,2,3,4\}\), use
+\[
+ P_{i,j}\longleftrightarrow 5i+j,
+ \qquad
+ Q_{k,\ell}\longleftrightarrow 25+5k+\ell.
+\]
+
+The complete neighborhood formulas are
+\begin{align}
+ N(P_{i,j})
+ &=\{P_{i,j-1},P_{i,j+1}\}
+   \cup\{Q_{k,ik+j}:k\in\F\},\label{eq:p-neighborhood}\\
+ N(Q_{k,\ell})
+ &=\{Q_{k,\ell-2},Q_{k,\ell+2}\}
+   \cup\{P_{i,\ell-ik}:i\in\F\}.
+   \label{eq:q-neighborhood}
+\end{align}
+
+\begin{lemma}\label{lem:simple-regular}
+The construction defines a simple 7-regular graph with 175 edges.
+\end{lemma}
+
+\begin{proof}
+Every listed edge has distinct endpoints.  Within each of the five fixed
+\(P\)-layers, addition by \(1\) gives a 5-cycle; within each fixed
+\(Q\)-layer, addition by \(2\) gives a 5-cycle.  The cross edges have one
+endpoint of each type.  The set notation removes any possibility of parallel
+edges.
+
+Equations~\eqref{eq:p-neighborhood}--\eqref{eq:q-neighborhood} list seven
+distinct neighbors at every vertex.  There are 25 edges of type \(E_P\), 25
+of type \(E_Q\), and 125 cross edges, hence 175 in total.  Equivalently, the
+handshake identity gives \(50\cdot7/2=175\).
+\end{proof}
+
+\section{The common-neighbor certificate}
+
+\begin{proposition}\label{prop:common-neighbors}
+For any two distinct vertices \(x,y\),
+\[
+ |N(x)\cap N(y)|=
+ \begin{cases}
+ 0,&x\sim y,\\
+ 1,&x\not\sim y.
+ \end{cases}
+\]
+\end{proposition}
+
+\begin{proof}
+First consider two \(P\)-vertices \(P_{i,j}\) and \(P_{i',j'}\).  If
+\(i=i'\), their layer is a 5-cycle.  Adjacent pairs have no common
+\(P\)-neighbor, while nonadjacent pairs have exactly one.  They cannot have a
+common \(Q\)-neighbor: for fixed \(i\) and \(k\), the equation
+\(Q_{k,\ell}\sim P_{i,j}\) determines \(j=\ell-ik\) uniquely.  If
+\(i\ne i'\), there is no common \(P\)-neighbor, and a common \(Q\)-neighbor
+must satisfy
+\[
+ ik+j=i'k+j'.
+\]
+This has the unique solution
+\[
+ k=\frac{j'-j}{i-i'},\qquad \ell=ik+j,
+\]
+because \(\F\) is a field.
+
+The argument for two \(Q\)-vertices is dual.  If their first coordinates
+agree, they lie in the 5-cycle generated by steps \(\pm2\).  Adjacent pairs
+have no common \(Q\)-neighbor and nonadjacent pairs have exactly one; no
+common \(P\)-neighbor is possible.  If \(k\ne k'\), a common
+\(P_{i,j}\) is determined uniquely by
+\[
+ \ell=ik+j,\qquad \ell'=ik'+j,
+\]
+namely
+\[
+ i=\frac{\ell-\ell'}{k-k'},\qquad j=\ell-ik.
+\]
+
+It remains to compare \(P_{i,j}\) with \(Q_{k,\ell}\).  Put
+\[
+ r=\ell-(ik+j)\in\F.
+\]
+The pair is adjacent precisely when \(r=0\).  A common \(P\)-vertex must be
+\(P_{i,j+s}\) with \(s\in\{\pm1\}\), and it is adjacent to
+\(Q_{k,\ell}\) precisely when \(r=s\).  Hence there is exactly one common
+\(P\)-neighbor if \(r\in\{\pm1\}\), and none otherwise.  A common
+\(Q\)-vertex must be \(Q_{k,\ell+t}\) with \(t\in\{\pm2\}\), and it is
+adjacent to \(P_{i,j}\) precisely when \(t=-r\).  Hence there is exactly one
+common \(Q\)-neighbor if \(r\in\{\pm2\}\), and none otherwise.  Finally,
+\[
+ \F=\{0\}\mathbin{\dot\cup}\{\pm1\}
+          \mathbin{\dot\cup}\{\pm2\},
+\]
+which proves every cross case and completes the certificate.
+\end{proof}
+
+\begin{corollary}\label{cor:geometry}
+The graph is connected, has diameter two, and has girth five.
+\end{corollary}
+
+\begin{proof}
+Every pair of distinct vertices is adjacent or has a common neighbor, so the
+graph is connected and has diameter at most two.  It is not complete, since
+it is 7-regular on 50 vertices, so its diameter is exactly two.
+
+A triangle would give an adjacent pair a common neighbor.  In a 4-cycle, two
+opposite vertices would have the other two cycle vertices as distinct common
+neighbors.  Both possibilities contradict
+Proposition~\ref{prop:common-neighbors}.  Thus \(g(G)\ge5\).  On the other
+hand, for every fixed \(i\),
+\[
+ P_{i,0}P_{i,1}P_{i,2}P_{i,3}P_{i,4}P_{i,0}
+\]
+is a 5-cycle, so \(g(G)=5\).
+\end{proof}
+
+\section{Exact spectral calculation}
+
+Let \(A\) be the adjacency matrix, let \(I\) be the \(50\times50\) identity
+matrix, and let \(J\) be the all-ones matrix.  Proposition
+\ref{prop:common-neighbors} gives, entry by entry,
+\begin{equation}\label{eq:a-square}
+ A^2=6I-A+J.
+\end{equation}
+Indeed, the diagonal entries on both sides are 7, the entries indexed by
+edges are 0, and all other off-diagonal entries are 1.
+
+Since the graph is connected and 7-regular, \(A\one=7\one\), with this
+eigenvalue simple.  On \(\one^\perp\), equation~\eqref{eq:a-square} becomes
+\[
+ A^2+A-6I=0.
+\]
+Thus the other adjacency eigenvalues are \(2\) and \(-3\).  If their
+multiplicities are \(m_2\) and \(m_{-3}\), then
+\[
+ m_2+m_{-3}=49,
+ \qquad
+ 7+2m_2-3m_{-3}=\tr A=0.
+\]
+Consequently
+\begin{equation}\label{eq:adjacency-spectrum}
+ \Spec(A)=\{7^{(1)},2^{(28)},(-3)^{(21)}\}.
+\end{equation}
+
+By Corollary~\ref{cor:geometry}, two distinct vertices are at distance one on
+edges and distance two on nonedges.  Therefore
+\begin{equation}\label{eq:distance-matrix}
+ D=A+2(J-I-A)=2J-2I-A.
+\end{equation}
+On \(\one\), the distance matrix has eigenvalue
+\[
+ 2\cdot50-2-7=91.
+\]
+If \(x\in\one^\perp\) and \(Ax=\theta x\), then
+\[
+ Dx=(-2I-A)x=(-2-\theta)x.
+\]
+Using \eqref{eq:adjacency-spectrum}, we obtain
+\begin{equation}\label{eq:distance-spectrum}
+ \Spec(D)=\{91^{(1)},1^{(21)},(-4)^{(28)}\},
+\end{equation}
+or equivalently
+\[
+ \det(xI-D)=(x-91)(x-1)^{21}(x+4)^{28}.
+\]
+
+\begin{proof}[Proof of Theorem A]
+Corollary~\ref{cor:geometry} gives connectedness and \(g(G)=5\).  By
+Lemma~\ref{lem:simple-regular}, every vertex and every one of its neighbors
+has degree 7, so
+\[
+ d^*(v)=\frac{1}{7}\sum_{u\in N(v)}7=7
+\]
+for every \(v\), and hence \(\delta^*(G)=7\).  Equation
+\eqref{eq:distance-spectrum} gives \(\partial_{50}(G)=-4\).  Thus
+\[
+ \delta^*(G)=7>4=-\partial_{50}(G),
+ \qquad
+ \delta^*(G)+\partial_{50}(G)=3>0.
+\]
+This is a strict counterexample to WOW-284.
+\end{proof}
+
+As a further exact certificate, the eigenvalues of \(D+7I\) are
+\(98\), \(8\) with multiplicity 21, and \(3\) with multiplicity 28.  Thus
+\(D+7I\) is positive definite.
+
+\section{Computational certificate}
+
+The proof above is entirely analytic.  The accompanying Python code supplies
+a separate exact check from the coordinate rules.  It performs the following
+steps:
+\begin{enumerate}
+\item constructs the 175 unordered edges and checks all 50 degrees;
+\item checks the common-neighbor count for every unordered vertex pair;
+\item constructs all 2,500 distance entries by integer breadth-first search;
+\item computes the distance characteristic polynomial symbolically; and
+\item computes an exact rational \(LDL^{\mathsf T}\) decomposition of
+      \(D+7I\) and checks that all 50 pivots are positive.
+\end{enumerate}
+The symbolic steps use SymPy \cite{MeurerEtAl2017}.  The expected output is
+\[
+  (x-91)(x-1)^{21}(x+4)^{28}
+\]
+together with 50 positive rational pivots.  Because the distance matrix is
+built by BFS, this check does not use equation~\eqref{eq:distance-matrix} or
+the spectral derivation above.  Numerical agreement is not treated as a
+proof; all calculations in the certificate are exact.
+
+\section*{Scope, provenance, and disclosures}
+
+The counterexample has order 50.  No minimality claim is made, and no
+exhaustive search over smaller graphs is part of this note.  The repository's
+source ledger distinguishes the published distance spectrum from the explicit
+WOW-284 connection and records the limits of the targeted priority search.
+
+The graph construction and counterexample claim were supplied by the author.
+OpenAI Codex assisted with adversarial proof checking, source discovery,
+editorial restructuring, LaTeX preparation, and reproducibility code.  No AI
+system is an author.  Samuil Petkov is the sole named author and assumes full
+responsibility for the mathematics, citations, attribution, and conclusions.
+
+The author received no funding for this work and declares no competing
+interests.  The manuscript source, exact verification code, machine-readable
+certificates, and build instructions are available in the public repository
+\href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
+
+\begingroup
+\small
+\renewcommand{\bibsection}{\section*{References}}
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\endgroup
+
+\end{document}
