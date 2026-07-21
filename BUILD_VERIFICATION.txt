@@ -53,7 +53,7 @@ PASS  All four pages rendered at 150 dpi and inspected at original render
       or broken bibliography/address layout.
 
 Verified PDF SHA-256:
-  0f089ddc754c2d6c337296be727b7ffcdec6ddebe62acf05686b9121466ee855  main.pdf
+  85f8d55405d0cd91d598e19be6d21cce1399d3c0ff372a0eaa4d377469177d5b  main.pdf
 
 ARXIV PACKAGE
 -------------
@@ -65,7 +65,7 @@ PASS  A fresh extraction of the ZIP compiled independently to a four-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  327369e4a4a636cec0814eb128333982a87ad1f2250a22edac1462d10e46b77d
+  8d193d45ba83b918677e04f9a6ce79c51b020c586d90eb9c95cb74dccd1a3644
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT

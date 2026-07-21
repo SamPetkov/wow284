@@ -169,7 +169,7 @@ def validate_release_text() -> None:
         r"\usepackage[margin=1in]{geometry}",
         "Howlader and Panigrahi",
         "No claim is made",
-        "OpenAI Codex",
+        "OpenAI ChatGPT-5.6 Sol Pro",
     ]
     missing = [item for item in required if item not in text]
     if missing:
