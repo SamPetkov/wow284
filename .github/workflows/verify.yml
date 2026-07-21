@@ -44,7 +44,7 @@ jobs:
       - name: Install TeX build dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y latexmk texlive-latex-extra texlive-fonts-recommended texlive-bibtex-extra
+          sudo apt-get install -y latexmk texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-bibtex-extra
       - name: Compile the arXiv source in isolation
         run: |
           build_dir="$(mktemp -d)"

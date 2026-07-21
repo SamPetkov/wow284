@@ -65,7 +65,7 @@ PASS  A fresh extraction of the ZIP compiled independently to a four-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  ce146baf03a5caebe7b919c18f89ff15f8f87d1d9adddc8a56415ca632a00c3c
+  327369e4a4a636cec0814eb128333982a87ad1f2250a22edac1462d10e46b77d
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT

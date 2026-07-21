@@ -81,7 +81,11 @@ def compile_manuscript() -> None:
             env=environment,
         )
         shutil.copy2(build / "main.pdf", CANONICAL_PDF)
-        shutil.copy2(build / "main.bbl", CANONICAL_BBL)
+        CANONICAL_BBL.write_text(
+            (build / "main.bbl").read_text(encoding="utf-8"),
+            encoding="utf-8",
+            newline="\n",
+        )
         log_target = ROOT / "tmp" / "main.log"
         log_target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(build / "main.log", log_target)
