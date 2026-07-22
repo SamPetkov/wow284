@@ -55,7 +55,7 @@ lean/Wow284/DiagonalizationLeft8.lean
 lean/Wow284/DiagonalizationLeft9.lean
 lean/Wow284/MooreThreshold.lean
 lean/lake-manifest.json
-lean/lakefile.toml
+lean/lakefile.lean
 lean/lean-toolchain
 main.bbl
 main.pdf

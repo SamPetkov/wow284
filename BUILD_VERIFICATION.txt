@@ -28,7 +28,7 @@ PASS  WOW-284 values: delta* = 7, least distance eigenvalue = -4,
 
 LEAN 4.31 CERTIFICATE
 ---------------------
-PASS  Lean and Mathlib are pinned to 4.31.0 in lean-toolchain, lakefile.toml,
+PASS  Lean and Mathlib are pinned to 4.31.0 in lean-toolchain, lakefile.lean,
       and lake-manifest.json.
 PASS  Structural module: graph definition, symmetry, irreflexivity,
       7-regularity, exhaustive common-neighbor counts, diameter two,

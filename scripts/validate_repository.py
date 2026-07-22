@@ -55,8 +55,10 @@ def main() -> None:
 
     require((ROOT / "lean" / "lean-toolchain").read_text(encoding="utf-8").strip() ==
             "leanprover/lean4:v4.31.0", "Lean toolchain is not pinned to 4.31.0")
-    lakefile = (ROOT / "lean" / "lakefile.toml").read_text(encoding="utf-8")
-    require('rev = "v4.31.0"' in lakefile, "Mathlib is not pinned to 4.31.0")
+    lakefile = (ROOT / "lean" / "lakefile.lean").read_text(encoding="utf-8")
+    require('@ "v4.31.0"' in lakefile, "Mathlib is not pinned to 4.31.0")
+    require("package Wow284" in lakefile,
+            "Lake package name must match the root module for external checking")
     lake_manifest = json.loads((ROOT / "lean" / "lake-manifest.json").read_text(encoding="utf-8"))
     mathlib_locks = [package for package in lake_manifest["packages"] if package["name"] == "mathlib"]
     require(len(mathlib_locks) == 1 and mathlib_locks[0]["inputRev"] == "v4.31.0",
