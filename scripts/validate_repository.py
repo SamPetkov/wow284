@@ -80,7 +80,7 @@ def main() -> None:
     for path in ROOT.rglob("*"):
         if not path.is_file() or path.suffix.lower() not in text_extensions:
             continue
-        if any(part in {".git", ".venv", "tmp", "__pycache__"} for part in path.relative_to(ROOT).parts):
+        if any(part in {".git", ".lake", ".venv", "tmp", "__pycache__"} for part in path.relative_to(ROOT).parts):
             continue
         text = path.read_text(encoding="utf-8")
         require(not any(marker in text for marker in mojibake_markers), f"mojibake marker in {path}")

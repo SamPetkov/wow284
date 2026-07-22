@@ -37,6 +37,7 @@ ARXIV_MIRRORS = {
 
 EXCLUDED_DIRECTORIES = {
     ".git",
+    ".lake",
     ".venv",
     ".pytest_cache",
     "__pycache__",
