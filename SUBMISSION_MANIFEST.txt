@@ -24,6 +24,7 @@ src/
 scripts/
 tests/
 results/
+lean/
 .github/
 MANIFEST.txt
 SHA256SUMS

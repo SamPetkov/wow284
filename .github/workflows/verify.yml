@@ -26,6 +26,8 @@ jobs:
         run: python -m pytest -q
       - name: Run the exact certificate
         run: python scripts/verify_exact.py --output tmp/ci-verification.json
+      - name: Check generated Lean spectral data
+        run: python scripts/generate_lean_diagonalization.py --check
       - name: Regenerate graph data and compare
         run: |
           python scripts/export_graph_data.py --output-dir tmp/export
@@ -53,3 +55,18 @@ jobs:
           latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
           test -s main.pdf
           ! grep -E "undefined citations|undefined references|There were undefined" main.log
+
+  lean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build and independently check the Lean development
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: lean
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: true
+          nanoda: true
+          nanoda-allow-sorry: false

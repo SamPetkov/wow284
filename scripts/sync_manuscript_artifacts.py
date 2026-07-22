@@ -114,7 +114,7 @@ def generate_markdown() -> None:
         )
         body = raw.read_text(encoding="utf-8")
 
-    header = """# The Hoffman-Singleton Graph Refutes WOW-284
+    header = """# Moore Graphs of Diameter Two and the Failure of WOW-284
 
 **Samuil Petkov**<br>
 Ecole normale superieure, Universite PSL, Paris, France<br>
@@ -164,13 +164,15 @@ def validate_arxiv_archive() -> None:
 def validate_release_text() -> None:
     text = CANONICAL_TEX.read_text(encoding="utf-8")
     required = [
-        r"\title[The Hoffman--Singleton graph refutes WOW-284]",
+        r"\title[Moore graphs and the failure of WOW-284]",
         r"\author{Samuil Petkov}",
         r"\date{19 July 2026}",
         r"\usepackage[margin=1in]{geometry}",
         "Howlader and Panigrahi",
         "No claim is made",
         "OpenAI ChatGPT-5.6 Sol Pro",
+        "The explicit 50-vertex counterexample is fully formalized and verified",
+        r"The scalar \(k\le3\) threshold",
     ]
     missing = [item for item in required if item not in text]
     if missing:
@@ -184,6 +186,8 @@ def validate_release_text() -> None:
         "Samuil Petkov & Codex",
         "20 July 2026",
         "21 July 2026",
+        "remains under verification",
+        "formalization is in preparation",
     ]
     present = [item for item in forbidden if item in text]
     if present:

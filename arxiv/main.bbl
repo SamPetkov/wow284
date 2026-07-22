@@ -1,4 +1,4 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{10}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -41,6 +41,12 @@ Aditi Howlader and Pratima Panigrahi.
   2022.
 \newblock \doi{10.1016/j.laa.2021.11.014}.
 
+\bibitem[Smith and Montemanni(2026)]{SmithMontemanni2026}
+Derek~H. Smith and Roberto Montemanni.
+\newblock The moore graph of diameter 2 and degree 57 via cyclic derangements.
+\newblock \emph{Axioms}, 15\penalty0 (5):\penalty0 332, 2026.
+\newblock \doi{10.3390/axioms15050332}.
+
 \bibitem[Hafner(2003)]{Hafner2003}
 Paul~R. Hafner.
 \newblock The hoffman--singleton graph and its automorphisms.
@@ -53,5 +59,20 @@ Aaron Meurer et~al.
 \newblock {SymPy}: Symbolic computing in {Python}.
 \newblock \emph{PeerJ Computer Science}, 3:\penalty0 e103, 2017.
 \newblock \doi{10.7717/peerj-cs.103}.
+
+\bibitem[de~Moura and Ullrich(2021)]{deMouraUllrich2021}
+Leonardo de~Moura and Sebastian Ullrich.
+\newblock The {Lean 4} theorem prover and programming language.
+\newblock In \emph{Automated Deduction---CADE 28}, volume 12699 of
+  \emph{Lecture Notes in Computer Science}, pages 625--635. Springer, 2021.
+\newblock \doi{10.1007/978-3-030-79876-5_37}.
+
+\bibitem[{The mathlib Community}(2020)]{Mathlib2020}
+{The mathlib Community}.
+\newblock The {Lean} mathematical library.
+\newblock In \emph{Proceedings of the 9th {ACM SIGPLAN} International
+  Conference on Certified Programs and Proofs}, pages 367--381. Association for
+  Computing Machinery, 2020.
+\newblock \doi{10.1145/3372885.3373824}.
 
 \end{thebibliography}

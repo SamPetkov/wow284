@@ -3,33 +3,36 @@ message: >-
   Please cite the manuscript using the metadata below. The published
   distance-spectrum calculation of Howlader and Panigrahi should also be
   cited where that prior result is used.
-title: "wow284: Reproducible artifacts for The Hoffman-Singleton Graph Refutes WOW-284"
+title: "wow284: Reproducible artifacts for Moore Graphs of Diameter Two and the Failure of WOW-284"
 type: software
 authors:
   - family-names: Petkov
     given-names: Samuil
     affiliation: "École normale supérieure, Université PSL"
     email: samuil.petkov@ens.psl.eu
-version: 1.0.0
+version: 1.1.0
 date-released: 2026-07-19
 url: "https://github.com/SamPetkov/wow284"
 repository-code: "https://github.com/SamPetkov/wow284"
 license: CC-BY-4.0
 abstract: >-
-  An explicit 50-vertex coordinate construction gives a 7-regular graph of
-  girth five with least distance eigenvalue -4. Its minimum dual degree is
-  therefore 7, strictly exceeding 4, and the graph refutes WOW-284. The
-  repository includes a self-contained proof and exact reproducibility code.
+  A degree-k Moore graph of diameter two has minimum dual degree k and least
+  distance eigenvalue -(3 + sqrt(4k - 3))/2, so WOW-284 fails precisely for
+  realizable degrees k > 3. An explicit coordinate construction of the
+  degree-7 Hoffman-Singleton graph gives the 50-vertex counterexample. The
+  repository includes a self-contained proof, exact Python verification, and
+  a complete Lean 4.31 formalization of the explicit counterexample.
 keywords:
   - distance spectrum
   - dual degree
   - girth
   - Hoffman-Singleton graph
+  - Moore graph
   - spectral graph theory
   - WOW-284
 preferred-citation:
   type: article
-  title: "The Hoffman-Singleton Graph Refutes WOW-284"
+  title: "Moore Graphs of Diameter Two and the Failure of WOW-284"
   authors:
     - family-names: Petkov
       given-names: Samuil

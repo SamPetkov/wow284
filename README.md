@@ -1,13 +1,21 @@
-# The Hoffman-Singleton Graph Refutes WOW-284
+# Moore Graphs of Diameter Two and the Failure of WOW-284
 
 **Author:** Samuil Petkov<br>
 **Affiliation:** Ecole normale superieure, Universite PSL, Paris, France<br>
 **Manuscript version:** 19 July 2026 (`2026-07-19`)<br>
 **Repository status:** Public research note; ready for arXiv source upload after the author's final account-level review
 
-This repository gives a self-contained 50-vertex counterexample to WOW-284,
-the minimum-dual-degree conjecture recorded as Conjecture 7.16 in Aouchiche
-and Hansen's *Distance Spectra of Graphs: A Survey*.
+This repository studies WOW-284, the minimum-dual-degree conjecture recorded
+as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
+Survey*. For every degree-`k` Moore graph of diameter two,
+
+\[
+\delta^*(G)=k,\qquad
+\partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
+\]
+
+Consequently WOW-284 holds for `k = 2`, is an equality for `k = 3`, and
+fails for every realizable degree `k > 3`.
 
 For the explicitly constructed graph (G),
 
@@ -24,7 +32,7 @@ Thus
 
 and the conjectured inequality fails by the strict gap (3).
 
-The graph is the Hoffman-Singleton graph. The proof does not rely on that
+The degree-7 graph is the Hoffman-Singleton graph. The proof does not rely on that
 identification: it verifies directly from coordinates over
 (mathbb F_5) that every adjacent pair has no common neighbor and every
 nonadjacent pair has exactly one. That certificate gives connectedness,
@@ -37,11 +45,13 @@ Aouchiche and Hansen record WOW-284 and attribute it to Siemion Fajtlowicz's
 1998 *Written on the Wall* report. Their 2014 survey states that the conjecture
 was open there and notes equality for the Petersen graph.
 
-The distance spectrum used here is not claimed as new. Howlader and
-Panigrahi explicitly published the Hoffman-Singleton distance spectrum
-({91,(-4)^{28},1^{21}}) in 2022. Combining their calculation with
-7-regularity already gives the counterexample. This note records that
-connection and supplies an independent, self-contained coordinate proof.
+The distance-spectral input is not claimed as new. Howlader and Panigrahi
+published a distance-polynomial treatment of minimal `(k,5)`-cages and
+explicitly listed the Petersen, Hoffman-Singleton, and hypothetical degree-57
+Moore cases in 2022. Combining their `k = 7` calculation with regularity and
+girth already gives the counterexample. This note isolates the sharp `k > 3`
+criterion, records the WOW-284 connection, and supplies an independent,
+self-contained coordinate proof.
 
 The targeted source search documented in [`SOURCE_LEDGER.md`](SOURCE_LEDGER.md)
 did not locate an earlier source explicitly connecting the Hoffman-Singleton
@@ -66,6 +76,7 @@ Primary links:
 - `src/wow284_graph.py` - standard-library coordinate construction, BFS, girth, and dual-degree routines.
 - `scripts/verify_exact.py` - exact SymPy characteristic-polynomial and rational (LDL^{\mathsf T}) certificate.
 - `scripts/export_graph_data.py` - deterministic edge, adjacency, and distance CSV exporter.
+- `scripts/generate_lean_diagonalization.py` - deterministic exact-data generator for the Lean spectral certificate.
 - `tests/` - exhaustive structural and exact spectral regression tests.
 - `results/verification.json` - machine-readable exact verification record.
 - `results/edges.csv`, `results/adjacency_matrix.csv`, `results/distance_matrix.csv` - complete graph data.
@@ -73,6 +84,25 @@ Primary links:
 - `SOURCE_LEDGER.md`, `REVIEW.md`, `PROVENANCE.md` - attribution, novelty, proof-audit, and provenance records.
 - `CITATION.cff`, `LICENSE`, `LICENSE_SCOPE.md` - citation and CC BY 4.0 metadata.
 - `BUILD_VERIFICATION.txt`, `MANIFEST.txt`, `SHA256SUMS` - release preflight and integrity records.
+- `lean/` - Lean 4.31/Mathlib 4.31 development and pinned project configuration.
+
+## Formal verification
+
+The explicit 50-vertex counterexample is fully formalized and verified in
+Lean 4.31/Mathlib 4.31. The development checks the graph definition,
+simplicity, 7-regularity, the exhaustive common-neighbor certificate, girth
+five, the adjacency-square and distance-matrix identities, and an exact
+spectral diagonalization with multiplicities `91^1`, `(-4)^28`, and `1^21`.
+The scalar `k <= 3` threshold is formalized separately. The generic
+Moore-graph derivation in the paper remains a conventional proof, so the
+formal-verification claim is intentionally limited to the complete explicit
+counterexample and the scalar threshold.
+
+The spectral computation is sharded into bounded integer certificates and
+then assembled into a rational two-sided inverse and diagonalization. The
+release audit rejects `sorry`, `admit`, `native_decide`, `bv_decide`, unsafe
+declarations, and new axioms. Representative axiom audits report only the
+standard dependencies `propext`, `Classical.choice`, and `Quot.sound`.
 
 ## Reproduce the exact certificate
 

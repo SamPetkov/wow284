@@ -6,6 +6,7 @@ from __future__ import annotations
 import csv
 import json
 from pathlib import Path
+import re
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -42,9 +43,30 @@ def main() -> None:
     require(r"\usepackage[margin=1in]{geometry}" in tex, "one-inch margins not fixed")
     require(r"\date{19 July 2026}" in tex, "manuscript date mismatch")
     require(r"\author{Samuil Petkov}" in tex, "author mismatch")
+    require(r"\title[Moore graphs and the failure of WOW-284]" in tex, "title mismatch")
     require("Howlader and Panigrahi" in tex, "prior distance-spectrum attribution missing")
     require("No claim is made" in tex, "scope limitation missing")
+    require("The explicit 50-vertex counterexample is fully formalized and verified" in tex,
+            "completed explicit Lean verification status missing")
+    require("formal verification claim here is deliberately limited" in
+            " ".join(tex.split()),
+            "formal verification scope limitation missing")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
+
+    require((ROOT / "lean" / "lean-toolchain").read_text(encoding="utf-8").strip() ==
+            "leanprover/lean4:v4.31.0", "Lean toolchain is not pinned to 4.31.0")
+    lakefile = (ROOT / "lean" / "lakefile.toml").read_text(encoding="utf-8")
+    require('rev = "v4.31.0"' in lakefile, "Mathlib is not pinned to 4.31.0")
+    lake_manifest = json.loads((ROOT / "lean" / "lake-manifest.json").read_text(encoding="utf-8"))
+    mathlib_locks = [package for package in lake_manifest["packages"] if package["name"] == "mathlib"]
+    require(len(mathlib_locks) == 1 and mathlib_locks[0]["inputRev"] == "v4.31.0",
+            "Lake manifest does not resolve Mathlib v4.31.0")
+    forbidden_lean = re.compile(r"\b(sorry|admit|native_decide|bv_decide|unsafe|axiom)\b")
+    for path in (ROOT / "lean").rglob("*.lean"):
+        if ".lake" in path.parts:
+            continue
+        require(not forbidden_lean.search(path.read_text(encoding="utf-8")),
+                f"forbidden Lean token in {path}")
 
     bibliography = (ROOT / "references.bib").read_text(encoding="utf-8")
     for doi in [
@@ -52,6 +74,7 @@ def main() -> None:
         "10.1147/rd.45.0497",
         "10.1016/j.laa.2021.11.014",
         "10.7717/peerj-cs.103",
+        "10.3390/axioms15050332",
     ]:
         require(doi in bibliography, f"missing DOI: {doi}")
 

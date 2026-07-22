@@ -13,9 +13,9 @@ repository metadata.
 
 ## Recommended attribution
 
-> Samuil Petkov, *The Hoffman-Singleton Graph Refutes WOW-284*, version dated
-> 19 July 2026, <https://github.com/SamPetkov/wow284>, licensed under CC BY
-> 4.0. Changes were made.
+> Samuil Petkov, *Moore Graphs of Diameter Two and the Failure of WOW-284*,
+> version dated 19 July 2026, <https://github.com/SamPetkov/wow284>, licensed
+> under CC BY 4.0. Changes were made.
 
 For scholarly use, also follow [`CITATION.cff`](CITATION.cff). Credit
 Howlader and Panigrahi's prior published distance-spectrum calculation where

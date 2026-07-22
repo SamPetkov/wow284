@@ -2,7 +2,7 @@
 
 **Author:** Samuil Petkov<br>
 **Manuscript date:** 19 July 2026<br>
-**Audit and package preparation:** 21 July 2026
+**Audit and package preparation:** 21--22 July 2026
 
 ## Submitted material
 
@@ -14,6 +14,10 @@ attached text file.
 The supplied argument identified the graph as a coordinate realization of the
 Hoffman-Singleton graph but deliberately proved all properties directly. The
 canonical manuscript preserves that self-contained route.
+
+The 22 July revision adds the degree-`k` Moore-graph criterion after an
+adversarial review. Published minimal-cage distance-spectral formulas remain
+explicitly credited; the revision does not claim those formulas as new.
 
 ## AI assistance
 
@@ -28,3 +32,8 @@ The exact scripts and audit documents are reproducibility aids, not external
 peer review. The source search is targeted and cannot establish absolute
 priority or absence from unpublished communications. The repository therefore
 avoids a first-discovery claim and makes no minimality claim.
+
+The Lean 4.31 development is recorded separately from the analytic and exact
+Python proofs. Until the spectral theorem passes the strict audit and CI, the
+manuscript claims full Lean verification only for the explicit 50-vertex
+counterexample and separately records the formalized scalar degree threshold.

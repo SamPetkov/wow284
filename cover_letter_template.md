@@ -2,23 +2,26 @@
 
 Dear Editors,
 
-Please consider the enclosed manuscript, **“The Hoffman-Singleton Graph
-Refutes WOW-284,”** by Samuil Petkov.
+Please consider the enclosed manuscript, **“Moore Graphs of Diameter Two and
+the Failure of WOW-284,”** by Samuil Petkov.
 
-The note records a 50-vertex counterexample to the minimum-dual-degree
-inequality listed as WOW-284 in Aouchiche and Hansen's 2014 survey of distance
-spectra. The counterexample is the Hoffman-Singleton graph. The note gives a
+The note proves that a degree-`k` Moore graph of diameter two violates the
+minimum-dual-degree inequality WOW-284 exactly when `k > 3`. The degree-7
+instance is the 50-vertex Hoffman-Singleton graph. The note gives a
 self-contained coordinate construction over the field with five elements and
 derives connectedness, girth, and the complete distance spectrum from an exact
 common-neighbor certificate.
 
-The manuscript explicitly credits Howlader and Panigrahi's 2022 publication
-of the same Hoffman-Singleton distance spectrum. Its contribution is the
-connection of that graph to WOW-284 and a direct reproducible certificate; it
-does not claim that the spectrum is new or that the counterexample is minimal.
+The manuscript explicitly credits Howlader and Panigrahi's 2022
+distance-polynomial treatment of minimal cages and their published
+Hoffman-Singleton spectrum. Its contribution is the sharp WOW-284 degree
+criterion, the explicit counterexample connection, and a direct reproducible
+certificate; it does not claim that the spectra are new or that the
+counterexample is minimal.
 
-Exact Python code, exhaustive pair checks, complete graph data, and the source
-and priority ledger are available at <https://github.com/SamPetkov/wow284>.
+Exact Python code, exhaustive pair checks, complete graph data, the Lean 4.31
+development in progress, and the source and priority ledger are available at
+<https://github.com/SamPetkov/wow284>.
 
 [Before use, add the target journal, originality/exclusive-submission
 statement, conflicts, funding, corresponding-author details, and any

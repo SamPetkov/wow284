@@ -45,3 +45,19 @@ proof package credited to Samuil Petkov at ENS.
 3. Adversarial checks of modular signs, edge multiplicities, eigenvalue
    ordering, trace equations, and bibliography.
 4. PDF compilation, rendering, and visual inspection.
+
+## Confirmed 22 July 2026 revision
+
+After an adversarial journal-style review, the user confirmed a conceptual
+revision that:
+
+- promotes the degree-`k` diameter-two Moore-graph criterion to the main
+  theorem and treats the Hoffman-Singleton graph as the `k = 7` application;
+- strengthens compressed combinatorial, spectral, and positive-definiteness
+  arguments;
+- expands prior-work credit to the general minimal-cage distance-spectral
+  results of Howlader and Panigrahi;
+- adds Lean 4.31/Mathlib 4.31 artifacts and strict audits; and
+- permits a present-tense full-formalization claim only after the complete
+  formal theorem, forbidden-token/axiom audit, independent strict check, and
+  GitHub Actions run all pass.

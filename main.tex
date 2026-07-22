@@ -58,44 +58,44 @@
 \newcommand{\tr}{\operatorname{tr}}
 
 \hypersetup{
-  pdftitle={The Hoffman--Singleton Graph Refutes WOW-284},
+  pdftitle={Moore Graphs of Diameter Two and the Failure of WOW-284},
   pdfauthor={Samuil Petkov},
   pdfsubject={A 50-vertex counterexample to the minimum-dual-degree and least-distance-eigenvalue conjecture WOW-284},
-  pdfkeywords={WOW-284, Hoffman-Singleton graph, distance spectrum, dual degree, girth, counterexample, spectral graph theory},
+  pdfkeywords={WOW-284, Moore graph, Hoffman-Singleton graph, distance spectrum, dual degree, girth, counterexample, spectral graph theory},
   pdfcreator={LaTeX with amsart},
   pdfproducer={pdfTeX},
   pdfdisplaydoctitle=true
 }
 
-\title[The Hoffman--Singleton graph refutes WOW-284]
-{The Hoffman--Singleton Graph Refutes WOW-284}
+\title[Moore graphs and the failure of WOW-284]
+{Moore Graphs of Diameter Two and the Failure of WOW-284}
 \author{Samuil Petkov}
 \address{\'Ecole normale sup\'erieure, Universit\'e PSL, Paris, France}
 \email{samuil.petkov@ens.psl.eu}
 \date{19 July 2026}
 \subjclass[2020]{Primary 05C50; Secondary 05C12}
-\keywords{distance spectrum, dual degree, girth, Hoffman--Singleton graph,
-WOW-284, strongly regular graph}
+\keywords{distance spectrum, dual degree, girth, Moore graph,
+Hoffman--Singleton graph, WOW-284, strongly regular graph}
 
 \begin{document}
 
 \begin{abstract}
 WOW-284 asserts that the minimum dual degree of every connected graph of
 order at least three and girth at least five is at most the negative of its
-least distance eigenvalue.  We record a counterexample on 50 vertices.  The
-graph is given by an explicit coordinate construction over \(\mathbb F_5\).
-It is 7-regular, has girth five, and has distance spectrum
+least distance eigenvalue.  We isolate its behavior on Moore graphs of
+diameter two.  For such a graph of degree \(k\ge2\), the minimum dual degree
+is \(k\), while the least distance eigenvalue is
 \[
-  \{91^{(1)},1^{(21)},(-4)^{(28)}\}.
+ -\frac{3+\sqrt{4k-3}}2.
 \]
-Consequently its minimum dual degree is \(7\), whereas the negative of its
-least distance eigenvalue is \(4\).  The strict gap is therefore \(3\).  The
-graph is the Hoffman--Singleton graph, but no classification or named-graph
-property enters the proof.  A coordinate common-neighbor certificate yields
-connectedness and girth, and a matrix calculation gives the full spectrum.
-Exact code constructs the distance matrix directly by breadth-first search,
-without using the analytic distance identity, and checks its characteristic
-polynomial over the integers.
+Thus WOW-284 holds for \(k=2\), is an equality for \(k=3\), and fails for
+every realizable degree \(k>3\).  The degree-7 instance is the
+Hoffman--Singleton graph: it has 50 vertices, girth five, and distance
+spectrum \(\{91^{(1)},1^{(21)},(-4)^{(28)}\}\), giving a strict gap of
+\(3\).  We provide a self-contained coordinate certificate over
+\(\mathbb F_5\) and an independent exact computational check.  The distance
+spectra of minimal cages were determined previously; the point here is their
+consequence for WOW-284.
 \end{abstract}
 
 \maketitle
@@ -134,29 +134,109 @@ If \(G\) is connected, has \(n\ge3\) vertices, and has girth
 
 In that 2014 survey, the authors reported that the conjecture remained open
 and noted equality for the Petersen graph
-\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}.  The degree-7 Moore graph
-constructed by Hoffman and Singleton \cite{HoffmanSingleton1960} gives a
-strict violation.
+\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}.  This equality is the
+degree-3 boundary case of a general Moore-graph calculation.  The degree-7
+Moore graph constructed by Hoffman and Singleton
+\cite{HoffmanSingleton1960} lies beyond that boundary and gives a strict
+violation.
 
-There is an important prior spectral calculation.  Howlader and Panigrahi
-explicitly give the distance spectrum
-\(\{91,(-4)^{(28)},1^{(21)}\}\) of the Hoffman--Singleton graph
-\cite[Theorem~2.5(1b)]{HowladerPanigrahi2022}.  Combining that calculation
-with 7-regularity already disproves Conjecture~\ref{conj:wow284}.  The present
-note records this connection and supplies a self-contained coordinate
-certificate, so neither the graph identification nor the earlier spectral
-formula is needed as a premise.  No claim is made that the spectrum is new,
-that this observation has priority over every unpublished observation, or
-that 50 is the smallest possible order.
+There is important prior spectral work.  Howlader and Panigrahi determine a
+distance polynomial for minimal \((k,5)\)-cages and explicitly list the
+distance spectra of the Petersen, Hoffman--Singleton, and hypothetical
+degree-57 Moore graphs
+\cite[Theorems~2.3 and~2.5(1)]{HowladerPanigrahi2022}; the existence of the
+last graph remains open \cite{SmithMontemanni2026}.  Their \(k=7\) calculation,
+together with regularity and the girth condition, already supplies every
+ingredient needed to disprove Conjecture~\ref{conj:wow284}.  The present note
+records the sharp degree criterion, makes the WOW-284 connection explicit,
+and supplies a self-contained coordinate certificate.  No claim is made that
+the distance spectra are new, that this observation has priority over every
+unpublished observation, or that 50 is the smallest possible order.
 
+\phantomsection\label{thm:moore-wow}
 \begin{theoremA}
-There is a simple connected graph \(G\) on 50 vertices such that
+Let \(G\) be a Moore graph of diameter two and degree \(k\ge2\).  Then
 \[
-  g(G)=5,\qquad \delta^*(G)=7,\qquad \partial_{50}(G)=-4.
+ |V(G)|=k^2+1,\qquad g(G)=5,\qquad \delta^*(G)=k,
+ \qquad
+ \partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
 \]
-In particular, \(G\) violates WOW-284 by the strict gap
-\(\delta^*(G)+\partial_{50}(G)=3\).
+Consequently \(G\) satisfies the inequality in WOW-284 if and only if
+\(k\le3\), with equality exactly when \(k=3\).
 \end{theoremA}
+
+\section{The Moore-graph mechanism}\label{sec:moore}
+
+A \emph{Moore graph of diameter two and degree \(k\)} is a finite simple
+connected \(k\)-regular graph of diameter two attaining the Moore bound
+\(|V(G)|\le 1+k+k(k-1)=k^2+1\).  We include the short derivation needed for
+\hyperref[thm:moore-wow]{Theorem~A}; no classification of Moore graphs is used.
+
+Fix a vertex \(v\).  Its \(k\) neighbors initiate \(k(k-1)\) nonbacktracking
+walks of length two.  Exactly \(k(k-1)\) vertices lie outside
+\(\{v\}\cup N(v)\), and diameter two makes every one of them the endpoint of
+at least one such walk.  The endpoint map is therefore a surjection between
+finite sets of the same size, hence a bijection.  Applying the same argument
+at each vertex shows that adjacent vertices have no common neighbor, whereas
+nonadjacent vertices have exactly one.  Thus there are no triangles or
+4-cycles.  To exhibit a 5-cycle, take an edge \(uv\), choose
+\(x\in N(u)\setminus\{v\}\) and \(y\in N(v)\setminus\{u\}\), and let \(z\)
+be the unique common neighbor of the necessarily nonadjacent vertices
+\(x,y\).  The absence of triangles and 4-cycles makes these five vertices
+distinct, so \(uxzyvu\) is a 5-cycle.  Hence \(g(G)=5\).
+
+Let \(A\), \(I\), and \(J\) denote the adjacency, identity, and all-ones
+matrices of order \(n=k^2+1\).  The common-neighbor counts give, entry by
+entry,
+\begin{equation}\label{eq:general-a-square}
+ A^2=(k-1)I-A+J.
+\end{equation}
+Indeed, the diagonal entries are \(k\), the entries indexed by edges are
+zero, and the remaining off-diagonal entries are one.  Since
+\(A\one=k\one\) and the graph is connected, the eigenvalue \(k\) is simple.
+For example, for \(x\in\mathbb R^n\),
+\[
+ x^{\mathsf T}(kI-A)x
+   =\sum_{\{u,v\}\in E(G)}(x_u-x_v)^2,
+\]
+so equality holds only for constant \(x\).  The real symmetric matrix \(A\)
+preserves \(\one^\perp\), and \eqref{eq:general-a-square} restricts there to
+\[
+ A^2+A-(k-1)I=0.
+\]
+Writing \(q=\sqrt{4k-3}\), the two nonprincipal adjacency eigenvalues are
+\[
+ r=\frac{-1+q}{2},\qquad s=\frac{-1-q}{2}.
+\]
+Their multiplicities, obtained from their sum \(k^2\) and \(\tr A=0\), are
+\begin{equation}\label{eq:general-multiplicities}
+ m_r=\frac12\left(k^2+\frac{k(k-2)}q\right),\qquad
+ m_s=\frac12\left(k^2-\frac{k(k-2)}q\right).
+\end{equation}
+
+Every nonedge joins vertices at distance two, so
+\begin{equation}\label{eq:general-distance}
+ D=2J-2I-A.
+\end{equation}
+It follows that the full distance spectrum is
+\begin{equation}\label{eq:general-distance-spectrum}
+ \Spec(D)=
+ \left\{(2k^2-k)^{(1)},
+ \left(\frac{q-3}{2}\right)^{(m_s)},
+ \left(-\frac{q+3}{2}\right)^{(m_r)}\right\}.
+\end{equation}
+In particular, the last displayed eigenvalue is the least one.  Regularity
+gives \(\delta^*(G)=k\).  Hence the conjectured inequality is
+\[
+ k\le\frac{3+\sqrt{4k-3}}2.
+\]
+For \(k\ge2\), comparison after moving 3 to the left is legitimate, and
+\[
+ (2k-3)^2-(4k-3)=4(k-1)(k-3).
+\]
+Thus the inequality is strict for \(k=2\), is an equality for \(k=3\), and
+fails precisely for \(k>3\).  This proves
+\hyperref[thm:moore-wow]{Theorem~A}.
 
 \section{Coordinate construction}
 
@@ -208,9 +288,13 @@ endpoint of each type.  The set notation removes any possibility of parallel
 edges.
 
 Equations~\eqref{eq:p-neighborhood}--\eqref{eq:q-neighborhood} list seven
-distinct neighbors at every vertex.  There are 25 edges of type \(E_P\), 25
-of type \(E_Q\), and 125 cross edges, hence 175 in total.  Equivalently, the
-handshake identity gives \(50\cdot7/2=175\).
+distinct neighbors at every vertex.  For a \(P\)-vertex, the two same-layer
+neighbors are distinct because \(1\ne-1\) in \(\F\); the five cross
+neighbors are distinct because their first \(Q\)-coordinates are distinct;
+and the two types cannot overlap.  The \(Q\)-case is identical with steps
+\(\pm2\).  There are 25 edges of type \(E_P\), 25 of type \(E_Q\), and 125
+cross edges, hence 175 in total.  Equivalently, the handshake identity gives
+\(50\cdot7/2=175\).
 \end{proof}
 
 \section{The common-neighbor certificate}
@@ -229,8 +313,9 @@ For any two distinct vertices \(x,y\),
 \begin{proof}
 First consider two \(P\)-vertices \(P_{i,j}\) and \(P_{i',j'}\).  If
 \(i=i'\), their layer is a 5-cycle.  Adjacent pairs have no common
-\(P\)-neighbor, while nonadjacent pairs have exactly one.  They cannot have a
-common \(Q\)-neighbor: for fixed \(i\) and \(k\), the equation
+\(P\)-neighbor.  If, for example, \(j'=j+2\), the unique common
+\(P\)-neighbor is \(P_{i,j+1}\); the case \(j'=j-2\) is analogous.  They
+cannot have a common \(Q\)-neighbor: for fixed \(i\) and \(k\), the equation
 \(Q_{k,\ell}\sim P_{i,j}\) determines \(j=\ell-ik\) uniquely.  If
 \(i\ne i'\), there is no common \(P\)-neighbor, and a common \(Q\)-neighbor
 must satisfy
@@ -245,8 +330,10 @@ because \(\F\) is a field.
 
 The argument for two \(Q\)-vertices is dual.  If their first coordinates
 agree, they lie in the 5-cycle generated by steps \(\pm2\).  Adjacent pairs
-have no common \(Q\)-neighbor and nonadjacent pairs have exactly one; no
-common \(P\)-neighbor is possible.  If \(k\ne k'\), a common
+have no common \(Q\)-neighbor.  For a nonadjacent pair, whose second
+coordinates differ by \(\pm1\), direct intersection of the two sets of
+\(\pm2\)-neighbors gives exactly one common \(Q\)-neighbor; no common
+\(P\)-neighbor is possible.  If \(k\ne k'\), a common
 \(P_{i,j}\) is determined uniquely by
 \[
  \ell=ik+j,\qquad \ell'=ik'+j,
@@ -294,80 +381,30 @@ hand, for every fixed \(i\),
 is a 5-cycle, so \(g(G)=5\).
 \end{proof}
 
-\section{Exact spectral calculation}
+\section{The explicit counterexample}
 
-Let \(A\) be the adjacency matrix, let \(I\) be the \(50\times50\) identity
-matrix, and let \(J\) be the all-ones matrix.  Proposition
-\ref{prop:common-neighbors} gives, entry by entry,
-\begin{equation}\label{eq:a-square}
- A^2=6I-A+J.
-\end{equation}
-Indeed, the diagonal entries on both sides are 7, the entries indexed by
-edges are 0, and all other off-diagonal entries are 1.
-
-Since the graph is 7-regular, \(A\one=7\one\).  This eigenvalue is simple:
-if \(Ax=7x\), then
-\[
-  0=x^{\mathsf T}(7I-A)x
-   =\sum_{\{u,v\}\in E(G)}(x_u-x_v)^2,
-\]
-so connectedness forces \(x\) to be constant.  Since \(A\) is real symmetric,
-\(\one^\perp\) is \(A\)-invariant and has an orthonormal eigenbasis.  On this
-subspace, equation~\eqref{eq:a-square} becomes
-\[
- A^2+A-6I=0.
-\]
-Thus every other adjacency eigenvalue is \(2\) or \(-3\).  If their
-multiplicities are \(m_2\) and \(m_{-3}\), then
-\[
- m_2+m_{-3}=49,
- \qquad
- 7+2m_2-3m_{-3}=\tr A=0,
-\]
-where \(\tr A=0\) because the graph is loopless.
-Consequently
-\begin{equation}\label{eq:adjacency-spectrum}
- \Spec(A)=\{7^{(1)},2^{(28)},(-3)^{(21)}\}.
-\end{equation}
-
-By Corollary~\ref{cor:geometry}, two distinct vertices are at distance one on
-edges and distance two on nonedges.  Therefore
-\begin{equation}\label{eq:distance-matrix}
- D=A+2(J-I-A)=2J-2I-A.
-\end{equation}
-On \(\one\), the distance matrix has eigenvalue
-\[
- 2\cdot50-2-7=91.
-\]
-If \(x\in\one^\perp\) and \(Ax=\theta x\), then
-\[
- Dx=(-2I-A)x=(-2-\theta)x.
-\]
-Using \eqref{eq:adjacency-spectrum}, we obtain
+The graph just constructed is 7-regular on \(50=7^2+1\) vertices and has
+diameter two.  It is therefore a Moore graph to which
+\hyperref[thm:moore-wow]{Theorem~A} applies.  Substituting \(k=7\) into
+\eqref{eq:general-distance-spectrum} gives
 \begin{equation}\label{eq:distance-spectrum}
  \Spec(D)=\{91^{(1)},1^{(21)},(-4)^{(28)}\},
 \end{equation}
 or equivalently
 \[
- \det(xI-D)=(x-91)(x-1)^{21}(x+4)^{28}.
+ \det(tI-D)=(t-91)(t-1)^{21}(t+4)^{28}.
 \]
-
-\begin{proof}[Proof of Theorem A]
-Corollary~\ref{cor:geometry} gives connectedness and \(g(G)=5\).  By
-Lemma~\ref{lem:simple-regular}, every vertex and every one of its neighbors
-has degree 7, so
+Every vertex and every one of its neighbors has degree 7, so
 \[
- d^*(v)=\frac{1}{7}\sum_{u\in N(v)}7=7
+ d^*(v)=\frac{1}{7}\sum_{u\in N(v)}7=7.
 \]
-for every \(v\), and hence \(\delta^*(G)=7\).  Equation
-\eqref{eq:distance-spectrum} gives \(\partial_{50}(G)=-4\).  Thus
+Consequently
 \[
- \delta^*(G)=7>4=-\partial_{50}(G),
- \qquad
- \delta^*(G)+\partial_{50}(G)=3>0.
+ g(G)=5,\qquad \delta^*(G)=7>4=-\partial_{50}(G),
+ \qquad \delta^*(G)+\partial_{50}(G)=3.
 \]
-This is a strict counterexample to WOW-284.
-\end{proof}
+This proves that the explicitly constructed Hoffman--Singleton graph is a
+strict counterexample to WOW-284.
 
 Equivalently, \(D+\delta^*(G)I=D+7I\) has eigenvalues
 \(98\), \(8\) with multiplicity 21, and \(3\) with multiplicity 28.  Thus
@@ -384,24 +421,49 @@ steps:
 \item checks the common-neighbor count for every unordered vertex pair;
 \item constructs all 2,500 distance entries by integer breadth-first search;
 \item computes the distance characteristic polynomial symbolically; and
-\item computes an exact rational \(LDL^{\mathsf T}\) decomposition of
+\item computes an exact rational \(L\Delta L^{\mathsf T}\) decomposition of
       \(D+7I\) and checks that all 50 pivots are positive.
 \end{enumerate}
 The symbolic steps use SymPy \cite{MeurerEtAl2017}.  The expected output is
 \[
-  (x-91)(x-1)^{21}(x+4)^{28}
+  (t-91)(t-1)^{21}(t+4)^{28}
 \]
-together with 50 positive rational pivots.  Because the distance matrix is
-built by BFS, this check does not use equation~\eqref{eq:distance-matrix} or
-the spectral derivation above.  Numerical agreement is not treated as a
-proof; all calculations in the certificate are exact.
+together with 50 positive rational pivots.  Here \(L\) is unit lower
+triangular and therefore invertible.  If \(M=D+7I=L\Delta L^{\mathsf T}\),
+then for every nonzero \(y\),
+\[
+ y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
+ \Delta(L^{\mathsf T}y)>0,
+\]
+so the pivot check proves positive definiteness.  Because the distance matrix
+is built by BFS, the certificate does not use
+equation~\eqref{eq:general-distance} or the spectral derivation above.
+Numerical agreement is not treated as a proof; all calculations in the
+certificate are exact.
+
+\section{Formal verification}
+
+The explicit 50-vertex counterexample is fully formalized and verified in
+Lean 4.31 with Mathlib 4.31 \cite{deMouraUllrich2021,Mathlib2020}.  The
+development verifies the graph, 7-regularity, the exhaustive common-neighbor
+certificate, girth five, and the adjacency-square and distance-matrix
+identities.  It supplies exact rational matrices \(S,S^{-1}\), proves their
+two-sided inverse identities by denominator-cleared integer certificates,
+proves \(DS=S\operatorname{diag}(91,(-4)^{(28)},1^{(21)})\), and checks the
+multiplicities.  Thus the complete explicit proof, including its least
+distance eigenvalue, is kernel-checked.  The scalar \(k\le3\) threshold is
+formalized separately.  Section~\ref{sec:moore} remains a conventional proof;
+the formal verification claim here is deliberately limited to the explicit
+counterexample and the scalar threshold.
 
 \section*{Scope, provenance, and disclosures}
 
 The counterexample has order 50.  No minimality claim is made, and no
-exhaustive search over smaller graphs is part of this note.  The repository's
-source ledger distinguishes the published distance spectrum from the explicit
-WOW-284 connection and records the limits of the targeted priority search.
+exhaustive search over smaller graphs is part of this note.  The general
+distance-spectral input for minimal cages and all three classical degree
+cases are credited to Howlader and Panigrahi; the repository's source ledger
+separately records the explicit WOW-284 connection and the limits of the
+targeted priority search.
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking and finding
 the exact graph construction.  No AI system is an

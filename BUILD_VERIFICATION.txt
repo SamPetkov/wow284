@@ -2,11 +2,16 @@ WOW-284 RELEASE VERIFICATION
 ============================
 
 Manuscript version: 19 July 2026
-Verification run: 21 July 2026
+Verification run: 22 July 2026
 Author: Samuil Petkov
 
 MATHEMATICAL CERTIFICATE
 ------------------------
+PASS  General theorem: for every degree-k Moore graph of diameter two,
+      |V| = k^2 + 1, girth = 5, minimum dual degree = k, and the least
+      distance eigenvalue is -(3 + sqrt(4k - 3))/2.
+PASS  Threshold: WOW-284 holds at k = 2, is an equality at k = 3, and fails
+      for every realizable degree k > 3.
 PASS  Coordinate construction: 50 vertices, 175 edges, degree set {7}.
 PASS  Pair certificate: 0 common neighbors on 175 adjacent pairs and exactly
       1 common neighbor on 1,050 nonadjacent pairs.
@@ -21,21 +26,47 @@ PASS  D + 7I: exact rational LDL^T factorization with 50 positive pivots;
 PASS  WOW-284 values: delta* = 7, least distance eigenvalue = -4,
       and strict violation gap 7 - 4 = 3.
 
+LEAN 4.31 CERTIFICATE
+---------------------
+PASS  Lean and Mathlib are pinned to 4.31.0 in lean-toolchain, lakefile.toml,
+      and lake-manifest.json.
+PASS  Structural module: graph definition, symmetry, irreflexivity,
+      7-regularity, exhaustive common-neighbor counts, diameter two,
+      exclusion of 3- and 4-cycles, explicit 5-cycle, A^2 identity, and
+      distance-matrix formula.
+PASS  Spectral module: deterministic 250-scaled integer inverse, exact
+      left inverse, algebraically derived right inverse, exact rational
+      distance diagonalization, and multiplicity counts 1, 28, and 21.
+PASS  Scalar Moore threshold: k <= 3 exactly, with strictness at k = 2,
+      equality at k = 3, and failure for k > 3.
+PASS  Generator freshness check covers all 24 generated Lean files.
+PASS  AXLE strict in environment lean-4.31.0:
+      20/20 final computational shards passed with zero failed declarations,
+      errors, or warnings; both dispatchers and every public wrapper passed.
+PASS  Forbidden scan: no sorry, admit, native_decide, bv_decide, unsafe
+      declaration, or new axiom.
+PASS  Representative #print axioms reports only propext, Classical.choice,
+      and Quot.sound.
+NOTE  The completed formal-verification claim covers the explicit 50-vertex
+      counterexample and the scalar threshold. The generic Moore-graph
+      derivation in the manuscript is a conventional mathematical proof.
+
 AUTOMATED CHECKS
 ----------------
 PASS  pytest: 6 tests passed.
-PASS  scripts/verify_exact.py generated results/verification.json.
+PASS  scripts/verify_exact.py.
+PASS  scripts/generate_lean_diagonalization.py --check.
 PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
       distance CSV files.
 PASS  scripts/validate_repository.py.
 PASS  scripts/sync_manuscript_artifacts.py --check.
-PASS  CITATION.cff parsed as YAML and contains the required author, date,
-      repository, and CC-BY-4.0 fields.
+PASS  CITATION.cff validates against CFF schema version 1.2.0.
 
 Toolchain used:
   Python 3.14.3
   SymPy 1.14.0
   pytest 8.4.1
+  Lean 4.31.0 / Mathlib 4.31.0
   MiKTeX 26.2 / pdfTeX 1.40.29
   latexmk 4.88
   Pandoc 3.9.0.2
@@ -44,16 +75,16 @@ MANUSCRIPT AND PDF
 ------------------
 PASS  Clean multi-pass LaTeX/BibTeX build: no final warnings, undefined
       citations/references, overfull/underfull boxes, or missing glyphs.
-PASS  PDF metadata: title, Samuil Petkov, and fixed creation/modification date
-      19 July 2026.
-PASS  Four pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
+PASS  PDF metadata: revised title, Samuil Petkov, and fixed
+      creation/modification date 19 July 2026.
+PASS  Five pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
 PASS  Every reported font is embedded and subset.
-PASS  All four pages rendered at 150 dpi and inspected at original render
+PASS  All five pages rendered at 130 dpi and inspected at original render
       resolution: no clipping, overlap, malformed glyphs, blank spill pages,
       or broken bibliography/address layout.
 
 Verified PDF SHA-256:
-  ec638d224756a1e433d37a4aa4daad3e7383a007ea3c4866519ec56c2a3f8f9f  main.pdf
+  17df156b2f542eb30aea7ff4efab3c668244b29652f078d2e015976ee177fc29  main.pdf
 
 ARXIV PACKAGE
 -------------
@@ -61,28 +92,31 @@ PASS  arxiv/wow284_arxiv_source.zip contains exactly, in this order:
       main.tex, references.bib, main.bbl.
 PASS  Archive members are byte-identical to the canonical repository files
       and carry the fixed timestamp 19 July 2026 12:00:00.
-PASS  A fresh extraction of the ZIP compiled independently to a four-page
+PASS  A fresh extraction of the ZIP compiled independently to a five-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  a1d2a0d7b59702bfd1e56fc88899d77eb57a5c4a274f974ec8875b409e2eacbf
+  f20bd2eec3d4770b763c3dec3ba751945e23a91f9dafaeeed68202a7181065978
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT
 ------------------------
 PASS  Published WOW-284 wording checked against Aouchiche--Hansen (2014),
       Conjecture 7.16.
-PASS  Prior Hoffman--Singleton distance spectrum credited to
-      Howlader--Panigrahi (2022), Theorem 2.5(1b).
+PASS  Howlader--Panigrahi (2022), Theorems 2.3 and 2.5(1), credited for the
+      general minimal-cage distance-polynomial framework and the classical
+      Moore-graph distance spectra.
 PASS  Exact coordinate rules matched, after the stated reindexing, to Hafner's
       published affine-coordinate construction (2003), Theorem 2.1.
+PASS  Smith--Montemanni (2026) cited for the current open status of the
+      degree-57 Moore graph.
 PASS  User-supplied Written on the Wall II catalogue URL recorded. Its server
-      timed out during this audit, so the exact wording is sourced from the
+      timed out during the audit, so the exact wording is sourced from the
       peer-reviewed survey.
 PASS  Targeted web, Crossref, arXiv, source-text, and public GitHub searches
       found no accessible earlier source explicitly making the WOW-284 /
-      Hoffman--Singleton connection. This is not an exhaustive priority proof,
-      and the manuscript makes no first-discovery, new-spectrum, or minimality
+      Moore-graph connection. This is not an exhaustive priority proof, and
+      the manuscript makes no first-discovery, new-spectrum, or minimality
       claim.
 
 LICENSING

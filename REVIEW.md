@@ -1,17 +1,24 @@
 # Mathematical and reproducibility review
 
-**Object reviewed:** *The Hoffman-Singleton Graph Refutes WOW-284*<br>
+**Object reviewed:** *Moore Graphs of Diameter Two and the Failure of WOW-284*<br>
 **Author:** Samuil Petkov<br>
 **Manuscript version:** 19 July 2026<br>
-**Review status:** Exact internal audit; not external peer review
+**Review status:** Adversarial internal audit after conceptual revision; not external peer review
 
 ## Outcome
 
-The supplied counterexample proof is mathematically correct under the
+The revised counterexample proof and the degree-`k` Moore-graph theorem are
+mathematically correct under the
 definitions of dual degree and ordered distance eigenvalues used by Aouchiche
 and Hansen. The coordinate graph is a simple connected 7-regular graph on 50
 vertices with girth five. Its least distance eigenvalue is -4, so its minimum
 dual degree 7 strictly violates the conjectured upper bound 4.
+
+The revision materially improves the paper by replacing a graph-specific
+calculation with a sharp structural statement: for every diameter-two Moore
+graph of degree `k >= 2`, the least distance eigenvalue is
+`-(3 + sqrt(4k - 3))/2`, and WOW-284 fails exactly when `k > 3`. The Petersen
+equality is therefore the boundary case rather than an isolated coincidence.
 
 No theorem-breaking gap was found. The three substantive editorial corrections
 were attribution and proof-clarity corrections rather than changes to the
@@ -22,6 +29,58 @@ counterexample:
    Hoffman-Singleton distance spectrum; and
 3. it credits Hafner's published affine-coordinate presentation of the exact
    Robertson construction used in the manuscript.
+
+It now also credits Howlader and Panigrahi for the general minimal-cage
+distance-polynomial framework, rather than crediting only their degree-7
+specialization.
+
+## Adversarial journal assessment
+
+The manuscript is now conceptually stronger and its novelty language is
+appropriately narrow. A demanding referee should nevertheless distinguish
+correctness from journal fit. The spectral ingredients were already available
+in published work, and the new `k > 3` criterion is a short consequence once
+they are placed beside WOW-284. This is a rigorous, useful research note and a
+clear resolution of the stated conjecture; it is not represented here as a
+broad spectral-graph-theory breakthrough. Suitability for a selective journal
+will depend on that journal's appetite for concise counterexample notes.
+
+The strongest remaining presentation risk is archival rather than
+mathematical: a mutable repository URL should be replaced or supplemented by
+a versioned release DOI before final journal submission. The explicit
+counterexample now has a complete Lean spectral certificate; the manuscript
+correctly limits that claim rather than presenting the generic Moore-graph
+derivation as fully formalized.
+
+## General Moore-graph audit
+
+For a degree-`k`, diameter-two Moore graph, equality in the Moore bound gives
+`n = 1 + k + k(k-1) = k^2 + 1`. From any root vertex, the `k(k-1)`
+nonbacktracking walks of length two must terminate bijectively at the
+`k(k-1)` nonneighbors. Hence adjacent pairs have no common neighbor and
+nonadjacent pairs have exactly one. This excludes triangles and 4-cycles; an
+edge together with one additional neighbor at each endpoint and the unique
+common neighbor of those two vertices gives a 5-cycle.
+
+The entrywise identity
+
+\[
+A^2=(k-1)I-A+J
+\]
+
+has the correct diagonal (`k-1+1=k`), edge (`-1+1=0`), and nonedge (`1`)
+entries. On the orthogonal complement of the all-ones vector the adjacency
+roots are `(-1 +/- sqrt(4k-3))/2`. Since `D=2J-2I-A`, the least distance
+eigenvalue is `-(3 + sqrt(4k-3))/2`. Regularity gives `delta*(G)=k`.
+Finally,
+
+\[
+(2k-3)^2-(4k-3)=4(k-1)(k-3),
+\]
+
+and `2k-3 > 0` for `k >= 2`; this proves the exact threshold. The cases
+`k=2`, `k=3`, and `k=7` were checked separately against the 5-cycle,
+Petersen, and Hoffman-Singleton spectra.
 
 ## Combinatorial audit
 
@@ -128,8 +187,8 @@ it does not use (D=2J-2I-A). SymPy then checks the full characteristic
 polynomial and an exact rational (LDL^{\mathsf T}) decomposition of (D+7I).
 The regression tests separately check all 1,225 unordered vertex pairs.
 
-The computation is independent of the paper's spectral shortcut, but it is
-not a formal proof assistant development and does not establish novelty or
+The Python computation is independent of the paper's spectral shortcut, but
+it is distinct from the Lean development and does not establish novelty or
 minimality. Numerical matching is not used as proof; the symbolic and matrix
 operations are exact.
 
@@ -140,3 +199,5 @@ operations are exact.
 - The targeted novelty search cannot rule out unpublished or non-indexed prior
   observations.
 - No exhaustive search below 50 vertices was attempted.
+- The complete explicit counterexample certificate passes strict Lean 4.31
+  checking; the generic Moore-graph derivation remains a conventional proof.
