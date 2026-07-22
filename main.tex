@@ -119,10 +119,10 @@ Write \(g(G)\) for the shortest-cycle length, with \(g(G)=\infty\) for an
 acyclic graph; spectral superscripts indicate algebraic multiplicity.
 
 Aouchiche and Hansen record the following Graffiti conjecture in their survey
-of distance spectra \cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}; they
-attribute it to Fajtlowicz's 1998 \emph{Written on the Wall} report
-\cite{Fajtlowicz1998}.  For related historical context, see DeLaVi\~na's
-separate \emph{Written on the Wall II} catalogue \cite{DeLaVinaWOWII}.
+of distance spectra~\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}; they
+attribute it to Fajtlowicz's 1998 \emph{Written on the Wall}
+report~\cite{Fajtlowicz1998}.  For related historical context, see DeLaVi\~na's
+separate \emph{Written on the Wall II} catalogue~\cite{DeLaVinaWOWII}.
 
 \begin{conjecture}[WOW-284]\label{conj:wow284}
 If \(G\) is connected, has \(n\ge3\) vertices, and has girth
@@ -133,19 +133,19 @@ If \(G\) is connected, has \(n\ge3\) vertices, and has girth
 \end{conjecture}
 
 In that 2014 survey, the authors reported that the conjecture remained open
-and noted equality for the Petersen graph
-\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}.  This equality is the
+and noted equality for the Petersen
+graph~\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}.  This equality is the
 degree-3 boundary case of a general Moore-graph calculation.  The degree-7
-Moore graph constructed by Hoffman and Singleton
-\cite{HoffmanSingleton1960} lies beyond that boundary and gives a strict
+Moore graph constructed by Hoffman and
+Singleton~\cite{HoffmanSingleton1960} lies beyond that boundary and gives a strict
 violation.
 
 There is important prior spectral work.  Howlader and Panigrahi determine a
 distance polynomial for minimal \((k,5)\)-cages and explicitly list the
 distance spectra of the Petersen, Hoffman--Singleton, and hypothetical
-degree-57 Moore graphs
-\cite[Theorems~2.3 and~2.5(1)]{HowladerPanigrahi2022}; the existence of the
-last graph remains open \cite{SmithMontemanni2026}.  Their \(k=7\) calculation,
+degree-57 Moore
+graphs~\cite[Theorems~2.3 and~2.5(1)]{HowladerPanigrahi2022}; the existence of the
+last graph remains open~\cite{SmithMontemanni2026}.  Their \(k=7\) calculation,
 together with regularity and the girth condition, already supplies every
 ingredient needed to disprove Conjecture~\ref{conj:wow284}.  The present note
 records the sharp degree criterion, makes the WOW-284 connection explicit,
@@ -200,7 +200,7 @@ For example, for \(x\in\mathbb R^n\),
    =\sum_{\{u,v\}\in E(G)}(x_u-x_v)^2,
 \]
 so equality holds only for constant \(x\).  The real symmetric matrix \(A\)
-preserves \(\one^\perp\), and \eqref{eq:general-a-square} restricts there to
+preserves \(\one^\perp\), and~\eqref{eq:general-a-square} restricts there to
 \[
  A^2+A-(k-1)I=0.
 \]
@@ -262,7 +262,7 @@ representatives in \(\{0,1,2,3,4\}\), use
 
 After reindexing the \(Q\)-layers by \(k\mapsto-k\), these are exactly
 Hafner's affine-coordinate form of Robertson's pentagon-and-pentagram
-construction \cite[Section~2 and Theorem~2.1]{Hafner2003}.  Thus \(G\) is the
+construction~\cite[Section~2 and Theorem~2.1]{Hafner2003}.  Thus \(G\) is the
 Hoffman--Singleton graph; all properties needed here are proved directly.
 
 The complete neighborhood formulas are
@@ -385,8 +385,8 @@ is a 5-cycle, so \(g(G)=5\).
 
 The graph just constructed is 7-regular on \(50=7^2+1\) vertices and has
 diameter two.  It is therefore a Moore graph to which
-\hyperref[thm:moore-wow]{Theorem~A} applies.  Substituting \(k=7\) into
-\eqref{eq:general-distance-spectrum} gives
+\hyperref[thm:moore-wow]{Theorem~A} applies.  Substituting \(k=7\)
+into~\eqref{eq:general-distance-spectrum} gives
 \begin{equation}\label{eq:distance-spectrum}
  \Spec(D)=\{91^{(1)},1^{(21)},(-4)^{(28)}\},
 \end{equation}
@@ -424,7 +424,7 @@ steps:
 \item computes an exact rational \(L\Delta L^{\mathsf T}\) decomposition of
       \(D+7I\) and checks that all 50 pivots are positive.
 \end{enumerate}
-The symbolic steps use SymPy \cite{MeurerEtAl2017}.  The expected output is
+The symbolic steps use SymPy~\cite{MeurerEtAl2017}.  The expected output is
 \[
   (t-91)(t-1)^{21}(t+4)^{28}
 \]
@@ -444,7 +444,7 @@ certificate are exact.
 \section{Formal verification}
 
 The explicit 50-vertex counterexample is fully formalized and verified in
-Lean 4.31 with Mathlib 4.31 \cite{deMouraUllrich2021,Mathlib2020}.  The
+Lean 4.31 with Mathlib 4.31~\cite{deMouraUllrich2021,Mathlib2020}.  The
 development verifies the graph, 7-regularity, the exhaustive common-neighbor
 certificate, girth five, and the adjacency-square and distance-matrix
 identities.  It supplies exact rational matrices \(S,S^{-1}\), proves their

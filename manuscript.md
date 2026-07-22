@@ -21,7 +21,7 @@ d^*(v)=\frac{1}{d(v)}\sum_{u\in N(v)}d(u),
 ```
 Write $`g(G)`$ for the shortest-cycle length, with $`g(G)=\infty`$ for an acyclic graph; spectral superscripts indicate algebraic multiplicity.
 
-Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)). For related historical context, see DeLaViña’s separate *Written on the Wall II* catalogue ([DeLaViña n.d.](#ref-DeLaVinaWOWII)).
+Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)). For related historical context, see DeLaViña’s separate *Written on the Wall II* catalogue ([DeLaViña n.d.](#ref-DeLaVinaWOWII)).
 
 <div id="conj:wow284" class="conjecture">
 
@@ -32,9 +32,9 @@ Aouchiche and Hansen record the following Graffiti conjecture in their survey of
 
 </div>
 
-In that 2014 survey, the authors reported that the conjecture remained open and noted equality for the Petersen graph ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370). This equality is the degree-3 boundary case of a general Moore-graph calculation. The degree-7 Moore graph constructed by Hoffman and Singleton ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) lies beyond that boundary and gives a strict violation.
+In that 2014 survey, the authors reported that the conjecture remained open and noted equality for the Petersen graph ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370). This equality is the degree-3 boundary case of a general Moore-graph calculation. The degree-7 Moore graph constructed by Hoffman and Singleton ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) lies beyond that boundary and gives a strict violation.
 
-There is important prior spectral work. Howlader and Panigrahi determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove Conjecture <a href="#conj:wow284" data-reference-type="ref" data-reference="conj:wow284">1</a>. The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies a self-contained coordinate certificate. No claim is made that the distance spectra are new, that this observation has priority over every unpublished observation, or that 50 is the smallest possible order.
+There is important prior spectral work. Howlader and Panigrahi determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove Conjecture <a href="#conj:wow284" data-reference-type="ref" data-reference="conj:wow284">1</a>. The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies a self-contained coordinate certificate. No claim is made that the distance spectra are new, that this observation has priority over every unpublished observation, or that 50 is the smallest possible order.
 
 <span id="thm:moore-wow" label="thm:moore-wow"></span>
 
@@ -68,7 +68,7 @@ Indeed, the diagonal entries are $`k`$, the entries indexed by edges are zero, a
 x^{\mathsf T}(kI-A)x
    =\sum_{\{u,v\}\in E(G)}(x_u-x_v)^2,
 ```
-so equality holds only for constant $`x`$. The real symmetric matrix $`A`$ preserves $`\mathbf 1^\perp`$, and <a href="#eq:general-a-square" data-reference-type="eqref" data-reference="eq:general-a-square">[eq:general-a-square]</a> restricts there to
+so equality holds only for constant $`x`$. The real symmetric matrix $`A`$ preserves $`\mathbf 1^\perp`$, and <a href="#eq:general-a-square" data-reference-type="eqref" data-reference="eq:general-a-square">[eq:general-a-square]</a> restricts there to
 ``` math
 A^2+A-(k-1)I=0.
 ```
@@ -134,7 +134,7 @@ P_{i,j}\longleftrightarrow 5i+j,
  Q_{k,\ell}\longleftrightarrow 25+5k+\ell.
 ```
 
-After reindexing the $`Q`$-layers by $`k\mapsto-k`$, these are exactly Hafner’s affine-coordinate form of Robertson’s pentagon-and-pentagram construction ([Hafner 2003, sec. 2](#ref-Hafner2003) and Theorem 2.1). Thus $`G`$ is the Hoffman–Singleton graph; all properties needed here are proved directly.
+After reindexing the $`Q`$-layers by $`k\mapsto-k`$, these are exactly Hafner’s affine-coordinate form of Robertson’s pentagon-and-pentagram construction ([Hafner 2003, sec. 2](#ref-Hafner2003) and Theorem 2.1). Thus $`G`$ is the Hoffman–Singleton graph; all properties needed here are proved directly.
 
 The complete neighborhood formulas are
 ``` math
@@ -232,7 +232,7 @@ is a 5-cycle, so $`g(G)=5`$. ◻
 
 # The explicit counterexample
 
-The graph just constructed is 7-regular on $`50=7^2+1`$ vertices and has diameter two. It is therefore a Moore graph to which [Theorem A](#thm:moore-wow) applies. Substituting $`k=7`$ into <a href="#eq:general-distance-spectrum" data-reference-type="eqref" data-reference="eq:general-distance-spectrum">[eq:general-distance-spectrum]</a> gives
+The graph just constructed is 7-regular on $`50=7^2+1`$ vertices and has diameter two. It is therefore a Moore graph to which [Theorem A](#thm:moore-wow) applies. Substituting $`k=7`$ into <a href="#eq:general-distance-spectrum" data-reference-type="eqref" data-reference="eq:general-distance-spectrum">[eq:general-distance-spectrum]</a> gives
 ``` math
 \begin{equation}
 \label{eq:distance-spectrum}
@@ -270,7 +270,7 @@ The proof above is entirely analytic. The accompanying Python code supplies a se
 
 5.  computes an exact rational $`L\Delta L^{\mathsf T}`$ decomposition of $`D+7I`$ and checks that all 50 pivots are positive.
 
-The symbolic steps use SymPy ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The expected output is
+The symbolic steps use SymPy ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The expected output is
 ``` math
 (t-91)(t-1)^{21}(t+4)^{28}
 ```
@@ -283,7 +283,7 @@ so the pivot check proves positive definiteness. Because the distance matrix is 
 
 # Formal verification
 
-The explicit 50-vertex counterexample is fully formalized and verified in Lean 4.31 with Mathlib 4.31 ([Moura and Ullrich 2021](#ref-deMouraUllrich2021); [The mathlib Community 2020](#ref-Mathlib2020)). The development verifies the graph, 7-regularity, the exhaustive common-neighbor certificate, girth five, and the adjacency-square and distance-matrix identities. It supplies exact rational matrices $`S,S^{-1}`$, proves their two-sided inverse identities by denominator-cleared integer certificates, proves $`DS=S\operatorname{diag}(91,(-4)^{(28)},1^{(21)})`$, and checks the multiplicities. Thus the complete explicit proof, including its least distance eigenvalue, is kernel-checked. The scalar $`k\le3`$ threshold is formalized separately. Section <a href="#sec:moore" data-reference-type="ref" data-reference="sec:moore">1</a> remains a conventional proof; the formal verification claim here is deliberately limited to the explicit counterexample and the scalar threshold.
+The explicit 50-vertex counterexample is fully formalized and verified in Lean 4.31 with Mathlib 4.31 ([Moura and Ullrich 2021](#ref-deMouraUllrich2021); [The mathlib Community 2020](#ref-Mathlib2020)). The development verifies the graph, 7-regularity, the exhaustive common-neighbor certificate, girth five, and the adjacency-square and distance-matrix identities. It supplies exact rational matrices $`S,S^{-1}`$, proves their two-sided inverse identities by denominator-cleared integer certificates, proves $`DS=S\operatorname{diag}(91,(-4)^{(28)},1^{(21)})`$, and checks the multiplicities. Thus the complete explicit proof, including its least distance eigenvalue, is kernel-checked. The scalar $`k\le3`$ threshold is formalized separately. Section <a href="#sec:moore" data-reference-type="ref" data-reference="sec:moore">1</a> remains a conventional proof; the formal verification claim here is deliberately limited to the explicit counterexample and the scalar threshold.
 
 # Scope, provenance, and disclosures
 
