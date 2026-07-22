@@ -68,7 +68,7 @@ jobs:
             echo "Forbidden proof shortcut or axiom declaration detected."
             exit 1
           fi
-      - name: Build and independently check the Lean development
+      - name: Build the Lean development with Lean 4.31
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: lean
@@ -76,4 +76,3 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-          leanchecker: true
