@@ -3,12 +3,12 @@ message: >-
   Please cite the manuscript using the metadata below. The published
   distance-spectrum calculation of Howlader and Panigrahi should also be
   cited where that prior result is used.
-title: "The Hoffman-Singleton Graph Refutes WOW-284"
-type: article
+title: "wow284: Reproducible artifacts for The Hoffman-Singleton Graph Refutes WOW-284"
+type: software
 authors:
   - family-names: Petkov
     given-names: Samuil
-    affiliation: "Ecole normale superieure, Universite PSL"
+    affiliation: "École normale supérieure, Université PSL"
     email: samuil.petkov@ens.psl.eu
 version: 1.0.0
 date-released: 2026-07-19
@@ -27,3 +27,15 @@ keywords:
   - Hoffman-Singleton graph
   - spectral graph theory
   - WOW-284
+preferred-citation:
+  type: article
+  title: "The Hoffman-Singleton Graph Refutes WOW-284"
+  authors:
+    - family-names: Petkov
+      given-names: Samuil
+      affiliation: "École normale supérieure, Université PSL"
+  year: 2026
+  month: 7
+  date-released: 2026-07-19
+  status: preprint
+  repository-code: "https://github.com/SamPetkov/wow284"
