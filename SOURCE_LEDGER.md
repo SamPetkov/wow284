@@ -10,7 +10,7 @@
 | --- | --- | --- |
 | WOW-284 formulation | Aouchiche and Hansen, *Linear Algebra and its Applications* 458 (2014), Conjecture 7.16, DOI `10.1016/j.laa.2014.06.010` | Authoritative published formulation used in the introduction. |
 | Original WOW attribution | Siemion Fajtlowicz, *Written on the Wall: Conjectures Derived on the Basis of the Program Galatea Gabriella Graffiti*, University of Houston technical report (1998) | Cited through the survey's bibliography and attribution. |
-| Online WOWII catalogue | Ermelinda DeLaViña, *Written on the Wall II*, `http://cms.dt.uh.edu/faculty/delavinae/research/wowII/list.htm` | User-supplied public-catalogue URL, corroborated as the WOWII site by DeLaViña's history paper and later literature. The server timed out during the 21 July 2026 audit, so the exact conjecture wording is taken from the published survey, not inferred from the unavailable page. |
+| Online WOWII catalogue | Ermelinda DeLaViña, *Written on the Wall II*, `http://cms.dt.uh.edu/faculty/delavinae/research/wowII/list.htm` | The URL is valid and was reachable during the 22 July 2026 re-audit, but it is a separate Graffiti.pc catalogue with independent numbering: its item 284 is unrelated to the conjecture studied here. It is therefore documented in this ledger but not cited as a source for WOW-284 in the manuscript. |
 | Hoffman-Singleton graph | A. J. Hoffman and R. R. Singleton, *IBM Journal of Research and Development* 4 (1960), 497-504, DOI `10.1147/rd.45.0497` | Historical source for the named graph; no named-graph theorem is used in the proof. |
 | Exact coordinate realization | Paul R. Hafner, *Journal of Algebraic Combinatorics* 18 (2003), Theorem 2.1, DOI `10.1023/A:1025136524481` | Published affine-coordinate form of Robertson's pentagon-and-pentagram construction; after reindexing the `Q`-layers by `k -> -k`, its adjacency rules are exactly those used here. |
 | Distance spectra of minimal cages | Aditi Howlader and Pratima Panigrahi, *Linear Algebra and its Applications* 636 (2022), Theorems 2.3 and 2.5(1), DOI `10.1016/j.laa.2021.11.014`, arXiv:2109.05274 | Prior distance-polynomial framework for minimal `(k,5)`-cages and explicit Petersen, Hoffman-Singleton, and hypothetical degree-57 spectra; explicitly credited. |
@@ -48,7 +48,8 @@ The following searches were run on 21--22 July 2026:
 - searches within Aouchiche-Hansen (2014), Howlader-Panigrahi (2022), and
   later distance-spectrum papers located from their bibliographies;
 - the supplied *Written on the Wall II* catalogue URL and its advertised
-  open/resolved endpoints (the server was unavailable during the audit);
+  open/resolved endpoints (reachable during the 22 July 2026 re-audit, with
+  numbering confirmed to be independent of WOW-284);
 - GitHub public code search for `WOW-284` and the Hoffman-Singleton/dual-degree
   combinations.
 

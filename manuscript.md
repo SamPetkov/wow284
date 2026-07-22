@@ -1,7 +1,8 @@
 # Moore Graphs of Diameter Two and the Failure of WOW-284
 
 **Samuil Petkov**<br>
-Ecole normale superieure, Universite PSL, Paris, France<br>
+Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
+<samuil.petkov@phys.ens.psl.eu><br>
 19 July 2026
 
 > Reading copy generated from `main.tex`. The TeX source is authoritative if
@@ -21,7 +22,7 @@ d^*(v)=\frac{1}{d(v)}\sum_{u\in N(v)}d(u),
 ```
 Write $`g(G)`$ for the shortest-cycle length, with $`g(G)=\infty`$ for an acyclic graph; spectral superscripts indicate algebraic multiplicity.
 
-Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)). For related historical context, see DeLaViña’s separate *Written on the Wall II* catalogue ([DeLaViña n.d.](#ref-DeLaVinaWOWII)).
+Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)).
 
 <div id="conj:wow284" class="conjecture">
 
@@ -298,12 +299,6 @@ The author received no funding for this work and declares no competing interests
 <div id="ref-AouchicheHansen2014" class="csl-entry">
 
 Aouchiche, Mustapha, and Pierre Hansen. 2014. “Distance Spectra of Graphs: A Survey.” *Linear Algebra and Its Applications* 458: 301–86. <https://doi.org/10.1016/j.laa.2014.06.010>.
-
-</div>
-
-<div id="ref-DeLaVinaWOWII" class="csl-entry">
-
-DeLaViña, Ermelinda. n.d. *Written on the Wall II*. Online conjecture catalogue. <http://cms.dt.uh.edu/faculty/delavinae/research/wowII/list.htm>.
 
 </div>
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -15,20 +15,12 @@ Mustapha Aouchiche and Pierre Hansen.
 \bibitem[Fajtlowicz(1998)]{Fajtlowicz1998}
 Siemion Fajtlowicz.
 \newblock Written on the wall: Conjectures derived on the basis of the program
-  galatea gabriella graffiti.
+  {Galatea Gabriella Graffiti}.
 \newblock Technical report, University of Houston, 1998.
-
-\bibitem[DeLaVi{\~n}a(n.d.)]{DeLaVinaWOWII}
-Ermelinda DeLaVi{\~n}a.
-\newblock Written on the wall ii.
-\newblock Online conjecture catalogue, n.d.
-\newblock URL
-  \url{http://cms.dt.uh.edu/faculty/delavinae/research/wowII/list.htm}.
-\newblock University of Houston--Downtown.
 
 \bibitem[Hoffman and Singleton(1960)]{HoffmanSingleton1960}
 Alan~J. Hoffman and Robert~R. Singleton.
-\newblock On moore graphs with diameters 2 and 3.
+\newblock On {Moore} graphs with diameters 2 and 3.
 \newblock \emph{IBM Journal of Research and Development}, 4\penalty0
   (5):\penalty0 497--504, 1960.
 \newblock \doi{10.1147/rd.45.0497}.
@@ -43,13 +35,14 @@ Aditi Howlader and Pratima Panigrahi.
 
 \bibitem[Smith and Montemanni(2026)]{SmithMontemanni2026}
 Derek~H. Smith and Roberto Montemanni.
-\newblock The moore graph of diameter 2 and degree 57 via cyclic derangements.
+\newblock The {Moore} graph of diameter 2 and degree 57 via cyclic
+  derangements.
 \newblock \emph{Axioms}, 15\penalty0 (5):\penalty0 332, 2026.
 \newblock \doi{10.3390/axioms15050332}.
 
 \bibitem[Hafner(2003)]{Hafner2003}
 Paul~R. Hafner.
-\newblock The hoffman--singleton graph and its automorphisms.
+\newblock The {Hoffman--Singleton} graph and its automorphisms.
 \newblock \emph{Journal of Algebraic Combinatorics}, 18\penalty0 (1):\penalty0
   7--12, 2003.
 \newblock \doi{10.1023/A:1025136524481}.

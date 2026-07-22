@@ -19,8 +19,9 @@ criterion, the explicit counterexample connection, and a direct reproducible
 certificate; it does not claim that the spectra are new or that the
 counterexample is minimal.
 
-Exact Python code, exhaustive pair checks, complete graph data, the Lean 4.31
-development in progress, and the source and priority ledger are available at
+Exact Python code, exhaustive pair checks, complete graph data, the complete
+Lean 4.31 formalization of the explicit 50-vertex counterexample, and the
+source and priority ledger are available at
 <https://github.com/SamPetkov/wow284>.
 
 [Before use, add the target journal, originality/exclusive-submission
@@ -30,5 +31,5 @@ journal-specific declarations.]
 Sincerely,
 
 Samuil Petkov<br>
-Ecole normale superieure, Universite PSL<br>
-samuil.petkov@ens.psl.eu
+Department of Physics, École normale supérieure, Université PSL<br>
+samuil.petkov@phys.ens.psl.eu

@@ -1,7 +1,8 @@
 # Moore Graphs of Diameter Two and the Failure of WOW-284
 
 **Author:** Samuil Petkov<br>
-**Affiliation:** Ecole normale superieure, Universite PSL, Paris, France<br>
+**Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
+**Email:** <samuil.petkov@phys.ens.psl.eu><br>
 **Manuscript version:** 19 July 2026 (`2026-07-19`)<br>
 **Repository status:** Public research note; ready for arXiv source upload after the author's final account-level review
 
@@ -62,7 +63,6 @@ that 50 is the smallest counterexample order.
 Primary links:
 
 - [Aouchiche-Hansen survey](https://doi.org/10.1016/j.laa.2014.06.010)
-- [Written on the Wall II catalogue](http://cms.dt.uh.edu/faculty/delavinae/research/wowII/list.htm)
 - [Hoffman-Singleton paper](https://doi.org/10.1147/rd.45.0497)
 - [Howlader-Panigrahi distance-spectrum paper](https://doi.org/10.1016/j.laa.2021.11.014)
 - [Howlader-Panigrahi arXiv source](https://arxiv.org/abs/2109.05274)

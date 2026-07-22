@@ -8,9 +8,9 @@ type: software
 authors:
   - family-names: Petkov
     given-names: Samuil
-    affiliation: "École normale supérieure, Université PSL"
-    email: samuil.petkov@ens.psl.eu
-version: 1.1.0
+    affiliation: "Department of Physics, École normale supérieure, Université PSL"
+    email: samuil.petkov@phys.ens.psl.eu
+version: 1.1.1
 date-released: 2026-07-19
 url: "https://github.com/SamPetkov/wow284"
 repository-code: "https://github.com/SamPetkov/wow284"
@@ -36,7 +36,8 @@ preferred-citation:
   authors:
     - family-names: Petkov
       given-names: Samuil
-      affiliation: "École normale supérieure, Université PSL"
+      affiliation: "Department of Physics, École normale supérieure, Université PSL"
+      email: samuil.petkov@phys.ens.psl.eu
   year: 2026
   month: 7
   date-released: 2026-07-19

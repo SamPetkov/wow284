@@ -117,7 +117,8 @@ def generate_markdown() -> None:
     header = """# Moore Graphs of Diameter Two and the Failure of WOW-284
 
 **Samuil Petkov**<br>
-Ecole normale superieure, Universite PSL, Paris, France<br>
+Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
+<samuil.petkov@phys.ens.psl.eu><br>
 19 July 2026
 
 > Reading copy generated from `main.tex`. The TeX source is authoritative if
