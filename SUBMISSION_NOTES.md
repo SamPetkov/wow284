@@ -17,14 +17,14 @@
 **Abstract:**
 
 > WOW-284 asserts that the minimum dual degree of every connected graph of
-> girth at least five is at most the negative of its least distance
+> order at least three and girth at least five is at most the negative of its least distance
 > eigenvalue. We give explicit counterexamples of orders $38,39,40,42$, and
 > $50$, all obtained from the Hoffman--Singleton graph. More generally, for
 > every connected $k$-regular graph of girth at least five and diameter
 > three, $D=3J+(k-3)I-2A-A^2$, which yields an exact adjacency-spectral
 > criterion for violating WOW-284. Moore second subconstituents provide a
 > further parameterized construction. All finite certificates use exact
-> arithmetic, and the explicit examples have independently checked Lean 4.31
-> certificates.
+> arithmetic. Lean 4.31 kernel-checks the complete 50-vertex proof and finite
+> spectral certificates for the four smaller constructions.
 
 **Leave blank:** Report number, journal reference, external DOI, and ACM class.
