@@ -61,15 +61,17 @@ def main() -> None:
     require(r"\title[Exact counterexamples to WOW-284]" in tex, "title mismatch")
     require("Howlader and Panigrahi" in tex, "prior distance-spectrum attribution missing")
     require("No claim is made" in tex, "scope limitation missing")
-    require("OpenAI ChatGPT assisted" in tex, "generic AI disclosure missing")
-    require("OpenAI ChatGPT-5.6" not in tex, "stale AI system designation present")
+    require(
+        "OpenAI ChatGPT-5.6 Sol Pro assisted" in tex,
+        "requested AI disclosure missing",
+    )
     require("A graph6 string in this fixed" in tex, "fixed-label graph6 wording missing")
     require("canonical graph6 string" not in tex, "unsupported graph6 canonicality claim")
     require(r"V(-\infty)=26" in tex and r"V(-28/5)=25" in tex,
             "exact order-38 Sturm variation certificate missing")
     require(r"vertices at distance two from \(P_{0,0}\)" in tex,
             "explicit order-42 base vertex missing")
-    require(r"\texttt{v2.0.4-arxiv}" in tex, "fixed release tag missing")
+    require(r"\texttt{v2.0.5-arxiv}" in tex, "fixed release tag missing")
     require(r"\delta^*(H_v)" in tex, "order-39 graph quantifier is not explicit")
     require(r"\mathbb R^{V(X)}" in tex, "Moore invariant-space decomposition missing")
     require(r"2K-7-\sqrt{4K-3}" in tex, "Moore threshold calculation missing")
@@ -97,8 +99,8 @@ def main() -> None:
 
     submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
     require(
-        "**Repository release:** `v2.0.4-arxiv`" in submission_notes,
-        "submission metadata does not identify release v2.0.4-arxiv",
+        "**Repository release:** `v2.0.5-arxiv`" in submission_notes,
+        "submission metadata does not identify release v2.0.5-arxiv",
     )
 
     build_report = (ROOT / "BUILD_VERIFICATION.txt").read_text(encoding="utf-8")

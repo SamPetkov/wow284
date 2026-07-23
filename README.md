@@ -243,7 +243,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 The fixed computational archive for this manuscript is GitHub release
-[`v2.0.4-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.4-arxiv).
+[`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv).
 
 Suggested arXiv primary category: `math.CO`. See
 [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) for title, abstract, comments,
@@ -257,7 +257,7 @@ repository material is licensed by Samuil Petkov under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See
 [`LICENSE_SCOPE.md`](LICENSE_SCOPE.md) for the exact scope.
 
-OpenAI ChatGPT assisted with adversarial proof checking, proof exploration,
-and Lean formalization. Samuil Petkov is the sole author and accepts full
-responsibility for the mathematics, citations, attribution, and conclusions.
-Reproducible checks are not peer review or journal acceptance.
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
+exploration, and Lean formalization. Samuil Petkov is the sole author and
+accepts full responsibility for the mathematics, citations, attribution, and
+conclusions. Reproducible checks are not peer review or journal acceptance.
