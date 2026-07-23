@@ -206,7 +206,7 @@ def validate_release_text() -> None:
         "A graph6 string in this fixed",
         r"V(-\infty)=26",
         r"vertices at distance two from \(P_{0,0}\)",
-        r"\texttt{v2.0.0-arxiv}",
+        r"\texttt{v2.0.1-arxiv}",
         r"\delta^*(H_v)",
         r"\mathbb R^{V(X)}",
         r"2K-7-\sqrt{4K-3}",
