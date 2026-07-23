@@ -1,2 +1,5 @@
+# Keep generated hashes and release archives stable across operating systems.
+* text=auto eol=lf
+
 # Preserve the checksum-frozen handoff byte-for-byte on every platform.
 supplement/extended_2026-07-23/** -text

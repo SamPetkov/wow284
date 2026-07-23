@@ -53,6 +53,13 @@ def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def arxiv_member_bytes(source: Path) -> bytes:
+    """Serialize arXiv text members with deterministic LF line endings."""
+
+    text = source.read_text(encoding="utf-8")
+    return text.replace("\r\n", "\n").replace("\r", "\n").encode("utf-8")
+
+
 def compile_manuscript() -> None:
     """Compile in a short temporary path and copy back the PDF and BBL."""
 
@@ -149,7 +156,7 @@ def make_arxiv_archive() -> None:
             info.create_system = 3
             info.external_attr = 0o100644 << 16
             info.compress_type = zipfile.ZIP_DEFLATED
-            archive.writestr(info, source.read_bytes())
+            archive.writestr(info, arxiv_member_bytes(source))
 
 
 def validate_arxiv_archive() -> None:
@@ -158,7 +165,7 @@ def validate_arxiv_archive() -> None:
         if archive.namelist() != expected:
             raise RuntimeError(f"unexpected arXiv archive members: {archive.namelist()}")
         for name, source in zip(expected, [CANONICAL_TEX, CANONICAL_BIB, CANONICAL_BBL], strict=True):
-            if archive.read(name) != source.read_bytes():
+            if archive.read(name) != arxiv_member_bytes(source):
                 raise RuntimeError(f"arXiv archive member differs from canonical source: {name}")
 
 
