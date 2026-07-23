@@ -4,7 +4,7 @@
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
 **Manuscript version:** 19 July 2026 (`2026-07-19`)<br>
-**Repository status:** Public research note; ready for arXiv source upload after the author's final account-level review
+**Repository status:** Public research note; arXiv submission received and revision package prepared
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
@@ -54,14 +54,12 @@ gives a self-contained block-matrix proof, and `scripts/verify_40.py` checks
 the construction, BFS distances, block identities, characteristic
 polynomials, and a positive rational `LDL^T` certificate exactly.
 
-The repository now contains a staged Lean 4.31 extension for this graph. It
-encodes the induced construction, degree and distance certificates, exact
-distance matrix, invertible rational eigenbasis, diagonalization, and
-multiplicity counts. This is not yet advertised as a full end-to-end
-formalization: a public wrapper must still connect the diagonalization to the
-least distance eigenvalue, prove the dual degree is six, and state the final
-WOW violation. The staged modules are built separately from the completed
-50-vertex development.
+The repository contains a Lean 4.31 finite spectral certificate for this
+graph.  Lean checks the labelled finite matrix data, a two-sided rational
+diagonalization, the diagonal-entry multiplicities, and that `-5` is an
+attained minimum diagonal entry, together with dual degree six and gap one.
+The precise formal scope is recorded in
+[`lean/NON50_CERTIFICATES.md`](lean/NON50_CERTIFICATES.md).
 
 ## Further exact counterexamples
 
@@ -137,8 +135,8 @@ Primary links:
 - `scripts/export_graphs.py` - deterministic graph6, adjacency-list, edge-list, and summary exporter.
 - `scripts/export_graph_data.py` - deterministic edge, adjacency, and distance CSV exporter.
 - `scripts/generate_lean_diagonalization.py` - deterministic exact-data generator for the Lean spectral certificate.
-- `scripts/generate_lean40_structural.py`, `scripts/generate_lean40_diagonalization.py` - deterministic generators for the staged 40-vertex Lean certificates.
-- `scripts/generate_lean38_certificates.py`, `scripts/generate_lean38_ldl.py` - deterministic generators for the staged 38-vertex finite and LDL data.
+- `scripts/generate_lean40_structural.py`, `scripts/generate_lean40_diagonalization.py` - deterministic generators for the 40-vertex Lean certificate.
+- `scripts/generate_lean38_certificates.py`, `scripts/generate_lean38_ldl.py` - deterministic generators for the 38-vertex finite and LDL certificate.
 - `tests/` - exhaustive structural and exact spectral regression tests.
 - `results/verification.json` - machine-readable exact verification record.
 - `results/verification_40.json` - machine-readable exact verification record for the 40-vertex graph.
@@ -158,26 +156,33 @@ Lean 4.31/Mathlib 4.31. The development checks the graph definition,
 simplicity, 7-regularity, the exhaustive common-neighbor certificate, girth
 five, the adjacency-square and distance-matrix identities, and an exact
 spectral diagonalization with multiplicities `91^1`, `(-4)^28`, and `1^21`.
-The scalar `k <= 3` threshold is formalized separately. The generic
-Moore-graph derivation in the paper remains a conventional proof, so the
-completed formal-verification claim is intentionally limited to the explicit
-50-vertex counterexample and the scalar threshold.
+The scalar `k <= 3` threshold is formalized separately.
 
-`Wow284Extended.lean` is an opt-in staging target. Its 40-vertex modules
-contain finite structural and exact matrix-diagonalization certificates, but
-still lack the final dual-degree/least-eigenvalue/WOW wrapper. Its 38-vertex
-modules contain exact finite, inverse, LDL, pivot, and scalar-gap data, but do
-not yet connect the padded LDL certificate to `Matrix.PosDef` and the least
-distance eigenvalue. The generic punctured-Moore graph statement is not
-formalized; only conditional scalar inequalities are present. None of these
-staged modules will be described as a complete formalization until Lean 4.31,
-representative axiom reports, and a new AXLE strict audit all pass.
+Lean 4.31 also kernel-checks finite spectral certificates for the explicit
+38-, 39-, 40-, and 42-vertex constructions. For orders 38, 39, and 42, the
+public endpoints prove the exact minimum dual-degree data, positive
+definiteness of a shifted finite matrix, and the strict bound for every
+nonzero real eigenpair. For order 40, the endpoint proves a two-sided
+invertible diagonalization, its exact diagonal-entry multiplicities, and that
+`-5` is an attained minimum diagonal entry, together with dual degree six and
+gap one.
+
+The non-50 endpoints do not bundle every structural hypothesis into the
+spectral theorem and do not identify their semantic finite matrix with
+Mathlib's `SimpleGraph.dist` in one theorem. Accordingly, they are described
+as kernel-checked finite spectral certificates, not as a full
+standard-library formalization of every graph-theoretic statement in the
+paper. The generic Moore-graph derivation, descendant-family results, and
+extended criteria remain conventional proofs supported by exact computation.
 
 The spectral computation is sharded into bounded integer certificates and
 then assembled into a rational two-sided inverse and diagonalization. The
 release audit rejects `sorry`, `admit`, `native_decide`, `bv_decide`, unsafe
 declarations, and new axioms. Representative axiom audits report only the
 standard dependencies `propext`, `Classical.choice`, and `Quot.sound`.
+GitHub Actions compiled every public endpoint with Lean/Mathlib 4.31.  A
+separate AxiomMath AXLE attempt on the expanded modular closure exhausted the
+remote worker's memory, so no AXLE claim is made for the non-50 endpoints.
 
 ## Reproduce the exact certificate
 

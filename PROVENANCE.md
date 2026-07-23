@@ -27,19 +27,19 @@ verifier hardening, deterministic graph export, an integer-BFS graph6 audit,
 and repairs to the Moore-subconstituent and equitable-deletion arguments.
 
 The author subsequently supplied a generated Lean 4.31 extension. The
-repository preserves its induced-40 structural/diagonalization certificates
-and induced-38 finite/LDL data as the opt-in `Wow284Extension` target. Static
-source scans and deterministic generator checks pass. The extension is not
-recorded as a completed formal proof: the 40-vertex endpoint theorem and the
-38-vertex positive-definiteness/spectral bridge remain open, and the earlier
-AXLE report does not cover these new modules.
+repository now contains kernel-checked finite spectral certificates for the
+explicit constructions of orders 38, 39, 40, and 42. GitHub Actions compiled
+every public endpoint with the pinned Lean/Mathlib 4.31 toolchain; the
+transitive axiom reports contain only `propext`, `Classical.choice`, and
+`Quot.sound`. Static source scans and deterministic generator checks reject
+proof placeholders, unsafe declarations, and new axioms.
 
 ## AI assistance
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking and finding
-the exact graph construction. No AI system is named as
-an author. Samuil Petkov accepts full responsibility for all mathematical,
-bibliographic, legal, and submission claims.
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
+exploration, and Lean formalization. No AI system is named as an author.
+Samuil Petkov accepts full responsibility for all mathematical, bibliographic,
+legal, and submission claims.
 
 ## Limits
 
@@ -50,7 +50,9 @@ avoids a first-discovery claim and makes no minimality claim.
 
 The Lean 4.31 development is recorded separately from the analytic and exact
 Python proofs. The explicit 50-vertex certificate and scalar degree threshold
-have passed the strict audit and CI. Staged Lean source now covers substantial
-finite and matrix certificates for orders 40 and 38, but no expanded
-end-to-end formalization is claimed pending the missing wrappers, kernel build,
-axiom review, and AXLE strict audit.
+are fully formalized. The non-50 public endpoints are kernel-checked finite
+spectral certificates: they do not bundle every graph-theoretic hypothesis or
+identify their semantic matrices with Mathlib's `SimpleGraph.dist` in one
+theorem. AxiomMath AXLE could not complete the expanded modular closure because
+its remote worker exhausted memory; the incomplete fallback was rejected and
+no AXLE claim is made for those endpoints.

@@ -62,15 +62,14 @@ def main() -> None:
     require("No claim is made" in tex, "scope limitation missing")
     require("The explicit 50-vertex counterexample is fully formalized and verified" in tex,
             "completed explicit Lean verification status missing")
+    require("Lean 4.31 also kernel-checks finite spectral certificates" in tex,
+            "non-50 finite spectral certificate status missing")
+    require("The scope of these non-50 results is deliberately finite and spectral" in tex,
+            "non-50 formal claim boundary missing")
     require(r"\section{A 40-vertex induced counterexample}" in tex,
             "40-vertex counterexample section missing")
     require(r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}" in tex,
             "40-vertex distance spectrum missing")
-    require("are analytic and exact-computational results" in tex,
-            "extended formalization scope limitation missing")
-    require("formal verification claim here is deliberately limited" in
-            " ".join(tex.split()),
-            "formal verification scope limitation missing")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
 
     require((ROOT / "lean" / "lean-toolchain").read_text(encoding="utf-8").strip() ==

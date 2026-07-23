@@ -56,19 +56,18 @@ will depend on that journal's appetite for concise counterexample notes.
 The strongest remaining presentation risk is archival rather than
 mathematical: a mutable repository URL should be replaced or supplemented by
 a versioned release DOI before final journal submission. The explicit
-50-vertex counterexample has a complete Lean spectral certificate; the
-manuscript correctly excludes the 38/39/40/42 extension and generic criteria
-from that formal-verification claim pending the expanded artifact.
+50-vertex counterexample has a complete Lean graph and spectral certificate.
+The constructions of orders 38, 39, 40, and 42 now have kernel-checked finite
+spectral certificates with public endpoints under Lean/Mathlib 4.31.
 
-The supplied expanded Lean source materially advances that artifact but does
-not close it. For the 40-vertex graph it contains kernel-checkable finite
-structure, semantic distance, inverse, diagonalization, and multiplicity
-certificates; a final theorem connecting these to dual degree six, the least
-distance eigenvalue `-5`, and WOW remains absent. For the 38-vertex graph, the
-padded LDL identities and positive pivots are present, but the semantic
-`3D+17I` identity, positive-definiteness transfer, and least-eigenvalue wrapper
-are not completed. The earlier AXLE report cannot be reused for these new
-modules.
+The claim boundary remains important. The non-50 endpoints do not package
+every structural hypothesis into one theorem or identify the semantic finite
+matrix with Mathlib's `SimpleGraph.dist`. For orders 38, 39, and 42 they prove
+exact dual-degree data, positive definiteness of a shifted matrix, and the
+strict eigenpair inequality; order 40 has a two-sided exact diagonalization,
+attained minimum diagonal entry `-5`, dual degree six, and gap one. The generic
+criteria and descendant-family results remain conventional proofs supported
+by exact computation.
 
 ## General Moore-graph audit
 
@@ -217,6 +216,7 @@ operations are exact.
 - The targeted novelty search cannot rule out unpublished or non-indexed prior
   observations.
 - No exhaustive search over all graphs below order 38 was attempted.
-- The complete explicit 50-vertex certificate and scalar threshold pass strict
-  Lean 4.31 checking; the other constructions and generic derivations remain
-  analytic and exact-computational results.
+- The complete explicit 50-vertex certificate and scalar threshold pass Lean
+  4.31 checking. Orders 38, 39, 40, and 42 have kernel-checked finite spectral
+  certificates; the generic derivations and descendant-family results remain
+  analytic and exact-computational.

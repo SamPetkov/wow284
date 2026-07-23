@@ -13,6 +13,7 @@ import argparse
 import hashlib
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import tempfile
@@ -103,11 +104,27 @@ def generate_markdown() -> None:
     """Generate a readable, explicitly noncanonical GitHub Markdown copy."""
 
     with tempfile.TemporaryDirectory(prefix="wow284-pandoc-") as temporary:
+        pandoc_source = Path(temporary) / "main-for-pandoc.tex"
         raw = Path(temporary) / "raw.md"
+        latex = CANONICAL_TEX.read_text(encoding="utf-8")
+
+        # Pandoc silently drops the contents of url.sty's \path{...} command.
+        # Replace those commands only in the disposable Markdown input; the
+        # canonical TeX retains \path so long filenames remain line-breakable.
+        def markdown_path(match: re.Match[str]) -> str:
+            value = match.group(1)
+            escaped = re.sub(r"([_#%&])", r"\\\1", value)
+            return rf"\texttt{{{escaped}}}"
+
+        pandoc_source.write_text(
+            re.sub(r"\\path\{([^{}]*)\}", markdown_path, latex),
+            encoding="utf-8",
+            newline="\n",
+        )
         run(
             [
                 "pandoc",
-                str(CANONICAL_TEX),
+                str(pandoc_source),
                 "--from=latex",
                 "--to=gfm+tex_math_dollars",
                 "--wrap=none",
@@ -120,6 +137,15 @@ def generate_markdown() -> None:
             cwd=ROOT,
         )
         body = raw.read_text(encoding="utf-8")
+        for expected_path in (
+            "scripts/verify_descendant_families.py",
+            "supplement/extended_2026-07-23/logs/descendant_family_output.txt",
+            "SHA256SUMS",
+        ):
+            if expected_path not in body:
+                raise RuntimeError(
+                    f"generated Markdown dropped required path: {expected_path}"
+                )
 
     header = """# Exact Counterexamples and Spectral Mechanisms for WOW-284
 
@@ -180,9 +206,10 @@ def validate_release_text() -> None:
         "No claim is made",
         "OpenAI ChatGPT-5.6 Sol Pro",
         "The explicit 50-vertex counterexample is fully formalized and verified",
+        "Lean 4.31 also kernel-checks finite spectral certificates",
+        "The scope of these non-50 results is deliberately finite and spectral",
         r"\section{A 40-vertex induced counterexample}",
         r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}",
-        "are analytic and exact-computational results",
         r"\section{Smaller induced counterexamples}",
         r"\partial_{38}(H)=-3-\sqrt7",
         r"The scalar \(k\le3\) threshold",

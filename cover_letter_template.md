@@ -22,7 +22,8 @@ parameterized mechanism gives an unconditional infinite family.
 
 Exact Python code, exhaustive deletion checks, complete graph data, the Lean
 4.31 formalization of the explicit 50-vertex counterexample and scalar
-threshold, and the source and priority ledger are available at
+threshold, finite spectral certificates for orders 38, 39, 40, and 42, and
+the source and priority ledger are available at
 <https://github.com/SamPetkov/wow284>.
 
 [Before use, add the target journal, originality/exclusive-submission

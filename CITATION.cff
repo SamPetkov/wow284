@@ -23,8 +23,10 @@ abstract: >-
   induced constructions give further counterexamples of orders 38, 39, 40,
   and 42, together with exhaustive labelled descendant families and a regular
   diameter-three criterion. The 50-vertex certificate and scalar threshold
-  have a complete Lean 4.31 formalization; the additional results currently
-  have analytic and exact Python certificates.
+  have a complete Lean 4.31 formalization. Lean 4.31 also kernel-checks finite
+  spectral certificates for the constructions of orders 38, 39, 40, and 42;
+  the generic criteria and descendant-family results remain analytic and
+  exact-computational.
 keywords:
   - distance spectrum
   - dual degree
