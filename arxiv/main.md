@@ -121,13 +121,13 @@ For $`k\ge2`$, comparison after moving 3 to the left is legitimate, and
 ```
 Thus the inequality is strict for $`k=2`$, is an equality for $`k=3`$, and fails precisely for $`k>3`$. This proves [Theorem A](#thm:moore-wow).
 
-Our smallest explicit example is the 38-vertex graph $`H=R-\{P_{1,0},P_{1,1}\}`$, for which
+The smallest explicit example constructed in this note has 38 vertices. By Theorem <a href="#thm:thirty-eight" data-reference-type="ref" data-reference="thm:thirty-eight">6</a>, it satisfies
 ``` math
-\delta^*(H)=\frac{17}{3},
+\delta^*=\frac{17}{3},
   \qquad
-  \partial_{38}(H)=-3-\sqrt7,
+  \partial_{38}=-3-\sqrt7,
   \qquad
-  \Phi(H)=\frac83-\sqrt7>0.
+  \Phi=\frac83-\sqrt7>0.
 ```
 
 # Coordinate construction
@@ -407,7 +407,7 @@ The exact distance characteristic polynomial is displayed in Appendix <a href="
 ``` math
 V(-\infty)=26,\qquad V(-28/5)=25.
 ```
-Thus the full polynomial has exactly one distinct root below $`-28/5`$. Moreover, $`7>(13/5)^2`$, so
+Since $`P_{38}(-28/5)\ne0`$, Sturm’s theorem therefore shows that $`P_{38}`$ has exactly one distinct root in $`(-\infty,-28/5)`$. Moreover, $`7>(13/5)^2`$, so
 ``` math
 -3-\sqrt7<-3-\frac{13}{5}=-\frac{28}{5}.
 ```
@@ -545,7 +545,7 @@ A(M)=
  0&C^{\mathsf T}&B
  \end{pmatrix}.
 ```
-Each vertex of $`X`$ has one neighbor in $`N(v)`$ and $`K-1`$ in $`X`$, so $`B`$ is $`(K-1)`$-regular. Distinct rows of $`C`$ have disjoint support and row sum $`K-1`$, hence $`CC^{\mathsf T}=(K-1)I`$. Since $`CC^{\mathsf T}=(K-1)I_K`$, the map $`C^{\mathsf T}`$ is injective and
+Each vertex of $`X`$ has one neighbor in $`N(v)`$ and $`K-1`$ in $`X`$, so $`B`$ is $`(K-1)`$-regular. Distinct rows of $`C`$ have disjoint support and row sum $`K-1`$, hence $`CC^{\mathsf T}=(K-1)I_K`$. Therefore $`C^{\mathsf T}`$ is injective and
 ``` math
 \mathbb R^{V(X)}
   =\operatorname{im}C^{\mathsf T}\mathbin{\oplus}\ker C.
@@ -713,7 +713,7 @@ and all 50 rational pivots are positive. Writing
 ``` math
 M:=D+7I=L\Delta L^{\mathsf T},
 ```
-we have, for every nonzero $`y`$,
+where $`L`$ is unit lower triangular and hence invertible. Thus $`L^{\mathsf T}y\ne0`$ for every nonzero $`y`$, and
 ``` math
 y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
   \Delta(L^{\mathsf T}y)>0,
@@ -754,7 +754,7 @@ The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is mad
 
 OpenAI ChatGPT assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.1-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.1-arxiv).
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.2-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.2-arxiv).
 
 # Exact distance characteristic polynomials
 

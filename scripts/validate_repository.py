@@ -69,7 +69,7 @@ def main() -> None:
             "exact order-38 Sturm variation certificate missing")
     require(r"vertices at distance two from \(P_{0,0}\)" in tex,
             "explicit order-42 base vertex missing")
-    require(r"\texttt{v2.0.1-arxiv}" in tex, "fixed release tag missing")
+    require(r"\texttt{v2.0.2-arxiv}" in tex, "fixed release tag missing")
     require(r"\delta^*(H_v)" in tex, "order-39 graph quantifier is not explicit")
     require(r"\mathbb R^{V(X)}" in tex, "Moore invariant-space decomposition missing")
     require(r"2K-7-\sqrt{4K-3}" in tex, "Moore threshold calculation missing")

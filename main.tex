@@ -84,8 +84,8 @@ Hoffman--Singleton graph, \((6,5)\)-cage, WOW-284, strongly regular graph}
 
 \begin{abstract}
 WOW-284 asserts that the minimum dual degree of every connected graph of
-girth at least five is at most the negative of its least distance
-eigenvalue.  We give explicit counterexamples of orders
+order at least three and girth at least five is at most the negative of
+its least distance eigenvalue.  We give explicit counterexamples of orders
 \(38,39,40,42\), and \(50\), all obtained from the
 Hoffman--Singleton graph.  More generally, for every connected
 \(k\)-regular graph of girth at least five and diameter three,
@@ -94,8 +94,9 @@ Hoffman--Singleton graph.  More generally, for every connected
 \]
 which yields an exact adjacency-spectral criterion for violating
 WOW-284.  Moore second subconstituents provide a further parameterized
-construction.  All finite certificates use exact arithmetic, and the
-explicit examples have independently checked Lean 4.31 certificates.
+construction.  All finite certificates use exact arithmetic.  Lean 4.31
+kernel-checks the complete 50-vertex proof and finite spectral
+certificates for the four smaller constructions.
 \end{abstract}
 
 \maketitle
@@ -251,14 +252,14 @@ Thus the inequality is strict for \(k=2\), is an equality for \(k=3\), and
 fails precisely for \(k>3\).  This proves
 \hyperref[thm:moore-wow]{Theorem~A}.
 
-Our smallest explicit example is the 38-vertex graph
-\(H=R-\{P_{1,0},P_{1,1}\}\), for which
+The smallest explicit example constructed in this note has 38 vertices.
+By Theorem~\ref{thm:thirty-eight}, it satisfies
 \[
-  \delta^*(H)=\frac{17}{3},
+  \delta^*=\frac{17}{3},
   \qquad
-  \partial_{38}(H)=-3-\sqrt7,
+  \partial_{38}=-3-\sqrt7,
   \qquad
-  \Phi(H)=\frac83-\sqrt7>0.
+  \Phi=\frac83-\sqrt7>0.
 \]
 
 \section{Coordinate construction}
@@ -610,7 +611,8 @@ Sturm sequence has variation counts
 \[
  V(-\infty)=26,\qquad V(-28/5)=25.
 \]
-Thus the full polynomial has exactly one distinct root below \(-28/5\).
+Since \(P_{38}(-28/5)\ne0\), Sturm's theorem therefore shows that
+\(P_{38}\) has exactly one distinct root in \((-\infty,-28/5)\).
 Moreover, \(7>(13/5)^2\), so
 \[
  -3-\sqrt7<-3-\frac{13}{5}=-\frac{28}{5}.
@@ -794,8 +796,8 @@ Relative to \(\{v\}\sqcup N(v)\sqcup V(X)\), write
 \]
 Each vertex of \(X\) has one neighbor in \(N(v)\) and \(K-1\) in \(X\),
 so \(B\) is \((K-1)\)-regular.  Distinct rows of \(C\) have disjoint support
-and row sum \(K-1\), hence \(CC^{\mathsf T}=(K-1)I\).  Since
-\(CC^{\mathsf T}=(K-1)I_K\), the map \(C^{\mathsf T}\) is injective and
+and row sum \(K-1\), hence \(CC^{\mathsf T}=(K-1)I_K\).  Therefore
+\(C^{\mathsf T}\) is injective and
 \[
   \mathbb R^{V(X)}
   =\operatorname{im}C^{\mathsf T}\mathbin{\oplus}\ker C.
@@ -1014,7 +1016,8 @@ and all 50 rational pivots are positive.  Writing
 \[
   M:=D+7I=L\Delta L^{\mathsf T},
 \]
-we have, for every nonzero \(y\),
+where \(L\) is unit lower triangular and hence invertible.  Thus
+\(L^{\mathsf T}y\ne0\) for every nonzero \(y\), and
 \[
   y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
   \Delta(L^{\mathsf T}y)>0,
@@ -1120,8 +1123,8 @@ interests.  The manuscript source, exact verification code, machine-readable
 certificates, and build instructions are available in the public repository
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
 The computational archive corresponding to this manuscript is release
-\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.1-arxiv}
-{\texttt{v2.0.1-arxiv}}.
+\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.2-arxiv}
+{\texttt{v2.0.2-arxiv}}.
 
 \appendix
 \section{Exact distance characteristic polynomials}\label{app:polynomials}
