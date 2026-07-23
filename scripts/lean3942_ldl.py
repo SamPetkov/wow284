@@ -12,7 +12,8 @@ def shard(name,lhs,rhs,r,rows):
     for s in range(rows):
         lines += ['set_option maxRecDepth 25000 in',f'lemma {name}_rows_{r}_{s} : ∀ c d : Fin 5,',
           f'    ({lhs}) (coordPad {r} c) (coordPad {s} d) =',
-          f'      ({rhs}) (coordPad {r} c) (coordPad {s} d) := by','  decide','']
+          f'      ({rhs}) (coordPad {r} c) (coordPad {s} d) := by',
+          '  intro c d','  fin_cases c <;> fin_cases d <;> decide','']
     lines += [f'lemma {name}_row_{r} (s : Fin {rows}) (c d : Fin 5) :',
       f'    ({lhs}) (coordPad {r} c) (coordPad s d) =',
       f'      ({rhs}) (coordPad {r} c) (coordPad s d) := by','  fin_cases s']
