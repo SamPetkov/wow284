@@ -117,60 +117,13 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Compile order-39 public endpoint
-        id: compile39
-        continue-on-error: true
+      - name: Build order-39 and order-42 dependency graph and public endpoints
         shell: bash
         run: |
-          if (cd lean && lake env lean Wow284/Induced39/Counterexample.lean) >/tmp/lean-39.log 2>&1; then
-            touch /tmp/lean-39.ok
+          if ! (cd lean && lake build Wow284Generated3942) >/tmp/lean-39-42-build.log 2>&1; then
+            tail -n 180 /tmp/lean-39-42-build.log
+            exit 1
           fi
-      - name: Compile order-42 public endpoint
-        id: compile42
-        continue-on-error: true
-        shell: bash
-        run: |
-          if (cd lean && lake env lean Wow284/Induced42/Counterexample.lean) >/tmp/lean-42.log 2>&1; then
-            touch /tmp/lean-42.ok
-          fi
+          tail -n 30 /tmp/lean-39-42-build.log
       - name: Report order-39 and order-42 endpoint axioms
-        id: axioms3942
-        continue-on-error: true
-        shell: bash
-        run: |
-          if [[ -f /tmp/lean-39.ok && -f /tmp/lean-42.ok ]] &&
-             (cd lean && lake env lean Wow284Generated3942Audit.lean) >/tmp/lean-39-42-axioms.log 2>&1; then
-            touch /tmp/lean-39-42-axioms.ok
-          fi
-      - name: Upload generated Lean diagnostics
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lean-39-42-diagnostics
-          path: |
-            /tmp/lean-39.log
-            /tmp/lean-42.log
-            /tmp/lean-39-42-axioms.log
-          if-no-files-found: ignore
-      - name: Enforce generated Lean verification
-        if: always()
-        shell: bash
-        run: |
-          if [[ -f /tmp/lean-39.ok &&
-                -f /tmp/lean-42.ok &&
-                -f /tmp/lean-39-42-axioms.ok ]]; then
-            echo "order 39 endpoint: PASS"
-            echo "order 42 endpoint: PASS"
-            echo "order 39/42 axiom audit: PASS"
-            cat /tmp/lean-39-42-axioms.log
-            exit 0
-          fi
-
-          echo "Generated Lean verification failed."
-          for logfile in /tmp/lean-39.log /tmp/lean-42.log /tmp/lean-39-42-axioms.log; do
-            if [[ -f "$logfile" ]]; then
-              echo "===== $logfile ====="
-              tail -n 120 "$logfile"
-            fi
-          done
-          exit 1
+        run: cd lean && lake env lean Wow284Generated3942Audit.lean
