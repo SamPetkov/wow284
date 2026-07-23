@@ -754,7 +754,7 @@ The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is mad
 
 OpenAI ChatGPT assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.0-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.0-arxiv).
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.1-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.1-arxiv).
 
 # Exact distance characteristic polynomials
 
