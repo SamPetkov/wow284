@@ -63,8 +63,8 @@ The precise formal scope is recorded in
 
 ## Further exact counterexamples
 
-The same coordinate graph produces verified strict counterexamples of orders
-38, 39, 40, 42, and 50. The explicit 38-vertex example has
+Reproducible exact Python programs verify strict counterexamples of orders 38,
+39, 40, 42, and 50. The explicit 38-vertex example has
 
 \[
 \delta^*=\frac{17}{3},\qquad
