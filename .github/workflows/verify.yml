@@ -131,7 +131,6 @@ jobs:
         run: cd lean && lake env lean Wow284/Induced42/Counterexample.lean >/tmp/lean-42.log 2>&1
       - name: Report order-39 and order-42 endpoint axioms
         id: axioms3942
-        if: always() && steps.compile39.outcome == 'success' && steps.compile42.outcome == 'success'
         continue-on-error: true
         shell: bash
         run: cd lean && lake env lean Wow284Generated3942Audit.lean >/tmp/lean-39-42-axioms.log 2>&1
