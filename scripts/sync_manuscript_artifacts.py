@@ -235,14 +235,28 @@ def validate_release_text() -> None:
 
 
 def list_release_files() -> list[str]:
+    # Use Git's release-visible inventory so ignored local build products
+    # (for example ``*.log``) can never leak into MANIFEST.txt.  Include
+    # untracked, non-ignored files so newly generated release artifacts are
+    # still detected before their first commit.
+    result = subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+    candidates = result.stdout.decode("utf-8").split("\0")
     files: list[str] = []
-    for path in ROOT.rglob("*"):
-        relative = path.relative_to(ROOT)
+    for item in candidates:
+        if not item:
+            continue
+        relative = Path(item)
         if any(part in EXCLUDED_DIRECTORIES for part in relative.parts):
             continue
+        path = ROOT / relative
         if path.is_file() and relative.as_posix() not in {"MANIFEST.txt", "SHA256SUMS"}:
             files.append(relative.as_posix())
-    return sorted(files)
+    return sorted(set(files))
 
 
 def update_manifest_and_hashes() -> None:

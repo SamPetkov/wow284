@@ -42,7 +42,6 @@ data/graphs/G50_edges.csv
 data/graphs/summary.json
 data/lean_static_audit.txt
 data/thirty_eight_sylvester.json
-isolated-build.log
 latexmkrc
 lean/NON50_CERTIFICATES.md
 lean/README.md
