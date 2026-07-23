@@ -15,13 +15,13 @@ open Matrix
 
 /-- Every diagonal entry in the exact distance diagonalization is one of the
 four displayed spectral values. -/
-set_option maxRecDepth 10000 in
 theorem distance_diagonal_entry_cases (j : Vertex) :
     distanceDiagonalInt j j = -5 ∨
     distanceDiagonalInt j j = 0 ∨
     distanceDiagonalInt j j = 3 ∨
     distanceDiagonalInt j j = 75 := by
-  fin_cases j <;> decide
+  set_option maxRecDepth 10000 in
+    fin_cases j <;> decide
 
 /-- The minimum entry of the exact diagonal form is `-5`, and it is attained. -/
 theorem distance_diagonal_minimum_certificate :
@@ -38,6 +38,22 @@ theorem distance_diagonal_minimum_certificate :
       norm_num
     rcases Finset.card_pos.mp hpos with ⟨j, hj⟩
     exact ⟨j, (Finset.mem_filter.mp hj).2⟩
+
+/-- Precisely scoped spectral certificate: the semantic distance matrix is
+similar, through a two-sided invertible rational change of basis, to the
+displayed diagonal matrix, whose least diagonal entry is the attained value
+`-5`.  This theorem deliberately states the exact finite diagonalization
+certificate rather than invoking a separate generic `λ_min` API. -/
+theorem exact_distance_diagonalization_minimum_certificate :
+    eigenbasisInv * eigenbasis = (1 : Matrix Vertex Vertex ℚ) ∧
+    eigenbasis * eigenbasisInv = (1 : Matrix Vertex Vertex ℚ) ∧
+    eigenbasisInv * castMatrix D * eigenbasis = distanceDiagonal ∧
+    (∀ j : Vertex, (-5 : ℤ) ≤ distanceDiagonalInt j j) ∧
+    ∃ j : Vertex, distanceDiagonalInt j j = -5 := by
+  exact ⟨eigenbasis_left_inverse, eigenbasis_right_inverse,
+    semantic_distance_exact_diagonal_form,
+    distance_diagonal_minimum_certificate.1,
+    distance_diagonal_minimum_certificate.2⟩
 
 /-- Public end-to-end certificate for the order-40 counterexample.  It records
 both inverse identities for the change of basis, the exact minimum of the

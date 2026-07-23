@@ -17,12 +17,17 @@ open Matrix
 /-- The semantic distance matrix, regarded over the rationals. -/
 def Dq : Matrix Vertex Vertex ℚ := D.map (Int.castRingHom ℚ)
 
+/-- The semantic distance cast agrees with the generated integer certificate. -/
+lemma Dq_eq_cast_Dcert : Dq = castMatrix38 Dcert := by
+  rw [Dq, semantic_distance_eq_Dcert]
+  rfl
+
 /-- The generated rational matrix is exactly `3 D + 17 I`. -/
 theorem M38q_eq_shifted_distance :
     M38q = (3 : ℚ) • Dq + (17 : ℚ) • (1 : Matrix Vertex Vertex ℚ) := by
-  rw [semantic_distance_eq_Dcert]
+  rw [M38q, M38Int_eq_shiftedCert, shiftedCert, Dq_eq_cast_Dcert]
   ext i j
-  decide
+  simp [castMatrix38]
 
 theorem deltaPad_posDef : DeltaPad.PosDef :=
   Matrix.PosDef.diagonal pivotPad_positive

@@ -53,38 +53,54 @@ theorem degree_profile :
     (Finset.univ.filter fun v : Vertex => degree v = 6).card = 28 := by
   decide
 
-private lemma dual_bound_coord (r : Fin 19) (c : Fin 2) :
-    (17 : ℚ) / 3 ≤ dualDegree (coordVertex r c) := by
+private lemma dual_cross_bound_coord (r : Fin 19) (c : Fin 2) :
+    17 * degree (coordVertex r c) ≤
+      3 * neighborDegreeSum (coordVertex r c) := by
   fin_cases r
-  · exact dual_bound_row_0 c
-  · exact dual_bound_row_1 c
-  · exact dual_bound_row_2 c
-  · exact dual_bound_row_3 c
-  · exact dual_bound_row_4 c
-  · exact dual_bound_row_5 c
-  · exact dual_bound_row_6 c
-  · exact dual_bound_row_7 c
-  · exact dual_bound_row_8 c
-  · exact dual_bound_row_9 c
-  · exact dual_bound_row_10 c
-  · exact dual_bound_row_11 c
-  · exact dual_bound_row_12 c
-  · exact dual_bound_row_13 c
-  · exact dual_bound_row_14 c
-  · exact dual_bound_row_15 c
-  · exact dual_bound_row_16 c
-  · exact dual_bound_row_17 c
-  · exact dual_bound_row_18 c
+  · exact dual_cross_bound_row_0 c
+  · exact dual_cross_bound_row_1 c
+  · exact dual_cross_bound_row_2 c
+  · exact dual_cross_bound_row_3 c
+  · exact dual_cross_bound_row_4 c
+  · exact dual_cross_bound_row_5 c
+  · exact dual_cross_bound_row_6 c
+  · exact dual_cross_bound_row_7 c
+  · exact dual_cross_bound_row_8 c
+  · exact dual_cross_bound_row_9 c
+  · exact dual_cross_bound_row_10 c
+  · exact dual_cross_bound_row_11 c
+  · exact dual_cross_bound_row_12 c
+  · exact dual_cross_bound_row_13 c
+  · exact dual_cross_bound_row_14 c
+  · exact dual_cross_bound_row_15 c
+  · exact dual_cross_bound_row_16 c
+  · exact dual_cross_bound_row_17 c
+  · exact dual_cross_bound_row_18 c
+
+private theorem dual_cross_bound (v : Vertex) :
+    17 * degree v ≤ 3 * neighborDegreeSum v := by
+  rw [← coordVertex_surj v]
+  exact dual_cross_bound_coord _ _
+
+private theorem degree_positive (v : Vertex) : 0 < degree v := by
+  rcases degree_five_or_six v with h | h <;> omega
 
 theorem dual_degree_lower_bound (v : Vertex) :
     (17 : ℚ) / 3 ≤ dualDegree v := by
-  rw [← coordVertex_surj v]
-  exact dual_bound_coord _ _
+  rw [dualDegree]
+  apply (div_le_div_iff₀ (by norm_num) (by exact_mod_cast degree_positive v)).2
+  have h :
+      (17 : ℚ) * degree v ≤
+        3 * (neighborDegreeSum v : ℚ) := by
+    exact_mod_cast dual_cross_bound v
+  simpa [mul_comm] using h
 
 theorem dual_degree_attained :
     ∃ v : Vertex, dualDegree v = (17 : ℚ) / 3 := by
   refine ⟨1, ?_⟩
-  decide
+  have hd : degree (1 : Vertex) = 6 := by decide
+  have hs : neighborDegreeSum (1 : Vertex) = 34 := by decide
+  simp [dualDegree, hd, hs]
 
 private lemma diameter_row_0 (s : Fin 19) (c d : Fin 2) :
     HasPathAtMostThree (coordVertex 0 c) (coordVertex s d) := by

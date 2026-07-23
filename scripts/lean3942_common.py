@@ -76,6 +76,8 @@ def lean_rat(value: sp.Expr) -> str:
 
 
 def lean_int_matrix(name: str, matrix: sp.Matrix, typ: str = "Vertex") -> str:
+    if any(sp.denom(value) != 1 for value in matrix):
+        raise AssertionError(f"{name} has a non-integral entry")
     rows = [", ".join(str(int(matrix[i,j])) for j in range(matrix.cols)) for i in range(matrix.rows)]
     return f"def {name} : Matrix {typ} {typ} ℤ := !![\n    " + ";\n    ".join(rows) + "\n  ]\n"
 
@@ -108,7 +110,8 @@ def basic(spec: Spec) -> str:
 The graph is an induced subgraph of a previously verified coordinate graph.
 Simplicity and exclusion of triangles and 4-cycles are inherited. Generated
 finite certificates prove the degree data, diameter three, and semantic BFS
-distance matrix; exact rational LDL data prove the strict spectral inequality.
+distance matrix; denominator-cleared integer LDL data prove the strict spectral
+inequality.
 -/
 namespace Wow284.{ns}
 open scoped BigOperators
@@ -124,8 +127,9 @@ lemma adjacent_irrefl (v : Vertex) : ¬ Adjacent v v := by
 
 def neighbors (v : Vertex) : Finset Vertex := Finset.univ.filter (Adjacent v)
 def degree (v : Vertex) : Nat := (neighbors v).card
+def neighborDegreeSum (v : Vertex) : Nat := ∑ u ∈ neighbors v, degree u
 def dualDegree (v : Vertex) : ℚ :=
-  ((∑ u ∈ neighbors v, degree u : ℕ) : ℚ) / (degree v : ℚ)
+  (neighborDegreeSum v : ℚ) / (degree v : ℚ)
 
 def coordVertex (r : Fin {spec.row_count}) (c : Fin {spec.col_count}) : Vertex :=
   ⟨{spec.col_count} * r.val + c.val, by omega⟩
@@ -182,7 +186,9 @@ open Matrix
 def Dq : Matrix Vertex Vertex ℚ := D.map (Int.castRingHom ℚ)
 theorem Mcore_eq_shifted_distance :
     Mcore = ({a} : ℚ) • Dq + ({b} : ℚ) • (1 : Matrix Vertex Vertex ℚ) := by
-  rw [semantic_distance_eq_Dcert]; ext i j; decide
+  rw [semantic_distance_eq_Dcert]
+  ext i j
+  simp [Mcore, McoreInt, Dq, castCoreMatrix]
 
 theorem deltaPad_posDef : DeltaPad.PosDef := Matrix.PosDef.diagonal pivotPad_positive
 theorem lpad_isUnit : IsUnit Lpad := Matrix.isUnit_of_left_inverse lpad_left_inverse

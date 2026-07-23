@@ -6,6 +6,12 @@ from lean3942_common import Spec, distance_matrix, lean_int_matrix
 
 def finite_outputs(spec: Spec) -> dict[str,str]:
     ns=spec.namespace; d=distance_matrix(spec.graph)
+    degrees=tuple(len(row) for row in spec.graph)
+    neighbor_degree_sums=tuple(
+        sum(degrees[u] for u in spec.graph[v]) for v in range(spec.order)
+    )
+    attained_degree=degrees[spec.attained_vertex]
+    attained_sum=neighbor_degree_sums[spec.attained_vertex]
     out={f"lean/Wow284/{ns}/CertificateDefinitions.lean": f'''import Wow284.{ns}.Basic
 /-! BFS-generated exact distance matrix for the order-{spec.order} graph. -/
 namespace Wow284.{ns}
@@ -21,8 +27,9 @@ end Wow284.{ns}
           f'''set_option maxRecDepth 15000 in
 lemma degree_range_row_{r} : ∀ c : Fin {spec.col_count}, {degprop.format(r=r)} := by decide
 set_option maxRecDepth 15000 in
-lemma dual_bound_row_{r} : ∀ c : Fin {spec.col_count},
-    {dual} ≤ dualDegree (coordVertex {r} c) := by decide
+lemma dual_bound_nat_row_{r} : ∀ c : Fin {spec.col_count},
+    {spec.dual_p} * degree (coordVertex {r} c) ≤
+      {spec.dual_q} * neighborDegreeSum (coordVertex {r} c) := by decide
 ''']
         for s in range(spec.row_count):
             parts.append(f'''set_option maxRecDepth 15000 in
@@ -38,7 +45,7 @@ lemma semantic_distance_rows_{r}_{s} : ∀ c d : Fin {spec.col_count},
 
     imports='\n'.join(f'import Wow284.{ns}.Finite{r}' for r in range(spec.row_count))
     degcases='\n'.join(f'  · exact degree_range_row_{r} c' for r in range(spec.row_count))
-    dualcases='\n'.join(f'  · exact dual_bound_row_{r} c' for r in range(spec.row_count))
+    dualcases='\n'.join(f'  · exact dual_bound_nat_row_{r} c' for r in range(spec.row_count))
     rows=[]
     for r in range(spec.row_count):
         rows.append(f'''private lemma diameter_row_{r} (s : Fin {spec.row_count}) (c d : Fin {spec.col_count}) :
@@ -56,6 +63,9 @@ lemma semantic_distance_rows_{r}_{s} : ∀ c d : Fin {spec.col_count},
 {degcases}
 theorem degree_six (v : Vertex) : degree v = 6 := by
   rw [← coordVertex_surj v]; exact degree_coord _ _
+theorem degree_positive (v : Vertex) : 0 < degree v := by
+  rw [degree_six v]
+  omega
 '''
     else:
         disj=' ∨ '.join(f'degree v = {x}' for x in spec.degree_values)
@@ -65,6 +75,8 @@ theorem degree_six (v : Vertex) : degree v = 6 := by
 {degcases}
 theorem degree_range (v : Vertex) : {disj} := by
   rw [← coordVertex_surj v]; exact degree_range_coord _ _
+theorem degree_positive (v : Vertex) : 0 < degree v := by
+  rcases degree_range v with h | h <;> omega
 '''
     profile=' ∧\n    '.join(f'(Finset.univ.filter fun v : Vertex => degree v = {d}).card = {n}' for d,n in spec.degree_profile)
     dcases='\n'.join(f'  · exact diameter_row_{r} s c d' for r in range(spec.row_count))
@@ -75,14 +87,32 @@ theorem degree_range (v : Vertex) : {disj} := by
 namespace Wow284.{ns}
 {degree}
 theorem degree_profile : {profile} := by decide
-private lemma dual_bound_coord (r : Fin {spec.row_count}) (c : Fin {spec.col_count}) :
-    {dual} ≤ dualDegree (coordVertex r c) := by
+private lemma dual_bound_nat_coord (r : Fin {spec.row_count}) (c : Fin {spec.col_count}) :
+    {spec.dual_p} * degree (coordVertex r c) ≤
+      {spec.dual_q} * neighborDegreeSum (coordVertex r c) := by
   fin_cases r
 {dualcases}
+private theorem dual_bound_nat (v : Vertex) :
+    {spec.dual_p} * degree v ≤ {spec.dual_q} * neighborDegreeSum v := by
+  rw [← coordVertex_surj v]
+  exact dual_bound_nat_coord _ _
 theorem dual_degree_lower_bound (v : Vertex) : {dual} ≤ dualDegree v := by
-  rw [← coordVertex_surj v]; exact dual_bound_coord _ _
+  unfold dualDegree
+  have hdegree : (0 : ℚ) < (degree v : ℚ) := by
+    exact_mod_cast degree_positive v
+  apply (div_le_div_iff₀ (by norm_num : (0 : ℚ) < {spec.dual_q}) hdegree).2
+  have hbound := dual_bound_nat v
+  have hbound' :
+      {spec.dual_p} * degree v ≤ neighborDegreeSum v * {spec.dual_q} := by
+    simpa [mul_comm] using hbound
+  exact_mod_cast hbound'
+private lemma dual_degree_attained_data :
+    degree ({spec.attained_vertex} : Vertex) = {attained_degree} ∧
+      neighborDegreeSum ({spec.attained_vertex} : Vertex) = {attained_sum} := by decide
 theorem dual_degree_attained : ∃ v : Vertex, dualDegree v = {dual} := by
-  refine ⟨{spec.attained_vertex}, ?_⟩; decide
+  refine ⟨{spec.attained_vertex}, ?_⟩
+  rcases dual_degree_attained_data with ⟨hdegree, hsum⟩
+  simp [dualDegree, hdegree, hsum]
 
 {chr(10).join(rows)}
 private lemma diameter_coord (r s : Fin {spec.row_count}) (c d : Fin {spec.col_count}) :

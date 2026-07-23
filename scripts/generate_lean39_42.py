@@ -44,7 +44,11 @@ def main():
     if args.verify_only:
         print('39/42 exact generator calculations: PASS'); return
     if args.check:
-        stale=[x.relative_to(ROOT) for x,c in outputs.items() if not x.exists() or x.read_text()!=c]
+        stale=[
+            x.relative_to(ROOT)
+            for x,c in outputs.items()
+            if not x.exists() or x.read_text(encoding='utf-8') != c
+        ]
         if stale: raise SystemExit('stale generated 39/42 Lean files: '+', '.join(map(str,stale)))
         print(f'39/42 Lean certificates: PASS ({len(outputs)} files)'); return
     for path,text in outputs.items():

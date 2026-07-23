@@ -9,22 +9,37 @@ import Wow284.Induced38.LDLLeft7
 
 namespace Wow284.Induced38
 
-private lemma lpad_left_inverse_coord (r s : Fin 8) (c d : Fin 5) :
-    (LpadInv * Lpad) (coordPad r c) (coordPad s d) =
-      ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad r c) (coordPad s d) := by
+private lemma lpad_left_inverse_scaled_coord (r s : Fin 8) (c d : Fin 5) :
+    (BpadInvNumerator * BpadInt) (coordPad r c) (coordPad s d) =
+      (scaledIdentityInt) (coordPad r c) (coordPad s d) := by
   fin_cases r
-  · exact lpad_left_inverse_row_0 s c d
-  · exact lpad_left_inverse_row_1 s c d
-  · exact lpad_left_inverse_row_2 s c d
-  · exact lpad_left_inverse_row_3 s c d
-  · exact lpad_left_inverse_row_4 s c d
-  · exact lpad_left_inverse_row_5 s c d
-  · exact lpad_left_inverse_row_6 s c d
-  · exact lpad_left_inverse_row_7 s c d
+  · exact lpad_left_inverse_scaled_row_0 s c d
+  · exact lpad_left_inverse_scaled_row_1 s c d
+  · exact lpad_left_inverse_scaled_row_2 s c d
+  · exact lpad_left_inverse_scaled_row_3 s c d
+  · exact lpad_left_inverse_scaled_row_4 s c d
+  · exact lpad_left_inverse_scaled_row_5 s c d
+  · exact lpad_left_inverse_scaled_row_6 s c d
+  · exact lpad_left_inverse_scaled_row_7 s c d
 
-theorem lpad_left_inverse : LpadInv * Lpad = (1 : Matrix PadVertex PadVertex ℚ) := by
+theorem lpad_left_inverse_scaled : BpadInvNumerator * BpadInt = scaledIdentityInt := by
   ext i j
   rw [← coordPad_surj i, ← coordPad_surj j]
-  exact lpad_left_inverse_coord _ _ _ _
+  exact lpad_left_inverse_scaled_coord _ _ _ _
+
+theorem lpad_left_inverse :
+    LpadInv * Lpad = (1 : Matrix PadVertex PadVertex ℚ) := by
+  change (((1 : ℚ) / 9872715611467135949855289360804685501665668482999185396169374584870460864410185247071326408815596008515976609812351092734822084129919104098317665928552560651239761846087438085885136674223443213546330216901531415239119767212472838176251785612674125844238268277075429461629762609078431370434890071654991556207365567800156615197978210622116836352281880346032737307044392183641783158551393556933742848145467163046095114892215250343988944633256351039608799989281499900523555040) •
+      castPadMatrix BpadInvNumerator) * castPadMatrix BpadInt = 1
+  rw [Matrix.smul_mul, ← castPadMatrix_mul, lpad_left_inverse_scaled]
+  ext i j
+  by_cases h : i = j
+  · subst j
+    simp [castPadMatrix, scaledIdentityInt]
+  · simp [castPadMatrix, scaledIdentityInt, h]
+
+theorem lpad_right_inverse :
+    Lpad * LpadInv = (1 : Matrix PadVertex PadVertex ℚ) :=
+  mul_eq_one_comm.mp lpad_left_inverse
 
 end Wow284.Induced38

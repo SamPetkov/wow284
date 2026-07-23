@@ -2,6 +2,8 @@ name: Exact and manuscript verification
 
 on:
   push:
+    branches:
+      - main
   pull_request:
   workflow_dispatch:
 
@@ -84,13 +86,30 @@ jobs:
           lint: false
           use-mathlib-cache: true
       - name: Compile order-38 and order-40 public endpoints
+        id: build3840
+        continue-on-error: true
         shell: bash
         run: |
-          if ! (cd lean && lake build Wow284Extension) >/tmp/lean-38-40.log 2>&1; then
-            tail -n 120 /tmp/lean-38-40.log
-            exit 1
+          if (cd lean && lake build Wow284Extension) >/tmp/lean-38-40.log 2>&1; then
+            touch /tmp/lean-38-40-build.ok
           fi
-          tail -n 20 /tmp/lean-38-40.log
+      - name: Upload order-38/order-40 Lake build diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-38-40-build-diagnostic
+          path: /tmp/lean-38-40.log
+          if-no-files-found: error
+      - name: Enforce order-38 and order-40 endpoint build
+        if: always()
+        shell: bash
+        run: |
+          if [[ -f /tmp/lean-38-40-build.ok ]]; then
+            tail -n 30 /tmp/lean-38-40.log
+            exit 0
+          fi
+          tail -n 180 /tmp/lean-38-40.log
+          exit 1
       - name: Report order-38 and order-40 endpoint axioms
         run: cd lean && lake env lean Wow284ExtensionAudit.lean
 
@@ -109,6 +128,26 @@ jobs:
         run: python scripts/generate_lean39_42.py
       - name: Audit generated source hygiene and import closure
         run: python scripts/static_lean_audit.py
+      - name: Record generated-source checksums
+        shell: bash
+        run: |
+          find lean/Wow284/Induced39 lean/Wow284/Induced42 \
+            -type f -name '*.lean' -print0 |
+            sort -z |
+            xargs -0 sha256sum > lean/GENERATED_39_42_SHA256SUMS
+          sha256sum lean/Wow284Generated3942.lean \
+            lean/Wow284Generated3942Audit.lean >> lean/GENERATED_39_42_SHA256SUMS
+      - name: Upload exact generated Lean sources
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-39-42-generated-source
+          path: |
+            lean/Wow284/Induced39
+            lean/Wow284/Induced42
+            lean/Wow284Generated3942.lean
+            lean/Wow284Generated3942Audit.lean
+            lean/GENERATED_39_42_SHA256SUMS
+          if-no-files-found: error
       - name: Install Lean 4.31 and restore the Mathlib cache
         uses: leanprover/lean-action@v1
         with:
