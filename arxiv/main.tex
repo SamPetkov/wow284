@@ -139,6 +139,12 @@ If \(G\) is connected, has \(n\ge3\) vertices, and has girth
 \]
 \end{conjecture}
 
+For such a graph, write
+\[
+  \Phi(G):=\delta^*(G)+\partial_{|V(G)|}(G).
+\]
+Thus \(G\) is a strict counterexample precisely when \(\Phi(G)>0\).
+
 In that 2014 survey, the authors reported that the conjecture remained open
 and noted equality for the Petersen
 graph~\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}.  This equality is the
@@ -434,7 +440,7 @@ is a Petersen graph.  This construction is the classical 40-vertex
 Wong~\cite{OKeefeWong1979}.  Its uniqueness was proved by
 Wong~\cite{Wong1979}, and its realization as a Petersen deletion from the
 Hoffman--Singleton graph is recorded explicitly by Klin, Muzychuk, and
-Ziv-Av~\cite[Section~3.6]{KlinMuzychukZivAv2009}.
+Ziv-Av~\cite[Section~3.4]{KlinMuzychukZivAv2009}.
 
 \begin{theorem}\label{thm:forty}
 The graph \(R\) is connected and 6-regular, has girth five and diameter three,
@@ -600,9 +606,9 @@ Finally \(8/3>\sqrt7\), because \(64>63\), proving strictness.
 
 \subsection{Orders 39 and 42}
 
-Deleting one vertex from \(R\) leaves six vertices of degree five and 33 of
-degree six.  A degree-six vertex meets at most one degree-five vertex, by the
-absence of 4-cycles, and at least one such incidence exists.  Thus
+For any \(v\in V(R)\), deleting \(v\) leaves six vertices of degree five and
+33 of degree six.  A degree-six vertex meets at most one degree-five vertex,
+by the absence of 4-cycles, and at least one such incidence exists.  Thus
 \[
  \delta^*=\frac{5+5\cdot6}{6}=\frac{35}{6}.
 \]
@@ -650,7 +656,8 @@ graph-isomorphism or transitivity assumption is used.
 
 \begin{remark}
 A numerical screen of all \(\binom{40}{3}=9880\) three-vertex deletions found
-no positive score; its best value was approximately \(-0.306979936667\).
+no graph with \(\Phi>0\); its best value was approximately
+\(-0.306979936667\).
 This is exploratory evidence only, not an exact elimination of order 37 and
 not a minimality proof.
 \end{remark}
@@ -699,9 +706,18 @@ The nonprincipal adjacency eigenvalue \(-k\) maps to
 Its negative is at least \(k\) for \(k\ge3\), with equality only at \(k=3\).
 \end{proof}
 
-For comparison, exact negative controls include the Odd graph
-\(O_4=KG(7,3)\), for which \(\delta^*=4\) and \(\partial_n=-7\), and the
-Heawood graph, for which \(\partial_n=-2-2\sqrt2\) and \(\delta^*=3\).
+For comparison, exact negative controls follow directly from
+Theorem~\ref{thm:diam3}.  The Odd graph \(O_4=KG(7,3)\) has adjacency
+spectrum
+\[
+ \{4^{(1)},2^{(14)},(-1)^{(14)},(-3)^{(6)}\},
+\]
+so \(\delta^*=4\) and \(\partial_n=-7\).  The Heawood graph has adjacency
+spectrum
+\[
+ \{3^{(1)},(\sqrt2)^{(6)},(-\sqrt2)^{(6)},(-3)^{(1)}\},
+\]
+so \(\delta^*=3\) and \(\partial_n=-2-2\sqrt2\).
 
 \section{Moore second subconstituents}\label{sec:subconstituent}
 
@@ -837,8 +853,11 @@ Because the outside set is nonempty, \(K>r\), so cancellation yields
 
 \section{Further exact and exploratory checks}
 
-Deleting complete matching \(P\)- and \(Q\)-coordinate layers gives the
-following exact representatives:
+For \(i\in\mathbb F_5\), put
+\(\mathcal L_i=\{P_{i,j},Q_{i,j}:j\in\mathbb F_5\}\), and let \(R_m\) be
+the graph obtained from \(G\) by deleting
+\(\mathcal L_0,\ldots,\mathcal L_{m-1}\) (with \(R_0=G\)).  These balanced
+coordinate-layer deletions give the following exact representatives:
 \[
 \begin{array}{c@{\qquad}c@{\qquad}c@{\qquad}c@{\qquad}c}
 \toprule
@@ -853,11 +872,11 @@ m&|V|&\text{degree}&\partial_n&\delta^*+\partial_n\\
 \end{array}
 \]
 Thus this natural chain stops producing strict counterexamples after the
-40-vertex member.  The exact checks cover the full regular diameter-two
-mechanism, every regular girth-at-least-five diameter-three graph through
-Theorem~\ref{thm:diam3}, Moore second subconstituents, the equitable deletion
-framework, all singleton and edge-endpoint deletions of \(R\), the balanced
-layer chain, \(O_4\), and the Heawood graph.
+40-vertex member.  The preceding analytic theorems cover the Moore and
+regular diameter-three mechanisms, Moore second subconstituents, and the
+equitable deletion framework.  The exact computations check the listed
+finite examples, all singleton and edge-endpoint deletions of \(R\), the
+balanced layer chain, \(O_4\), and the Heawood graph.
 
 No unconditional infinite family is established.  Fixed-degree,
 diameter-three graphs have bounded order by the Moore bound, so an infinite
@@ -957,10 +976,10 @@ subconstituent are separately credited above.  The repository source ledger
 records the explicit WOW-284 connection and the limits of the targeted
 priority search.
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking and finding
-the exact graph construction.  No AI system is an
-author.  Samuil Petkov is the sole named author and assumes full responsibility
-for the mathematics, citations, attribution, and conclusions.
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
+exploration, and Lean formalization.  No AI system is an author.  Samuil
+Petkov is the sole named author and assumes full responsibility for the
+mathematics, citations, attribution, and conclusions.
 
 The author received no funding for this work and declares no competing
 interests.  The manuscript source, exact verification code, machine-readable

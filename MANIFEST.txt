@@ -151,6 +151,7 @@ lean/Wow284/Induced40/DiagonalizationLeft5.lean
 lean/Wow284/Induced40/DiagonalizationLeft6.lean
 lean/Wow284/Induced40/DiagonalizationLeft7.lean
 lean/Wow284/Induced40/Gap.lean
+lean/Wow284/Induced40/SpectralEndpoint.lean
 lean/Wow284/Induced40/Structural.lean
 lean/Wow284/Induced40/Structural0.lean
 lean/Wow284/Induced40/Structural1.lean

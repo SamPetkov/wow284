@@ -16,7 +16,8 @@ def diameterThreeDistanceValue (k theta : ℝ) : ℝ :=
 theorem diameter_three_gap_identity (k theta : ℝ) :
     k + diameterThreeDistanceValue k theta =
       2 * k - 2 - (theta + 1) ^ 2 := by
-  ring_nf
+  unfold diameterThreeDistanceValue
+  ring
 
 theorem diameter_three_scalar_criterion (k theta : ℝ) (hk : 1 ≤ k) :
     0 < k + diameterThreeDistanceValue k theta ↔

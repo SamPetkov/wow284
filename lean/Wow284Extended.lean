@@ -2,6 +2,7 @@ import Wow284
 import Wow284.Induced40.Structural
 import Wow284.Induced40.DiagonalizationData
 import Wow284.Induced40.Gap
+import Wow284.Induced40.SpectralEndpoint
 import Wow284.Induced38.FiniteCertificates
 import Wow284.Induced38.LDLData
 import Wow284.Induced38.Gap

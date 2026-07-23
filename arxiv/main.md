@@ -33,6 +33,12 @@ Aouchiche and Hansen record the following Graffiti conjecture in their survey of
 
 </div>
 
+For such a graph, write
+``` math
+\Phi(G):=\delta^*(G)+\partial_{|V(G)|}(G).
+```
+Thus $`G`$ is a strict counterexample precisely when $`\Phi(G)>0`$.
+
 In that 2014 survey, the authors reported that the conjecture remained open and noted equality for the Petersen graph ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370). This equality is the degree-3 boundary case of a general Moore-graph calculation. The degree-7 Moore graph constructed by Hoffman and Singleton ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) lies beyond that boundary and gives a strict violation.
 
 There is important prior spectral work. Howlader and Panigrahi determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove Conjecture <a href="#conj:wow284" data-reference-type="ref" data-reference="conj:wow284">1</a>. The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies a self-contained coordinate certificate. It also extracts the 40-vertex $`(6,5)`$-cage from the same coordinates and gives its distance spectrum directly. No claim is made that the distance spectra are new, that this observation has priority over every unpublished observation, or that the 40-vertex example has minimum possible order among all counterexamples.
@@ -263,7 +269,7 @@ The same coordinates contain a smaller regular counterexample. Delete
 ``` math
 \mathcal P=\{P_{0,j},Q_{0,j}:j\in\mathbb F_5\}
 ```
-and let $`R=G-\mathcal P`$ be the induced graph on the remaining 40 vertices. The deleted graph consists of the $`P_{0,\bullet}`$ pentagon, the $`Q_{0,\bullet}`$ pentagram, and the matching $`P_{0,j}Q_{0,j}`$; hence it is a Petersen graph. This construction is the classical 40-vertex $`(6,5)`$-cage of O’Keefe and Wong ([O’Keefe and Wong 1979](#ref-OKeefeWong1979)). Its uniqueness was proved by Wong ([Wong 1979](#ref-Wong1979)), and its realization as a Petersen deletion from the Hoffman–Singleton graph is recorded explicitly by Klin, Muzychuk, and Ziv-Av ([Klin et al. 2009, sec. 3.6](#ref-KlinMuzychukZivAv2009)).
+and let $`R=G-\mathcal P`$ be the induced graph on the remaining 40 vertices. The deleted graph consists of the $`P_{0,\bullet}`$ pentagon, the $`Q_{0,\bullet}`$ pentagram, and the matching $`P_{0,j}Q_{0,j}`$; hence it is a Petersen graph. This construction is the classical 40-vertex $`(6,5)`$-cage of O’Keefe and Wong ([O’Keefe and Wong 1979](#ref-OKeefeWong1979)). Its uniqueness was proved by Wong ([Wong 1979](#ref-Wong1979)), and its realization as a Petersen deletion from the Hoffman–Singleton graph is recorded explicitly by Klin, Muzychuk, and Ziv-Av ([Klin et al. 2009, sec. 3.4](#ref-KlinMuzychukZivAv2009)).
 
 <div id="thm:forty" class="theorem">
 
@@ -396,7 +402,7 @@ this is the least distance eigenvalue. Independently, an exact rational $`LDL^{\
 
 ## Orders 39 and 42
 
-Deleting one vertex from $`R`$ leaves six vertices of degree five and 33 of degree six. A degree-six vertex meets at most one degree-five vertex, by the absence of 4-cycles, and at least one such incidence exists. Thus
+For any $`v\in V(R)`$, deleting $`v`$ leaves six vertices of degree five and 33 of degree six. A degree-six vertex meets at most one degree-five vertex, by the absence of 4-cycles, and at least one such incidence exists. Thus
 ``` math
 \delta^*=\frac{5+5\cdot6}{6}=\frac{35}{6}.
 ```
@@ -429,7 +435,7 @@ Hence $`\delta^*=6>5=-\partial_{42}`$. The parameterized construction behind thi
 
 <div class="remark">
 
-*Remark 8*. A numerical screen of all $`\binom{40}{3}=9880`$ three-vertex deletions found no positive score; its best value was approximately $`-0.306979936667`$. This is exploratory evidence only, not an exact elimination of order 37 and not a minimality proof.
+*Remark 8*. A numerical screen of all $`\binom{40}{3}=9880`$ three-vertex deletions found no graph with $`\Phi>0`$; its best value was approximately $`-0.306979936667`$. This is exploratory evidence only, not an exact elimination of order 37 and not a minimality proof.
 
 </div>
 
@@ -477,7 +483,15 @@ Its negative is at least $`k`$ for $`k\ge3`$, with equality only at $`k=3`$. �
 
 </div>
 
-For comparison, exact negative controls include the Odd graph $`O_4=KG(7,3)`$, for which $`\delta^*=4`$ and $`\partial_n=-7`$, and the Heawood graph, for which $`\partial_n=-2-2\sqrt2`$ and $`\delta^*=3`$.
+For comparison, exact negative controls follow directly from Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a>. The Odd graph $`O_4=KG(7,3)`$ has adjacency spectrum
+``` math
+\{4^{(1)},2^{(14)},(-1)^{(14)},(-3)^{(6)}\},
+```
+so $`\delta^*=4`$ and $`\partial_n=-7`$. The Heawood graph has adjacency spectrum
+``` math
+\{3^{(1)},(\sqrt2)^{(6)},(-\sqrt2)^{(6)},(-3)^{(1)}\},
+```
+so $`\delta^*=3`$ and $`\partial_n=-2-2\sqrt2`$.
 
 # Moore second subconstituents
 
@@ -579,7 +593,7 @@ Because the outside set is nonempty, $`K>r`$, so cancellation yields $`K=r^2-r+1
 
 # Further exact and exploratory checks
 
-Deleting complete matching $`P`$- and $`Q`$-coordinate layers gives the following exact representatives:
+For $`i\in\mathbb F_5`$, put $`\mathcal L_i=\{P_{i,j},Q_{i,j}:j\in\mathbb F_5\}`$, and let $`R_m`$ be the graph obtained from $`G`$ by deleting $`\mathcal L_0,\ldots,\mathcal L_{m-1}`$ (with $`R_0=G`$). These balanced coordinate-layer deletions give the following exact representatives:
 ``` math
 \begin{array}{c@{\qquad}c@{\qquad}c@{\qquad}c@{\qquad}c}
 \toprule
@@ -593,7 +607,7 @@ m&|V|&\text{degree}&\partial_n&\delta^*+\partial_n\\
 \bottomrule
 \end{array}
 ```
-Thus this natural chain stops producing strict counterexamples after the 40-vertex member. The exact checks cover the full regular diameter-two mechanism, every regular girth-at-least-five diameter-three graph through Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a>, Moore second subconstituents, the equitable deletion framework, all singleton and edge-endpoint deletions of $`R`$, the balanced layer chain, $`O_4`$, and the Heawood graph.
+Thus this natural chain stops producing strict counterexamples after the 40-vertex member. The preceding analytic theorems cover the Moore and regular diameter-three mechanisms, Moore second subconstituents, and the equitable deletion framework. The exact computations check the listed finite examples, all singleton and edge-endpoint deletions of $`R`$, the balanced layer chain, $`O_4`$, and the Heawood graph.
 
 No unconditional infinite family is established. Fixed-degree, diameter-three graphs have bounded order by the Moore bound, so an infinite family within this framework would require unbounded degree. Covers, subdivisions, coronas, and general vertex replacements are not asserted to preserve the strict inequality; the present arguments establish no such preservation theorem.
 
@@ -646,7 +660,7 @@ The explicit 50-vertex counterexample is fully formalized and verified in Lean 4
 
 The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is made that 38 is the minimum possible order among WOW-284 counterexamples, and no exhaustive search over all smaller graphs is part of this note. Calling the 40-vertex graph the $`(6,5)`$-cage refers to its classical minimum-order property among 6-regular girth-five graphs, not to minimum order for the WOW problem. The distance-spectral input for Moore graphs is credited to Howlader and Panigrahi; the classical 40-vertex cage and 42-vertex second subconstituent are separately credited above. The repository source ledger records the explicit WOW-284 connection and the limits of the targeted priority search.
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking and finding the exact graph construction. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
 The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284).
 

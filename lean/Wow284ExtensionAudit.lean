@@ -18,6 +18,9 @@ mathematical dependency.
 #print axioms Wow284.Induced40.distance_diagonalization
 #print axioms Wow284.Induced40.distance_diagonal_counts
 #print axioms Wow284.Induced40.exact_wow_gap_positive
+#print axioms Wow284.Induced40.dual_degree_six
+#print axioms Wow284.Induced40.semantic_distance_exact_diagonal_form
+#print axioms Wow284.Induced40.counterexample_spectral_endpoint
 
 -- Induced 38-vertex certificate and its staged LDL data.
 #print axioms Wow284.Induced38.degree_profile
