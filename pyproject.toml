@@ -1,9 +1,9 @@
 [project]
 name = "wow284-certificate"
 version = "1.0.0"
-description = "Exact verification package for the Hoffman-Singleton counterexample to WOW-284"
+description = "Exact verification package for the 38-, 39-, 40-, 42-, and 50-vertex counterexamples to WOW-284"
 requires-python = ">=3.11"
-dependencies = ["sympy==1.14.0"]
+dependencies = ["sympy==1.14.0", "networkx==3.6.1", "numpy==2.3.5"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -3,14 +3,14 @@ message: >-
   Please cite the manuscript using the metadata below. The published
   distance-spectrum calculation of Howlader and Panigrahi should also be
   cited where that prior result is used.
-title: "wow284: Reproducible artifacts for Moore Graphs of Diameter Two and the Failure of WOW-284"
+title: "wow284: Reproducible artifacts for Exact Counterexamples and Spectral Mechanisms for WOW-284"
 type: software
 authors:
   - family-names: Petkov
     given-names: Samuil
     affiliation: "Department of Physics, École normale supérieure, Université PSL"
     email: samuil.petkov@phys.ens.psl.eu
-version: 1.1.1
+version: 2.0.0
 date-released: 2026-07-19
 url: "https://github.com/SamPetkov/wow284"
 repository-code: "https://github.com/SamPetkov/wow284"
@@ -19,20 +19,24 @@ abstract: >-
   A degree-k Moore graph of diameter two has minimum dual degree k and least
   distance eigenvalue -(3 + sqrt(4k - 3))/2, so WOW-284 fails precisely for
   realizable degrees k > 3. An explicit coordinate construction of the
-  degree-7 Hoffman-Singleton graph gives the 50-vertex counterexample. The
-  repository includes a self-contained proof, exact Python verification, and
-  a complete Lean 4.31 formalization of the explicit counterexample.
+  degree-7 Hoffman-Singleton graph gives a 50-vertex counterexample. Exact
+  induced constructions give further counterexamples of orders 38, 39, 40,
+  and 42, together with exhaustive labelled descendant families and a regular
+  diameter-three criterion. The 50-vertex certificate and scalar threshold
+  have a complete Lean 4.31 formalization; the additional results currently
+  have analytic and exact Python certificates.
 keywords:
   - distance spectrum
   - dual degree
   - girth
   - Hoffman-Singleton graph
+  - (6,5)-cage
   - Moore graph
   - spectral graph theory
   - WOW-284
 preferred-citation:
   type: article
-  title: "Moore Graphs of Diameter Two and the Failure of WOW-284"
+  title: "Exact Counterexamples and Spectral Mechanisms for WOW-284"
   authors:
     - family-names: Petkov
       given-names: Samuil

@@ -5,7 +5,7 @@ arXiv submission.
 
 ## Suggested metadata
 
-**Title:** Moore Graphs of Diameter Two and the Failure of WOW-284
+**Title:** Exact Counterexamples and Spectral Mechanisms for WOW-284
 
 **Author:** Samuil Petkov
 
@@ -14,8 +14,10 @@ arXiv submission.
 **Optional cross-list:** `math.SP` only if the submitter judges that the
 distance-spectrum content meets that category's current scope.
 
-**Comments:** Self-contained research note with exact Python verification and
-a complete Lean 4.31 formalization of the explicit counterexample; includes a
+**Comments:** Self-contained research note with exact Python verification for
+counterexamples of orders 38, 39, 40, 42, and 50. The explicit 50-vertex
+certificate and scalar Moore threshold have a complete Lean 4.31
+formalization; the additional results are not yet Lean-formalized. Includes a
 source and priority ledger.
 The PDF page count should be copied from `BUILD_VERIFICATION.txt` after the
 final rebuild.
@@ -26,16 +28,19 @@ final rebuild.
 
 > WOW-284 asserts that the minimum dual degree of every connected graph of
 > order at least three and girth at least five is at most the negative of its
-> least distance eigenvalue. We isolate its behavior on Moore graphs of
-> diameter two. For such a graph of degree k >= 2, the minimum dual degree is
-> k, while the least distance eigenvalue is -(3 + sqrt(4k - 3))/2. Thus
-> WOW-284 holds for k = 2, is an equality for k = 3, and fails for every
-> realizable degree k > 3. The degree-7 instance is the Hoffman-Singleton
-> graph: it has 50 vertices, girth five, and distance spectrum
-> {91^(1),1^(21),(-4)^(28)}, giving a strict gap of 3. We provide a
-> self-contained coordinate certificate over F_5 and an independent exact
-> computational check. The distance spectra of minimal cages were determined
-> previously; the point here is their consequence for WOW-284.
+> least distance eigenvalue. We disprove the conjecture by exact constructions
+> of orders 38, 39, 40, 42, and 50, all obtained from Hoffman-Singleton
+> coordinates. The 38-vertex graph has minimum dual degree 17/3 and least
+> distance eigenvalue -3-sqrt(7), giving the positive gap 8/3-sqrt(7).
+> Exact exhaustive computation further proves that every one of the 40
+> labelled single-vertex deletions of the 40-vertex graph, and every one of
+> its 120 labelled edge-endpoint deletions, is a strict counterexample. We
+> establish a spectral criterion for regular girth-at-least-five graphs of
+> diameter three and derive a parameterized construction from Moore second
+> subconstituents. No minimality, first-discovery, or unconditional
+> infinite-family claim is made. The 50-vertex certificate and scalar Moore
+> threshold are verified in Lean 4.31; the additional constructions are
+> analytic and exact-computational pending the expanded formalization.
 
 ## Upload artifact
 
@@ -64,8 +69,8 @@ Before clicking submit, Samuil Petkov should:
 - verify that the `.bbl` is recognized and all DOI/arXiv references render;
 - confirm any required endorsement or institutional-email step;
 - decide whether the public AI-assistance disclosure is satisfactory; and
-- do not change the formal-verification wording to present tense unless the
-  final Lean spectral theorem, strict audit, and CI have all passed; and
+- do not extend the formal-verification claim beyond the 50-vertex certificate
+  and scalar threshold until the expanded Lean artifact passes strict audit;
 - rerun the novelty search immediately before announcement if priority
   language is changed.
 

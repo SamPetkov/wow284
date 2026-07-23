@@ -1,0 +1,56 @@
+\begin{thebibliography}{10}
+
+\bibitem{AouchicheHansen2014}
+Mustapha Aouchiche and Pierre Hansen.
+\newblock Distance spectra of graphs: A survey.
+\newblock {\em Linear Algebra and its Applications}, 458:301--386, 2014.
+
+\bibitem{HoffmanSingleton1960}
+Alan~J. Hoffman and Robert~R. Singleton.
+\newblock On moore graphs with diameters 2 and 3.
+\newblock {\em IBM Journal of Research and Development}, 4(5):497--504, 1960.
+
+\bibitem{HowladerPanigrahi2022}
+Aditi Howlader and Pratima Panigrahi.
+\newblock On the distance spectrum of minimal cages and associated distance
+  biregular graphs.
+\newblock {\em Linear Algebra and its Applications}, 636:115--133, 2022.
+
+\bibitem{OKeefeWong1979}
+M.~O'Keefe and Pak-Ken Wong.
+\newblock A smallest graph of girth 5 and valency 6.
+\newblock {\em Journal of Combinatorial Theory, Series B}, 26(2):145--149,
+  1979.
+
+\bibitem{Wong1979}
+Pak-Ken Wong.
+\newblock On the uniqueness of the smallest graph of girth 5 and valency 6.
+\newblock {\em Journal of Graph Theory}, 3(4):407--409, 1979.
+
+\bibitem{ExooJajcay2013}
+Geoffrey Exoo and Robert Jajcay.
+\newblock Dynamic cage survey.
+\newblock {\em Electronic Journal of Combinatorics}, (DS16), 2013.
+
+\bibitem{KlinMuzychukZivAv2009}
+Mikhail Klin, Mikhail Muzychuk, and Matan Ziv-Av.
+\newblock Higmanian rank-5 association schemes on 40 points.
+\newblock {\em Michigan Mathematical Journal}, 58:255--284, 2009.
+
+\bibitem{SmithMontemanni2026}
+Derek~H. Smith and Roberto Montemanni.
+\newblock The moore graph of diameter 2 and degree 57 via cyclic derangements.
+\newblock {\em Axioms}, 15(5):332, 2026.
+
+\bibitem{MeurerEtAl2017}
+Aaron Meurer, Christopher~P. Smith, Mateusz Paprocki, et~al.
+\newblock {SymPy}: Symbolic computing in {Python}.
+\newblock {\em PeerJ Computer Science}, 3:e103, 2017.
+
+\bibitem{HagbergSchultSwart2008}
+Aric~A. Hagberg, Daniel~A. Schult, and Pieter~J. Swart.
+\newblock Exploring network structure, dynamics, and function using {NetworkX}.
+\newblock In {\em Proceedings of the 7th Python in Science Conference}, pages
+  11--15, 2008.
+
+\end{thebibliography}

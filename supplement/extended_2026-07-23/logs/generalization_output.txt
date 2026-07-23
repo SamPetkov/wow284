@@ -1,0 +1,14 @@
+BALANCED LAYER-DELETION CHAIN (exact representatives)
+  m=0: n=50, k=7, diameter=2, lambda_min=-4, Phi=3
+  m=1: n=40, k=6, diameter=3, lambda_min=-5, Phi=1
+  m=2: n=30, k=5, diameter=3, lambda_min=-6, Phi=-1
+  m=3: n=20, k=4, diameter=3, lambda_min=-7, Phi=-3
+  m=4: n=10, k=3, diameter=2, lambda_min=-3, Phi=0
+STANDARD-FAMILY NEGATIVE CHECKS (exact)
+  Odd graph O_4=KG(7,3): delta*=4, lambda_min=-7, so not a counterexample
+  Heawood graph: delta*=3, lambda_min=-2-2*sqrt(2), so not a counterexample
+  Connected regular bipartite diameter-three graphs are excluded in general
+  because adjacency eigenvalue -k maps to k-2-(k-1)^2.
+THREE-VERTEX DELETION SCREEN (floating-point exploration only)
+  checked=9880; best numerical Phi=-0.306979936667; deleted=(10, 37, 39)
+  no positive candidate appeared, but this is not an exact theorem or a minimality proof

@@ -1,0 +1,55 @@
+WOW-284 ARXIV SUBMISSION METADATA
+Prepared: 22 July 2026
+
+UPLOAD FILE
+arxiv/wow284_arxiv_source.zip
+
+EXPECTED SHA-256
+3db826e70a24639824f9b4296648a36dd131adc8d39fb22d839e063a08530b5e
+
+COMPILER
+pdfLaTeX
+
+TOP-LEVEL TEX FILE
+main.tex
+
+TITLE
+The Hoffman-Singleton Graph Refutes WOW-284
+
+AUTHORS
+Samuil Petkov (\'Ecole normale sup\'erieure, Universit\'e PSL, Paris, France)
+
+PRIMARY CATEGORY
+math.CO
+
+CROSS-LISTS
+None
+
+MSC-CLASS
+05C50 (Primary), 05C12 (Secondary)
+
+COMMENTS
+4 pages, no figures. Self-contained proof with exact verification code and certificates at https://github.com/SamPetkov/wow284 .
+
+ABSTRACT
+WOW-284 asserts that the minimum dual degree of every connected graph of order at least three and girth at least five is at most the negative of its least distance eigenvalue. We record a counterexample on 50 vertices. The graph is given by an explicit coordinate construction over the field F_5. It is 7-regular, has girth five, and has distance spectrum {91^(1), 1^(21), (-4)^(28)}. Consequently its minimum dual degree is 7, whereas the negative of its least distance eigenvalue is 4. The strict gap is therefore 3. The graph is the Hoffman-Singleton graph, but the proof uses no classification or named-graph property: a direct common-neighbor certificate yields connectedness, girth, and the full spectrum. Exact verification code builds the distance matrix independently by breadth-first search and checks the characteristic polynomial over the integers.
+
+LICENSE
+Creative Commons Attribution 4.0 International (CC BY 4.0), provided the author deliberately accepts that this choice is irrevocable on arXiv.
+
+REPORT NUMBER
+Leave blank.
+
+JOURNAL REFERENCE
+Leave blank.
+
+DOI
+Leave blank.
+
+FINAL ACCOUNT-LEVEL CONFIRMATIONS
+- The displayed author name is the author's intended scholarly name.
+- The ENS/PSL affiliation and email address are current and accurate.
+- The arXiv-generated PDF has four complete pages and all six references render.
+- The detected compiler is pdfLaTeX and the top-level source is main.tex.
+- No files other than main.tex, references.bib, and main.bbl are retained.
+- Any required math.CO endorsement has been completed.

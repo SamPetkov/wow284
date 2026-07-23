@@ -114,7 +114,7 @@ def generate_markdown() -> None:
         )
         body = raw.read_text(encoding="utf-8")
 
-    header = """# Moore Graphs of Diameter Two and the Failure of WOW-284
+    header = """# Exact Counterexamples and Spectral Mechanisms for WOW-284
 
 **Samuil Petkov**<br>
 Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
@@ -165,7 +165,7 @@ def validate_arxiv_archive() -> None:
 def validate_release_text() -> None:
     text = CANONICAL_TEX.read_text(encoding="utf-8")
     required = [
-        r"\title[Moore graphs and the failure of WOW-284]",
+        r"\title[Exact counterexamples to WOW-284]",
         r"\author{Samuil Petkov}",
         r"\date{19 July 2026}",
         r"\usepackage[margin=1in]{geometry}",
@@ -173,6 +173,11 @@ def validate_release_text() -> None:
         "No claim is made",
         "OpenAI ChatGPT-5.6 Sol Pro",
         "The explicit 50-vertex counterexample is fully formalized and verified",
+        r"\section{A 40-vertex induced counterexample}",
+        r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}",
+        "are analytic and exact-computational results",
+        r"\section{Smaller induced counterexamples}",
+        r"\partial_{38}(H)=-3-\sqrt7",
         r"The scalar \(k\le3\) threshold",
     ]
     missing = [item for item in required if item not in text]

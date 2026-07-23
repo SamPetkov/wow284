@@ -13,5 +13,13 @@
 | Minimum dual degree is 7. | Regularity and definition; exact fractions. | Proved and checked. |
 | WOW-284 fails by strict gap 3. | `7 > 4`, with `partial_50=-4`. | Proved and checked. |
 | The graph is a Hoffman-Singleton realization. | Exact agreement, after `k -> -k` on the `Q`-layers, with Hafner's Theorem 2.1; independently, parameters `(50,7,0,1)` and Hoffman-Singleton uniqueness. | Published construction cited; named-graph identification is not needed for the counterexample proof. |
-| This is the smallest counterexample. | No exhaustive search performed. | Not claimed. |
+| The Petersen deletion gives the 40-vertex `(6,5)`-cage with distance spectrum `{75^1,3^5,0^16,(-5)^18}`. | Analytic block proof; exact coordinate/BFS/characteristic-polynomial verifier; classical cage sources. | Proved, checked, and attributed. |
+| Deleting one vertex from the 40-vertex graph gives a strict order-39 counterexample with `delta*=35/6`. | Exact rational dual degrees and positive-definite `6D+35I`; common exact characteristic polynomial for all 40 labels. | Proved by finite exact computation. |
+| Deleting an edge's endpoints gives an order-38 counterexample with `delta*=17/3` and least distance eigenvalue `-3-sqrt(7)`. | Structural degree proof; exact characteristic polynomial and Sturm count; positive-definite `3D+17I`; independent graph6/integer-BFS/Fraction-LDL audit. | Proved and checked. |
+| All 40 labelled singleton deletions and all 120 labelled edge-endpoint deletions are strict counterexamples. | Exhaustive exact characteristic-polynomial and dual-degree computation; one exact Sturm audit for each common polynomial. | Proved by finite exact computation; no isomorphism assumption. |
+| The 42-vertex second subconstituent is a strict counterexample with distance spectrum `{81^1,4^6,0^14,(-5)^21}`. | Repaired analytic Moore-subconstituent proof; exact coordinate verifier; published adjacency spectrum. | Proved, checked, and attributed. |
+| The regular diameter-three identity and spectral criterion hold. | Exact distance-matrix polynomial derivation from girth and diameter. | Proved analytically. |
+| The 9,880 tested three-vertex deletions contain no positive numerical score. | Exhaustive floating-point screen of this fixed deletion class. | Exploratory only; not a theorem or order-37 elimination. |
+| The complete Lean development covers the explicit 50-vertex certificate and scalar Moore threshold. | Lean/Mathlib 4.31 build, strict shortcut scan, and GitHub Actions. | Formally verified. The 38/39/40/42 and extended criteria are not yet Lean-formalized. |
+| This is the smallest counterexample. | No exhaustive search over all smaller graphs was performed. | Not claimed. |
 | This is the first observation of the counterexample. | Targeted search found no explicit prior connection, but cannot prove priority. | Not claimed. |

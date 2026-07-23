@@ -1,0 +1,5 @@
+independent graph6 audit: PASS
+order=38 size=109 degrees=5^10,6^28 girth=5 diameter=3
+delta*=17/3; lambda_min=-3-sqrt(7)
+3D+17I: 38 positive exact Fraction pivots
+smallest pivot=12434320241260060/51172748480408387

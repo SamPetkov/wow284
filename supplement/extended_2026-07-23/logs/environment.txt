@@ -1,0 +1,4 @@
+Python 3.13.5
+SymPy 1.14.0
+NetworkX 3.6.1
+NumPy 2.3.5

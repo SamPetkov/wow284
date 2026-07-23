@@ -1,0 +1,643 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\F}{\mathbb F_5}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\PhiScore}{\Phi}
+
+\hypersetup{
+  pdftitle={Exact Verification Notes for 38-, 39-, 40-, 42-, and 50-Vertex Counterexamples to WOW-284},
+  pdfauthor={Samuil Petkov},
+  pdfsubject={Exact graph constructions, distance spectra, and generalization mechanisms for WOW-284},
+  pdfkeywords={WOW-284, distance spectrum, dual degree, Hoffman-Singleton graph, Moore graph, cage}
+}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{lemma}[theorem]{Lemma}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\title[Further exact counterexamples to WOW-284]
+{Exact Verification Notes for 38-, 39-, 40-, 42-, and 50-Vertex Counterexamples to WOW-284}
+\author{Samuil Petkov}
+\address{\'Ecole normale sup\'erieure, Universit\'e PSL, Paris, France}
+\email{samuil.petkov@ens.psl.eu}
+\date{23 July 2026}
+\subjclass[2020]{Primary 05C50; Secondary 05C12, 05E30}
+\keywords{distance spectrum, dual degree, girth, Moore graph, Hoffman--Singleton graph, cage, counterexample}
+
+\begin{document}
+
+\begin{abstract}
+This working note verifies an induced 40-vertex counterexample to the Graffiti
+conjecture WOW-284 and records smaller induced descendants.  The 40-vertex
+$(6,5)$-cage has minimum dual degree $6$ and least distance eigenvalue $-5$.
+Deleting any edge endpoints produces a 38-vertex graph with
+\[
+ \delta^*=\frac{17}{3},\qquad
+ \lambda_{\min}(D)=-3-\sqrt7,
+ \qquad
+ \PhiScore=\frac83-\sqrt7>0.
+\]
+Exact exhaustive computation shows that all 120 edge-endpoint deletions have
+the same distance characteristic polynomial; all 40 single-vertex deletions
+are also strict counterexamples.  We prove a spectral criterion for every
+regular girth-at-least-five graph of diameter three, derive a Moore
+second-subconstituent construction, and record both positive and negative
+generalization tests.  No minimality, first-discovery, or unconditional
+infinite-family claim is made.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+\section{Definitions and scope}
+
+For a finite simple connected graph $G$, write $d(v)$ for vertex degree and
+\[
+ d^*(v)=\frac1{d(v)}\sum_{u\in N(v)}d(u),
+ \qquad
+ \delta^*(G)=\min_{v\in V(G)}d^*(v).
+\]
+Let $D(G)$ be the ordinary graph-distance matrix and let
+$\partial_n(G)=\lambda_{\min}(D(G))$.  WOW-284 asserts that every connected
+graph of order at least three and girth at least five satisfies
+\[
+ \delta^*(G)\le -\partial_n(G)
+\]
+\cite[Conjecture~7.16]{AouchicheHansen2014}.  The counterexample score is
+\[
+ \PhiScore(G)=\delta^*(G)+\lambda_{\min}(D(G)).
+\]
+A strict counterexample has $\PhiScore(G)>0$.
+
+The statements below have two independent forms of verification.  The
+analytic calculations use exact matrix identities and characteristic
+polynomials.  The accompanying programs reconstruct graph distances by
+integer breadth-first search and use exact rational or integer arithmetic.
+Floating-point computation is used only in the explicitly labelled
+three-vertex exploratory screen.
+
+\section{The ambient 50-vertex coordinate graph}
+
+All coordinates lie in $\F$.  Introduce vertices
+\[
+ \{P_{i,j}:i,j\in\F\}\mathbin{\dot\cup}
+ \{Q_{k,\ell}:k,\ell\in\F\}
+\]
+and edges
+\[
+ P_{i,j}\sim P_{i,j+1},\qquad
+ Q_{k,\ell}\sim Q_{k,\ell+2},\qquad
+ P_{i,j}\sim Q_{k,ik+j}.
+\]
+This is the Hoffman--Singleton graph, although no named-graph theorem is
+needed for the finite certificates.  Its adjacency matrix $A_{HS}$ satisfies
+\begin{equation}\label{eq:HS-square}
+ A_{HS}^2=6I-A_{HS}+J.
+\end{equation}
+Indeed, adjacent vertices have no common neighbor and nonadjacent vertices
+have exactly one.  Thus it is 7-regular, has girth five and diameter two, and
+\[
+ \Spec(A_{HS})=\{7^{(1)},2^{(28)},(-3)^{(21)}\}.
+\]
+Since $D=2J-2I-A_{HS}$,
+\[
+ \Spec(D)=\{91^{(1)},1^{(21)},(-4)^{(28)}\}.
+\]
+Hence $\delta^*=7$ and $\PhiScore=3$.  The classical construction and Moore
+graph context originate with Hoffman and Singleton
+\cite{HoffmanSingleton1960}; the distance spectrum was previously recorded
+in the cage literature \cite{HowladerPanigrahi2022}.
+
+\section{The 40-vertex regular counterexample}
+
+Delete the ten vertices
+\[
+ S=\{P_{0,j},Q_{0,j}:j\in\F\}
+\]
+and call the remaining induced graph $R$.  The deleted vertices induce a
+Petersen graph: the $P$-vertices and $Q$-vertices form two 5-cycles and the
+cross edges $P_{0,j}Q_{0,j}$ form a perfect matching.  This realizes the
+classical 40-vertex $(6,5)$-cage
+\cite{OKeefeWong1979,Wong1979,ExooJajcay2013,KlinMuzychukZivAv2009}.
+
+\begin{theorem}\label{thm:R40}
+The graph $R$ is simple, connected and 6-regular on 40 vertices, has girth
+five and diameter three, and has spectra
+\[
+ \Spec(A(R))=
+ \{6^{(1)},2^{(18)},1^{(4)},(-2)^{(5)},(-3)^{(12)}\},
+\]
+\[
+ \Spec(D(R))=
+ \{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}.
+\]
+Consequently
+\[
+ \delta^*(R)=6,
+ \qquad
+ \lambda_{\min}(D(R))=-5,
+ \qquad
+ \PhiScore(R)=1.
+\]
+\end{theorem}
+
+\begin{proof}
+Every surviving vertex loses exactly one neighbor in $S$, so $R$ is
+6-regular and has $40\cdot6/2=120$ edges.  It is induced in a girth-five
+graph and retains a full $P$-layer 5-cycle, so its girth is exactly five.
+
+Order the ambient adjacency matrix as
+\[
+ A_{HS}=\begin{pmatrix}B&C\\C^{\mathsf T}&P\end{pmatrix},
+\]
+where $B=A(R)$ and $P$ is the Petersen adjacency matrix.  Each deleted vertex
+has four outside neighbors, while two distinct deleted vertices have no
+common outside neighbor.  Hence
+\[
+ C^{\mathsf T}C=4I_{10}.
+\]
+Taking the upper-right block of \eqref{eq:HS-square} gives
+\begin{equation}\label{eq:BC}
+ BC=C(J-I-P).
+\end{equation}
+The columns of $C$ are independent.  Since
+\[
+ \Spec(P)=\{3^{(1)},1^{(5)},(-2)^{(4)}\},
+\]
+Equation~\eqref{eq:BC} gives the spectrum
+$\{6^{(1)},(-2)^{(5)},1^{(4)}\}$ on $\operatorname{col}(C)$.
+
+If $x\in\ker(C^{\mathsf T})$, then $x\perp\one$, because
+$C\one=\one$.  The upper-left block of \eqref{eq:HS-square} therefore gives
+\[
+ (B^2+B-6I)x=0.
+\]
+The remaining 30 eigenvalues are $2$ or $-3$.  Dimension and trace yield
+multiplicities 18 and 12.  In particular, the regular eigenvalue 6 is simple,
+so $R$ is connected.
+
+For completeness, the same block equations give a structural diameter bound.
+If two nonadjacent outside vertices have their unique ambient common neighbor
+outside $S$, their distance in $R$ is two.  If their unique common neighbor is
+the same vertex of $S$, then the corresponding entry of $B^2$ is zero and,
+using \eqref{eq:BC}, the corresponding entry of $B^3$ is six.  Thus every
+pair is at distance at most three.  The Moore bound excludes diameter two,
+since $40>1+6+6\cdot5=37$.  Hence the diameter is three.
+
+For every connected $k$-regular graph of girth at least five and diameter
+three,
+\begin{equation}\label{eq:diam3-polynomial}
+ D=3J+(k-3)I-2A-A^2;
+\end{equation}
+this is proved in Section~\ref{sec:diam3}.  Here $k=6$.  The principal
+distance eigenvalue is 75, while a nonprincipal adjacency eigenvalue $\theta$
+maps to
+\[
+ 3-2\theta-\theta^2=4-(\theta+1)^2.
+\]
+Substitution gives the displayed distance spectrum.  Regularity gives
+$\delta^*(R)=6$, completing the proof.
+\end{proof}
+
+\section{The 38-vertex edge-deletion counterexample}
+
+Delete the adjacent vertices
+\[
+ a=P_{1,0},\qquad b=P_{1,1}
+\]
+from $R$, and call the resulting graph $H$.  Equivalently, delete from the
+50-vertex coordinate graph
+\[
+ \{P_{0,j},Q_{0,j}:j\in\F\}\cup\{P_{1,0},P_{1,1}\}.
+\]
+Relabeling the surviving ambient labels increasingly by $0,\ldots,37$, an
+independent graph6 specification is
+\begin{verbatim}
+egCGGc??G?_@?H????G?@??C?@HCP?AG_OAIaG@qGaBH?Q?HGA??c@@?HG?s_H?E_SA?
+@OGC?@OI??OGD??WA_O?E@@@??CCE???GKC??AKCC??EAAA??B?
+\end{verbatim}
+
+\begin{theorem}\label{thm:H38}
+The graph $H$ is simple and connected, has 38 vertices, 109 edges, girth five
+and diameter three, and has degree multiset $6^{(28)},5^{(10)}$.  Moreover,
+\[
+ \delta^*(H)=\frac{17}{3},
+ \qquad
+ \lambda_{\min}(D(H))=-3-\sqrt7,
+\]
+and therefore
+\[
+ \PhiScore(H)=\frac83-\sqrt7>0.
+\]
+\end{theorem}
+
+\begin{proof}
+Induced deletion preserves simplicity and cannot create a triangle or
+4-cycle.  A distinct $P$-layer remains a 5-cycle.  Exact breadth-first search
+from every vertex gives connectedness and diameter three.
+
+Let
+\[
+ X=N_R(a)\setminus\{b\},\qquad
+ Y=N_R(b)\setminus\{a\}.
+\]
+The girth condition implies that $X$ and $Y$ are disjoint and that no vertex
+of $X\cup Y$ has a remaining neighbor in $X\cup Y$.  Thus these ten vertices
+have degree five and all their remaining neighbors have degree six.  Every
+other vertex has degree six.  A degree-six vertex has at most one neighbor in
+$X$ and at most one in $Y$, or a 4-cycle would result.  If it has $t$ such
+neighbors, where $t\in\{0,1,2\}$, then
+\[
+ d^*(v)=\frac{5t+6(6-t)}6=6-\frac{t}{6}.
+\]
+There are $10\cdot5=50$ incidences from $X\cup Y$ to the 28 degree-six
+vertices, so some degree-six vertex has $t=2$.  Hence
+$\delta^*(H)=17/3$.
+
+The exact distance characteristic polynomial is recorded in
+Appendix~\ref{app:polynomials}.  It contains the factor
+$(x^2+6x+2)^2$, whose roots are $-3\pm\sqrt7$.  An exact Sturm count shows
+that the complete characteristic polynomial has exactly one distinct root
+below $-28/5$.  Since
+\[
+ -3-\sqrt7<-\frac{28}{5}
+ \quad\Longleftrightarrow\quad
+ 7>\left(\frac{13}{5}\right)^2,
+\]
+this is the least distance eigenvalue.  Independently, an exact rational
+$LDL^{\mathsf T}$ decomposition of $3D(H)+17I$ has 38 positive pivots; the
+smallest in the fixed graph6 order is
+\[
+ \frac{12434320241260060}{51172748480408387}>0.
+\]
+Finally,
+\[
+ \frac83>\sqrt7
+ \quad\text{because}\quad
+ \frac{64}{9}>7,
+\]
+so the violation is strict.
+\end{proof}
+
+\section{Order 39 and order 42}
+
+\subsection{Deleting one vertex from the 40-vertex graph}
+Delete $P_{1,0}$ from $R$.  Its six former neighbors have degree five and the
+other 33 vertices have degree six.  A degree-six vertex is adjacent to at
+most one degree-five vertex, by the absence of 4-cycles.  Since incidences
+exist, the minimum dual degree is
+\[
+ \delta^*=\frac{5+5\cdot6}{6}=\frac{35}{6}.
+\]
+Exact rational factorization gives
+\[
+ 6D+35I\succ0;
+\]
+the smallest pivot in the fixed coordinate order is
+\[
+ \frac{128650413252103}{36129805596929}>0.
+\]
+Thus the 39-vertex graph is a strict counterexample.  Its exact distance
+characteristic polynomial appears in Appendix~\ref{app:polynomials}.
+
+\subsection{The second subconstituent of one ambient vertex}
+Fix $P_{0,0}$ in the Hoffman--Singleton graph and delete it together with all
+seven of its neighbors.  The remaining 42 vertices form a 6-regular graph
+with
+\[
+ \Spec(A)=\{6^{(1)},2^{(21)},(-1)^{(6)},(-3)^{(14)}\},
+\]
+\[
+ \Spec(D)=\{81^{(1)},4^{(6)},0^{(14)},(-5)^{(21)}\}.
+\]
+Hence $\delta^*=6$ and $\PhiScore=1$.  Section~\ref{sec:subconstituent}
+places this example in a parameterized Moore-graph construction.
+
+\section{Exact finite descendant families}
+
+The scripts do more than verify one selected vertex and one selected edge.
+They exhaust the corresponding labelled deletion classes inside the fixed
+40-vertex graph.
+
+\begin{proposition}\label{prop:descendants}
+For every vertex $v$ of $R$, the graph $R-v$ has
+$\delta^*=35/6$ and the same exact distance characteristic polynomial
+$P_{39}$ displayed in Appendix~\ref{app:polynomials}.  The polynomial has no
+root at or below $-35/6$, so all 40 labelled single-vertex deletions are strict
+counterexamples.
+
+For every edge $uv$ of $R$, the graph $R-\{u,v\}$ has
+$\delta^*=17/3$ and the same exact distance characteristic polynomial
+$P_{38}$.  Its least root is $-3-\sqrt7$, so all 120 labelled edge-endpoint
+deletions are strict counterexamples.
+\end{proposition}
+
+\begin{proof}
+The program \texttt{scripts/verify\_descendant\_families.py} enumerates all
+40 vertices and all 120 edges.  For each induced graph it reconstructs the
+integer distance matrix by breadth-first search, computes every dual degree
+as a rational number, and computes the characteristic polynomial over
+$\mathbb Z$.  Equality with $P_{39}$ or $P_{38}$ is exact.  One Sturm count
+for each common polynomial then proves the strict spectral bound for every
+member of the finite class.  No graph-isomorphism assumption is used.
+\end{proof}
+
+\begin{remark}
+A numerical screen of all $\binom{40}{3}=9880$ three-vertex deletions found no
+positive score; its best value was approximately $-0.306979936667$.  That
+screen is deliberately not promoted to an exact theorem and is not a
+minimality proof.
+\end{remark}
+
+\section{A general diameter-three criterion}\label{sec:diam3}
+
+\begin{theorem}\label{thm:diam3}
+Let $G$ be a connected $k$-regular graph of girth at least five and diameter
+three.  If its adjacency eigenvalues are
+\[
+ k=\theta_0>\theta_1\ge\cdots\ge\theta_{n-1},
+\]
+then
+\[
+ D=3J+(k-3)I-2A-A^2,
+\]
+the principal distance eigenvalue is $3n-k^2-k-3$, and every nonprincipal
+adjacency eigenvalue $\theta$ gives the distance eigenvalue
+\[
+ \mu(\theta)=k-2-(\theta+1)^2.
+\]
+Consequently
+\[
+ G\text{ refutes WOW-284}
+ \quad\Longleftrightarrow\quad
+ \max_{\theta\ne k}|\theta+1|<\sqrt{2k-2}.
+\]
+\end{theorem}
+
+\begin{proof}
+The absence of triangles and 4-cycles means that two vertices at distance two
+have exactly one common neighbor.  Therefore the distance-two matrix is
+\[
+ A_2=A^2-kI.
+\]
+Since the diameter is three,
+\[
+ A_3=J-I-A-A_2.
+\]
+Now $D=A+2A_2+3A_3$, which simplifies to the asserted polynomial.  On
+$\one^\perp$, $J$ vanishes, giving $\mu(\theta)$.  Since regularity gives
+$\delta^*=k$ and the principal distance eigenvalue is positive, the strict
+WOW inequality is equivalent to
+\[
+ k>\max_{\theta\ne k}\big((\theta+1)^2-k+2\big),
+\]
+which is the displayed criterion.
+\end{proof}
+
+\begin{corollary}[Bipartite obstruction]
+A connected $k$-regular bipartite graph of diameter three and girth at least
+five is not a strict counterexample for $k\ge3$.
+\end{corollary}
+
+\begin{proof}
+The adjacency eigenvalue $-k$ is nonprincipal.  It gives
+\[
+ \mu(-k)=k-2-(k-1)^2=-k^2+3k-3.
+\]
+For $k\ge3$, the corresponding value of $-\mu(-k)$ is at least $k$, with
+equality only at $k=3$.
+\end{proof}
+
+As exact negative tests, the Odd graph $O_4=KG(7,3)$ has
+\[
+ \Spec(D)=\{82^{(1)},2^{(14)},(-2)^{(6)},(-7)^{(14)}\},
+\]
+so $\delta^*=4<7$.  The Heawood graph has
+\[
+ \chi_D(x)=(x-27)(x+3)(x^2+4x-4)^6,
+\]
+so its least distance eigenvalue is $-2-2\sqrt2< -3$.  Neither is a
+counterexample.
+
+\section{Moore second subconstituents}\label{sec:subconstituent}
+
+\begin{theorem}\label{thm:second-sub}
+Let $M$ be a degree-$K$ Moore graph of diameter two, with $K\ge3$, and fix a
+vertex $v$.  Let $X$ be the subgraph induced by the vertices at distance two
+from $v$.  Then
+\[
+ |V(X)|=K(K-1),\qquad X\text{ is }(K-1)\text{-regular},
+\]
+$X$ has girth at least five and diameter three, and
+\[
+ \lambda_{\min}(D(X))=-\frac{5+\sqrt{4K-3}}2.
+\]
+Consequently
+\[
+ \PhiScore(X)=K-1-\frac{5+\sqrt{4K-3}}2,
+\]
+which is positive exactly for integer $K\ge6$.
+\end{theorem}
+
+\begin{proof}
+Relative to $\{v\}\sqcup N(v)\sqcup V(X)$, write
+\[
+ A(M)=
+ \begin{pmatrix}
+ 0&\one^{\mathsf T}&0\\
+ \one&0&C\\
+ 0&C^{\mathsf T}&B
+ \end{pmatrix}.
+\]
+Each vertex of $X$ has one neighbor in $N(v)$ and $K-1$ in $X$, so $B$ is
+$(K-1)$-regular.  Distinct rows of $C$ have disjoint support and row sum
+$K-1$, hence $CC^{\mathsf T}=(K-1)I$.  The middle-right block of the Moore
+identity
+\[
+ A(M)^2=(K-1)I-A(M)+J
+\]
+gives
+\[
+ CB=J-C.
+\]
+Thus $B$ has eigenvalue $-1$ on the $(K-1)$-dimensional image of
+$C^{\mathsf T}$ orthogonal to $\one$, while the principal eigenvalue is
+$K-1$.  On $\ker C$, the bottom-right block reduces to
+\[
+ B^2+B-(K-1)I=0.
+\]
+The two remaining adjacency roots are
+\[
+ r=\frac{-1+\sqrt{4K-3}}2,
+ \qquad
+ s=\frac{-1-\sqrt{4K-3}}2.
+\]
+The graph has diameter three; equivalently, its intersection array is
+$\{K-1,K-2,1;1,1,K-1\}$.  Applying Theorem~\ref{thm:diam3} with
+$k=K-1$, the root $r$ gives
+\[
+ (K-3)-(r+1)^2=-\frac{5+\sqrt{4K-3}}2,
+\]
+which is the least distance eigenvalue.  The final inequality is elementary:
+for integer $K\ge3$, it becomes strict precisely at $K\ge6$.
+\end{proof}
+
+For $K=7$, Theorem~\ref{thm:second-sub} is the explicit 42-vertex graph.  A
+degree-57 Moore graph, if it exists, would produce a 56-regular example on
+3192 vertices.  Its existence remains unresolved; recent work still treats
+it as the open case \cite{SmithMontemanni2026}.  Therefore this theorem is a
+parameterized construction, not an unconditional infinite family.
+
+\section{An equitable-deletion framework}
+
+The 40-vertex construction is part of a more general block mechanism.
+
+\begin{proposition}\label{prop:equitable-delete}
+Let $M$ be a degree-$K$ Moore graph of diameter two.  Partition its vertices
+as $V(M)=R\sqcup S$ and write
+\[
+ A(M)=\begin{pmatrix}B&C\\C^{\mathsf T}&P\end{pmatrix}.
+\]
+Assume that $M[S]$ is $r$-regular and every vertex of $R$ has exactly $t>0$
+neighbors in $S$.  Then $M[R]$ is $(K-t)$-regular.  If $Py=\eta y$ and
+$y\perp\one$, then
+\[
+ BCy=-(1+\eta)Cy,
+ \qquad
+ \|Cy\|^2=(K-1-\eta-\eta^2)\|y\|^2.
+\]
+Moreover, on $\ker(C^{\mathsf T})$,
+\[
+ B^2+B-(K-1)I=0.
+\]
+Whenever $M[R]$ has diameter three, these adjacency data can be inserted
+directly into Theorem~\ref{thm:diam3}.
+\end{proposition}
+
+\begin{proof}
+The upper-right and lower-right blocks of the Moore identity are
+\[
+ BC+CP=-C+J,
+ \qquad
+ C^{\mathsf T}C+P^2=(K-1)I-P+J.
+\]
+Apply these identities to an eigenvector orthogonal to $\one$.  Finally,
+$C\one=t\one$ implies that $\ker(C^{\mathsf T})\subseteq\one^\perp$, and
+the upper-left block gives the last equation.
+\end{proof}
+
+For the 40-vertex graph, $K=7$, $S$ is the induced Petersen graph,
+$r=3$, and $t=1$.  A counting specialization is also useful: if $S$ itself
+is a degree-$r$ Moore graph and every outside vertex has exactly one neighbor
+in $S$, then cross-edge counting forces
+\[
+ K=r^2-r+1.
+\]
+The known chain $C_5\subset$ Petersen $\subset$ Hoffman--Singleton realizes
+$(r,K)=(2,3)$ and $(3,7)$, but it does not currently yield an infinite chain.
+
+\section{Other generalization checks}
+
+\subsection{Balanced coordinate-layer deletions}
+For $m=0,1,2,3,4$, delete the full $P$-layers and $Q$-layers with first
+coordinate in $\{0,\ldots,m-1\}$.  Exact representative calculations give:
+\[
+\begin{array}{c@{\qquad}c@{\qquad}c@{\qquad}c@{\qquad}c}
+\toprule
+m&|V|&\text{degree}&\lambda_{\min}(D)&\PhiScore\\
+\midrule
+0&50&7&-4&3\\
+1&40&6&-5&1\\
+2&30&5&-6&-1\\
+3&20&4&-7&-3\\
+4&10&3&-3&0\\
+\bottomrule
+\end{array}
+\]
+Thus the natural layer-deletion chain produces the 50- and 40-vertex strict
+counterexamples, but does not continue to smaller strict examples.
+
+\subsection{What remains open}
+The checks in this package cover:
+\begin{enumerate}[label=(\roman*)]
+\item all regular diameter-two girth-five graphs through the Moore mechanism;
+\item every regular girth-at-least-five diameter-three graph through the exact
+      adjacency-spectrum criterion;
+\item Moore second subconstituents;
+\item equitable induced-subgraph deletions, including the Petersen deletion;
+\item all one-vertex and edge-endpoint deletions of the fixed 40-vertex graph;
+\item the balanced layer-deletion chain, the Odd graph $O_4$, and the Heawood
+      graph.
+\end{enumerate}
+No unconditional infinite family is established.  In particular, fixed-degree
+diameter-three graphs have bounded order by the Moore bound, so an infinite
+family through Theorem~\ref{thm:diam3} would require unbounded degree or a
+new operation outside the diameter-three setting.  Covers, subdivisions, and
+vertex-replacement operations are not asserted to preserve the strict
+inequality; no exact preservation theorem was found for them.
+
+\section{Reproducibility and certificate separation}
+
+Run, from the package root,
+\begin{verbatim}
+python scripts/verify_wow284_38_40_42.py
+python scripts/verify_38_graph6_independent.py
+python scripts/verify_descendant_families.py
+python scripts/explore_generalizations.py
+\end{verbatim}
+The first script reconstructs the ambient coordinate graph and verifies the
+42-, 40-, 39-, and 38-vertex results.  The second starts only from graph6,
+uses NetworkX shortest-path routines, and implements a separate exact
+\texttt{Fraction}-based $LDL^{\mathsf T}$ algorithm.  The third exhausts the
+40 singleton and 120 edge deletions with exact characteristic polynomials and
+Sturm counts.  The fourth contains exact family checks and one clearly marked
+floating-point screen.  SymPy and NetworkX are cited in
+\cite{MeurerEtAl2017,HagbergSchultSwart2008}.
+
+Machine-readable graph6 strings, complete adjacency lists and edge lists are
+in \texttt{data/graphs/}.  The package includes captured outputs and SHA-256
+checksums.  These are reproducibility certificates, not external peer review
+or a claim of priority.
+
+\appendix
+\section{Exact distance characteristic polynomials}\label{app:polynomials}
+
+For the 39-vertex graph,
+\begin{align*}
+P_{39}(x)={}&x^9(x+5)^{12}(x^2+6x+3)\\
+&\cdot(x^3+3x^2-15x-7)^2(x^3+3x^2-15x-3)^2\\
+&\cdot(x^4-78x^3+303x^2-70x-450).
+\end{align*}
+
+For the 38-vertex graph,
+\begin{align*}
+P_{38}(x)={}&x^4(x-2)(x+5)^8(x^2+6x+2)^2\\
+&\cdot(x^3+3x^2-15x-3)\\
+&\cdot(x^4+5x^3-7x^2-23x-6)\\
+&\cdot(x^5+9x^4+7x^3-77x^2-54x-4)\\
+&\cdot(x^9-67x^8-404x^7+1772x^6+7205x^5\\
+&\hspace{2.2em}-18489x^4-17018x^3+20288x^2+16824x+1680).
+\end{align*}
+
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}

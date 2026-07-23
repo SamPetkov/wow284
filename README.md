@@ -1,4 +1,4 @@
-# Moore Graphs of Diameter Two and the Failure of WOW-284
+# Exact Counterexamples and Spectral Mechanisms for WOW-284
 
 **Author:** Samuil Petkov<br>
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
@@ -33,12 +33,56 @@ Thus
 
 and the conjectured inequality fails by the strict gap (3).
 
-The degree-7 graph is the Hoffman-Singleton graph. The proof does not rely on that
-identification: it verifies directly from coordinates over
-(mathbb F_5) that every adjacent pair has no common neighbor and every
+## A 40-vertex induced counterexample
+
+Deleting the induced Petersen graph
+`{P_(0,j), Q_(0,j) : j in F_5}` leaves the classical 40-vertex `(6,5)`-cage.
+It is 6-regular, has girth five and diameter three, and has exact spectra
+
+\[
+\operatorname{Spec}A=
+\{6^{(1)},2^{(18)},1^{(4)},(-2)^{(5)},(-3)^{(12)}\},
+\]
+
+\[
+\operatorname{Spec}D=
+\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}.
+\]
+
+Therefore `delta*=6>5=-lambda_min(D)`, a strict gap of one. The manuscript
+gives a self-contained block-matrix proof, and `scripts/verify_40.py` checks
+the construction, BFS distances, block identities, characteristic
+polynomials, and a positive rational `LDL^T` certificate exactly.
+
+The 40-vertex result is not currently Lean-formalized. The complete Lean
+artifact continues to cover the explicit 50-vertex graph and the scalar
+Moore-degree threshold.
+
+## Further exact counterexamples
+
+The same coordinate graph produces verified strict counterexamples of orders
+38, 39, 40, 42, and 50. The explicit 38-vertex example has
+
+\[
+\delta^*=\frac{17}{3},\qquad
+\lambda_{\min}(D)=-3-\sqrt7,
+\qquad
+\delta^*+\lambda_{\min}(D)=\frac83-\sqrt7>0.
+\]
+
+Exact exhaustive computation proves that all 40 labelled single-vertex
+deletions of the 40-vertex graph and all 120 labelled edge-endpoint deletions
+are strict counterexamples. The repository also proves a regular
+diameter-three spectral criterion and a parameterized construction from Moore
+second subconstituents. It does not claim that order 38 is minimal or that the
+construction gives an unconditional infinite family.
+
+The degree-7 graph is the Hoffman-Singleton graph. The proof does not rely on
+that identification: it verifies directly from coordinates over
+\(\mathbb F_5\) that every adjacent pair has no common neighbor and every
 nonadjacent pair has exactly one. That certificate gives connectedness,
 diameter two, girth five, and the matrix identity
-(A^2=6I-A+J), from which the full spectrum follows.
+\(A^2=6I-A+J\), from which the full spectrum follows.
 
 ## Prior work and scope
 
@@ -57,8 +101,8 @@ self-contained coordinate proof.
 The targeted source search documented in [`SOURCE_LEDGER.md`](SOURCE_LEDGER.md)
 did not locate an earlier source explicitly connecting the Hoffman-Singleton
 graph to WOW-284. That search is not a proof of priority. The manuscript makes
-no claim that the observation is first, that the distance spectrum is new, or
-that 50 is the smallest counterexample order.
+no claim that the observation is first, that any displayed distance spectrum
+is new, or that 38 is the smallest counterexample order.
 
 Primary links:
 
@@ -66,6 +110,9 @@ Primary links:
 - [Hoffman-Singleton paper](https://doi.org/10.1147/rd.45.0497)
 - [Howlader-Panigrahi distance-spectrum paper](https://doi.org/10.1016/j.laa.2021.11.014)
 - [Howlader-Panigrahi arXiv source](https://arxiv.org/abs/2109.05274)
+- [O'Keefe-Wong 40-vertex cage](https://doi.org/10.1016/0095-8956(79)90052-2)
+- [Wong uniqueness theorem](https://doi.org/10.1002/jgt.3190030413)
+- [Klin-Muzychuk-Ziv-Av structural study](https://doi.org/10.1307/mmj/1242071692)
 
 ## Repository map
 
@@ -74,12 +121,23 @@ Primary links:
 - `manuscript.md` - generated noncanonical reading copy.
 - `references.bib` - bibliography maintenance file.
 - `src/wow284_graph.py` - standard-library coordinate construction, BFS, girth, and dual-degree routines.
+- `src/wow284_induced40.py` - exact induced 40-vertex construction and structural certificate.
 - `scripts/verify_exact.py` - exact SymPy characteristic-polynomial and rational (LDL^{\mathsf T}) certificate.
+- `scripts/verify_40.py` - exact block, spectrum, and positive-definiteness certificate for the 40-vertex graph.
+- `scripts/verify_extended.py` - cross-platform runner for all extended exact certificates.
+- `scripts/verify_wow284_38_40_42.py` - combined exact verifier for orders 38, 39, 40, and 42.
+- `scripts/verify_38_graph6_independent.py` - graph6/integer-BFS/Fraction-LDL audit of the 38-vertex graph.
+- `scripts/verify_descendant_families.py` - exhaustive exact audit of all 40 singleton and 120 edge-endpoint deletions.
+- `scripts/explore_generalizations.py` - exact controls plus a separately labelled numerical screen.
+- `scripts/export_graphs.py` - deterministic graph6, adjacency-list, edge-list, and summary exporter.
 - `scripts/export_graph_data.py` - deterministic edge, adjacency, and distance CSV exporter.
 - `scripts/generate_lean_diagonalization.py` - deterministic exact-data generator for the Lean spectral certificate.
 - `tests/` - exhaustive structural and exact spectral regression tests.
 - `results/verification.json` - machine-readable exact verification record.
+- `results/verification_40.json` - machine-readable exact verification record for the 40-vertex graph.
 - `results/edges.csv`, `results/adjacency_matrix.csv`, `results/distance_matrix.csv` - complete graph data.
+- `data/graphs/` - machine-readable representations of the 38-, 39-, 40-, 42-, and 50-vertex graphs.
+- `supplement/extended_2026-07-23/` - checksum-preserved original extended handoff, report, code, data, and captured outputs.
 - `arxiv/wow284_arxiv_source.zip` - minimal arXiv source archive containing `main.tex`, `references.bib`, and `main.bbl` only.
 - `SOURCE_LEDGER.md`, `REVIEW.md`, `PROVENANCE.md` - attribution, novelty, proof-audit, and provenance records.
 - `CITATION.cff`, `LICENSE`, `LICENSE_SCOPE.md` - citation and CC BY 4.0 metadata.
@@ -96,7 +154,9 @@ spectral diagonalization with multiplicities `91^1`, `(-4)^28`, and `1^21`.
 The scalar `k <= 3` threshold is formalized separately. The generic
 Moore-graph derivation in the paper remains a conventional proof, so the
 formal-verification claim is intentionally limited to the complete explicit
-counterexample and the scalar threshold.
+50-vertex counterexample and the scalar threshold. The 38-, 39-, 40-, and
+42-vertex results and extended criteria have analytic and exact Python
+certificates but are not yet part of the Lean build.
 
 The spectral computation is sharded into bounded integer certificates and
 then assembled into a rational two-sided inverse and diagonalization. The
@@ -120,12 +180,16 @@ On Windows, activate with `.venv\Scripts\Activate.ps1`; on POSIX systems, use
 ```bash
 python -m pytest -q
 python scripts/verify_exact.py --output results/verification.json
+python scripts/verify_40.py --output results/verification_40.json
 python scripts/export_graph_data.py --output-dir results
+python scripts/verify_extended.py
 ```
 
-The symbolic verification is exact. It does not use floating-point
-eigenvalues. The distance matrix is constructed by 50 independent integer BFS
-runs rather than by the manuscript's formula (D=2J-2I-A).
+The theorem-level verification is exact and does not use floating-point
+eigenvalues. Distance matrices are reconstructed by integer BFS rather than
+from the manuscript's spectral identities. To include the explicitly labelled
+numerical three-vertex screen, run
+`python scripts/verify_extended.py --include-exploratory`.
 
 ## Build and synchronize the manuscript
 

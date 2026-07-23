@@ -33,7 +33,7 @@ proof package credited to Samuil Petkov at ENS.
 ## Explicit non-goals
 
 - No minimality claim.
-- No exhaustive search below 50 vertices.
+- No exhaustive search over all graphs below order 38.
 - No claim that the distance spectrum is new.
 - No claim of absolute priority without additional evidence.
 - No arXiv submission on the author's behalf; only a ready upload artifact.

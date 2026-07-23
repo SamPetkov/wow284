@@ -1,0 +1,22 @@
+40 vertices: PASS
+  size=120, degree=6, girth=5, diameter=3
+  chi_A=(x-6)(x-2)^18(x-1)^4(x+2)^5(x+3)^12
+  chi_D=(x-75)(x-3)^5*x^16*(x+5)^18
+  delta*=6, lambda_min(D)=-5, gap=1
+42 vertices: PASS
+  size=126, degree=6, girth=5, diameter=3
+  chi_A=(x-6)(x-2)^21(x+1)^6(x+3)^14
+  chi_D=(x-81)(x-4)^6*x^14*(x+5)^21
+  delta*=6, lambda_min(D)=-5, gap=1
+39 vertices: PASS
+  size=114, degrees 6^33 and 5^6, girth=5, diameter=3
+  delta*=35/6 and 6D+35I has 39 positive rational LDL pivots
+  smallest pivot in this ordering: 128650413252103/36129805596929
+38 vertices: PASS
+  delete P_(1,0), P_(1,1) from the 40-vertex graph
+  size=109, degrees 6^28 and 5^10, girth=5, diameter=3
+  delta*=17/3
+  lambda_min(D)=-3-sqrt(7), certified by factorization and Sturm count
+  exact gap=8/3-sqrt(7)>0 because 64>63
+  3D+17I: 38 positive rational LDL pivots; smallest=12434320241260060/51172748480408387
+ALL EXACT CHECKS PASSED

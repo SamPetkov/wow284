@@ -1,6 +1,6 @@
 # Mathematical and reproducibility review
 
-**Object reviewed:** *Moore Graphs of Diameter Two and the Failure of WOW-284*<br>
+**Object reviewed:** *Exact Counterexamples and Spectral Mechanisms for WOW-284*<br>
 **Author:** Samuil Petkov<br>
 **Manuscript version:** 19 July 2026<br>
 **Review status:** Adversarial internal audit after conceptual revision; not external peer review
@@ -13,6 +13,14 @@ definitions of dual degree and ordered distance eigenvalues used by Aouchiche
 and Hansen. The coordinate graph is a simple connected 7-regular graph on 50
 vertices with girth five. Its least distance eigenvalue is -4, so its minimum
 dual degree 7 strictly violates the conjectured upper bound 4.
+
+The 23 July extension also passes adversarial mathematical and computational
+review. It adds exact counterexamples of orders 38, 39, 40, and 42; exact
+finite statements for all 40 singleton and 120 edge-endpoint deletions of the
+40-vertex graph; a regular diameter-three criterion; and a repaired
+Moore-second-subconstituent mechanism. The 38-vertex least distance eigenvalue
+is exactly `-3-sqrt(7)`. The three-vertex deletion screen remains explicitly
+numerical and is not treated as a theorem or a minimality argument.
 
 The revision materially improves the paper by replacing a graph-specific
 calculation with a sharp structural statement: for every diameter-two Moore
@@ -48,9 +56,9 @@ will depend on that journal's appetite for concise counterexample notes.
 The strongest remaining presentation risk is archival rather than
 mathematical: a mutable repository URL should be replaced or supplemented by
 a versioned release DOI before final journal submission. The explicit
-counterexample now has a complete Lean spectral certificate; the manuscript
-correctly limits that claim rather than presenting the generic Moore-graph
-derivation as fully formalized.
+50-vertex counterexample has a complete Lean spectral certificate; the
+manuscript correctly excludes the 38/39/40/42 extension and generic criteria
+from that formal-verification claim pending the expanded artifact.
 
 ## General Moore-graph audit
 
@@ -198,6 +206,7 @@ operations are exact.
 - arXiv moderation and endorsement have not occurred.
 - The targeted novelty search cannot rule out unpublished or non-indexed prior
   observations.
-- No exhaustive search below 50 vertices was attempted.
-- The complete explicit counterexample certificate passes strict Lean 4.31
-  checking; the generic Moore-graph derivation remains a conventional proof.
+- No exhaustive search over all graphs below order 38 was attempted.
+- The complete explicit 50-vertex certificate and scalar threshold pass strict
+  Lean 4.31 checking; the other constructions and generic derivations remain
+  analytic and exact-computational results.

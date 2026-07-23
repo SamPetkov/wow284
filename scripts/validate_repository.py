@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -31,10 +32,23 @@ def main() -> None:
         "REVIEW.md",
         "SOURCE_LEDGER.md",
         "results/verification.json",
+        "results/verification_40.json",
         "results/edges.csv",
         "results/adjacency_matrix.csv",
         "results/distance_matrix.csv",
         "arxiv/wow284_arxiv_source.zip",
+        "src/wow284_induced40.py",
+        "scripts/verify_40.py",
+        "scripts/verify_extended.py",
+        "scripts/verify_wow284_38_40_42.py",
+        "scripts/verify_38_graph6_independent.py",
+        "scripts/verify_descendant_families.py",
+        "data/graphs/G38.graph6",
+        "data/graphs/G39.graph6",
+        "data/graphs/G40.graph6",
+        "data/graphs/G42.graph6",
+        "data/graphs/G50.graph6",
+        "supplement/extended_2026-07-23/SHA256SUMS",
     ]
     missing = [relative for relative in expected if not (ROOT / relative).is_file()]
     require(not missing, f"missing release files: {missing}")
@@ -43,11 +57,17 @@ def main() -> None:
     require(r"\usepackage[margin=1in]{geometry}" in tex, "one-inch margins not fixed")
     require(r"\date{19 July 2026}" in tex, "manuscript date mismatch")
     require(r"\author{Samuil Petkov}" in tex, "author mismatch")
-    require(r"\title[Moore graphs and the failure of WOW-284]" in tex, "title mismatch")
+    require(r"\title[Exact counterexamples to WOW-284]" in tex, "title mismatch")
     require("Howlader and Panigrahi" in tex, "prior distance-spectrum attribution missing")
     require("No claim is made" in tex, "scope limitation missing")
     require("The explicit 50-vertex counterexample is fully formalized and verified" in tex,
             "completed explicit Lean verification status missing")
+    require(r"\section{A 40-vertex induced counterexample}" in tex,
+            "40-vertex counterexample section missing")
+    require(r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}" in tex,
+            "40-vertex distance spectrum missing")
+    require("are analytic and exact-computational results" in tex,
+            "extended formalization scope limitation missing")
     require("formal verification claim here is deliberately limited" in
             " ".join(tex.split()),
             "formal verification scope limitation missing")
@@ -77,6 +97,11 @@ def main() -> None:
         "10.1016/j.laa.2021.11.014",
         "10.7717/peerj-cs.103",
         "10.3390/axioms15050332",
+        "10.1016/0095-8956(79)90052-2",
+        "10.1002/jgt.3190030413",
+        "10.1307/mmj/1242071692",
+        "10.1016/S0024-3795(03)00483-X",
+        "10.25080/TCWV9851",
     ]:
         require(doi in bibliography, f"missing DOI: {doi}")
 
@@ -85,6 +110,17 @@ def main() -> None:
     require(certificate["graph"]["girth"] == 5, "certificate girth mismatch")
     require(certificate["spectra"]["least_distance_eigenvalue"] == -4, "certificate spectrum mismatch")
     require(certificate["wow284"]["strict_gap"] == 3, "certificate gap mismatch")
+
+    certificate_40 = json.loads(
+        (ROOT / "results" / "verification_40.json").read_text(encoding="utf-8")
+    )
+    require(certificate_40["graph"]["order"] == 40, "40-certificate order mismatch")
+    require(certificate_40["graph"]["girth"] == 5, "40-certificate girth mismatch")
+    require(certificate_40["graph"]["diameter"] == 3, "40-certificate diameter mismatch")
+    require(certificate_40["spectra"]["least_distance_eigenvalue"] == -5,
+            "40-certificate spectrum mismatch")
+    require(certificate_40["wow284"]["strict_gap"] == 1,
+            "40-certificate gap mismatch")
 
     with (ROOT / "results" / "edges.csv").open(encoding="utf-8", newline="") as handle:
         require(sum(1 for _ in csv.reader(handle)) == 176, "edge CSV row count mismatch")
@@ -99,6 +135,17 @@ def main() -> None:
             archive.namelist() == ["main.tex", "references.bib", "main.bbl"],
             "arXiv archive contains unexpected files",
         )
+
+    supplement = ROOT / "supplement" / "extended_2026-07-23"
+    for line in (supplement / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
+        match = re.fullmatch(r"([0-9a-fA-F]{64})\s+\*?(.+)", line)
+        require(match is not None, f"invalid supplement checksum line: {line!r}")
+        expected_hash, relative = match.groups()
+        payload = supplement / Path(relative)
+        require(payload.is_file(), f"missing supplement payload: {relative}")
+        actual_hash = hashlib.sha256(payload.read_bytes()).hexdigest()
+        require(actual_hash.lower() == expected_hash.lower(),
+                f"supplement checksum mismatch: {relative}")
 
     text_extensions = {".tex", ".bib", ".md", ".py", ".toml", ".txt", ".yml", ".cff", ".sh", ".ps1"}
     mojibake_markers = ("\ufffd", "\u00e2\u20ac", "\u00c3")

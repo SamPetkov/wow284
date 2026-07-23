@@ -2,7 +2,7 @@ WOW-284 RELEASE VERIFICATION
 ============================
 
 Manuscript version: 19 July 2026
-Verification run: 22 July 2026
+Verification run: 23 July 2026
 Author: Samuil Petkov
 
 MATHEMATICAL CERTIFICATE
@@ -25,6 +25,15 @@ PASS  D + 7I: exact rational LDL^T factorization with 50 positive pivots;
       smallest pivot in the chosen ordering is 2352/563.
 PASS  WOW-284 values: delta* = 7, least distance eigenvalue = -4,
       and strict violation gap 7 - 4 = 3.
+PASS  Extended exact examples: orders 38, 39, 40, and 42 reconstructed from
+      coordinates with the claimed girth, diameter, dual degrees, spectra,
+      Sturm bounds, and positive rational LDL^T certificates.
+PASS  Independent G38 graph6 audit: integer BFS and handwritten Fraction-LDL;
+      delta* = 17/3 and least distance eigenvalue = -3 - sqrt(7).
+PASS  Exact descendant families: 40/40 singleton deletions and 120/120
+      edge-endpoint deletions are strict counterexamples.
+PASS  Deterministic graph6, adjacency-list, edge-list, and summary export for
+      orders 38, 39, 40, 42, and 50.
 
 LEAN 4.31 CERTIFICATE
 ---------------------
@@ -48,13 +57,14 @@ PASS  Forbidden scan: no sorry, admit, native_decide, bv_decide, unsafe
 PASS  Representative #print axioms reports only propext, Classical.choice,
       and Quot.sound.
 NOTE  The completed formal-verification claim covers the explicit 50-vertex
-      counterexample and the scalar threshold. The generic Moore-graph
-      derivation in the manuscript is a conventional mathematical proof.
+      counterexample and the scalar threshold. The 38-, 39-, 40-, and
+      42-vertex results and extended criteria are not yet Lean-formalized.
 
 AUTOMATED CHECKS
 ----------------
-PASS  pytest: 6 tests passed.
+PASS  pytest: 9 tests passed.
 PASS  scripts/verify_exact.py.
+PASS  scripts/verify_extended.py.
 PASS  scripts/generate_lean_diagonalization.py --check.
 PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
       distance CSV files.
@@ -77,14 +87,14 @@ PASS  Clean multi-pass LaTeX/BibTeX build: no final warnings, undefined
       citations/references, overfull/underfull boxes, or missing glyphs.
 PASS  PDF metadata: revised title, Samuil Petkov, and fixed
       creation/modification date 19 July 2026.
-PASS  Five pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
+PASS  Eleven pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
 PASS  Every reported font is embedded and subset.
-PASS  All five pages rendered at 130 dpi and inspected at original render
+PASS  All eleven pages rendered at 140 dpi and inspected at original render
       resolution: no clipping, overlap, malformed glyphs, blank spill pages,
       or broken bibliography/address layout.
 
 Verified PDF SHA-256:
-  61d78b1e954eebc8d44e206aeca4e51c18f37725782381fbcb38dbb167138ba0  main.pdf
+  e71eb9827cb95c7ba72dcbc687052543946c021d8773f58bfd181927d9387214  main.pdf
 
 ARXIV PACKAGE
 -------------
@@ -92,11 +102,11 @@ PASS  arxiv/wow284_arxiv_source.zip contains exactly, in this order:
       main.tex, references.bib, main.bbl.
 PASS  Archive members are byte-identical to the canonical repository files
       and carry the fixed timestamp 19 July 2026 12:00:00.
-PASS  A fresh extraction of the ZIP compiled independently to a five-page
+PASS  A fresh extraction of the ZIP compiled independently to an eleven-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  6ee44208cbf35937fa30424957c56bb06279248936a236f6ea7149c0968532d3
+  7abbae5a93a440c62d8f659de856fc65b9902c9bbcb7301327d848e9c253e81f
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT

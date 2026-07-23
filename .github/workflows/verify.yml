@@ -26,6 +26,12 @@ jobs:
         run: python -m pytest -q
       - name: Run the exact certificate
         run: python scripts/verify_exact.py --output tmp/ci-verification.json
+      - name: Run the exact 40-vertex certificate
+        run: python scripts/verify_40.py --output tmp/ci-verification-40.json
+      - name: Run the extended exact certificates
+        run: python scripts/verify_extended.py
+      - name: Run exact generalization checks and labelled exploratory screen
+        run: python scripts/explore_generalizations.py
       - name: Check generated Lean spectral data
         run: python scripts/generate_lean_diagonalization.py --check
       - name: Regenerate graph data and compare

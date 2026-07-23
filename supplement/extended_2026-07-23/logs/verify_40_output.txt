@@ -1,0 +1,5 @@
+40-vertex exact audit: PASS
+order=40 size=120 degree=6 girth=5 diameter=3
+chi_A=(x-6)(x-2)^18(x-1)^4(x+2)^5(x+3)^12
+chi_D=(x-75)(x-3)^5*x^16*(x+5)^18
+delta*=6; lambda_min(D)=-5; WOW-284 gap=1

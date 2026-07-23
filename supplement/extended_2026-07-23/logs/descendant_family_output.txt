@@ -1,0 +1,8 @@
+EXACT DESCENDANT-FAMILY CHECKS: PASS
+40/40 single-vertex deletions:
+  delta*=35/6 and identical exact distance characteristic polynomial P39
+  P39 has no root <= -35/6, so all 40 are strict counterexamples
+120/120 edge-endpoint deletions:
+  delta*=17/3 and identical exact distance characteristic polynomial P38
+  lambda_min=-3-sqrt(7), so all 120 are strict counterexamples
+No isomorphism or minimality assertion is used.

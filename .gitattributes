@@ -1,12 +1,2 @@
-* text=auto eol=lf
-*.bbl text eol=lf
-*.tex text eol=lf
-*.bib text eol=lf
-*.md text eol=lf
-*.py text eol=lf
-*.yml text eol=lf
-*.cff text eol=lf
-*.csv text eol=lf
-*.json text eol=lf
-*.pdf binary
-*.zip binary
+# Preserve the checksum-frozen handoff byte-for-byte on every platform.
+supplement/extended_2026-07-23/** -text

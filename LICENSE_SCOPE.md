@@ -13,7 +13,7 @@ repository metadata.
 
 ## Recommended attribution
 
-> Samuil Petkov, *Moore Graphs of Diameter Two and the Failure of WOW-284*,
+> Samuil Petkov, *Exact Counterexamples and Spectral Mechanisms for WOW-284*,
 > version dated 19 July 2026, <https://github.com/SamPetkov/wow284>, licensed
 > under CC BY 4.0. Changes were made.
 
