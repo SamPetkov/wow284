@@ -146,8 +146,8 @@ Moore graph constructed by Hoffman and
 Singleton~\cite{HoffmanSingleton1960} lies beyond that boundary and gives a strict
 violation.
 
-There is important prior spectral work.  Howlader and Panigrahi determine a
-distance polynomial for minimal \((k,5)\)-cages and explicitly list the
+Howlader and Panigrahi provide the relevant prior spectral calculation.  They
+determine a distance polynomial for minimal \((k,5)\)-cages and explicitly list the
 distance spectra of the Petersen, Hoffman--Singleton, and hypothetical
 degree-57 Moore
 graphs~\cite[Theorems~2.3 and~2.5(1)]{HowladerPanigrahi2022}; the existence of the
@@ -547,8 +547,8 @@ the proof.
 \section{Smaller induced counterexamples}\label{sec:smaller}
 
 The 40-vertex graph contains strict counterexamples of orders 39 and 38.
-All claims in this section are reproduced exactly by the accompanying
-programs; floating-point eigenvalues are not used.
+The accompanying programs verify the finite claims in this section using
+exact arithmetic; no theorem relies on floating-point eigenvalues.
 
 \subsection{Deleting the endpoints of an edge}
 
@@ -588,16 +588,21 @@ Put
 The girth condition implies that \(X\) and \(Y\) are disjoint and that no
 vertex of \(X\cup Y\) has a remaining neighbor in \(X\cup Y\).  These ten
 vertices therefore have degree five and all their remaining neighbors have
-degree six; every other vertex has degree six.  A degree-six vertex has at
+degree six; every other vertex has degree six.  The handshake lemma now gives
+\[
+ |E(H)|=\frac{28\cdot6+10\cdot5}{2}=109.
+\]
+Each of the ten degree-five vertices has five degree-six neighbors and hence
+dual degree \(6\).  A degree-six vertex has at
 most one neighbor in \(X\) and at most one in \(Y\), since two in either set
 would create a 4-cycle.  If it has \(t\in\{0,1,2\}\) neighbors in
 \(X\cup Y\), then
 \[
- d^*(v)=\frac{5t+6(6-t)}6=6-\frac{t}{6}.
+ d^*(v)=\frac{5t+6(6-t)}6=6-\frac{t}{6}\ge\frac{17}{3}.
 \]
 There are \(10\cdot5=50\) incidences from \(X\cup Y\) to the 28 degree-six
-vertices, so some degree-six vertex has \(t=2\).  Hence
-\(\delta^*(H)=17/3\).
+vertices, so some degree-six vertex has \(t=2\).  The lower bound is therefore
+attained, and \(\delta^*(H)=17/3\).
 
 The exact distance characteristic polynomial is displayed in
 Appendix~\ref{app:polynomials}.  It contains \((x^2+6x+2)^2\), whose roots
@@ -652,8 +657,8 @@ The graph \(X_{42}\) is 6-regular and has
 \]
 Hence
 \(\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})\).
-The parameterized construction behind this classical second subconstituent is proved in
-Section~\ref{sec:subconstituent}; its adjacency spectrum is also tabulated by
+Section~\ref{sec:subconstituent} proves the general construction.  The
+adjacency spectrum is also tabulated by
 van Dam and Haemers~\cite[Table~3]{vanDamHaemers2003}.
 
 \subsection{Exact labelled descendant families}
@@ -731,6 +736,9 @@ eigenvalue occurs among the nonprincipal images.  Finally regularity gives
 criterion.
 \end{proof}
 
+Thus, in diameter three, WOW-284 is governed by the spread of the
+nonprincipal adjacency spectrum about \(-1\).
+
 \begin{corollary}[Bipartite obstruction]
 A connected \(k\)-regular bipartite graph of diameter three and girth at
 least five is not a strict counterexample for \(k\ge3\).
@@ -744,7 +752,7 @@ The nonprincipal adjacency eigenvalue \(-k\) maps to
 Its negative is at least \(k\) for \(k\ge3\), with equality only at \(k=3\).
 \end{proof}
 
-For comparison, exact negative controls follow directly from
+For comparison, negative controls follow directly from
 Theorem~\ref{thm:diam3}.  The Odd graph \(O_4=KG(7,3)\) has adjacency
 spectrum
 \[
@@ -780,6 +788,9 @@ which is positive exactly for integers \(K\ge6\).
 \end{theorem}
 
 \begin{proof}
+Since \(X\) is an induced subgraph of the girth-five graph \(M\), it contains
+no triangle or 4-cycle.  Hence \(g(X)\ge5\).
+
 Relative to \(\{v\}\sqcup N(v)\sqcup V(X)\), write
 \[
  A(M)=
@@ -789,6 +800,8 @@ Relative to \(\{v\}\sqcup N(v)\sqcup V(X)\), write
  0&C^{\mathsf T}&B
  \end{pmatrix}.
 \]
+All zero and all-one blocks in this proof have the dimensions forced by the
+displayed partition.
 Each vertex of \(X\) has one neighbor in \(N(v)\) and \(K-1\) in \(X\),
 so \(B\) is \((K-1)\)-regular.  Distinct rows of \(C\) have disjoint support
 and row sum \(K-1\), hence \(CC^{\mathsf T}=(K-1)I_K\).  Therefore
@@ -844,7 +857,7 @@ there are \(m_r,m_s\), then the trace of \(B\) gives
 \((K-1)\) copies of \(-1\).  Since \(r>0>s\), both multiplicities are
 positive.
 
-We record the diameter argument explicitly.  Around any \(x\in X\), girth
+It remains to prove that \(X\) has diameter three.  Around any \(x\in X\), girth
 at least five gives \(1\), \(K-1\), and \((K-1)(K-2)\) distinct vertices in
 the first three distance layers of \(X\).  The remaining \(K-2\) vertices are
 exactly the other vertices of \(X\) sharing the unique neighbor of \(x\) in
@@ -920,6 +933,11 @@ into Theorem~\ref{thm:diam3}.
 \end{proposition}
 
 \begin{proof}
+Each vertex of \(U\) has degree \(K\) in \(M\) and exactly \(t\) neighbors in
+\(S\).  It therefore has \(K-t\) neighbors in \(U\), so \(M[U]\) is
+\((K-t)\)-regular.  All zero and all-one blocks in this proof have the
+dimensions forced by the displayed partition.
+
 The upper-right and lower-right blocks of the Moore identity are
 \[
  BC+CP=-C+J,
@@ -993,8 +1011,8 @@ preservation theorem.
 
 \section{Computational certificate}
 
-The accompanying Python programs supply several exact checks with deliberately
-separated dependencies.  The original 50-vertex certificate:
+The repository contains independent exact checks.  For the 50-vertex graph,
+the original certificate does the following:
 \begin{enumerate}
 \item constructs the 175 unordered edges and checks all 50 degrees;
 \item checks the common-neighbor count for every unordered vertex pair;
@@ -1009,17 +1027,21 @@ The resulting characteristic polynomial is
 \]
 and all 50 rational pivots are positive.  Set
 \[
-  M:=D+7I=L\Delta L^{\mathsf T}.
+  M:=D+7I.
 \]
-Since \(L\) is unit lower triangular, it is invertible.  Thus
-\(L^{\mathsf T}y\ne0\) for every nonzero \(y\), and
+The exact decomposition is
+\[
+  M=L\Delta L^{\mathsf T},
+\]
+where \(L\) is unit lower triangular and \(\Delta\) has strictly positive
+diagonal.  Hence \(L\) is invertible, and for every nonzero \(y\),
 \[
   y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
-  \Delta(L^{\mathsf T}y)>0,
+  \Delta(L^{\mathsf T}y)>0.
 \]
-Hence \(M=D+7I\) is positive definite.
+Thus \(M=D+7I\) is positive definite.
 
-A second exact script constructs \(R\) by the stated deletion and independently
+A second script constructs \(R\) by the stated deletion and independently
 checks its 40 degrees, all BFS distances, girth, the block identities
 \eqref{eq:c-block}--\eqref{eq:bc-intertwining}, and the characteristic
 polynomials
@@ -1036,9 +1058,9 @@ characteristic-polynomial, Sturm, and rational
 \(LDL^{\mathsf T}\) assertions used above.  A separate 38-vertex audit starts
 from the stored graph6 representation, reconstructs graph distances by
 integer breadth-first search through NetworkX~\cite{HagbergSchultSwart2008},
-and uses a handwritten \texttt{Fraction}-based decomposition.  This is
-independent of the coordinate representation and of SymPy's matrix
-factorization, although it is not an independently sourced graph.
+and uses a handwritten \texttt{Fraction}-based decomposition.  This audit
+uses a different graph representation and an independent
+\(LDL^{\mathsf T}\) implementation; the underlying graph is the same.
 
 Finally, \path{scripts/verify_descendant_families.py} exhausts the 40 labelled
 single-vertex and 120 labelled edge-endpoint deletions.  SymPy supplies exact
@@ -1118,8 +1140,8 @@ interests.  The manuscript source, exact verification code, machine-readable
 certificates, and build instructions are available in the public repository
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
 The computational archive corresponding to this manuscript is release
-\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.3-arxiv}
-{\texttt{v2.0.3-arxiv}}.
+\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.4-arxiv}
+{\texttt{v2.0.4-arxiv}}.
 
 \appendix
 \section{Exact distance characteristic polynomials}\label{app:polynomials}
