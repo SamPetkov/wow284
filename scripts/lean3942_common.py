@@ -225,7 +225,11 @@ private theorem MpadR_posDef : MpadR.PosDef := by
   simpa only [conjTranspose_eq_transpose] using
     deltaPadR_posDef.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit lpadR_isUnit)
 private theorem MpadR_submatrix : MpadR.submatrix embedPad embedPad = McoreR := by
-  rw [MpadR, McoreR, ← Matrix.map_submatrix, Mpad_submatrix]
+  ext i j
+  change ((Mpad (embedPad i) (embedPad j) : ℚ) : ℝ) =
+    ((Mcore i j : ℚ) : ℝ)
+  have h := congrArg (fun M : Matrix Vertex Vertex ℚ => M i j) Mpad_submatrix
+  exact_mod_cast h
 private theorem McoreR_posDef : McoreR.PosDef := by
   rw [← MpadR_submatrix]; exact MpadR_posDef.submatrix embedPad_injective
 private theorem McoreR_eq_shifted_distance :

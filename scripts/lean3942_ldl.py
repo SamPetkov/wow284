@@ -143,7 +143,12 @@ lemma coordPad_surj (v : PadVertex) :
 def McoreInt : Matrix Vertex Vertex ℤ :=
   ({spec.shift_scale} : ℤ) • Dcert +
     ({spec.shift_diag} : ℤ) • (1 : Matrix Vertex Vertex ℤ)
-{lean_int_matrix("MpadInt", m_pad_int, "PadVertex")}
+def MpadInt : Matrix PadVertex PadVertex ℤ := fun i j =>
+  if hi : i.val < {spec.order} then
+    if hj : j.val < {spec.order} then
+      McoreInt ⟨i.val, hi⟩ ⟨j.val, hj⟩
+    else 0
+  else if i = j then 1 else 0
 {lean_int_matrix("BpadInt", b_pad_int, "PadVertex")}
 {lean_int_matrix("BpadInvNumeratorInt", b_inverse_numerator_pad_int, "PadVertex")}
 def wPadInt : PadVertex → ℤ := ![{weight_vector}]
@@ -225,18 +230,20 @@ open Matrix
 
 theorem ldl_identity : Lpad * DeltaPad * Lpad.transpose = Mpad := by
   rw [DeltaPad_eq_scaled_cast, Matrix.mul_smul, Matrix.smul_mul]
-  have hcast := congrArg castPadMatrix ldl_scaled_identity_int
-  simp only [castPadMatrix_mul, castPadMatrix_transpose] at hcast
-  rw [hcast]
+  change ((1 : ℚ) / {identity_scale}) •
+      (castPadMatrix BpadInt * castPadMatrix WpadInt *
+        (castPadMatrix BpadInt).transpose) =
+    castPadMatrix MpadInt
+  rw [← castPadMatrix_transpose, ← castPadMatrix_mul, ← castPadMatrix_mul,
+    ldl_scaled_identity_int]
   ext i j
   simp [MscaledPadInt, Mpad, castPadMatrix]
 
 theorem lpad_left_inverse : LpadInv * Lpad =
     (1 : Matrix PadVertex PadVertex ℚ) := by
-  rw [LpadInv, Lpad, Matrix.smul_mul]
-  have hcast := congrArg castPadMatrix lpad_left_inverse_scaled_int
-  simp only [castPadMatrix_mul] at hcast
-  rw [hcast]
+  change (((1 : ℚ) / {inverse_scale}) •
+      castPadMatrix BpadInvNumeratorInt) * castPadMatrix BpadInt = 1
+  rw [Matrix.smul_mul, ← castPadMatrix_mul, lpad_left_inverse_scaled_int]
   ext i j
   by_cases hij : i = j
   · subst j
@@ -262,10 +269,15 @@ lemma embedPad_injective : Function.Injective embedPad := by
 private lemma MpadInt_submatrix :
     MpadInt.submatrix embedPad embedPad = McoreInt := by
   ext i j
-  decide
+  simp [MpadInt, embedPad]
 
 lemma Mpad_submatrix : Mpad.submatrix embedPad embedPad = Mcore := by
-  rw [Mpad, Mcore, ← Matrix.map_submatrix, MpadInt_submatrix]
+  ext i j
+  change ((MpadInt (embedPad i) (embedPad j) : ℤ) : ℚ) =
+    ((McoreInt i j : ℤ) : ℚ)
+  have h := congrArg (fun M : Matrix Vertex Vertex ℤ => M i j)
+    MpadInt_submatrix
+  exact_mod_cast h
 
 end Wow284.{ns}
 """
