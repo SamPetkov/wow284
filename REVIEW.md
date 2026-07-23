@@ -58,7 +58,7 @@ mathematical: a mutable repository URL should be replaced or supplemented by
 a versioned release DOI before final journal submission. The explicit
 50-vertex counterexample has a complete Lean spectral certificate; the
 manuscript correctly excludes the 38/39/40/42 extension and generic criteria
-from that formal-verification claim pending the expanded artifact.
+from that formal-verification claim.
 
 The supplied expanded Lean source materially advances that artifact but does
 not close it. For the 40-vertex graph it contains kernel-checkable finite

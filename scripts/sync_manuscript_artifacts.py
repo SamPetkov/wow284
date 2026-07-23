@@ -182,7 +182,7 @@ def validate_release_text() -> None:
         "The explicit 50-vertex counterexample is fully formalized and verified",
         r"\section{A 40-vertex induced counterexample}",
         r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}",
-        "are analytic and exact-computational results",
+        "verified by reproducible exact Python",
         r"\section{Smaller induced counterexamples}",
         r"\partial_{38}(H)=-3-\sqrt7",
         r"The scalar \(k\le3\) threshold",

@@ -66,8 +66,8 @@ def main() -> None:
             "40-vertex counterexample section missing")
     require(r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}" in tex,
             "40-vertex distance spectrum missing")
-    require("are analytic and exact-computational results" in tex,
-            "extended formalization scope limitation missing")
+    require("verified by reproducible exact Python" in tex,
+            "exact Python verification scope wording missing")
     require("formal verification claim here is deliberately limited" in
             " ".join(tex.split()),
             "formal verification scope limitation missing")

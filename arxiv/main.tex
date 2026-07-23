@@ -102,8 +102,8 @@ three, derive a parameterized construction from Moore second subconstituents,
 and give exact positive and negative controls.  No minimality,
 first-discovery, or unconditional infinite-family claim is made.  The
 50-vertex certificate and scalar Moore threshold are fully verified in Lean
-4.31; the additional constructions are proved analytically and checked by
-separate exact programs pending the expanded formalization.
+4.31; all five listed orders are verified by reproducible exact Python
+programs, and the additional constructions are also proved analytically.
 \end{abstract}
 
 \maketitle
@@ -972,11 +972,8 @@ formalized separately.  Section~\ref{sec:moore} remains a conventional proof;
 the formal verification claim here is deliberately limited to the explicit
 50-vertex counterexample and the scalar threshold.  The 38-, 39-, 40-, and
 42-vertex results, the descendant-family statements, and the extended
-criteria are analytic and exact-computational results.  Staged Lean sources
-for parts of the 38- and 40-vertex developments are included in the
-repository, but they are not part of the completed formal-verification claim;
-that scope will be expanded only after the staged target passes the same
-kernel, axiom, and placeholder audits.
+criteria are analytic results verified by reproducible exact Python
+certificates; they are not part of the completed Lean-verification claim.
 
 \section*{Scope, provenance, and disclosures}
 
