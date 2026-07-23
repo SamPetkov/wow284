@@ -183,19 +183,22 @@ import Mathlib.Analysis.Matrix.PosDef
 /-! Exact positive-definiteness bridge for the order-{spec.order} graph. -/
 namespace Wow284.{n}
 open Matrix
-noncomputable section
 def Dq : Matrix Vertex Vertex ℚ := D.map (Int.castRingHom ℚ)
 theorem Mcore_eq_shifted_distance :
     Mcore = ({a} : ℚ) • Dq + ({b} : ℚ) • (1 : Matrix Vertex Vertex ℚ) := by
-  rw [Mcore, McoreInt, Dq, semantic_distance_eq_Dcert]
+  rw [Mcore, Dq, semantic_distance_eq_Dcert]
   ext i j
-  by_cases h : i = j <;> simp [castCoreMatrix, h]
+  change ((({a} * Dcert i j + {b} * (if i = j then 1 else 0) : ℤ) : ℚ)) =
+    ({a} : ℚ) * ((Dcert i j : ℤ) : ℚ) +
+      ({b} : ℚ) * (if i = j then 1 else 0)
+  by_cases h : i = j <;> simp [h, Int.cast_add, Int.cast_mul]
 
 theorem deltaPad_posDef : DeltaPad.PosDef := Matrix.PosDef.diagonal pivotPad_positive
 theorem lpad_isUnit : IsUnit Lpad := Matrix.isUnit_of_left_inverse lpad_left_inverse
 theorem Mpad_posDef : Mpad.PosDef := by
   rw [← ldl_identity]
-  simpa using
+  rw [← Matrix.conjTranspose_eq_transpose_of_trivial]
+  exact
     deltaPad_posDef.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit lpad_isUnit)
 theorem Mcore_posDef : Mcore.PosDef := by
   rw [← Mpad_submatrix]; exact Mpad_posDef.submatrix embedPad_injective
@@ -203,14 +206,17 @@ theorem shifted_distance_posDef :
     (({a} : ℚ) • Dq + ({b} : ℚ) • (1 : Matrix Vertex Vertex ℚ)).PosDef := by
   rw [← Mcore_eq_shifted_distance]; exact Mcore_posDef
 
-def Dr : Matrix Vertex Vertex ℝ := D.map (Int.castRingHom ℝ)
-private def LpadR : Matrix PadVertex PadVertex ℝ := Lpad.map (Rat.castHom ℝ)
-private def DeltaPadR : Matrix PadVertex PadVertex ℝ := DeltaPad.map (Rat.castHom ℝ)
-private def MpadR : Matrix PadVertex PadVertex ℝ := Mpad.map (Rat.castHom ℝ)
-private def McoreR : Matrix Vertex Vertex ℝ := Mcore.map (Rat.castHom ℝ)
-private def LpadInvR : Matrix PadVertex PadVertex ℝ := LpadInv.map (Rat.castHom ℝ)
+noncomputable def Dr : Matrix Vertex Vertex ℝ := D.map (Int.castRingHom ℝ)
+private noncomputable def LpadR : Matrix PadVertex PadVertex ℝ := Lpad.map (Rat.castHom ℝ)
+private noncomputable def DeltaPadR : Matrix PadVertex PadVertex ℝ := DeltaPad.map (Rat.castHom ℝ)
+private noncomputable def MpadR : Matrix PadVertex PadVertex ℝ := Mpad.map (Rat.castHom ℝ)
+private noncomputable def McoreR : Matrix Vertex Vertex ℝ := Mcore.map (Rat.castHom ℝ)
+private noncomputable def LpadInvR : Matrix PadVertex PadVertex ℝ := LpadInv.map (Rat.castHom ℝ)
 private theorem deltaPadR_eq : DeltaPadR = diagonal (fun i => (pivotPad i : ℝ)) := by
-  ext i j; simp [DeltaPadR, DeltaPad, diagonal]
+  ext i j
+  change ((if i = j then pivotPad i else 0 : ℚ) : ℝ) =
+    if i = j then (pivotPad i : ℝ) else 0
+  by_cases h : i = j <;> simp [h]
 private theorem pivotPadR_positive (i : PadVertex) : 0 < (pivotPad i : ℝ) := by
   exact_mod_cast pivotPad_positive i
 private theorem deltaPadR_posDef : DeltaPadR.PosDef := by
@@ -219,12 +225,15 @@ private theorem lpadR_left_inverse : LpadInvR * LpadR = (1 : Matrix PadVertex Pa
   rw [LpadInvR, LpadR, ← Matrix.map_mul, lpad_left_inverse]; simp
 private theorem lpadR_isUnit : IsUnit LpadR := Matrix.isUnit_of_left_inverse lpadR_left_inverse
 private theorem ldl_identity_real : LpadR * DeltaPadR * LpadR.transpose = MpadR := by
-  rw [LpadR, DeltaPadR, MpadR, ← Matrix.map_mul, ← Matrix.map_transpose,
-    ← Matrix.map_mul]
+  rw [LpadR, DeltaPadR, MpadR, ← Matrix.map_mul]
+  change (Lpad * DeltaPad).map (Rat.castHom ℝ) *
+    (Lpad.transpose.map (Rat.castHom ℝ)) = Mpad.map (Rat.castHom ℝ)
+  rw [← Matrix.map_mul]
   exact congrArg (Matrix.map (Rat.castHom ℝ)) ldl_identity
 private theorem MpadR_posDef : MpadR.PosDef := by
   rw [← ldl_identity_real]
-  simpa using
+  rw [← Matrix.conjTranspose_eq_transpose_of_trivial]
+  exact
     deltaPadR_posDef.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit lpadR_isUnit)
 private theorem MpadR_submatrix : MpadR.submatrix embedPad embedPad = McoreR := by
   ext i j
@@ -247,8 +256,18 @@ theorem real_eigenpair_above_shift {{mu : ℝ}} {{x : Vertex → ℝ}}
     (hx : x ≠ 0) (heig : Dr *ᵥ x = mu • x) : (-{b} : ℝ) / {a} < mu := by
   have hpos := shifted_distance_real_posDef.dotProduct_mulVec_pos hx
   rw [add_mulVec, smul_mulVec, smul_mulVec, one_mulVec, heig] at hpos
-  simp only [star_trivial, dotProduct_add, dotProduct_smul] at hpos
-  have hnorm : 0 < dotProduct x x := dotProduct_self_pos.mpr hx
+  simp only [star_trivial, dotProduct_add, dotProduct_smul, smul_eq_mul] at hpos
+  have hnorm : 0 < dotProduct x x := by
+    have hnonneg : 0 ≤ dotProduct x x :=
+      Finset.sum_nonneg fun i _ => mul_self_nonneg (x i)
+    have hne : dotProduct x x ≠ 0 := (dotProduct_self_eq_zero).not.mpr hx
+    exact lt_of_le_of_ne hnonneg hne.symm
+  have hprod : 0 < (({a} : ℝ) * mu + {b}) * dotProduct x x := by
+    convert hpos using 1 <;> ring
+  have hcoeff : 0 < ({a} : ℝ) * mu + {b} := by
+    rcases (mul_pos_iff.mp hprod) with h | h
+    · exact h.1
+    · exact False.elim ((not_lt_of_ge hnorm.le) h.2)
   nlinarith
 end Wow284.{n}
 '''
