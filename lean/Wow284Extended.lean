@@ -5,6 +5,7 @@ import Wow284.Induced40.Gap
 import Wow284.Induced38.FiniteCertificates
 import Wow284.Induced38.LDLData
 import Wow284.Induced38.Gap
+import Wow284.Induced38.SpectralBridge
 import Wow284.DiameterThreeScalar
 import Wow284.MooreSecondThreshold
 import Wow284.PuncturedMooreThreshold

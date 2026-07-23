@@ -19,7 +19,8 @@ noncomputable section
 private theorem puncture_one_margin_of_five_le (k : ℕ) (hk : 5 ≤ k) :
     2 + Real.sqrt (k : ℝ) < (k : ℝ) - 1 / (k : ℝ) := by
   let x : ℝ := k
-  have hx5 : (5 : ℝ) ≤ x := by exact_mod_cast hk
+  have hx5 : (5 : ℝ) ≤ x := by
+    simpa [x] using (show (5 : ℝ) ≤ (k : ℝ) by exact_mod_cast hk)
   have hxpos : 0 < x := by nlinarith
   have hsnonneg : 0 ≤ Real.sqrt x := Real.sqrt_nonneg _
   have hsquare : (Real.sqrt x) ^ 2 = x := Real.sq_sqrt (by nlinarith)
@@ -28,7 +29,7 @@ private theorem puncture_one_margin_of_five_le (k : ℕ) (hk : 5 ≤ k) :
   have hm3 : 0 ≤ (x - 5) ^ 3 := by
     exact mul_nonneg hm2 hm
   have hm4 : 0 ≤ (x - 5) ^ 4 := by
-    exact sq_nonneg ((x - 5) ^ 2)
+    positivity
   have hpoly : 0 < (x ^ 2 - 2 * x - 1) ^ 2 - x ^ 3 := by
     have hid :
         (x ^ 2 - 2 * x - 1) ^ 2 - x ^ 3 =
@@ -56,7 +57,8 @@ private theorem puncture_one_margin_of_five_le (k : ℕ) (hk : 5 ≤ k) :
 private theorem puncture_edge_margin_of_five_le (k : ℕ) (hk : 5 ≤ k) :
     2 + Real.sqrt (k : ℝ) < (k : ℝ) - 2 / (k : ℝ) := by
   let x : ℝ := k
-  have hx5 : (5 : ℝ) ≤ x := by exact_mod_cast hk
+  have hx5 : (5 : ℝ) ≤ x := by
+    simpa [x] using (show (5 : ℝ) ≤ (k : ℝ) by exact_mod_cast hk)
   have hxpos : 0 < x := by nlinarith
   have hsnonneg : 0 ≤ Real.sqrt x := Real.sqrt_nonneg _
   have hsquare : (Real.sqrt x) ^ 2 = x := Real.sq_sqrt (by nlinarith)
@@ -65,7 +67,7 @@ private theorem puncture_edge_margin_of_five_le (k : ℕ) (hk : 5 ≤ k) :
   have hm3 : 0 ≤ (x - 5) ^ 3 := by
     exact mul_nonneg hm2 hm
   have hm4 : 0 ≤ (x - 5) ^ 4 := by
-    exact sq_nonneg ((x - 5) ^ 2)
+    positivity
   have hpoly : 0 < (x ^ 2 - 2 * x - 2) ^ 2 - x ^ 3 := by
     have hid :
         (x ^ 2 - 2 * x - 2) ^ 2 - x ^ 3 =

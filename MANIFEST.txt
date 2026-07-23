@@ -128,6 +128,7 @@ lean/Wow284/Induced38/LDLRight5.lean
 lean/Wow284/Induced38/LDLRight6.lean
 lean/Wow284/Induced38/LDLRight7.lean
 lean/Wow284/Induced38/PositiveDefiniteSkeleton.lean.template
+lean/Wow284/Induced38/SpectralBridge.lean
 lean/Wow284/Induced40/Basic.lean
 lean/Wow284/Induced40/DiagonalizationData.lean
 lean/Wow284/Induced40/DiagonalizationDefinitions.lean
@@ -164,6 +165,7 @@ lean/Wow284/MooreThreshold.lean
 lean/Wow284/PuncturedMooreSkeleton.lean
 lean/Wow284/PuncturedMooreThreshold.lean
 lean/Wow284Extended.lean
+lean/Wow284ExtensionAudit.lean
 lean/lake-manifest.json
 lean/lakefile.lean
 lean/lean-toolchain

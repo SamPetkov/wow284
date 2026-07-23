@@ -4,6 +4,7 @@ import Wow284.Induced40.DiagonalizationDistance
 namespace Wow284.Induced40
 
 /-- The generated diagonal contains the complete distance spectrum. -/
+set_option maxRecDepth 10000 in
 theorem distance_diagonal_counts :
     (Finset.univ.filter fun j : Vertex => distanceDiagonalInt j j = -5).card = 18 ∧
     (Finset.univ.filter fun j : Vertex => distanceDiagonalInt j j = 3).card = 5 ∧

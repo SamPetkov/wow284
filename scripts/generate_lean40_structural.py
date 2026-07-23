@@ -135,6 +135,7 @@ theorem diameter_at_most_three : ∀ u v : Vertex, HasPathAtMostThree u v := by
   rw [← coordVertex_surj u, ← coordVertex_surj v]
   exact diameter_coord _ _ _ _
 
+set_option maxRecDepth 10000 in
 theorem explicit_distance_three :
     ¬ HasPathAtMostTwo (0 : Vertex) 5 ∧ HasPathAtMostThree (0 : Vertex) 5 := by
   decide

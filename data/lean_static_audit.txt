@@ -1,8 +1,8 @@
 LEAN STATIC AUDIT
 =================
-Imported Lean files: 116
+Imported Lean files: 118
 Induced40 imported files: 31
-Induced38 imported files: 52
+Induced38 imported files: 53
 Non-imported templates: 4
 Visible sorry occurrences in templates: 3
 Imported sorry occurrences: 0

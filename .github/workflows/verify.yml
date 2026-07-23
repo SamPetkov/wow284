@@ -85,3 +85,5 @@ jobs:
           use-mathlib-cache: true
       - name: Compile the staged induced-graph extension
         run: cd lean && lake build Wow284Extension
+      - name: Report axioms used by representative extension theorems
+        run: cd lean && lake env lean Wow284ExtensionAudit.lean

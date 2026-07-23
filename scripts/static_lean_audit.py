@@ -35,6 +35,8 @@ IMPORT = re.compile(r"(?m)^import\s+([A-Za-z0-9_.]+)\s*$")
 
 
 def module_path(module: str) -> Path:
+    if module in {"Wow284Extended", "Wow284ExtensionAudit"}:
+        return LEAN / f"{module}.lean"
     parts = module.split(".")
     if parts[0] != "Wow284":
         raise ValueError(module)
@@ -48,7 +50,11 @@ def main() -> None:
     # Mathlib under ``lean/.lake/packages``; recursively scanning all of
     # ``lean`` is both slow and outside this audit's trust boundary.
     lean_files = sorted((LEAN / "Wow284").rglob("*.lean"))
-    for root_module in (LEAN / "Wow284.lean", LEAN / "Wow284Extended.lean"):
+    for root_module in (
+        LEAN / "Wow284.lean",
+        LEAN / "Wow284Extended.lean",
+        LEAN / "Wow284ExtensionAudit.lean",
+    ):
         if root_module.exists():
             lean_files.append(root_module)
     lean_files.sort()

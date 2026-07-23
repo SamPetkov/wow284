@@ -23,8 +23,9 @@ theorem moore_second_gap_positive_iff (K : ℕ) (hK : 2 ≤ K) :
     by_contra hnot
     have hK5 : K ≤ 5 := by omega
     have cases : K = 2 ∨ K = 3 ∨ K = 4 ∨ K = 5 := by omega
-    rcases cases with rfl | rfl | rfl | rfl <;>
-      norm_num at hgap hsquare hsnonneg ⊢ <;> nlinarith
+    rcases cases with rfl | rfl | rfl | rfl
+    all_goals norm_num at hgap hsquare hsnonneg ⊢
+    all_goals nlinarith
   · intro hK6
     have hK6r : (6 : ℝ) ≤ (K : ℝ) := by exact_mod_cast hK6
     nlinarith [sq_nonneg ((K : ℝ) - 6)]

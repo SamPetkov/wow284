@@ -228,7 +228,12 @@ def check_manifest_and_hashes() -> None:
     actual = sorted([*list_release_files(), "MANIFEST.txt", "SHA256SUMS"])
     recorded = (ROOT / "MANIFEST.txt").read_text(encoding="utf-8").splitlines()
     if recorded != actual:
-        raise RuntimeError("MANIFEST.txt is not synchronized")
+        missing = sorted(set(actual) - set(recorded))
+        stale = sorted(set(recorded) - set(actual))
+        raise RuntimeError(
+            "MANIFEST.txt is not synchronized"
+            f"; missing entries={missing}; stale entries={stale}"
+        )
     for line in (ROOT / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
         digest, relative = line.split("  ", 1)
         if sha256(ROOT / relative) != digest:
