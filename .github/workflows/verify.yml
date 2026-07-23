@@ -68,7 +68,26 @@ jobs:
           test -s main.pdf
           ! grep -E "undefined citations|undefined references|There were undefined" main.log
 
-  lean:
+  lean-38-40:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Reject proof placeholders and unsafe shortcuts
+        run: python scripts/static_lean_audit.py
+      - name: Build Lean 4.31 and the committed order-38/order-40 development
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: lean
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Compile order-38 and order-40 public endpoints
+        run: cd lean && lake build Wow284Extension
+      - name: Report order-38 and order-40 endpoint axioms
+        run: cd lean && lake env lean Wow284ExtensionAudit.lean
+
+  lean-39-42:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -81,10 +100,9 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Generate order-39 and order-42 Lean certificates
         run: python scripts/generate_lean39_42.py
-      - name: Reject proof placeholders and unsafe shortcuts
-        shell: bash
+      - name: Audit generated source hygiene and import closure
         run: python scripts/static_lean_audit.py
-      - name: Build the Lean development with Lean 4.31
+      - name: Install Lean 4.31 and restore the Mathlib cache
         uses: leanprover/lean-action@v1
         with:
           lake-package-directory: lean
@@ -92,13 +110,7 @@ jobs:
           test: false
           lint: false
           use-mathlib-cache: true
-      - name: Compile induced-graph counterexample certificates
-        run: |
-          cd lean
-          lake build Wow284Extension
-          lake env lean Wow284Generated3942.lean
-      - name: Report axioms used by representative extension theorems
-        run: |
-          cd lean
-          lake env lean Wow284ExtensionAudit.lean
-          lake env lean Wow284Generated3942Audit.lean
+      - name: Compile order-39 and order-42 public endpoints
+        run: cd lean && lake env lean Wow284Generated3942.lean
+      - name: Report order-39 and order-42 endpoint axioms
+        run: cd lean && lake env lean Wow284Generated3942Audit.lean
