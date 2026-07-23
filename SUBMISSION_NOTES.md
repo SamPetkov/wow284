@@ -1,9 +1,4 @@
-# arXiv submission notes
-
-These notes prepare an upload; they do not authorize or represent an actual
-arXiv submission.
-
-## Suggested metadata
+# arXiv metadata
 
 **Title:** Exact Counterexamples and Spectral Mechanisms for WOW-284
 
@@ -11,15 +6,9 @@ arXiv submission.
 
 **Primary category:** `math.CO`
 
-**Optional cross-list:** `math.SP` only if the submitter judges that the
-distance-spectrum content meets that category's current scope.
+**Cross-list:** `math.SP`
 
-**Comments:** Self-contained research note with exact Python verification for
-counterexamples of orders 38, 39, 40, 42, and 50. The explicit 50-vertex
-certificate and scalar Moore threshold have a complete Lean 4.31
-formalization; staged 38- and 40-vertex Lean sources are not included in the
-completed formal-verification claim. Includes a source and priority ledger.
-The audited PDF has 12 pages.
+**Comments:** 12 pages.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
@@ -40,39 +29,3 @@ The audited PDF has 12 pages.
 > infinite-family claim is made. The 50-vertex certificate and scalar Moore
 > threshold are verified in Lean 4.31; the additional constructions are
 > analytic and exact-computational pending the expanded formalization.
-
-## Upload artifact
-
-Upload `arxiv/wow284_arxiv_source.zip`. It contains exactly:
-
-```text
-main.tex
-references.bib
-main.bbl
-```
-
-The archive intentionally excludes the compiled PDF, logs, caches, code,
-audits, checksums, and GitHub files. arXiv's current TeX guidance says not to
-include extraneous files and permits a matching `.bbl` and `.bib`. The source
-uses a fixed date, not `\today`.
-
-## Final account-level checks
-
-Before clicking submit, Samuil Petkov should:
-
-- confirm the displayed name, ENS/PSL affiliation, and email address;
-- review the arXiv-generated PDF page by page, even though the local PDF was
-  rendered and checked;
-- choose the final category and CC BY 4.0 option in the arXiv interface;
-- confirm title capitalization, abstract, comments, and author order;
-- verify that the `.bbl` is recognized and all DOI/arXiv references render;
-- confirm any required endorsement or institutional-email step;
-- decide whether the public AI-assistance disclosure is satisfactory; and
-- do not extend the formal-verification claim beyond the 50-vertex certificate
-  and scalar threshold until the staged 40-/38-vertex source has its missing
-  endpoint wrappers and passes Lean 4.31, axiom review, and AXLE strict;
-- rerun the novelty search immediately before announcement if priority
-  language is changed.
-
-Do not add a claim of first discovery, a new distance spectrum, or minimality
-without new evidence.
