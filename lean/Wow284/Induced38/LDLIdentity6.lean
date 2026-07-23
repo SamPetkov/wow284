@@ -7,49 +7,57 @@ set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_0 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 0 d) =
       (Mpad) (coordPad 6 c) (coordPad 0 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_1 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 1 d) =
       (Mpad) (coordPad 6 c) (coordPad 1 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_2 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 2 d) =
       (Mpad) (coordPad 6 c) (coordPad 2 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_3 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 3 d) =
       (Mpad) (coordPad 6 c) (coordPad 3 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_4 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 4 d) =
       (Mpad) (coordPad 6 c) (coordPad 4 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_5 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 5 d) =
       (Mpad) (coordPad 6 c) (coordPad 5 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_6 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 6 d) =
       (Mpad) (coordPad 6 c) (coordPad 6 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma ldl_identity_rows_6_7 : ∀ c d : Fin 5,
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad 7 d) =
       (Mpad) (coordPad 6 c) (coordPad 7 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 lemma ldl_identity_row_6 (s : Fin 8) (c d : Fin 5) :
     (Lpad * DeltaPad * Lpad.transpose) (coordPad 6 c) (coordPad s d) =

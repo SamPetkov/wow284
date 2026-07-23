@@ -8,12 +8,14 @@ namespace Wow284.Induced38
 set_option maxRecDepth 10000 in
 lemma degree_range_row_10 : ∀ c : Fin 2,
     degree (coordVertex 10 c) = 5 ∨ degree (coordVertex 10 c) = 6 := by
-  decide
+  intro c
+  fin_cases c <;> decide
 
 set_option maxRecDepth 10000 in
 lemma dual_bound_row_10 : ∀ c : Fin 2,
     (17 : ℚ) / 3 ≤ dualDegree (coordVertex 10 c) := by
-  decide
+  intro c
+  fin_cases c <;> decide
 
 set_option maxRecDepth 10000 in
 lemma diameter_rows_10_0 : ∀ c d : Fin 2,

@@ -49,7 +49,8 @@ def shard(name: str, lhs: str, rhs: str, r: int) -> str:
             f"lemma {name}_rows_{r}_{s} : ∀ c d : Fin 5,",
             f"    ({lhs}) (coordPad {r} c) (coordPad {s} d) =",
             f"      ({rhs}) (coordPad {r} c) (coordPad {s} d) := by",
-            "  decide",
+            "  intro c d",
+            "  fin_cases c <;> fin_cases d <;> decide",
             "",
         ]
     lines += [

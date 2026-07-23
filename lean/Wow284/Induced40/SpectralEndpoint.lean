@@ -32,7 +32,7 @@ theorem dual_degree_six (v : Vertex) : dualDegree v = 6 := by
             exact degree_six u
       _ = (neighbors v).card * 6 := by simp
       _ = 36 := by simpa [degree] using congrArg (fun n : ℕ => n * 6) hdeg
-  simp [dualDegree, hdeg, hsum]
+  norm_num [dualDegree, hdeg, hsum]
 
 /-- The matrix diagonalized by the finite certificate is the cast of the
 semantic distance matrix, rather than merely an unrelated data matrix. -/

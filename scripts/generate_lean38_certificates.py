@@ -96,12 +96,14 @@ end Wow284.Induced38
             f'''set_option maxRecDepth 10000 in
 lemma degree_range_row_{r} : ∀ c : Fin 2,
     degree (coordVertex {r} c) = 5 ∨ degree (coordVertex {r} c) = 6 := by
-  decide
+  intro c
+  fin_cases c <;> decide
 
 set_option maxRecDepth 10000 in
 lemma dual_bound_row_{r} : ∀ c : Fin 2,
     (17 : ℚ) / 3 ≤ dualDegree (coordVertex {r} c) := by
-  decide
+  intro c
+  fin_cases c <;> decide
 ''',
         ]
         for s in range(19):

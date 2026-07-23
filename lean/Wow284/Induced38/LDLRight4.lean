@@ -7,49 +7,57 @@ set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_0 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 0 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 0 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_1 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 1 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 1 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_2 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 2 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 2 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_3 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 3 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 3 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_4 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 4 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 4 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_5 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 5 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 5 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_6 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 6 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 6 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 set_option maxRecDepth 20000 in
 lemma lpad_right_inverse_rows_4_7 : ∀ c d : Fin 5,
     (Lpad * LpadInv) (coordPad 4 c) (coordPad 7 d) =
       ((1 : Matrix PadVertex PadVertex ℚ)) (coordPad 4 c) (coordPad 7 d) := by
-  decide
+  intro c d
+  fin_cases c <;> fin_cases d <;> decide
 
 lemma lpad_right_inverse_row_4 (s : Fin 8) (c d : Fin 5) :
     (Lpad * LpadInv) (coordPad 4 c) (coordPad s d) =
