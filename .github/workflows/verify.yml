@@ -7,6 +7,8 @@ on:
 
 permissions:
   contents: read
+  issues: write
+  pull-requests: write
 
 jobs:
   exact:
@@ -86,7 +88,7 @@ jobs:
         shell: bash
         run: |
           if ! (cd lean && lake build Wow284Extension) >/tmp/lean-38-40.log 2>&1; then
-            tail -n 240 /tmp/lean-38-40.log
+            tail -n 120 /tmp/lean-38-40.log
             exit 1
           fi
           tail -n 20 /tmp/lean-38-40.log
@@ -117,26 +119,59 @@ jobs:
           lint: false
           use-mathlib-cache: true
       - name: Compile order-39 public endpoint
+        id: compile39
+        continue-on-error: true
         shell: bash
-        run: |
-          if ! (cd lean && lake env lean Wow284/Induced39/Counterexample.lean) >/tmp/lean-39.log 2>&1; then
-            tail -n 240 /tmp/lean-39.log
-            exit 1
-          fi
-          tail -n 20 /tmp/lean-39.log
+        run: cd lean && lake env lean Wow284/Induced39/Counterexample.lean >/tmp/lean-39.log 2>&1
       - name: Compile order-42 public endpoint
+        id: compile42
+        continue-on-error: true
         shell: bash
-        run: |
-          if ! (cd lean && lake env lean Wow284/Induced42/Counterexample.lean) >/tmp/lean-42.log 2>&1; then
-            tail -n 240 /tmp/lean-42.log
-            exit 1
-          fi
-          tail -n 20 /tmp/lean-42.log
+        run: cd lean && lake env lean Wow284/Induced42/Counterexample.lean >/tmp/lean-42.log 2>&1
       - name: Report order-39 and order-42 endpoint axioms
+        id: axioms3942
+        if: steps.compile39.outcome == 'success' && steps.compile42.outcome == 'success'
+        continue-on-error: true
         shell: bash
+        run: cd lean && lake env lean Wow284Generated3942Audit.lean >/tmp/lean-39-42-axioms.log 2>&1
+      - name: Publish concise generated-Lean diagnostics
+        if: always()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          COMPILE39: ${{ steps.compile39.outcome }}
+          COMPILE42: ${{ steps.compile42.outcome }}
+          AXIOMS3942: ${{ steps.axioms3942.outcome }}
         run: |
-          if ! (cd lean && lake env lean Wow284Generated3942Audit.lean) >/tmp/lean-39-42-axioms.log 2>&1; then
-            tail -n 240 /tmp/lean-39-42-axioms.log
+          failed=0
+          report=/tmp/generated-lean-diagnostics.md
+          {
+            echo "## Generated Lean 39/42 diagnostic"
+            echo
+            echo "Commit: \`${GITHUB_SHA}\`"
+            echo
+          } > "$report"
+          for item in "39:$COMPILE39:/tmp/lean-39.log" "42:$COMPILE42:/tmp/lean-42.log" "axioms:$AXIOMS3942:/tmp/lean-39-42-axioms.log"; do
+            IFS=: read -r label outcome logfile <<< "$item"
+            if [[ "$outcome" == "failure" ]]; then
+              failed=1
+              {
+                echo "### $label failed"
+                echo
+                echo '```text'
+                tail -n 100 "$logfile"
+                echo '```'
+                echo
+              } >> "$report"
+            elif [[ "$outcome" == "success" ]]; then
+              echo "- $label: PASS" >> "$report"
+            fi
+          done
+          if [[ $failed -ne 0 ]]; then
+            cat "$report"
+            if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              gh pr comment "${{ github.event.pull_request.number }}" --body-file "$report"
+            fi
             exit 1
           fi
           cat /tmp/lean-39-42-axioms.log
