@@ -1,0 +1,33 @@
+import Mathlib
+
+/-!
+# A universal two-coordinate obstruction
+
+For vertices `u,v` at distance `d`, the vector `e_u-e_v` has distance-matrix
+quadratic value `-2d` and squared norm `2`.  Consequently
+`lambda_min(D) ≤ -diameter`, and a strict WOW-284 counterexample must satisfy
+`δ*(G) > diameter(G)`.
+
+The matrix calculation is isolated here as a compact future formalization
+target.  It is also useful for ruling out subdivision and pendant-attachment
+constructions whose minimum dual degree is at most their diameter.
+-/
+
+namespace Wow284.DiameterWitness
+
+open Matrix
+
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+/-- Two-coordinate quadratic-form identity. -/
+theorem two_coordinate_value
+    (D : Matrix n n ℝ) (u v : n) (huv : u ≠ v)
+    (hdiag_u : D u u = 0) (hdiag_v : D v v = 0)
+    (hsymm : D u v = D v u) :
+    let x : n → ℝ := fun w => if w = u then 1 else if w = v then -1 else 0
+    star x ⬝ᵥ (D *ᵥ x) = -2 * D u v := by
+  -- `classical`; unfold `Matrix.mulVec` and `dotProduct`; only coordinates
+  -- `u` and `v` survive.  This is intentionally a small standalone target.
+  sorry
+
+end Wow284.DiameterWitness

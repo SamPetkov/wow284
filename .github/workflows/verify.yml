@@ -33,7 +33,12 @@ jobs:
       - name: Run exact generalization checks and labelled exploratory screen
         run: python scripts/explore_generalizations.py
       - name: Check generated Lean spectral data
-        run: python scripts/generate_lean_diagonalization.py --check
+        run: |
+          python scripts/generate_lean_diagonalization.py --check
+          python scripts/generate_lean40_structural.py --check
+          python scripts/generate_lean40_diagonalization.py --check
+          python scripts/generate_lean38_certificates.py --check
+          python scripts/generate_lean38_ldl.py --check
       - name: Regenerate graph data and compare
         run: |
           python scripts/export_graph_data.py --output-dir tmp/export
@@ -69,11 +74,7 @@ jobs:
       - name: Reject proof placeholders and unsafe shortcuts
         shell: bash
         run: |
-          if grep -RInE '(^|[^[:alnum:]_])(sorry|admit|native_decide|bv_decide|unsafe|axiom)([^[:alnum:]_]|$)' \
-            lean/Wow284.lean lean/Wow284 scripts/generate_lean_diagonalization.py; then
-            echo "Forbidden proof shortcut or axiom declaration detected."
-            exit 1
-          fi
+          python scripts/static_lean_audit.py
       - name: Build the Lean development with Lean 4.31
         uses: leanprover/lean-action@v1
         with:

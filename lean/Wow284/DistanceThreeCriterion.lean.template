@@ -1,0 +1,37 @@
+import Mathlib
+
+/-!
+# Algebraic skeleton for the regular diameter-three mechanism
+
+For a connected `k`-regular graph of girth at least five and diameter three,
+`D = 3J + (k-3)I - 2A - A^2`.  On an adjacency eigenvector orthogonal to the
+all-ones vector, an adjacency eigenvalue `θ` therefore maps to
+`k-2-(θ+1)^2` for the distance matrix.
+-/
+
+namespace Wow284.DistanceThree
+
+open Matrix
+
+variable {n : Type*} [Fintype n] [DecidableEq n]
+
+/-- Pure matrix form of the distance-eigenvalue transform. -/
+theorem eigenvalue_transform
+    (A D J : Matrix n n ℝ) (k θ : ℝ) (x : n → ℝ)
+    (hD : D = (3 : ℝ) • J + (k - 3) • (1 : Matrix n n ℝ) - 2 • A - A * A)
+    (hAx : A *ᵥ x = θ • x)
+    (hJx : J *ᵥ x = 0) :
+    D *ᵥ x = (k - 2 - (θ + 1) ^ 2) • x := by
+  -- Expand `hD`, use `mulVec_add`, `mulVec_sub`, `mulVec_mul`, `hAx`, and
+  -- `hJx`, then finish by ring normalization.
+  sorry
+
+/-- Scalar interval equivalent to the strict WOW inequality in the regular
+case. -/
+theorem strict_interval_iff (k θ : ℝ) :
+    k - 2 - (θ + 1) ^ 2 > -k ↔ |θ + 1| < Real.sqrt (2 * k - 2) := by
+  -- Requires the natural hypothesis `1 ≤ k`; keep that hypothesis explicit
+  -- when completing this wrapper.
+  sorry
+
+end Wow284.DistanceThree

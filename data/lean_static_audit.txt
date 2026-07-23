@@ -1,0 +1,24 @@
+LEAN STATIC AUDIT
+=================
+Imported Lean files: 116
+Induced40 imported files: 31
+Induced38 imported files: 52
+Non-imported templates: 4
+Visible sorry occurrences in templates: 3
+Imported sorry occurrences: 0
+Imported admit occurrences: 0
+Imported native_decide occurrences: 0
+Imported bv_decide occurrences: 0
+Imported unsafe declaration occurrences: 0
+Imported axiom declaration occurrences: 0
+Missing extension imports: 0
+Imported templates: 0
+
+Template sorry locations:
+  lean/Wow284/DiameterWitness.lean.template:31
+  lean/Wow284/DistanceThreeCriterion.lean.template:27
+  lean/Wow284/DistanceThreeCriterion.lean.template:35
+
+LIMITATION
+----------
+This is a textual/import-closure audit, not Lean kernel compilation.

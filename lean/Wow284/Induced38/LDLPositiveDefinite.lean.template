@@ -1,0 +1,21 @@
+import Wow284.Induced38.LDLData
+
+/-!
+NON-IMPORTED SKELETON.
+
+The large exact identities are complete generated targets.  The remaining
+wrapper should use Mathlib's positive-definite congruence and submatrix API:
+
+1. `pivotPad_positive` implies `DeltaPad.PosDef`;
+2. `lpad_left_inverse` and `lpad_right_inverse` make `Lpad` invertible;
+3. `ldl_identity` gives positive definiteness of `Mpad` by congruence;
+4. `Mpad_submatrix` and `embedPad_injective` transfer it to `M38q`;
+5. the semantic-distance equality then proves `3D+17I` positive definite.
+-/
+
+namespace Wow284.Induced38
+
+-- theorem shifted_positive_definite : M38q.PosDef := by
+--   ...
+
+end Wow284.Induced38

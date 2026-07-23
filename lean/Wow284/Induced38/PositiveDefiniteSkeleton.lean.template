@@ -1,0 +1,25 @@
+import Wow284.Induced38.FiniteCertificates
+
+/-!
+NON-IMPORTED SKELETON.
+
+Target: connect the generated list of 38 positive leading principal minors to
+`Matrix.PosDef` (or an equivalent quadratic-form predicate) by Sylvester's
+criterion.  The exact values are in `leadingPrincipalExpected`; Python checks
+that each is the determinant of the corresponding leading principal submatrix
+of `shiftedCert = 3D+17I`.
+-/
+
+namespace Wow284.Induced38
+
+-- Suggested obligations:
+-- 1. define the `k` by `k` leading principal submatrix of `shiftedCert`;
+-- 2. prove its determinant equals `leadingPrincipalExpected ⟨k-1,...⟩`;
+-- 3. apply a Sylvester-criterion lemma, or prove the criterion once;
+-- 4. transfer along `semantic_distance_eq_Dcert`;
+-- 5. conclude every eigenvalue of `D` is greater than `-17/3`.
+
+-- theorem shiftedCert_posDef : Matrix.PosDef (shiftedCert.map (Int.castRingHom ℚ)) := by
+--   ...
+
+end Wow284.Induced38
