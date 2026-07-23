@@ -72,7 +72,7 @@ def verify() -> dict[str, object]:
     ]
     return {
         "certificate_version": 1,
-        "manuscript_version": "2026-07-23",
+        "manuscript_version": "2026-07-24",
         "graph": structure,
         "matrix_identities": {
             "adjacency_square": "A^2 = 6I - A + J",

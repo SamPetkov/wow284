@@ -3,7 +3,7 @@
 **Author:** Samuil Petkov<br>
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
-**Repository revision:** 23 July 2026 (`2026-07-23`); PDF date suppressed<br>
+**Repository revision:** 24 July 2026 (`2026-07-24`); PDF date suppressed<br>
 **Repository status:** Public research note; arXiv submission received and revision package prepared
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
@@ -242,6 +242,8 @@ file uses `\date{}` rather than a dynamic `\today`.
 
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
+The fixed computational archive for this manuscript is GitHub release
+[`v2.0.0-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.0-arxiv).
 
 Suggested arXiv primary category: `math.CO`. See
 [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) for title, abstract, comments,

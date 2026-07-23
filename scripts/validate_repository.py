@@ -67,7 +67,22 @@ def main() -> None:
     require("canonical graph6 string" not in tex, "unsupported graph6 canonicality claim")
     require(r"V(-\infty)=26" in tex and r"V(-28/5)=25" in tex,
             "exact order-38 Sturm variation certificate missing")
-    require(r"fix \(P_{0,0}\)" in tex, "explicit order-42 base vertex missing")
+    require(r"vertices at distance two from \(P_{0,0}\)" in tex,
+            "explicit order-42 base vertex missing")
+    require(r"\texttt{v2.0.0-arxiv}" in tex, "fixed release tag missing")
+    require(r"\delta^*(H_v)" in tex, "order-39 graph quantifier is not explicit")
+    require(r"\mathbb R^{V(X)}" in tex, "Moore invariant-space decomposition missing")
+    require(r"2K-7-\sqrt{4K-3}" in tex, "Moore threshold calculation missing")
+    require(r"m_2+m_{-3}=35" in tex, "order-42 multiplicity calculation missing")
+    require(r"V(M)=U\sqcup S" in tex, "generic equitable-deletion notation not fixed")
+    require("permitting byte-for-byte integrity" in tex,
+            "checksum integrity wording missing")
+    require("python scripts/explore_generalizations.py" in tex,
+            "generalization verifier command missing")
+    require("runs every extended exact certificate" not in tex,
+            "verify_extended.py scope is overstated")
+    require("authenticates it and every other archived" not in tex,
+            "unsigned checksum manifest is described as authentication")
     require("The explicit 50-vertex counterexample is fully formalized and verified" in tex,
             "completed explicit Lean verification status missing")
     require("Lean 4.31 also kernel-checks finite spectral certificates" in tex,

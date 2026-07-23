@@ -2,7 +2,7 @@
 
 **Object reviewed:** *Exact Counterexamples and Spectral Mechanisms for WOW-284*<br>
 **Author:** Samuil Petkov<br>
-**Repository revision:** 23 July 2026; active PDF date suppressed<br>
+**Repository revision:** 24 July 2026; active PDF date suppressed<br>
 **Review status:** Adversarial internal audit after conceptual revision; not external peer review
 
 ## Outcome

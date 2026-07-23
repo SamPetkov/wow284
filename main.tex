@@ -84,27 +84,29 @@ Hoffman--Singleton graph, \((6,5)\)-cage, WOW-284, strongly regular graph}
 
 \begin{abstract}
 WOW-284 asserts that the minimum dual degree of every connected graph of
-order at least three and girth at least five is at most the negative of its
-least distance eigenvalue.  We disprove the conjecture through exact
-counterexamples of orders \(38,39,40,42\), and \(50\), all arising from
-Hoffman--Singleton coordinates.  A common structural picture explains much
-of this phenomenon.  For every connected \(k\)-regular graph of girth at least
-five and diameter three, we prove
+girth at least five is at most the negative of its least distance
+eigenvalue.  We give explicit counterexamples of orders
+\(38,39,40,42\), and \(50\), all obtained from the
+Hoffman--Singleton graph.  The 40-vertex example is 6-regular and has
+distance spectrum
+\[
+  \{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\},
+\]
+while deleting the endpoints of an edge gives a 38-vertex graph with
+\[
+  \delta^*=\frac{17}{3},
+  \qquad
+  \lambda_{\min}(D)=-3-\sqrt7.
+\]
+More generally, for every connected \(k\)-regular graph of girth at
+least five and diameter three,
 \[
  D=3J+(k-3)I-2A-A^2,
 \]
-so a nonprincipal adjacency eigenvalue \(\theta\) yields the distance
-eigenvalue \(k-2-(\theta+1)^2\) and an exact criterion for strict failure.
-This mechanism organizes the regular diameter-three examples and a
-parameterized construction from Moore second subconstituents, while induced
-subgraphs produce further nonregular descendants.  Exact enumeration proves
-that all 40 labelled single-vertex deletions and all 120 labelled
-edge-endpoint deletions of the 40-vertex graph are strict counterexamples.
-We also give exact positive and negative controls.  The finite graph data and
-associated spectral certificates are checked by exact programs.  The
-50-vertex coordinate certificate and scalar Moore threshold are fully verified
-in Lean 4.31; Lean 4.31 also kernel-checks finite spectral certificates for
-the constructions of orders \(38,39,40\), and \(42\).
+which yields an exact adjacency-spectral criterion for violating
+WOW-284.  Moore second subconstituents provide a further parameterized
+construction.  All finite certificates use exact arithmetic, and the
+explicit examples have independently checked Lean 4.31 certificates.
 \end{abstract}
 
 \maketitle
@@ -226,7 +228,11 @@ Writing \(q=\sqrt{4k-3}\), the two nonprincipal adjacency eigenvalues are
 \[
  r=\frac{-1+q}{2},\qquad s=\frac{-1-q}{2}.
 \]
-Their multiplicities, obtained from their sum \(k^2\) and \(\tr A=0\), are
+If \(m_r,m_s\) are the respective multiplicities, then
+\[
+  m_r+m_s=k^2,\qquad k+m_rr+m_ss=0.
+\]
+Solving gives
 \begin{equation}\label{eq:general-multiplicities}
  m_r=\frac12\left(k^2+\frac{k(k-2)}q\right),\qquad
  m_s=\frac12\left(k^2-\frac{k(k-2)}q\right).
@@ -255,6 +261,16 @@ For \(k\ge2\), comparison after moving 3 to the left is legitimate, and
 Thus the inequality is strict for \(k=2\), is an equality for \(k=3\), and
 fails precisely for \(k>3\).  This proves
 \hyperref[thm:moore-wow]{Theorem~A}.
+
+Our smallest explicit example is the 38-vertex graph
+\(H=R-\{P_{1,0},P_{1,1}\}\), for which
+\[
+  \delta^*(H)=\frac{17}{3},
+  \qquad
+  \partial_{38}(H)=-3-\sqrt7,
+  \qquad
+  \Phi(H)=\frac83-\sqrt7>0.
+\]
 
 \section{Coordinate construction}
 
@@ -481,6 +497,9 @@ of \(R\) first, and write its adjacency matrix in blocks as
 \]
 where \(B=A(R)\), \(P=A(G[\mathcal P])\), and \(C\) is \(40\times10\).
 Every row of \(C\) has sum one and every column has sum four.  Moreover,
+direct inspection of the two 5-cycles and their matching shows that every
+nonadjacent pair of vertices in \(\mathcal P\) has exactly one common neighbor
+in \(\mathcal P\).  Consequently,
 distinct vertices of \(\mathcal P\) have no common retained neighbor: adjacent
 pairs have no common neighbor in \(G\), while the unique common neighbor of a
 nonadjacent pair already lies in the induced Petersen graph.  Therefore
@@ -614,35 +633,40 @@ Finally \(8/3>\sqrt7\), because \(64>63\), proving strictness.
 
 \subsection{Orders 39 and 42}
 
-For any \(v\in V(R)\), deleting \(v\) leaves its six neighbors with degree
-five and the other 33 vertices with degree six.  The six degree-five vertices
-are pairwise nonadjacent, and all five remaining neighbors of each have
-degree six; hence their dual degree is \(6\).  A degree-six vertex has at most
-one degree-five neighbor, since two would form a 4-cycle through \(v\).
-There are \(6\cdot5=30\) incidences between the degree-five and degree-six
-vertices, so at least one degree-six vertex has exactly one degree-five
-neighbor.  Therefore
+For \(v\in V(R)\), put \(H_v=R-v\).  Deleting \(v\) leaves its six
+neighbors with degree five and the other 33 vertices with degree six.
+The six degree-five vertices are pairwise nonadjacent, and all five
+remaining neighbors of each have degree six; hence their dual degree is
+\(6\).  A degree-six vertex has at most one degree-five neighbor, since
+two would form a 4-cycle through \(v\).  There are \(6\cdot5=30\)
+incidences between the degree-five and degree-six vertices.  Therefore
+exactly 30 degree-six vertices have one degree-five neighbor, and
 \[
- \delta^*=\frac{5+5\cdot6}{6}=\frac{35}{6}.
+  \delta^*(H_v)=\frac{5+5\cdot6}{6}=\frac{35}{6}.
 \]
-An exact rational \(LDL^{\mathsf T}\) decomposition of \(6D+35I\) has all
-39 pivots strictly positive.  Thus \(6D+35I\succ0\), so every distance
-eigenvalue is strictly greater than \(-35/6\).  This gives a 39-vertex strict
-counterexample.  The exhaustive verification below checks connectivity for
-each of the 40 choices of \(v\); as induced subgraphs, they retain girth at
-least five.
 
-For another regular example, fix \(P_{0,0}\) in the Hoffman--Singleton graph
-and retain the 42 vertices at distance two from it.  The induced graph is
-6-regular and has
+For the explicit representative
 \[
- \Spec(A)=\{6^{(1)},2^{(21)},(-1)^{(6)},(-3)^{(14)}\},
+  H_{39}:=R-P_{1,0},
+\]
+an exact rational \(LDL^{\mathsf T}\) decomposition of
+\(6D(H_{39})+35I\) has all 39 pivots strictly positive.  Thus
+\(6D(H_{39})+35I\succ0\), so \(H_{39}\) is a strict counterexample.
+Proposition~\ref{prop:descendants} below verifies the corresponding
+assertion for every choice of \(v\).
+
+For another regular example, let \(X_{42}\) be the graph induced by the
+vertices at distance two from \(P_{0,0}\) in the Hoffman--Singleton graph.
+The graph \(X_{42}\) is 6-regular and has
+\[
+ \Spec(A(X_{42}))=\{6^{(1)},2^{(21)},(-1)^{(6)},(-3)^{(14)}\},
 \]
 \[
- \Spec(D)=\{81^{(1)},4^{(6)},0^{(14)},(-5)^{(21)}\}.
+ \Spec(D(X_{42}))=\{81^{(1)},4^{(6)},0^{(14)},(-5)^{(21)}\}.
 \]
-Hence \(\delta^*=6>5=-\partial_{42}\).  The parameterized construction
-behind this classical second subconstituent is proved in
+Hence
+\(\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})\).
+The parameterized construction behind this classical second subconstituent is proved in
 Section~\ref{sec:subconstituent}; its adjacency spectrum is also tabulated by
 van Dam and Haemers~\cite[Table~3]{vanDamHaemers2003}.
 
@@ -669,9 +693,13 @@ from every vertex checks connectivity and reconstructs the integer distance
 matrix.  Induced deletion cannot create a cycle of length below five.  The
 script then computes every dual degree as a rational number and the
 characteristic polynomial \(\det(xI-D)\) over \(\mathbb Z\).  Exact equality
-with \(P_{39}\) or \(P_{38}\), followed by an exact Sturm count for each
-common polynomial, proves the assertions.  No graph-isomorphism or
-transitivity assumption is used.
+with \(P_{39}\) or \(P_{38}\) proves the common-polynomial assertions.  The
+representative \(H_{39}\) satisfies
+\(6D(H_{39})+35I\succ0\), so every root of \(P_{39}\) is greater than
+\(-35/6\).  Since every graph \(R-v\) has this same characteristic polynomial,
+the same strict bound holds for all 40 labelled deletions.  An exact Sturm
+count for \(P_{38}\) identifies its least root as \(-3-\sqrt7\).  No
+graph-isomorphism or transitivity assumption is used.
 \end{proof}
 
 \begin{remark}
@@ -712,7 +740,7 @@ and irreducible (indeed, every off-diagonal entry is positive), and its row
 sums are constant by the displayed identity.  Perron--Frobenius therefore
 makes the principal eigenvalue its largest eigenvalue, so the least distance
 eigenvalue occurs among the nonprincipal images.  Finally regularity gives
-\(\delta^*=k\), so strict failure is equivalent to
+\(\delta^*=k\), so strict violation is equivalent to
 \(k>\max_{\theta\ne k}((\theta+1)^2-k+2)\), which is the displayed
 criterion.
 \end{proof}
@@ -777,10 +805,39 @@ Relative to \(\{v\}\sqcup N(v)\sqcup V(X)\), write
 \]
 Each vertex of \(X\) has one neighbor in \(N(v)\) and \(K-1\) in \(X\),
 so \(B\) is \((K-1)\)-regular.  Distinct rows of \(C\) have disjoint support
-and row sum \(K-1\), hence \(CC^{\mathsf T}=(K-1)I\).  The middle-right
-block of the Moore identity gives \(CB=J-C\).  Thus \(B\) has eigenvalue
-\(-1\) on the \((K-1)\)-dimensional image of \(C^{\mathsf T}\) orthogonal
-to \(\one\).  On \(\ker C\), the bottom-right block gives
+and row sum \(K-1\), hence \(CC^{\mathsf T}=(K-1)I\).  Since
+\(CC^{\mathsf T}=(K-1)I_K\), the map \(C^{\mathsf T}\) is injective and
+\[
+  \mathbb R^{V(X)}
+  =\operatorname{im}C^{\mathsf T}\mathbin{\oplus}\ker C.
+\]
+Moreover,
+\[
+  C^{\mathsf T}\one_K=\one_{V(X)}.
+\]
+The middle-right block of the Moore identity gives \(CB=J-C\).
+Transposing this identity shows that
+\[
+  BC^{\mathsf T}z=-C^{\mathsf T}z
+  \qquad (z\perp\one_K).
+\]
+Thus \(B\) has eigenvalue \(-1\) on the
+\((K-1)\)-dimensional space
+\(C^{\mathsf T}(\one_K^\perp)\), while
+\(\one_{V(X)}\) has eigenvalue \(K-1\).
+
+Now let \(x\in\ker C\).  Since
+\(C^{\mathsf T}\one_K=\one_{V(X)}\),
+\[
+  \one_{V(X)}^{\mathsf T}x
+  =\one_K^{\mathsf T}Cx=0.
+\]
+Furthermore,
+\[
+  CBx=(J-C)x=0,
+\]
+so \(\ker C\) is \(B\)-invariant.  The bottom-right block of the
+Moore identity therefore restricts on \(\ker C\) to
 \[
  B^2+B-(K-1)I=0,
 \]
@@ -790,7 +847,12 @@ whose roots are
  \qquad
  s=\frac{-1-\sqrt{4K-3}}2.
 \]
-The kernel has dimension \(K(K-2)>0\).  If the multiplicities of \(r,s\)
+The kernel has dimension \(K(K-2)>0\), so the principal line,
+\(C^{\mathsf T}(\one_K^\perp)\), and \(\ker C\) account for all
+\[
+  1+(K-1)+K(K-2)=K(K-1)
+\]
+dimensions.  If the multiplicities of \(r,s\)
 there are \(m_r,m_s\), then the trace of \(B\) gives
 \(m_rr+m_ss=0\), because the principal eigenvalue \(K-1\) cancels the
 \((K-1)\) copies of \(-1\).  Since \(r>0>s\), both multiplicities are
@@ -817,11 +879,32 @@ to \(K-3\), while \(r\) and \(s\) map respectively to
  \quad\text{and}\quad
  -\frac{5-\sqrt{4K-3}}2.
 \]
-Thus the first of these is the least distance eigenvalue.
-The final integer inequality is strict exactly for \(K\ge6\).
+Thus the first of these is the least distance eigenvalue.  Finally,
+\[
+  2\bigl(\delta^*(X)+\partial_{K(K-1)}(X)\bigr)
+  =2K-7-\sqrt{4K-3}.
+\]
+This is nonpositive for \(K=3,4,5\).  For \(K\ge6\), both sides of
+\(2K-7>\sqrt{4K-3}\) are positive, and
+\[
+  (2K-7)^2-(4K-3)
+  =4(K^2-8K+13)>0.
+\]
+Indeed, \(K^2-8K+13=1\) at \(K=6\) and is increasing for \(K\ge6\).
+Hence the gap is positive exactly for integers \(K\ge6\).
 \end{proof}
 
-For \(K=7\), this gives the explicit 42-vertex graph above.  A degree-57
+For \(K=7\), the two roots on \(\ker C\) are \(2\) and \(-3\).  Their
+multiplicities \(m_2,m_{-3}\) satisfy
+\[
+  m_2+m_{-3}=35,\qquad 2m_2-3m_{-3}=0,
+\]
+the second equation following from the trace after the principal eigenvalue
+\(6\) cancels the six copies of \(-1\).  Hence
+\[
+  m_2=21,\qquad m_{-3}=14.
+\]
+This gives the explicit 42-vertex graph above.  A degree-57
 Moore graph, if it exists, would give a 56-regular example on 3192 vertices.
 Its existence remains open~\cite{SmithMontemanni2026}; the theorem is
 therefore a parameterized construction, not an unconditional infinite family.
@@ -830,12 +913,12 @@ therefore a parameterized construction, not an unconditional infinite family.
 
 \begin{proposition}\label{prop:equitable-delete}
 Let \(M\) be a degree-\(K\) Moore graph of diameter two.  Partition its
-vertices as \(V(M)=R\sqcup S\), write
+vertices as \(V(M)=U\sqcup S\), write
 \[
  A(M)=\begin{pmatrix}B&C\\C^{\mathsf T}&P\end{pmatrix},
 \]
-and suppose \(M[S]\) is \(r\)-regular while every vertex of \(R\) has
-exactly \(t>0\) neighbors in \(S\).  Then \(M[R]\) is
+and suppose \(M[S]\) is \(r\)-regular while every vertex of \(U\) has
+exactly \(t>0\) neighbors in \(S\).  Then \(M[U]\) is
 \((K-t)\)-regular.  If \(Py=\eta y\) and \(y\perp\one\), then
 \[
  BCy=-(1+\eta)Cy,
@@ -846,7 +929,7 @@ Moreover, on \(\ker C^{\mathsf T}\),
 \[
  B^2+B-(K-1)I=0.
 \]
-Whenever \(M[R]\) has diameter three, these adjacency data feed directly
+Whenever \(M[U]\) has diameter three, these adjacency data feed directly
 into Theorem~\ref{thm:diam3}.
 \end{proposition}
 
@@ -857,14 +940,27 @@ The upper-right and lower-right blocks of the Moore identity are
  \qquad
  C^{\mathsf T}C+P^2=(K-1)I-P+J.
 \]
-Apply them to an eigenvector orthogonal to \(\one\).  Finally
-\(C\one=t\one\), with \(t>0\), implies
-\(\ker C^{\mathsf T}\subseteq\one^\perp\); the upper-left block gives the
-last equation.
+If \(Py=\eta y\) and \(y\perp\one\), then \(Jy=0\), so the
+upper-right block gives
+\[
+  BCy=-(1+\eta)Cy.
+\]
+Taking the inner product of the lower-right block with \(y\) gives
+\[
+  \lVert Cy\rVert^2
+  =(K-1-\eta-\eta^2)\lVert y\rVert^2.
+\]
+Finally, if \(x\in\ker C^{\mathsf T}\), then
+\(C\one=t\one\) and \(t>0\) imply \(x\perp\one\).
+The upper-left block consequently gives
+\[
+  (B^2+B-(K-1)I)x=0.
+\]
 \end{proof}
 
-For the 40-vertex graph, \(K=7\), \(S\) is the induced Petersen graph,
-\(r=3\), and \(t=1\).  If, more generally, \(S\subsetneq V(M)\) is itself a
+For the 40-vertex graph, \(U=V(R)\), \(K=7\), \(S\) is the induced Petersen
+graph, \(r=3\), and \(t=1\).  If, more generally,
+\(S\subsetneq V(M)\) is itself a
 degree-\(r\) Moore graph and every outside vertex has exactly one neighbor in
 \(S\), cross-edge counting gives
 \[
@@ -921,15 +1017,18 @@ separated dependencies.  The original 50-vertex certificate:
 \item computes an exact rational \(L\Delta L^{\mathsf T}\) decomposition of
       \(D+7I\) and checks that all 50 pivots are positive.
 \end{enumerate}
-Its expected characteristic polynomial is
+The resulting characteristic polynomial is
 \[
   (t-91)(t-1)^{21}(t+4)^{28}
 \]
-and all 50 rational pivots are positive.  Since \(L\) is unit lower
-triangular, for every nonzero \(y\),
+and all 50 rational pivots are positive.  Writing
 \[
- y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
- \Delta(L^{\mathsf T}y)>0,
+  M:=D+7I=L\Delta L^{\mathsf T},
+\]
+we have, for every nonzero \(y\),
+\[
+  y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
+  \Delta(L^{\mathsf T}y)>0,
 \]
 so this proves positive definiteness of \(M=D+7I\).
 
@@ -959,17 +1058,22 @@ single-vertex and 120 labelled edge-endpoint deletions.  SymPy supplies exact
 integer characteristic polynomials \(\det(tI-D)\) and Sturm counts of their
 square-free parts~\cite{MeurerEtAl2017}.  The recorded output is
 \path{supplement/extended_2026-07-23/logs/descendant_family_output.txt}; the
-enclosing \path{SHA256SUMS} authenticates it and every other archived
-certificate in that supplement.
+enclosing \path{SHA256SUMS} records the expected SHA-256 digest of that output
+and every other archived certificate, permitting byte-for-byte integrity
+checks.
 The cross-platform command
 \begin{verbatim}
 python scripts/verify_extended.py
 \end{verbatim}
-runs every extended exact certificate and checks regenerated graph files
-byte-for-byte.  No floating-point eigenvalue evidence is used for any theorem.
-The optional numerical three-vertex screen is isolated in
-\texttt{explore\_generalizations.py} and is labelled exploratory wherever
-reported.
+runs the exact certificates for the explicit non-50 constructions, the
+independent graph6 audit, the descendant-family verification, and the
+byte-for-byte graph-export checks.  The balanced layer-deletion chain,
+the Odd graph, and the Heawood graph are checked by
+\begin{verbatim}
+python scripts/explore_generalizations.py
+\end{verbatim}
+which also performs the separately labelled floating-point three-vertex
+screen.  No floating-point eigenvalue evidence is used for any theorem.
 
 \section{Formal verification}
 
@@ -999,8 +1103,10 @@ finite matrices are not identified with Mathlib's
 \texttt{SimpleGraph.dist} in a single theorem.  They are therefore described
 here as kernel-checked finite spectral certificates, rather than as a full
 standard-library formalization of every graph-theoretic phrase in the
-manuscript.  Section~\ref{sec:moore}, the descendant-family results, and the
-extended criteria remain conventional proofs supported by exact computation.
+manuscript.  Section~\ref{sec:moore}, the diameter-three criterion, and the
+Moore-subconstituent theorem remain conventional analytic proofs.  The
+descendant-family assertions are conventional finite arguments supported by
+exact computation.
 
 \section*{Scope, provenance, and disclosures}
 
@@ -1024,6 +1130,9 @@ The author received no funding for this work and declares no competing
 interests.  The manuscript source, exact verification code, machine-readable
 certificates, and build instructions are available in the public repository
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
+The computational archive corresponding to this manuscript is release
+\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.0-arxiv}
+{\texttt{v2.0.0-arxiv}}.
 
 \appendix
 \section{Exact distance characteristic polynomials}\label{app:polynomials}

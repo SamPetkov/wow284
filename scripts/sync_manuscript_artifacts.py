@@ -72,7 +72,7 @@ def compile_manuscript() -> None:
         environment.update(
             {
                 "TZ": "UTC",
-                "SOURCE_DATE_EPOCH": "1784808000",
+                "SOURCE_DATE_EPOCH": "1784894400",
                 "FORCE_SOURCE_DATE": "1",
             }
         )
@@ -176,7 +176,7 @@ def make_arxiv_archive() -> None:
     ARXIV_DIR.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(ARXIV_ZIP, "w") as archive:
         for name, source in members:
-            info = zipfile.ZipInfo(name, date_time=(2026, 7, 23, 12, 0, 0))
+            info = zipfile.ZipInfo(name, date_time=(2026, 7, 24, 12, 0, 0))
             info.create_system = 3
             info.external_attr = 0o100644 << 16
             info.compress_type = zipfile.ZIP_DEFLATED
@@ -205,7 +205,15 @@ def validate_release_text() -> None:
         "OpenAI ChatGPT assisted",
         "A graph6 string in this fixed",
         r"V(-\infty)=26",
-        r"fix \(P_{0,0}\)",
+        r"vertices at distance two from \(P_{0,0}\)",
+        r"\texttt{v2.0.0-arxiv}",
+        r"\delta^*(H_v)",
+        r"\mathbb R^{V(X)}",
+        r"2K-7-\sqrt{4K-3}",
+        r"m_2+m_{-3}=35",
+        r"V(M)=U\sqcup S",
+        "permitting byte-for-byte integrity",
+        "python scripts/explore_generalizations.py",
         "The explicit 50-vertex counterexample is fully formalized and verified",
         "Lean 4.31 also kernel-checks finite spectral certificates",
         "The scope of these non-50 results is deliberately finite and spectral",
@@ -230,6 +238,8 @@ def validate_release_text() -> None:
         "canonical graph6 string",
         "OpenAI ChatGPT-5.6",
         "Exact rational factorization",
+        "authenticates it and every other archived",
+        "runs every extended exact certificate",
         "remains under verification",
         "formalization is in preparation",
     ]
