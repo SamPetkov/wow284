@@ -54,19 +54,10 @@ gives a self-contained block-matrix proof, and `scripts/verify_40.py` checks
 the construction, BFS distances, block identities, characteristic
 polynomials, and a positive rational `LDL^T` certificate exactly.
 
-The repository now contains a staged Lean 4.31 extension for this graph. It
-encodes the induced construction, degree and distance certificates, exact
-distance matrix, invertible rational eigenbasis, diagonalization, and
-multiplicity counts. This is not yet advertised as a full end-to-end
-formalization: a public wrapper must still connect the diagonalization to the
-least distance eigenvalue, prove the dual degree is six, and state the final
-WOW violation. The staged modules are built separately from the completed
-50-vertex development.
-
 ## Further exact counterexamples
 
-The same coordinate graph produces verified strict counterexamples of orders
-38, 39, 40, 42, and 50. The explicit 38-vertex example has
+Reproducible exact Python programs verify strict counterexamples of orders 38,
+39, 40, 42, and 50. The explicit 38-vertex example has
 
 \[
 \delta^*=\frac{17}{3},\qquad
@@ -163,15 +154,9 @@ Moore-graph derivation in the paper remains a conventional proof, so the
 completed formal-verification claim is intentionally limited to the explicit
 50-vertex counterexample and the scalar threshold.
 
-`Wow284Extended.lean` is an opt-in staging target. Its 40-vertex modules
-contain finite structural and exact matrix-diagonalization certificates, but
-still lack the final dual-degree/least-eigenvalue/WOW wrapper. Its 38-vertex
-modules contain exact finite, inverse, LDL, pivot, and scalar-gap data, but do
-not yet connect the padded LDL certificate to `Matrix.PosDef` and the least
-distance eigenvalue. The generic punctured-Moore graph statement is not
-formalized; only conditional scalar inequalities are present. None of these
-staged modules will be described as a complete formalization until Lean 4.31,
-representative axiom reports, and a new AXLE strict audit all pass.
+The 38-, 39-, 40-, and 42-vertex results and the extended criteria are
+analytic results verified by reproducible exact Python certificates; they are
+outside the completed Lean-verification claim.
 
 The spectral computation is sharded into bounded integer certificates and
 then assembled into a rational two-sided inverse and diagonalization. The

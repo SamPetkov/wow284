@@ -50,7 +50,6 @@ avoids a first-discovery claim and makes no minimality claim.
 
 The Lean 4.31 development is recorded separately from the analytic and exact
 Python proofs. The explicit 50-vertex certificate and scalar degree threshold
-have passed the strict audit and CI. Staged Lean source now covers substantial
-finite and matrix certificates for orders 40 and 38, but no expanded
-end-to-end formalization is claimed pending the missing wrappers, kernel build,
-axiom review, and AXLE strict audit.
+have passed the strict audit and CI. The results at orders 38, 39, 40, and 42
+are recorded as analytic and exact Python-verified results, not as part of the
+completed Lean-verification claim.
