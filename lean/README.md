@@ -2,7 +2,8 @@
 
 This directory contains the Lean 4.31/Mathlib 4.31 verification of the
 explicit 50-vertex WOW-284 counterexample and the scalar Moore-degree
-threshold.
+threshold, together with a separately built staging target for induced
+examples.
 
 The public development checks:
 
@@ -34,3 +35,30 @@ only `propext`, `Classical.choice`, and `Quot.sound`.
 The paper's generic Moore-graph-to-spectrum derivation is not encoded in full;
 the completed formal-verification claim is limited to the explicit
 counterexample and the scalar threshold.
+
+## Staged induced-graph extension
+
+`Wow284Extended.lean` is exposed through the separate Lake target
+`Wow284Extension`. It imports generated finite certificates for the induced
+40-vertex graph and exact finite/LDL data for the 38-vertex graph. Run:
+
+```text
+python scripts/generate_lean40_structural.py --check
+python scripts/generate_lean40_diagonalization.py --check
+python scripts/generate_lean38_certificates.py --check
+python scripts/generate_lean38_ldl.py --check
+cd lean
+lake build Wow284Extension
+```
+
+The 40-vertex source currently lacks the final public theorem combining dual
+degree six, least distance eigenvalue `-5`, and the strict WOW inequality. The
+38-vertex source additionally lacks the `Matrix.PosDef` congruence and
+principal-submatrix bridge from its padded LDL data to the spectral claim.
+Files ending in `.lean.template` are deliberately excluded and contain the
+remaining proof sketches. The punctured-Moore skeleton is also excluded from
+the staging root because its interface is only a semantic placeholder.
+
+The previous AXLE strict report covers the completed 50-vertex/scalar target,
+not this extension. A fresh AXLE audit and representative `#print axioms`
+reports are release gates for any expanded formal-verification claim.

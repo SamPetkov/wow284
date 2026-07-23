@@ -84,6 +84,4 @@ jobs:
           lint: false
           use-mathlib-cache: true
       - name: Compile the staged induced-graph extension
-        run: |
-          cd lean
-          lake env lean Wow284Extended.lean
+        run: cd lean && lake build Wow284Extension

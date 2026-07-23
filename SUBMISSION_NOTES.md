@@ -70,7 +70,8 @@ Before clicking submit, Samuil Petkov should:
 - confirm any required endorsement or institutional-email step;
 - decide whether the public AI-assistance disclosure is satisfactory; and
 - do not extend the formal-verification claim beyond the 50-vertex certificate
-  and scalar threshold until the expanded Lean artifact passes strict audit;
+  and scalar threshold until the staged 40-/38-vertex source has its missing
+  endpoint wrappers and passes Lean 4.31, axiom review, and AXLE strict;
 - rerun the novelty search immediately before announcement if priority
   language is changed.
 

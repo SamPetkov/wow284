@@ -60,6 +60,16 @@ a versioned release DOI before final journal submission. The explicit
 manuscript correctly excludes the 38/39/40/42 extension and generic criteria
 from that formal-verification claim pending the expanded artifact.
 
+The supplied expanded Lean source materially advances that artifact but does
+not close it. For the 40-vertex graph it contains kernel-checkable finite
+structure, semantic distance, inverse, diagonalization, and multiplicity
+certificates; a final theorem connecting these to dual degree six, the least
+distance eigenvalue `-5`, and WOW remains absent. For the 38-vertex graph, the
+padded LDL identities and positive pivots are present, but the semantic
+`3D+17I` identity, positive-definiteness transfer, and least-eigenvalue wrapper
+are not completed. The earlier AXLE report cannot be reused for these new
+modules.
+
 ## General Moore-graph audit
 
 For a degree-`k`, diameter-two Moore graph, equality in the Moore bound gives

@@ -17,6 +17,7 @@
 | Classical 40-vertex `(6,5)`-cage | O'Keefe and Wong, *Journal of Combinatorial Theory B* 26 (1979), DOI `10.1016/0095-8956(79)90052-2`; Wong, *Journal of Graph Theory* 3 (1979), DOI `10.1002/jgt.3190030413` | Construction and uniqueness of the classical cage; this is a minimum-order statement among 6-regular girth-five graphs, not among WOW-284 counterexamples. |
 | Petersen deletion realization | Klin, Muzychuk, and Ziv-Av, *Michigan Mathematical Journal* 58 (2009), Section 3.6, DOI `10.1307/mmj/1242071692` | Published structural context for obtaining the 40-vertex graph from Hoffman-Singleton. |
 | Hoffman-Singleton second subconstituent | van Dam and Haemers, *Linear Algebra and its Applications* 373 (2003), Table 3, DOI `10.1016/S0024-3795(03)00483-X` | Published identification and adjacency spectrum of the classical 42-vertex graph. |
+| Jørgensen order-96 `(9,5)` graph | Leif K. Jørgensen, *Discrete Mathematics* 293 (2005), 177-184, DOI `10.1016/j.disc.2004.08.029`; author-hosted adjacency list at `https://people.math.aau.dk/~leif/research/girth5/96.html` | The published source supports the relative-difference-set construction, order 96, degree 9, and girth five. The stored 96-line adjacency list matches the author-hosted list after whitespace normalization. Diameter, transmission, distance polynomial, least distance eigenvalue `-9`, WOW equality, and deletion screens are repository computations, not claims attributed to the paper. This research-only control is not currently part of the manuscript. |
 | Symbolic software | Meurer et al., *PeerJ Computer Science* 3 (2017), e103, DOI `10.7717/peerj-cs.103` | Citation for SymPy, used for exact characteristic polynomials, Sturm counts, and rational certificates. |
 | Graph software | Hagberg, Schult, and Swart, *Proceedings of SciPy 2008*, DOI `10.25080/TCWV9851` | Citation for NetworkX, used in the graph6-based integer-BFS audit and standard-family controls. |
 | Lean 4 | Leonardo de Moura and Sebastian Ullrich, CADE 28 (2021), DOI `10.1007/978-3-030-79876-5_37` | System reference for the verified explicit-counterexample formalization. |
@@ -85,3 +86,18 @@ Not supported:
 - "The Moore-graph distance spectrum is new."
 
 The manuscript follows the permitted language.
+
+## Status of new extension claims
+
+The Moore second-subconstituent theorem is stated only for `K >= 3`; the
+formula does not extend to `K = 2`, where the second subconstituent of `C5` is
+`K2`. Punctured-Moore statements are conditional formulas or construction
+schemas, not an unconditional infinite family. The Lean files presently prove
+only the associated scalar inequalities, not the generic graph-to-spectrum
+theorems. “Punctured Moore graph” is package terminology and must be defined
+when used.
+
+The targeted search did not establish literature priority for the deleted-
+graph distance-spectrum formulas, the descendant classes, or the order-96
+equality computation. They are described as results established in this
+package, with no first-discovery claim.

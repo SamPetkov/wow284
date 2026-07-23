@@ -26,6 +26,14 @@ rerun in an isolated Python 3.13 environment. The canonical integration adds
 verifier hardening, deterministic graph export, an integer-BFS graph6 audit,
 and repairs to the Moore-subconstituent and equitable-deletion arguments.
 
+The author subsequently supplied a generated Lean 4.31 extension. The
+repository preserves its induced-40 structural/diagonalization certificates
+and induced-38 finite/LDL data as the opt-in `Wow284Extension` target. Static
+source scans and deterministic generator checks pass. The extension is not
+recorded as a completed formal proof: the 40-vertex endpoint theorem and the
+38-vertex positive-definiteness/spectral bridge remain open, and the earlier
+AXLE report does not cover these new modules.
+
 ## AI assistance
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking and finding
@@ -42,6 +50,7 @@ avoids a first-discovery claim and makes no minimality claim.
 
 The Lean 4.31 development is recorded separately from the analytic and exact
 Python proofs. The explicit 50-vertex certificate and scalar degree threshold
-have passed the strict audit and CI. The 38-, 39-, 40-, and 42-vertex results
-and extended criteria are not claimed as Lean-formalized pending the separate
-expanded artifact.
+have passed the strict audit and CI. Staged Lean source now covers substantial
+finite and matrix certificates for orders 40 and 38, but no expanded
+end-to-end formalization is claimed pending the missing wrappers, kernel build,
+axiom review, and AXLE strict audit.
