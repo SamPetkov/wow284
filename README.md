@@ -243,7 +243,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 The fixed computational archive for this manuscript is GitHub release
-[`v2.0.2-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.2-arxiv).
+[`v2.0.3-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.3-arxiv).
 
 Suggested arXiv primary category: `math.CO`. See
 [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) for title, abstract, comments,

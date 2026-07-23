@@ -27,6 +27,7 @@ CANONICAL_PDF = ROOT / "main.pdf"
 CANONICAL_MD = ROOT / "manuscript.md"
 ARXIV_DIR = ROOT / "arxiv"
 ARXIV_ZIP = ARXIV_DIR / "wow284_arxiv_source.zip"
+BUILD_REPORT = ROOT / "BUILD_VERIFICATION.txt"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -206,7 +207,7 @@ def validate_release_text() -> None:
         "A graph6 string in this fixed",
         r"V(-\infty)=26",
         r"vertices at distance two from \(P_{0,0}\)",
-        r"\texttt{v2.0.2-arxiv}",
+        r"\texttt{v2.0.3-arxiv}",
         r"\delta^*(H_v)",
         r"\mathbb R^{V(X)}",
         r"2K-7-\sqrt{4K-3}",
@@ -246,6 +247,20 @@ def validate_release_text() -> None:
     present = [item for item in forbidden if item in text]
     if present:
         raise RuntimeError(f"canonical TeX contains forbidden release wording: {present}")
+
+    report = BUILD_REPORT.read_text(encoding="utf-8")
+    authoritative = (
+        "The authoritative SHA-256 digests for main.pdf and\n"
+        "      arxiv/wow284_arxiv_source.zip are recorded in SHA256SUMS."
+    )
+    if authoritative not in report:
+        raise RuntimeError("build report does not delegate artifact digests to SHA256SUMS")
+    stale_digest_patterns = [
+        r"[0-9a-f]{64}\s+main\.pdf",
+        r"[0-9a-f]{64}\s+arxiv/wow284_arxiv_source\.zip",
+    ]
+    if any(re.search(pattern, report) for pattern in stale_digest_patterns):
+        raise RuntimeError("build report embeds duplicated PDF or arXiv ZIP digests")
 
 
 def list_release_files() -> list[str]:

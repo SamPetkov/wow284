@@ -14,6 +14,8 @@
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
+**Repository release:** `v2.0.3-arxiv`
+
 **Abstract:**
 
 > WOW-284 asserts that the minimum dual degree of every connected graph of

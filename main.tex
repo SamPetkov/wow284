@@ -253,14 +253,9 @@ fails precisely for \(k>3\).  This proves
 \hyperref[thm:moore-wow]{Theorem~A}.
 
 The smallest explicit example constructed in this note has 38 vertices.
-By Theorem~\ref{thm:thirty-eight}, it satisfies
-\[
-  \delta^*=\frac{17}{3},
-  \qquad
-  \partial_{38}=-3-\sqrt7,
-  \qquad
-  \Phi=\frac83-\sqrt7>0.
-\]
+By Theorem~\ref{thm:thirty-eight}, its minimum dual degree is \(17/3\),
+its least distance eigenvalue is \(-3-\sqrt7\), and its counterexample
+score is \(8/3-\sqrt7>0\).
 
 \section{Coordinate construction}
 
@@ -1010,19 +1005,19 @@ separated dependencies.  The original 50-vertex certificate:
 \end{enumerate}
 The resulting characteristic polynomial is
 \[
-  (t-91)(t-1)^{21}(t+4)^{28}
+  (t-91)(t-1)^{21}(t+4)^{28},
 \]
-and all 50 rational pivots are positive.  Writing
+and all 50 rational pivots are positive.  Set
 \[
-  M:=D+7I=L\Delta L^{\mathsf T},
+  M:=D+7I=L\Delta L^{\mathsf T}.
 \]
-where \(L\) is unit lower triangular and hence invertible.  Thus
+Since \(L\) is unit lower triangular, it is invertible.  Thus
 \(L^{\mathsf T}y\ne0\) for every nonzero \(y\), and
 \[
   y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
   \Delta(L^{\mathsf T}y)>0,
 \]
-so this proves positive definiteness of \(M=D+7I\).
+Hence \(M=D+7I\) is positive definite.
 
 A second exact script constructs \(R\) by the stated deletion and independently
 checks its 40 degrees, all BFS distances, girth, the block identities
@@ -1123,8 +1118,8 @@ interests.  The manuscript source, exact verification code, machine-readable
 certificates, and build instructions are available in the public repository
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
 The computational archive corresponding to this manuscript is release
-\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.2-arxiv}
-{\texttt{v2.0.2-arxiv}}.
+\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.3-arxiv}
+{\texttt{v2.0.3-arxiv}}.
 
 \appendix
 \section{Exact distance characteristic polynomials}\label{app:polynomials}

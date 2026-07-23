@@ -100,8 +100,8 @@ PASS  All thirteen pages rendered at 130 dpi and inspected at high resolution:
       no clipping, overlap, malformed glyphs, blank spill pages,
       or broken bibliography/address layout.
 
-Verified PDF SHA-256:
-  5ce49b14e6adbb0de9fdd5c1a5f6b9c08270e6005f83fd061efe159c5b455928  main.pdf
+The authoritative SHA-256 digests for main.pdf and
+      arxiv/wow284_arxiv_source.zip are recorded in SHA256SUMS.
 
 ARXIV PACKAGE
 -------------
@@ -111,10 +111,6 @@ PASS  Archive members are deterministic LF serializations of the canonical
       source files and carry the fixed timestamp 24 July 2026 12:00:00.
 PASS  A fresh extraction of the ZIP compiled independently to a thirteen-page
       PDF with latexmk/BibTeX.
-
-Verified arXiv ZIP SHA-256:
-  dd06896061e6fb847a1977a5de87b07773af9876ceea6853ae05582982a45561
-  arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT
 ------------------------
