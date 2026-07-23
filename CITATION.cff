@@ -10,7 +10,7 @@ authors:
     given-names: Samuil
     affiliation: "Department of Physics, École normale supérieure, Université PSL"
     email: samuil.petkov@phys.ens.psl.eu
-version: 2.0.3
+version: 2.0.4
 date-released: 2026-07-24
 url: "https://github.com/SamPetkov/wow284"
 repository-code: "https://github.com/SamPetkov/wow284"

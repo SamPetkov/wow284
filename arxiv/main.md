@@ -39,7 +39,7 @@ Thus $`G`$ is a strict counterexample precisely when $`\Phi(G)>0`$.
 
 In that 2014 survey, the authors reported that the conjecture remained open and noted equality for the Petersen graph ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370). This equality is the degree-3 boundary case of a general Moore-graph calculation. The degree-7 Moore graph constructed by Hoffman and Singleton ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) lies beyond that boundary and gives a strict violation.
 
-There is important prior spectral work. Howlader and Panigrahi determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove Conjecture <a href="#conj:wow284" data-reference-type="ref" data-reference="conj:wow284">1</a>. The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies a self-contained coordinate certificate. It also extracts the 40-vertex $`(6,5)`$-cage from the same coordinates and gives its distance spectrum directly. No claim is made that the distance spectra are new, that this observation has priority over every unpublished observation, or that the 38-vertex example has minimum possible order among all counterexamples.
+Howlader and Panigrahi provide the relevant prior spectral calculation. They determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove Conjecture <a href="#conj:wow284" data-reference-type="ref" data-reference="conj:wow284">1</a>. The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies a self-contained coordinate certificate. It also extracts the 40-vertex $`(6,5)`$-cage from the same coordinates and gives its distance spectrum directly. No claim is made that the distance spectra are new, that this observation has priority over every unpublished observation, or that the 38-vertex example has minimum possible order among all counterexamples.
 
 <span id="thm:moore-wow" label="thm:moore-wow"></span>
 
@@ -355,7 +355,7 @@ Applying this to <a href="#eq:forty-adjacency-spectrum" data-reference-type="eq
 
 # Smaller induced counterexamples
 
-The 40-vertex graph contains strict counterexamples of orders 39 and 38. All claims in this section are reproduced exactly by the accompanying programs; floating-point eigenvalues are not used.
+The 40-vertex graph contains strict counterexamples of orders 39 and 38. The accompanying programs verify the finite claims in this section using exact arithmetic; no theorem relies on floating-point eigenvalues.
 
 ## Deleting the endpoints of an edge
 
@@ -390,11 +390,15 @@ Put
 X=N_R(a)\setminus\{b\},\qquad
  Y=N_R(b)\setminus\{a\}.
 ```
-The girth condition implies that $`X`$ and $`Y`$ are disjoint and that no vertex of $`X\cup Y`$ has a remaining neighbor in $`X\cup Y`$. These ten vertices therefore have degree five and all their remaining neighbors have degree six; every other vertex has degree six. A degree-six vertex has at most one neighbor in $`X`$ and at most one in $`Y`$, since two in either set would create a 4-cycle. If it has $`t\in\{0,1,2\}`$ neighbors in $`X\cup Y`$, then
+The girth condition implies that $`X`$ and $`Y`$ are disjoint and that no vertex of $`X\cup Y`$ has a remaining neighbor in $`X\cup Y`$. These ten vertices therefore have degree five and all their remaining neighbors have degree six; every other vertex has degree six. The handshake lemma now gives
 ``` math
-d^*(v)=\frac{5t+6(6-t)}6=6-\frac{t}{6}.
+|E(H)|=\frac{28\cdot6+10\cdot5}{2}=109.
 ```
-There are $`10\cdot5=50`$ incidences from $`X\cup Y`$ to the 28 degree-six vertices, so some degree-six vertex has $`t=2`$. Hence $`\delta^*(H)=17/3`$.
+Each of the ten degree-five vertices has five degree-six neighbors and hence dual degree $`6`$. A degree-six vertex has at most one neighbor in $`X`$ and at most one in $`Y`$, since two in either set would create a 4-cycle. If it has $`t\in\{0,1,2\}`$ neighbors in $`X\cup Y`$, then
+``` math
+d^*(v)=\frac{5t+6(6-t)}6=6-\frac{t}{6}\ge\frac{17}{3}.
+```
+There are $`10\cdot5=50`$ incidences from $`X\cup Y`$ to the 28 degree-six vertices, so some degree-six vertex has $`t=2`$. The lower bound is therefore attained, and $`\delta^*(H)=17/3`$.
 
 The exact distance characteristic polynomial is displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. It contains $`(x^2+6x+2)^2`$, whose roots are $`-3\pm\sqrt7`$. For the square-free part of this polynomial, the exact Sturm sequence has variation counts
 ``` math
@@ -428,7 +432,7 @@ For another regular example, let $`X_{42}`$ be the graph induced by the vertices
 ``` math
 \operatorname{Spec}(D(X_{42}))=\{81^{(1)},4^{(6)},0^{(14)},(-5)^{(21)}\}.
 ```
-Hence $`\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})`$. The parameterized construction behind this classical second subconstituent is proved in Section <a href="#sec:subconstituent" data-reference-type="ref" data-reference="sec:subconstituent">8</a>; its adjacency spectrum is also tabulated by van Dam and Haemers ([Dam and Haemers 2003](#ref-vanDamHaemers2003), Table 3).
+Hence $`\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})`$. Section <a href="#sec:subconstituent" data-reference-type="ref" data-reference="sec:subconstituent">8</a> proves the general construction. The adjacency spectrum is also tabulated by van Dam and Haemers ([Dam and Haemers 2003](#ref-vanDamHaemers2003), Table 3).
 
 ## Exact labelled descendant families
 
@@ -480,6 +484,8 @@ Consequently $`G`$ is a strict counterexample to WOW-284 precisely when
 
 </div>
 
+Thus, in diameter three, WOW-284 is governed by the spread of the nonprincipal adjacency spectrum about $`-1`$.
+
 <div class="corollary">
 
 **Corollary 10** (Bipartite obstruction). *A connected $`k`$-regular bipartite graph of diameter three and girth at least five is not a strict counterexample for $`k\ge3`$.*
@@ -496,7 +502,7 @@ Its negative is at least $`k`$ for $`k\ge3`$, with equality only at $`k=3`$. �
 
 </div>
 
-For comparison, exact negative controls follow directly from Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a>. The Odd graph $`O_4=KG(7,3)`$ has adjacency spectrum
+For comparison, negative controls follow directly from Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a>. The Odd graph $`O_4=KG(7,3)`$ has adjacency spectrum
 ``` math
 \{4^{(1)},2^{(14)},(-1)^{(14)},(-3)^{(6)}\},
 ```
@@ -529,7 +535,9 @@ which is positive exactly for integers $`K\ge6`$.*
 
 <div class="proof">
 
-*Proof.* Relative to $`\{v\}\sqcup N(v)\sqcup V(X)`$, write
+*Proof.* Since $`X`$ is an induced subgraph of the girth-five graph $`M`$, it contains no triangle or 4-cycle. Hence $`g(X)\ge5`$.
+
+Relative to $`\{v\}\sqcup N(v)\sqcup V(X)`$, write
 ``` math
 A(M)=
  \begin{pmatrix}
@@ -538,7 +546,7 @@ A(M)=
  0&C^{\mathsf T}&B
  \end{pmatrix}.
 ```
-Each vertex of $`X`$ has one neighbor in $`N(v)`$ and $`K-1`$ in $`X`$, so $`B`$ is $`(K-1)`$-regular. Distinct rows of $`C`$ have disjoint support and row sum $`K-1`$, hence $`CC^{\mathsf T}=(K-1)I_K`$. Therefore $`C^{\mathsf T}`$ is injective and
+All zero and all-one blocks in this proof have the dimensions forced by the displayed partition. Each vertex of $`X`$ has one neighbor in $`N(v)`$ and $`K-1`$ in $`X`$, so $`B`$ is $`(K-1)`$-regular. Distinct rows of $`C`$ have disjoint support and row sum $`K-1`$, hence $`CC^{\mathsf T}=(K-1)I_K`$. Therefore $`C^{\mathsf T}`$ is injective and
 ``` math
 \mathbb R^{V(X)}
   =\operatorname{im}C^{\mathsf T}\mathbin{\oplus}\ker C.
@@ -579,7 +587,7 @@ The kernel has dimension $`K(K-2)>0`$, so the principal line, $`C^{\mathsf T}(\m
 ```
 dimensions. If the multiplicities of $`r,s`$ there are $`m_r,m_s`$, then the trace of $`B`$ gives $`m_rr+m_ss=0`$, because the principal eigenvalue $`K-1`$ cancels the $`(K-1)`$ copies of $`-1`$. Since $`r>0>s`$, both multiplicities are positive.
 
-We record the diameter argument explicitly. Around any $`x\in X`$, girth at least five gives $`1`$, $`K-1`$, and $`(K-1)(K-2)`$ distinct vertices in the first three distance layers of $`X`$. The remaining $`K-2`$ vertices are exactly the other vertices of $`X`$ sharing the unique neighbor of $`x`$ in $`N(v)`$. They have no path of length at most two to $`x`$, since such a path would create a triangle or 4-cycle in $`M`$. Every neighbor of any such remaining vertex $`z`$ is nonadjacent to $`x`$, since an edge to $`x`$ would complete the 4-cycle through their shared neighbor in $`N(v)`$. If $`w\in N_X(z)`$, the unique ambient common neighbor of $`x`$ and $`w`$ cannot lie in $`N(v)`$: it would have to be the unique such neighbor of $`x`$, and would then form a triangle with $`w,z`$. It therefore lies in $`X`$, giving a path of length three from $`x`$ to $`z`$. Hence all remaining vertices are at distance three. This proves connectivity and diameter three.
+It remains to prove that $`X`$ has diameter three. Around any $`x\in X`$, girth at least five gives $`1`$, $`K-1`$, and $`(K-1)(K-2)`$ distinct vertices in the first three distance layers of $`X`$. The remaining $`K-2`$ vertices are exactly the other vertices of $`X`$ sharing the unique neighbor of $`x`$ in $`N(v)`$. They have no path of length at most two to $`x`$, since such a path would create a triangle or 4-cycle in $`M`$. Every neighbor of any such remaining vertex $`z`$ is nonadjacent to $`x`$, since an edge to $`x`$ would complete the 4-cycle through their shared neighbor in $`N(v)`$. If $`w\in N_X(z)`$, the unique ambient common neighbor of $`x`$ and $`w`$ cannot lie in $`N(v)`$: it would have to be the unique such neighbor of $`x`$, and would then form a triangle with $`w,z`$. It therefore lies in $`X`$, giving a path of length three from $`x`$ to $`z`$. Hence all remaining vertices are at distance three. This proves connectivity and diameter three.
 
 Apply Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a> with $`k=K-1`$. The eigenvalue $`-1`$ maps to $`K-3`$, while $`r`$ and $`s`$ map respectively to
 ``` math
@@ -635,7 +643,9 @@ Whenever $`M[U]`$ has diameter three, these adjacency data feed directly into Th
 
 <div class="proof">
 
-*Proof.* The upper-right and lower-right blocks of the Moore identity are
+*Proof.* Each vertex of $`U`$ has degree $`K`$ in $`M`$ and exactly $`t`$ neighbors in $`S`$. It therefore has $`K-t`$ neighbors in $`U`$, so $`M[U]`$ is $`(K-t)`$-regular. All zero and all-one blocks in this proof have the dimensions forced by the displayed partition.
+
+The upper-right and lower-right blocks of the Moore identity are
 ``` math
 BC+CP=-C+J,
  \qquad
@@ -686,7 +696,7 @@ No unconditional infinite family is established. Fixed-degree, diameter-three gr
 
 # Computational certificate
 
-The accompanying Python programs supply several exact checks with deliberately separated dependencies. The original 50-vertex certificate:
+The repository contains independent exact checks. For the 50-vertex graph, the original certificate does the following:
 
 1.  constructs the 175 unordered edges and checks all 50 degrees;
 
@@ -704,16 +714,20 @@ The resulting characteristic polynomial is
 ```
 and all 50 rational pivots are positive. Set
 ``` math
-M:=D+7I=L\Delta L^{\mathsf T}.
+M:=D+7I.
 ```
-Since $`L`$ is unit lower triangular, it is invertible. Thus $`L^{\mathsf T}y\ne0`$ for every nonzero $`y`$, and
+The exact decomposition is
+``` math
+M=L\Delta L^{\mathsf T},
+```
+where $`L`$ is unit lower triangular and $`\Delta`$ has strictly positive diagonal. Hence $`L`$ is invertible, and for every nonzero $`y`$,
 ``` math
 y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
-  \Delta(L^{\mathsf T}y)>0,
+  \Delta(L^{\mathsf T}y)>0.
 ```
-Hence $`M=D+7I`$ is positive definite.
+Thus $`M=D+7I`$ is positive definite.
 
-A second exact script constructs $`R`$ by the stated deletion and independently checks its 40 degrees, all BFS distances, girth, the block identities <a href="#eq:c-block" data-reference-type="eqref" data-reference="eq:c-block">[eq:c-block]</a>–<a href="#eq:bc-intertwining" data-reference-type="eqref" data-reference="eq:bc-intertwining">[eq:bc-intertwining]</a>, and the characteristic polynomials
+A second script constructs $`R`$ by the stated deletion and independently checks its 40 degrees, all BFS distances, girth, the block identities <a href="#eq:c-block" data-reference-type="eqref" data-reference="eq:c-block">[eq:c-block]</a>–<a href="#eq:bc-intertwining" data-reference-type="eqref" data-reference="eq:bc-intertwining">[eq:bc-intertwining]</a>, and the characteristic polynomials
 ``` math
 \det(tI-B)=(t-6)(t-2)^{18}(t-1)^4(t+2)^5(t+3)^{12},
 ```
@@ -721,7 +735,7 @@ A second exact script constructs $`R`$ by the stated deletion and independently 
 \det(tI-D(R))=(t-75)(t-3)^5t^{16}(t+5)^{18}.
 ```
 
-The extended verifier reconstructs the 42-, 40-, 39-, and 38-vertex graphs from the field-coordinate rules and checks all structural, dual-degree, characteristic-polynomial, Sturm, and rational $`LDL^{\mathsf T}`$ assertions used above. A separate 38-vertex audit starts from the stored graph6 representation, reconstructs graph distances by integer breadth-first search through NetworkX ([Hagberg et al. 2008](#ref-HagbergSchultSwart2008)), and uses a handwritten `Fraction`-based decomposition. This is independent of the coordinate representation and of SymPy’s matrix factorization, although it is not an independently sourced graph.
+The extended verifier reconstructs the 42-, 40-, 39-, and 38-vertex graphs from the field-coordinate rules and checks all structural, dual-degree, characteristic-polynomial, Sturm, and rational $`LDL^{\mathsf T}`$ assertions used above. A separate 38-vertex audit starts from the stored graph6 representation, reconstructs graph distances by integer breadth-first search through NetworkX ([Hagberg et al. 2008](#ref-HagbergSchultSwart2008)), and uses a handwritten `Fraction`-based decomposition. This audit uses a different graph representation and an independent $`LDL^{\mathsf T}`$ implementation; the underlying graph is the same.
 
 Finally, `scripts/verify_descendant_families.py` exhausts the 40 labelled single-vertex and 120 labelled edge-endpoint deletions. SymPy supplies exact integer characteristic polynomials $`\det(tI-D)`$ and Sturm counts of their square-free parts ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The recorded output is `supplement/extended_2026-07-23/logs/descendant_family_output.txt`; the enclosing `SHA256SUMS` records the expected SHA-256 digest of that output and every other archived certificate, permitting byte-for-byte integrity checks. The cross-platform command
 
@@ -747,7 +761,7 @@ The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is mad
 
 OpenAI ChatGPT assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.3-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.3-arxiv).
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.4-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.4-arxiv).
 
 # Exact distance characteristic polynomials
 
