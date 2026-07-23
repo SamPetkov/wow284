@@ -118,8 +118,26 @@ jobs:
           lint: false
           use-mathlib-cache: true
       - name: Compile order-39 public endpoint
-        run: cd lean && lake env lean Wow284/Induced39/Counterexample.lean
+        shell: bash
+        run: |
+          if ! (cd lean && lake env lean Wow284/Induced39/Counterexample.lean) >/tmp/lean-39.log 2>&1; then
+            tail -n 160 /tmp/lean-39.log
+            exit 1
+          fi
+          tail -n 20 /tmp/lean-39.log
       - name: Compile order-42 public endpoint
-        run: cd lean && lake env lean Wow284/Induced42/Counterexample.lean
+        shell: bash
+        run: |
+          if ! (cd lean && lake env lean Wow284/Induced42/Counterexample.lean) >/tmp/lean-42.log 2>&1; then
+            tail -n 160 /tmp/lean-42.log
+            exit 1
+          fi
+          tail -n 20 /tmp/lean-42.log
       - name: Report order-39 and order-42 endpoint axioms
-        run: cd lean && lake env lean Wow284Generated3942Audit.lean
+        shell: bash
+        run: |
+          if ! (cd lean && lake env lean Wow284Generated3942Audit.lean) >/tmp/lean-39-42-axioms.log 2>&1; then
+            tail -n 160 /tmp/lean-39-42-axioms.log
+            exit 1
+          fi
+          cat /tmp/lean-39-42-axioms.log
