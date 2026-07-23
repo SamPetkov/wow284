@@ -38,5 +38,6 @@ theorem ldl_identity :
     ldl_identity_scaled]
   ext i j
   simp [castPadMatrix]
+  norm_num
 
 end Wow284.Induced38

@@ -238,6 +238,7 @@ theorem ldl_identity : Lpad * DeltaPad * Lpad.transpose = Mpad := by
     ldl_scaled_identity_int]
   ext i j
   simp [MscaledPadInt, Mpad, castPadMatrix]
+  norm_num
 
 theorem lpad_left_inverse : LpadInv * Lpad =
     (1 : Matrix PadVertex PadVertex ℚ) := by
@@ -248,7 +249,9 @@ theorem lpad_left_inverse : LpadInv * Lpad =
   by_cases hij : i = j
   · subst j
     simp [scaledIdentityInt, castPadMatrix]
+    norm_num
   · simp [scaledIdentityInt, castPadMatrix, hij]
+    norm_num
 
 private theorem wPadInt_positive : ∀ i : PadVertex, 0 < wPadInt i := by decide
 
