@@ -171,6 +171,17 @@ lemma castPadMatrix_transpose (M : Matrix PadVertex PadVertex ℤ) :
     castPadMatrix M.transpose = (castPadMatrix M).transpose := by
   rfl
 
+lemma castPadMatrix_smul (a : ℤ) (M : Matrix PadVertex PadVertex ℤ) :
+    castPadMatrix (a • M) = (a : ℚ) • castPadMatrix M := by
+  ext i j
+  simp [castPadMatrix]
+
+lemma castPadMatrix_one :
+    castPadMatrix (1 : Matrix PadVertex PadVertex ℤ) =
+      (1 : Matrix PadVertex PadVertex ℚ) := by
+  ext i j
+  simp [castPadMatrix]
+
 def Mcore : Matrix Vertex Vertex ℚ := castCoreMatrix McoreInt
 def Mpad : Matrix PadVertex PadVertex ℚ := castPadMatrix MpadInt
 def Lpad : Matrix PadVertex PadVertex ℚ := castPadMatrix BpadInt
@@ -236,22 +247,19 @@ theorem ldl_identity : Lpad * DeltaPad * Lpad.transpose = Mpad := by
     castPadMatrix MpadInt
   rw [← castPadMatrix_transpose, ← castPadMatrix_mul, ← castPadMatrix_mul,
     ldl_scaled_identity_int]
-  ext i j
-  simp [MscaledPadInt, Mpad, castPadMatrix]
-  norm_num
+  rw [MscaledPadInt, castPadMatrix_smul, smul_smul, one_div]
+  have hscale : ({identity_scale} : ℚ) ≠ 0 := by positivity
+  rw [inv_mul_cancel₀ hscale, one_smul]
 
 theorem lpad_left_inverse : LpadInv * Lpad =
     (1 : Matrix PadVertex PadVertex ℚ) := by
   change (((1 : ℚ) / {inverse_scale}) •
       castPadMatrix BpadInvNumeratorInt) * castPadMatrix BpadInt = 1
   rw [Matrix.smul_mul, ← castPadMatrix_mul, lpad_left_inverse_scaled_int]
-  ext i j
-  by_cases hij : i = j
-  · subst j
-    simp [scaledIdentityInt, castPadMatrix]
-    norm_num
-  · simp [scaledIdentityInt, castPadMatrix, hij]
-    norm_num
+  rw [scaledIdentityInt, castPadMatrix_smul, castPadMatrix_one,
+    smul_smul, one_div]
+  have hscale : ({inverse_scale} : ℚ) ≠ 0 := by positivity
+  rw [inv_mul_cancel₀ hscale, one_smul]
 
 private theorem wPadInt_positive : ∀ i : PadVertex, 0 < wPadInt i := by decide
 

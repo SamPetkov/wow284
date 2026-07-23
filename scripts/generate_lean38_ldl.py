@@ -170,7 +170,7 @@ def weightPadInt : PadVertex → ℤ := ![
 ]
 def WpadInt : Matrix PadVertex PadVertex ℤ := diagonal weightPadInt
 def scaledIdentityInt : Matrix PadVertex PadVertex ℤ :=
-  fun i j => if i = j then {inverse_scale} else 0
+  ({inverse_scale} : ℤ) • (1 : Matrix PadVertex PadVertex ℤ)
 
 def castMatrix38 (M : Matrix Vertex Vertex ℤ) : Matrix Vertex Vertex ℚ :=
   M.map (Int.castRingHom ℚ)
@@ -181,6 +181,15 @@ lemma castPadMatrix_mul (M N : Matrix PadVertex PadVertex ℤ) :
     castPadMatrix (M * N) = castPadMatrix M * castPadMatrix N := Matrix.map_mul
 lemma castPadMatrix_transpose (M : Matrix PadVertex PadVertex ℤ) :
     castPadMatrix M.transpose = (castPadMatrix M).transpose := rfl
+lemma castPadMatrix_smul (a : ℤ) (M : Matrix PadVertex PadVertex ℤ) :
+    castPadMatrix (a • M) = (a : ℚ) • castPadMatrix M := by
+  ext i j
+  simp [castPadMatrix]
+lemma castPadMatrix_one :
+    castPadMatrix (1 : Matrix PadVertex PadVertex ℤ) =
+      (1 : Matrix PadVertex PadVertex ℚ) := by
+  ext i j
+  simp [castPadMatrix]
 
 def M38q : Matrix Vertex Vertex ℚ := castMatrix38 M38Int
 def Mpad : Matrix PadVertex PadVertex ℚ := castPadMatrix MpadInt
@@ -244,9 +253,9 @@ theorem ldl_identity :
     castPadMatrix MpadInt
   rw [← castPadMatrix_transpose, ← castPadMatrix_mul, ← castPadMatrix_mul,
     ldl_identity_scaled]
-  ext i j
-  simp [castPadMatrix]
-  norm_num
+  rw [castPadMatrix_smul, smul_smul, one_div]
+  have hscale : ({ldl_scale} : ℚ) ≠ 0 := by positivity
+  rw [inv_mul_cancel₀ hscale, one_smul]
 
 end Wow284.Induced38
 '''
@@ -261,11 +270,10 @@ theorem lpad_left_inverse :
   change (((1 : ℚ) / {inverse_scale}) •
       castPadMatrix BpadInvNumerator) * castPadMatrix BpadInt = 1
   rw [Matrix.smul_mul, ← castPadMatrix_mul, lpad_left_inverse_scaled]
-  ext i j
-  by_cases h : i = j
-  · subst j
-    simp [castPadMatrix, scaledIdentityInt]
-  · simp [castPadMatrix, scaledIdentityInt, h]
+  rw [scaledIdentityInt, castPadMatrix_smul, castPadMatrix_one,
+    smul_smul, one_div]
+  have hscale : ({inverse_scale} : ℚ) ≠ 0 := by positivity
+  rw [inv_mul_cancel₀ hscale, one_smul]
 
 theorem lpad_right_inverse :
     Lpad * LpadInv = (1 : Matrix PadVertex PadVertex ℚ) :=
