@@ -184,12 +184,17 @@ lemma castPadMatrix_transpose (M : Matrix PadVertex PadVertex ℤ) :
 lemma castPadMatrix_smul (a : ℤ) (M : Matrix PadVertex PadVertex ℤ) :
     castPadMatrix (a • M) = (a : ℚ) • castPadMatrix M := by
   ext i j
-  simp [castPadMatrix]
+  change (((a * M i j : ℤ) : ℚ)) =
+    (a : ℚ) * ((M i j : ℤ) : ℚ)
+  rw [Int.cast_mul]
 lemma castPadMatrix_one :
     castPadMatrix (1 : Matrix PadVertex PadVertex ℤ) =
       (1 : Matrix PadVertex PadVertex ℚ) := by
   ext i j
-  simp [castPadMatrix]
+  by_cases h : i = j
+  · subst j
+    simp [castPadMatrix]
+  · simp [castPadMatrix, h]
 
 def M38q : Matrix Vertex Vertex ℚ := castMatrix38 M38Int
 def Mpad : Matrix PadVertex PadVertex ℚ := castPadMatrix MpadInt
