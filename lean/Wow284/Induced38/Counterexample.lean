@@ -2,7 +2,7 @@ import Wow284.Induced38.FiniteCertificates
 import Wow284.Induced38.SpectralBridge
 
 /-!
-# End-to-end counterexample certificate for the 38-vertex graph
+# Spectral counterexample certificate for the 38-vertex graph
 
 The original task permits a strict violation to be certified by positive
 definiteness of `qD + pI`, where the exact minimum dual degree is `p/q`.
@@ -39,7 +39,7 @@ theorem real_eigenpair_wow_gap_positive
   have h := real_eigenpair_above_neg_seventeen_thirds hx heig
   linarith
 
-/-- Public end-to-end endpoint: exact minimum dual degree, exact shifted
+/-- Public spectral endpoint: exact minimum dual degree, exact shifted
 positive-definiteness, and the induced strict inequality for every real
 eigenpair. -/
 theorem counterexample_endpoint :

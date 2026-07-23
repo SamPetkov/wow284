@@ -1,7 +1,7 @@
 # Lean verification
 
 This directory uses Lean 4.31 and Mathlib 4.31. It contains the completed
-50-vertex certificate, the Moore scalar threshold, and explicit counterexample
+50-vertex development, the Moore scalar threshold, and explicit finite spectral
 certificates for orders 38, 39, 40, and 42.
 
 A claim-by-claim description of the non-50 developments is in
@@ -27,10 +27,11 @@ matrix identities in separate shards.
 The separate Lake target `Wow284Extension` imports the committed order-38 and
 order-40 sources.
 
-For order 38, Lean proves the exact minimum dual degree `17/3` and positive
-definiteness of `3D+17I`, which is already a complete strict counterexample
-certificate. For order 40, Lean proves the complete exact distance
-diagonalization, minimum eigenvalue `-5`, dual degree six, and gap one.
+For order 38, Lean proves the exact minimum dual degree `17/3`, positive
+definiteness of `3D+17I`, and the resulting strict inequality for every
+nonzero real eigenpair of the formal matrix. For order 40, Lean proves a
+two-sided invertible exact diagonalization, minimum diagonal entry `-5`, dual
+degree six, and gap one.
 
 ```text
 cd lean
@@ -52,7 +53,8 @@ lake env lean Wow284Generated3942Audit.lean
 The order-39 endpoint proves minimum dual degree `35/6` and
 `6D+35I` positive definite. The order-42 endpoint proves minimum dual degree
 six and `D+6I` positive definite. In each case the positive-definiteness theorem
-implies a strict positive WOW gap for every real distance eigenpair.
+implies a strict positive WOW gap for every nonzero real eigenpair of the
+formal matrix.
 
 To rerun only the exact Python-side generation checks without writing Lean
 files:
@@ -77,6 +79,11 @@ new axiom declarations
 The axiom-report files print the transitive assumptions used by representative
 public endpoints. The intended final reports should contain only standard
 Mathlib foundations such as `propext`, `Classical.choice`, and `Quot.sound`.
+
+For the non-50 constructions, separate finite structural lemmas are present,
+but the public spectral endpoints do not bundle all graph hypotheses or
+identify the semantic `0/1/2/3` matrix with Mathlib's `SimpleGraph.dist` in one
+theorem. See `NON50_CERTIFICATES.md` for the exact claim boundary.
 
 Files ending in `.lean.template` remain outside all imported roots. They record
 generic mechanisms that are not part of any completed explicit-counterexample

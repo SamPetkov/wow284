@@ -252,12 +252,13 @@ def counterexample(spec: Spec) -> str:
     return f'''import Wow284.{n}.SpectralBridge
 
 /-!
-# End-to-end Lean certificate for the order-{spec.order} counterexample
+# Lean spectral certificate for the order-{spec.order} construction
 
 It packages the exact minimum dual degree `{p}/{q}`, positive definiteness of
-`{a}D+{b}I`, and the resulting strict WOW gap for every real distance eigenpair.
-The imported structural modules also certify simplicity, girth five, and
-connectivity. No floating-point eigenvalue is used.
+`{a}D+{b}I`, and the resulting strict WOW gap for every nonzero real eigenpair
+of the formal matrix. Separate imported modules contain finite structural
+lemmas; they are not bundled into the public endpoint below. No floating-point
+eigenvalue is used.
 -/
 namespace Wow284.{n}
 open Matrix

@@ -100,7 +100,7 @@ theorem dual_degree_attained :
   refine ⟨1, ?_⟩
   have hd : degree (1 : Vertex) = 6 := by decide
   have hs : neighborDegreeSum (1 : Vertex) = 34 := by decide
-  simp [dualDegree, hd, hs]
+  norm_num [dualDegree, hd, hs]
 
 private lemma diameter_row_0 (s : Fin 19) (c d : Fin 2) :
     HasPathAtMostThree (coordVertex 0 c) (coordVertex s d) := by
@@ -988,7 +988,8 @@ theorem diameter_at_most_three : ∀ u v : Vertex, HasPathAtMostThree u v := by
 
 theorem explicit_distance_three :
     ¬ HasPathAtMostTwo (0 : Vertex) 5 ∧ HasPathAtMostThree (0 : Vertex) 5 := by
-  decide
+  set_option maxRecDepth 10000 in
+    decide
 
 private lemma semantic_distance_coord (r s : Fin 19) (c d : Fin 2) :
     D (coordVertex r c) (coordVertex s d) =

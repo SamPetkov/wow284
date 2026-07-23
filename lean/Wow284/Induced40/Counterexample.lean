@@ -1,7 +1,7 @@
 import Wow284.Induced40.SpectralEndpoint
 
 /-!
-# End-to-end counterexample certificate for the induced 40-vertex graph
+# Spectral counterexample certificate for the induced 40-vertex graph
 
 The existing generated data give an invertible rational eigenbasis and an exact
 diagonalization of the semantic distance matrix.  This module packages those
@@ -55,7 +55,7 @@ theorem exact_distance_diagonalization_minimum_certificate :
     distance_diagonal_minimum_certificate.1,
     distance_diagonal_minimum_certificate.2⟩
 
-/-- Public end-to-end certificate for the order-40 counterexample.  It records
+/-- Public finite spectral certificate for the order-40 construction. It records
 both inverse identities for the change of basis, the exact minimum of the
 resulting diagonal form, and the previously assembled structural/spectral
 endpoint with strict gap `6 + (-5) = 1`. -/
