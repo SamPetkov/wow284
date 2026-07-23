@@ -1,64 +1,83 @@
 # Lean verification
 
-This directory contains the Lean 4.31/Mathlib 4.31 verification of the
-explicit 50-vertex WOW-284 counterexample and the scalar Moore-degree
-threshold, together with a separately built staging target for induced
-examples.
+This directory uses Lean 4.31 and Mathlib 4.31. It contains the completed
+50-vertex certificate, the Moore scalar threshold, and explicit counterexample
+certificates for orders 38, 39, 40, and 42.
 
-The public development checks:
+A claim-by-claim description of the non-50 developments is in
+[`NON50_CERTIFICATES.md`](NON50_CERTIFICATES.md).
 
-- the 50-vertex coordinate graph, symmetry, irreflexivity, and degree seven;
-- the exhaustive common-neighbor certificate, diameter two, girth five, and
-  the adjacency-square and distance-matrix identities;
+## Completed 50-vertex development
+
+The default `Wow284` library checks:
+
+- the coordinate graph, symmetry, irreflexivity, and degree seven;
+- the common-neighbour certificate, diameter two, and girth five;
+- the adjacency-square and distance-matrix identities;
 - an exact rational eigenbasis and two-sided inverse;
-- the exact diagonalization with eigenvalues `91`, `-4`, and `1`, with
-  multiplicities `1`, `28`, and `21`; and
-- the scalar WOW inequality precisely for natural degrees `k <= 3` when
-  `k >= 2`, with equality at `k = 3` and failure for `k > 3`.
+- the exact distance diagonalization `91^1, (-4)^28, 1^21`; and
+- the scalar Moore threshold, with equality at degree three and failure above
+  degree three.
 
-The spectral proof is generated deterministically by
-`../scripts/generate_lean_diagonalization.py`. It clears denominators, checks
-bounded integer matrix identities in 20 shards, and assembles them into the
-public rational theorems. Run:
+The generated spectral proof clears denominators and checks bounded integer
+matrix identities in separate shards.
 
-```text
-python scripts/generate_lean_diagonalization.py --check
-cd lean
-lake build
-```
+## Orders 38 and 40
 
-Release scans reject `sorry`, `admit`, `native_decide`, `bv_decide`, unsafe
-declarations, and new axioms. Strict AXLE audits of every computational shard
-and public wrapper pass under `lean-4.31.0`. Representative axiom reports list
-only `propext`, `Classical.choice`, and `Quot.sound`.
+The separate Lake target `Wow284Extension` imports the committed order-38 and
+order-40 sources.
 
-The paper's generic Moore-graph-to-spectrum derivation is not encoded in full;
-the completed formal-verification claim is limited to the explicit
-counterexample and the scalar threshold.
-
-## Staged induced-graph extension
-
-`Wow284Extended.lean` is exposed through the separate Lake target
-`Wow284Extension`. It imports generated finite certificates for the induced
-40-vertex graph and exact finite/LDL data for the 38-vertex graph. Run:
+For order 38, Lean proves the exact minimum dual degree `17/3` and positive
+definiteness of `3D+17I`, which is already a complete strict counterexample
+certificate. For order 40, Lean proves the complete exact distance
+diagonalization, minimum eigenvalue `-5`, dual degree six, and gap one.
 
 ```text
-python scripts/generate_lean40_structural.py --check
-python scripts/generate_lean40_diagonalization.py --check
-python scripts/generate_lean38_certificates.py --check
-python scripts/generate_lean38_ldl.py --check
 cd lean
 lake build Wow284Extension
+lake env lean Wow284ExtensionAudit.lean
 ```
 
-The 40-vertex source currently lacks the final public theorem combining dual
-degree six, least distance eigenvalue `-5`, and the strict WOW inequality. The
-38-vertex source additionally lacks the `Matrix.PosDef` congruence and
-principal-submatrix bridge from its padded LDL data to the spectral claim.
-Files ending in `.lean.template` are deliberately excluded and contain the
-remaining proof sketches. The punctured-Moore skeleton is also excluded from
-the staging root because its interface is only a semantic placeholder.
+## Orders 39 and 42
 
-The previous AXLE strict report covers the completed 50-vertex/scalar target,
-not this extension. A fresh AXLE audit and representative `#print axioms`
-reports are release gates for any expanded formal-verification claim.
+These larger generated source sets are produced deterministically during CI:
+
+```text
+python scripts/generate_lean39_42.py
+cd lean
+lake env lean Wow284Generated3942.lean
+lake env lean Wow284Generated3942Audit.lean
+```
+
+The order-39 endpoint proves minimum dual degree `35/6` and
+`6D+35I` positive definite. The order-42 endpoint proves minimum dual degree
+six and `D+6I` positive definite. In each case the positive-definiteness theorem
+implies a strict positive WOW gap for every real distance eigenpair.
+
+To rerun only the exact Python-side generation checks without writing Lean
+files:
+
+```text
+python scripts/generate_lean39_42.py --verify-only
+```
+
+## Trust and source hygiene
+
+The CI source audit rejects imported occurrences of:
+
+```text
+sorry
+admit
+native_decide
+bv_decide
+unsafe declarations
+new axiom declarations
+```
+
+The axiom-report files print the transitive assumptions used by representative
+public endpoints. The intended final reports should contain only standard
+Mathlib foundations such as `propext`, `Classical.choice`, and `Quot.sound`.
+
+Files ending in `.lean.template` remain outside all imported roots. They record
+generic mechanisms that are not part of any completed explicit-counterexample
+claim.
