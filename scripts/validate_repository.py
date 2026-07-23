@@ -69,7 +69,7 @@ def main() -> None:
             "exact order-38 Sturm variation certificate missing")
     require(r"vertices at distance two from \(P_{0,0}\)" in tex,
             "explicit order-42 base vertex missing")
-    require(r"\texttt{v2.0.2-arxiv}" in tex, "fixed release tag missing")
+    require(r"\texttt{v2.0.3-arxiv}" in tex, "fixed release tag missing")
     require(r"\delta^*(H_v)" in tex, "order-39 graph quantifier is not explicit")
     require(r"\mathbb R^{V(X)}" in tex, "Moore invariant-space decomposition missing")
     require(r"2K-7-\sqrt{4K-3}" in tex, "Moore threshold calculation missing")
@@ -94,6 +94,33 @@ def main() -> None:
     require(r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}" in tex,
             "40-vertex distance spectrum missing")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
+
+    submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
+    require(
+        "**Repository release:** `v2.0.3-arxiv`" in submission_notes,
+        "submission metadata does not identify release v2.0.3-arxiv",
+    )
+
+    build_report = (ROOT / "BUILD_VERIFICATION.txt").read_text(encoding="utf-8")
+    require(
+        "The authoritative SHA-256 digests for main.pdf and\n"
+        "      arxiv/wow284_arxiv_source.zip are recorded in SHA256SUMS."
+        in build_report,
+        "build report does not identify SHA256SUMS as the authoritative digest ledger",
+    )
+    require(
+        re.search(r"[0-9a-f]{64}\s+main\.pdf", build_report) is None,
+        "build report duplicates the main.pdf digest",
+    )
+    require(
+        re.search(
+            r"[0-9a-f]{64}\s+arxiv/wow284_arxiv_source\.zip",
+            build_report,
+        )
+        is None,
+        "build report duplicates the arXiv ZIP digest",
+    )
+
     archived_tex = (ROOT / "archive" / "main_2026-07-19.tex").read_text(encoding="utf-8")
     require(r"\date{19 July 2026}" in archived_tex,
             "historical 19 July manuscript snapshot is not dated correctly")

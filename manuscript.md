@@ -121,14 +121,7 @@ For $`k\ge2`$, comparison after moving 3 to the left is legitimate, and
 ```
 Thus the inequality is strict for $`k=2`$, is an equality for $`k=3`$, and fails precisely for $`k>3`$. This proves [Theorem A](#thm:moore-wow).
 
-The smallest explicit example constructed in this note has 38 vertices. By Theorem <a href="#thm:thirty-eight" data-reference-type="ref" data-reference="thm:thirty-eight">6</a>, it satisfies
-``` math
-\delta^*=\frac{17}{3},
-  \qquad
-  \partial_{38}=-3-\sqrt7,
-  \qquad
-  \Phi=\frac83-\sqrt7>0.
-```
+The smallest explicit example constructed in this note has 38 vertices. By Theorem <a href="#thm:thirty-eight" data-reference-type="ref" data-reference="thm:thirty-eight">6</a>, its minimum dual degree is $`17/3`$, its least distance eigenvalue is $`-3-\sqrt7`$, and its counterexample score is $`8/3-\sqrt7>0`$.
 
 # Coordinate construction
 
@@ -707,18 +700,18 @@ The accompanying Python programs supply several exact checks with deliberately s
 
 The resulting characteristic polynomial is
 ``` math
-(t-91)(t-1)^{21}(t+4)^{28}
+(t-91)(t-1)^{21}(t+4)^{28},
 ```
-and all 50 rational pivots are positive. Writing
+and all 50 rational pivots are positive. Set
 ``` math
-M:=D+7I=L\Delta L^{\mathsf T},
+M:=D+7I=L\Delta L^{\mathsf T}.
 ```
-where $`L`$ is unit lower triangular and hence invertible. Thus $`L^{\mathsf T}y\ne0`$ for every nonzero $`y`$, and
+Since $`L`$ is unit lower triangular, it is invertible. Thus $`L^{\mathsf T}y\ne0`$ for every nonzero $`y`$, and
 ``` math
 y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
   \Delta(L^{\mathsf T}y)>0,
 ```
-so this proves positive definiteness of $`M=D+7I`$.
+Hence $`M=D+7I`$ is positive definite.
 
 A second exact script constructs $`R`$ by the stated deletion and independently checks its 40 degrees, all BFS distances, girth, the block identities <a href="#eq:c-block" data-reference-type="eqref" data-reference="eq:c-block">[eq:c-block]</a>–<a href="#eq:bc-intertwining" data-reference-type="eqref" data-reference="eq:bc-intertwining">[eq:bc-intertwining]</a>, and the characteristic polynomials
 ``` math
@@ -754,7 +747,7 @@ The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is mad
 
 OpenAI ChatGPT assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.2-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.2-arxiv).
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.3-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.3-arxiv).
 
 # Exact distance characteristic polynomials
 
