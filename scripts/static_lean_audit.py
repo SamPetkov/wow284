@@ -112,7 +112,7 @@ def main() -> None:
         "----------",
         "This is a textual/import-closure audit, not Lean kernel compilation.",
     ]
-    OUTPUT.write_text("\n".join(report) + "\n", encoding="utf-8")
+    OUTPUT.write_text("\n".join(report) + "\n", encoding="utf-8", newline="\n")
     print("Lean static audit: PASS")
     print(f"  imported .lean files={len(lean_files)}")
     print(f"  non-imported templates={len(templates)}")
