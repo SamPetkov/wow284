@@ -1,7 +1,7 @@
 # Provenance and AI-assistance record
 
 **Author:** Samuil Petkov<br>
-**Manuscript date:** 19 July 2026<br>
+**Repository revision:** 23 July 2026; active PDF date suppressed<br>
 **Audit and package preparation:** 21--23 July 2026
 
 ## Submitted material
@@ -36,10 +36,10 @@ proof placeholders, unsafe declarations, and new axioms.
 
 ## AI assistance
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
-exploration, and Lean formalization. No AI system is named as an author.
-Samuil Petkov accepts full responsibility for all mathematical, bibliographic,
-legal, and submission claims.
+OpenAI ChatGPT assisted with adversarial proof checking, proof exploration,
+and Lean formalization. No AI system is named as an author. Samuil Petkov
+accepts full responsibility for all mathematical, bibliographic, legal, and
+submission claims.
 
 ## Limits
 

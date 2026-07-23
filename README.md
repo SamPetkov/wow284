@@ -3,7 +3,7 @@
 **Author:** Samuil Petkov<br>
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
-**Manuscript version:** 19 July 2026 (`2026-07-19`)<br>
+**Repository revision:** 23 July 2026 (`2026-07-23`); PDF date suppressed<br>
 **Repository status:** Public research note; arXiv submission received and revision package prepared
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
@@ -238,7 +238,10 @@ The upload archive is [`arxiv/wow284_arxiv_source.zip`](arxiv/wow284_arxiv_sourc
 It excludes PDFs, logs, caches, repository administration, proof audits, and
 code because arXiv asks authors not to include files that are unnecessary for
 TeX processing. The archive includes the matching `.bbl` and `.bib`; the main
-file uses a fixed date rather than `\today`.
+file uses `\date{}` rather than a dynamic `\today`.
+
+The pre-revision source dated 19 July 2026 is preserved as
+[`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 
 Suggested arXiv primary category: `math.CO`. See
 [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) for title, abstract, comments,
@@ -252,8 +255,7 @@ repository material is licensed by Samuil Petkov under
 [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). See
 [`LICENSE_SCOPE.md`](LICENSE_SCOPE.md) for the exact scope.
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking and finding
-the exact graph construction. Samuil Petkov is the sole
-author and accepts full responsibility for the mathematics, citations,
-attribution, and conclusions. Reproducible checks are not peer review or
-journal acceptance.
+OpenAI ChatGPT assisted with adversarial proof checking, proof exploration,
+and Lean formalization. Samuil Petkov is the sole author and accepts full
+responsibility for the mathematics, citations, attribution, and conclusions.
+Reproducible checks are not peer review or journal acceptance.

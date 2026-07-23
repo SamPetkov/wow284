@@ -289,10 +289,25 @@ def verify_38(graph40: Graph, labels40: tuple[Vertex, ...]) -> None:
     assert sp.Poly(characteristic.as_expr() - expected_d, X).is_zero
 
     # The factor x^2+6x+2 gives the candidate least root -3-sqrt(7).
-    # Exact Sturm counting shows that it is the unique distinct root below -28/5.
-    assert characteristic.sqf_part().count_roots(
-        -sp.oo, sp.Rational(-28, 5)
-    ) == 1
+    # Record the exact Sturm variation certificate used in the manuscript.
+    square_free = characteristic.sqf_part()
+    sturm_sequence = sp.sturm(square_free.as_expr(), X)
+    signs_at_minus_infinity = [
+        sp.sign(poly.LC()) * (-1) ** poly.degree()
+        for poly in map(lambda expr: sp.Poly(expr, X), sturm_sequence)
+    ]
+    signs_at_cut = [
+        sp.sign(sp.Poly(expr, X).eval(sp.Rational(-28, 5)))
+        for expr in sturm_sequence
+    ]
+
+    def variations(signs: list[sp.Expr]) -> int:
+        nonzero = [sign for sign in signs if sign != 0]
+        return sum(left != right for left, right in zip(nonzero, nonzero[1:]))
+
+    assert variations(signs_at_minus_infinity) == 26
+    assert variations(signs_at_cut) == 25
+    assert square_free.count_roots(-sp.oo, sp.Rational(-28, 5)) == 1
     assert sp.Rational(7) > sp.Rational(13, 5) ** 2  # sqrt(7) > 13/5
     # Hence -3-sqrt(7) < -28/5 and no other root is smaller.
 

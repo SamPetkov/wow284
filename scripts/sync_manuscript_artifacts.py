@@ -72,7 +72,7 @@ def compile_manuscript() -> None:
         environment.update(
             {
                 "TZ": "UTC",
-                "SOURCE_DATE_EPOCH": "1784462400",
+                "SOURCE_DATE_EPOCH": "1784808000",
                 "FORCE_SOURCE_DATE": "1",
             }
         )
@@ -152,8 +152,6 @@ def generate_markdown() -> None:
 **Samuil Petkov**<br>
 Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 <samuil.petkov@phys.ens.psl.eu><br>
-19 July 2026
-
 > Reading copy generated from `main.tex`. The TeX source is authoritative if
 > this rendering differs in notation, citations, or layout.
 
@@ -178,7 +176,7 @@ def make_arxiv_archive() -> None:
     ARXIV_DIR.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(ARXIV_ZIP, "w") as archive:
         for name, source in members:
-            info = zipfile.ZipInfo(name, date_time=(2026, 7, 19, 12, 0, 0))
+            info = zipfile.ZipInfo(name, date_time=(2026, 7, 23, 12, 0, 0))
             info.create_system = 3
             info.external_attr = 0o100644 << 16
             info.compress_type = zipfile.ZIP_DEFLATED
@@ -200,11 +198,14 @@ def validate_release_text() -> None:
     required = [
         r"\title[Exact counterexamples to WOW-284]",
         r"\author{Samuil Petkov}",
-        r"\date{19 July 2026}",
+        r"\date{}",
         r"\usepackage[margin=1in]{geometry}",
         "Howlader and Panigrahi",
         "No claim is made",
-        "OpenAI ChatGPT-5.6 Sol Pro",
+        "OpenAI ChatGPT assisted",
+        "A graph6 string in this fixed",
+        r"V(-\infty)=26",
+        r"fix \(P_{0,0}\)",
         "The explicit 50-vertex counterexample is fully formalized and verified",
         "Lean 4.31 also kernel-checks finite spectral certificates",
         "The scope of these non-50 results is deliberately finite and spectral",
@@ -226,6 +227,9 @@ def validate_release_text() -> None:
         "Samuil Petkov & Codex",
         "20 July 2026",
         "21 July 2026",
+        "canonical graph6 string",
+        "OpenAI ChatGPT-5.6",
+        "Exact rational factorization",
         "remains under verification",
         "formalization is in preparation",
     ]

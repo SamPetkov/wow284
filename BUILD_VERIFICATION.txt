@@ -1,8 +1,8 @@
 WOW-284 RELEASE VERIFICATION
 ============================
 
-Manuscript version: 19 July 2026
-Verification run: 23 July 2026
+Repository revision: 23 July 2026; active PDF date suppressed
+Verification run: 24 July 2026
 Author: Samuil Petkov
 
 MATHEMATICAL CERTIFICATE
@@ -93,7 +93,7 @@ MANUSCRIPT AND PDF
 PASS  Clean multi-pass LaTeX/BibTeX build: no final warnings, undefined
       citations/references, overfull/underfull boxes, or missing glyphs.
 PASS  PDF metadata: revised title, Samuil Petkov, and fixed
-      creation/modification date 19 July 2026.
+      creation/modification date 23 July 2026.
 PASS  Twelve pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
 PASS  Every reported font is embedded and subset.
 PASS  All twelve pages rendered at 130 dpi and inspected at high resolution:
@@ -101,19 +101,19 @@ PASS  All twelve pages rendered at 130 dpi and inspected at high resolution:
       or broken bibliography/address layout.
 
 Verified PDF SHA-256:
-  b6545a1c120ab9fb27d1f566f90dbae04433df777a4b48427258d8ce5244f8c6  main.pdf
+  f96611a6c466a4329fdd013a9be7b37afdb91b090d73fdd2bc399c461317e357  main.pdf
 
 ARXIV PACKAGE
 -------------
 PASS  arxiv/wow284_arxiv_source.zip contains exactly, in this order:
       main.tex, references.bib, main.bbl.
 PASS  Archive members are deterministic LF serializations of the canonical
-      source files and carry the fixed timestamp 19 July 2026 12:00:00.
+      source files and carry the fixed timestamp 23 July 2026 12:00:00.
 PASS  A fresh extraction of the ZIP compiled independently to a twelve-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  513745c4d22be3a10c7d85554deb8917b19a1efde5560a702de54e09f7ed6aaa
+  4d87ab07a3672e1d2f7550cf3d98cc6176c83553e57414f552c5ffc2967148a7
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT

@@ -3,8 +3,6 @@
 **Samuil Petkov**<br>
 Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 <samuil.petkov@phys.ens.psl.eu><br>
-19 July 2026
-
 > Reading copy generated from `main.tex`. The TeX source is authoritative if
 > this rendering differs in notation, citations, or layout.
 
@@ -61,7 +59,7 @@ Consequently $`G`$ satisfies the inequality in WOW-284 if and only if $`k\le3`$,
 
 A *Moore graph of diameter two and degree $`k`$* is a finite simple connected $`k`$-regular graph of diameter two attaining the Moore bound $`|V(G)|\le 1+k+k(k-1)=k^2+1`$. We include the short derivation needed for [Theorem A](#thm:moore-wow); no classification of Moore graphs is used.
 
-Fix a vertex $`v`$. Its $`k`$ neighbors initiate $`k(k-1)`$ nonbacktracking walks of length two. Exactly $`k(k-1)`$ vertices lie outside $`\{v\}\cup N(v)`$, and diameter two makes every one of them the endpoint of at least one such walk. The endpoint map is therefore a surjection between finite sets of the same size, hence a bijection. Applying the same argument at each vertex shows that adjacent vertices have no common neighbor, whereas nonadjacent vertices have exactly one. Thus there are no triangles or 4-cycles. To exhibit a 5-cycle, take an edge $`uv`$, choose $`x\in N(u)\setminus\{v\}`$ and $`y\in N(v)\setminus\{u\}`$, and let $`z`$ be the unique common neighbor of the necessarily nonadjacent vertices $`x,y`$. The absence of triangles and 4-cycles makes these five vertices distinct, so $`uxzyvu`$ is a 5-cycle. Hence $`g(G)=5`$.
+Fix a vertex $`v`$. There are exactly $`k(k-1)`$ nonbacktracking walks $`vuw`$ of length two. There are also exactly $`k(k-1)`$ vertices outside $`\{v\}\cup N(v)`$, and diameter two implies that each such vertex is the endpoint of at least one of these walks. Walks with distinct endpoints are distinct, so these required walks already exhaust all $`k(k-1)`$ nonbacktracking walks. Consequently every such walk ends outside $`\{v\}\cup N(v)`$, and every outside vertex is reached exactly once. Applying this at every vertex shows that adjacent vertices have no common neighbor and nonadjacent vertices have exactly one. Thus there are no triangles or 4-cycles. To exhibit a 5-cycle, take an edge $`uv`$, choose $`x\in N(u)\setminus\{v\}`$ and $`y\in N(v)\setminus\{u\}`$, and let $`z`$ be the unique common neighbor of the necessarily nonadjacent vertices $`x,y`$. The absence of triangles and 4-cycles makes these five vertices distinct, so $`uxzyvu`$ is a 5-cycle. Hence $`g(G)=5`$.
 
 Let $`A`$, $`I`$, and $`J`$ denote the adjacency, identity, and all-ones matrices of order $`n=k^2+1`$. The common-neighbor counts give, entry by entry,
 ``` math
@@ -359,7 +357,7 @@ Delete the adjacent vertices
 ``` math
 a=P_{1,0},\qquad b=P_{1,1}
 ```
-from $`R`$, and call the resulting graph $`H`$. A canonical graph6 string, complete adjacency lists, and an edge list are provided in `data/graphs/`.
+from $`R`$, and call the resulting graph $`H`$. A graph6 string in this fixed labeling, together with complete adjacency lists and an edge list, is provided in `data/graphs/`.
 
 <div id="thm:thirty-eight" class="theorem">
 
@@ -392,23 +390,27 @@ d^*(v)=\frac{5t+6(6-t)}6=6-\frac{t}{6}.
 ```
 There are $`10\cdot5=50`$ incidences from $`X\cup Y`$ to the 28 degree-six vertices, so some degree-six vertex has $`t=2`$. Hence $`\delta^*(H)=17/3`$.
 
-The exact distance characteristic polynomial is displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. It contains $`(x^2+6x+2)^2`$, whose roots are $`-3\pm\sqrt7`$. An exact Sturm count shows that the full polynomial has exactly one distinct root below $`-28/5`$. Since
+The exact distance characteristic polynomial is displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. It contains $`(x^2+6x+2)^2`$, whose roots are $`-3\pm\sqrt7`$. For the square-free part of this polynomial, the exact Sturm sequence has variation counts
 ``` math
--3-\sqrt7<-\frac{28}{5},
+V(-\infty)=26,\qquad V(-28/5)=25.
 ```
-this is the least distance eigenvalue. Independently, an exact rational $`LDL^{\mathsf T}`$ decomposition of $`3D(H)+17I`$ has 38 positive pivots. Finally $`8/3>\sqrt7`$, because $`64>63`$, proving strictness. ◻
+Thus the full polynomial has exactly one distinct root below $`-28/5`$. Moreover, $`7>(13/5)^2`$, so
+``` math
+-3-\sqrt7<-3-\frac{13}{5}=-\frac{28}{5}.
+```
+Therefore this is the least distance eigenvalue. Independently, an exact rational $`LDL^{\mathsf T}`$ decomposition of $`3D(H)+17I`$ has 38 positive pivots. Finally $`8/3>\sqrt7`$, because $`64>63`$, proving strictness. ◻
 
 </div>
 
 ## Orders 39 and 42
 
-For any $`v\in V(R)`$, deleting $`v`$ leaves six vertices of degree five and 33 of degree six. A degree-six vertex meets at most one degree-five vertex, by the absence of 4-cycles, and at least one such incidence exists. Thus
+For any $`v\in V(R)`$, deleting $`v`$ leaves its six neighbors with degree five and the other 33 vertices with degree six. The six degree-five vertices are pairwise nonadjacent, and all five remaining neighbors of each have degree six; hence their dual degree is $`6`$. A degree-six vertex has at most one degree-five neighbor, since two would form a 4-cycle through $`v`$. There are $`6\cdot5=30`$ incidences between the degree-five and degree-six vertices, so at least one degree-six vertex has exactly one degree-five neighbor. Therefore
 ``` math
 \delta^*=\frac{5+5\cdot6}{6}=\frac{35}{6}.
 ```
-Exact rational factorization gives $`6D+35I\succ0`$, so every distance eigenvalue is strictly greater than $`-35/6`$. This gives a 39-vertex strict counterexample. The exhaustive verification below checks connectivity for each of the 40 choices of $`v`$; as induced subgraphs, they retain girth at least five.
+An exact rational $`LDL^{\mathsf T}`$ decomposition of $`6D+35I`$ has all 39 pivots strictly positive. Thus $`6D+35I\succ0`$, so every distance eigenvalue is strictly greater than $`-35/6`$. This gives a 39-vertex strict counterexample. The exhaustive verification below checks connectivity for each of the 40 choices of $`v`$; as induced subgraphs, they retain girth at least five.
 
-For another regular example, fix a vertex in the Hoffman–Singleton graph and retain its 42 vertices at distance two. The induced graph is 6-regular and has
+For another regular example, fix $`P_{0,0}`$ in the Hoffman–Singleton graph and retain the 42 vertices at distance two from it. The induced graph is 6-regular and has
 ``` math
 \operatorname{Spec}(A)=\{6^{(1)},2^{(21)},(-1)^{(6)},(-3)^{(14)}\},
 ```
@@ -664,7 +666,7 @@ The scope of these non-50 results is deliberately finite and spectral: their pub
 
 The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is made that 38 is the minimum possible order among WOW-284 counterexamples, and no exhaustive search over all smaller graphs is part of this note. Calling the 40-vertex graph the $`(6,5)`$-cage refers to its classical minimum-order property among 6-regular girth-five graphs, not to minimum order for the WOW problem. The distance-spectral input for Moore graphs is credited to Howlader and Panigrahi; the classical 40-vertex cage and 42-vertex second subconstituent are separately credited above. The repository source ledger records the explicit WOW-284 connection and the limits of the targeted priority search.
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
+OpenAI ChatGPT assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
 The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284).
 
