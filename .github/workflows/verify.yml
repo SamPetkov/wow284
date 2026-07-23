@@ -118,46 +118,8 @@ jobs:
           lint: false
           use-mathlib-cache: true
       - name: Compile order-39 public endpoint
-        id: compile39
-        continue-on-error: true
-        shell: bash
-        run: cd lean && lake env lean Wow284/Induced39/Counterexample.lean >/tmp/lean-39.log 2>&1
+        run: cd lean && lake env lean Wow284/Induced39/Counterexample.lean
       - name: Compile order-42 public endpoint
-        id: compile42
-        continue-on-error: true
-        shell: bash
-        run: cd lean && lake env lean Wow284/Induced42/Counterexample.lean >/tmp/lean-42.log 2>&1
+        run: cd lean && lake env lean Wow284/Induced42/Counterexample.lean
       - name: Report order-39 and order-42 endpoint axioms
-        id: axioms3942
-        continue-on-error: true
-        shell: bash
-        run: cd lean && lake env lean Wow284Generated3942Audit.lean >/tmp/lean-39-42-axioms.log 2>&1
-      - name: Verify generated-Lean status
-        if: always()
-        shell: bash
-        env:
-          COMPILE39: ${{ steps.compile39.outcome }}
-          COMPILE42: ${{ steps.compile42.outcome }}
-          AXIOMS3942: ${{ steps.axioms3942.outcome }}
-        run: |
-          if [[ "$COMPILE39" == "success" &&
-                "$COMPILE42" == "success" &&
-                "$AXIOMS3942" == "success" ]]; then
-            echo "order 39 endpoint: PASS"
-            echo "order 42 endpoint: PASS"
-            echo "order 39/42 axiom audit: PASS"
-            cat /tmp/lean-39-42-axioms.log
-            exit 0
-          fi
-
-          echo "Generated Lean verification failed."
-          echo "order 39: $COMPILE39"
-          echo "order 42: $COMPILE42"
-          echo "axiom audit: $AXIOMS3942"
-          for logfile in /tmp/lean-39.log /tmp/lean-42.log /tmp/lean-39-42-axioms.log; do
-            if [[ -f "$logfile" ]]; then
-              echo "===== $logfile ====="
-              tail -n 120 "$logfile"
-            fi
-          done
-          exit 1
+        run: cd lean && lake env lean Wow284Generated3942Audit.lean
