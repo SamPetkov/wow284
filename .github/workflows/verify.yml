@@ -48,7 +48,8 @@ jobs:
           cmp tmp/export/edges.csv results/edges.csv
           cmp tmp/export/adjacency_matrix.csv results/adjacency_matrix.csv
           cmp tmp/export/distance_matrix.csv results/distance_matrix.csv
-      - name: Check synchronized release files
+      - name: Check synchronized release files on the release branch
+        if: github.ref == 'refs/heads/main'
         run: |
           python scripts/sync_manuscript_artifacts.py --check
           python scripts/validate_repository.py
@@ -130,7 +131,7 @@ jobs:
         run: cd lean && lake env lean Wow284/Induced42/Counterexample.lean >/tmp/lean-42.log 2>&1
       - name: Report order-39 and order-42 endpoint axioms
         id: axioms3942
-        if: steps.compile39.outcome == 'success' && steps.compile42.outcome == 'success'
+        if: always() && steps.compile39.outcome == 'success' && steps.compile42.outcome == 'success'
         continue-on-error: true
         shell: bash
         run: cd lean && lake env lean Wow284Generated3942Audit.lean >/tmp/lean-39-42-axioms.log 2>&1
@@ -153,14 +154,18 @@ jobs:
           } > "$report"
           for item in "39:$COMPILE39:/tmp/lean-39.log" "42:$COMPILE42:/tmp/lean-42.log" "axioms:$AXIOMS3942:/tmp/lean-39-42-axioms.log"; do
             IFS=: read -r label outcome logfile <<< "$item"
-            if [[ "$outcome" == "failure" ]]; then
+            if [[ "$outcome" == "failure" || "$outcome" == "skipped" ]]; then
               failed=1
               {
-                echo "### $label failed"
+                echo "### $label $outcome"
                 echo
-                echo '```text'
-                tail -n 100 "$logfile"
-                echo '```'
+                if [[ -f "$logfile" ]]; then
+                  echo '```text'
+                  tail -n 100 "$logfile"
+                  echo '```'
+                else
+                  echo "No diagnostic log was produced."
+                fi
                 echo
               } >> "$report"
             elif [[ "$outcome" == "success" ]]; then
