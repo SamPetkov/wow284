@@ -18,15 +18,15 @@ open scoped BigOperators
 
 /-- Average degree of the neighbours of `v`. -/
 def dualDegree (v : Vertex) : ℚ :=
-  ((∑ u in neighbors v, degree u : ℕ) : ℚ) / (degree v : ℚ)
+  ((∑ u ∈ neighbors v, degree u : ℕ) : ℚ) / (degree v : ℚ)
 
 /-- Regularity makes the dual degree identically six. -/
 theorem dual_degree_six (v : Vertex) : dualDegree v = 6 := by
   have hdeg : degree v = 6 := degree_six v
-  have hsum : (∑ u in neighbors v, degree u : ℕ) = 36 := by
+  have hsum : (∑ u ∈ neighbors v, degree u : ℕ) = 36 := by
     calc
-      (∑ u in neighbors v, degree u : ℕ) =
-          ∑ _u in neighbors v, 6 := by
+      (∑ u ∈ neighbors v, degree u : ℕ) =
+          ∑ _u ∈ neighbors v, 6 := by
             apply Finset.sum_congr rfl
             intro u _hu
             exact degree_six u

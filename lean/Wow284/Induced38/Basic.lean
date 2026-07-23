@@ -41,7 +41,7 @@ def neighbors (v : Vertex) : Finset Vertex := Finset.univ.filter (Adjacent v)
 def degree (v : Vertex) : Nat := (neighbors v).card
 
 def dualDegree (v : Vertex) : ℚ :=
-  ((∑ u in neighbors v, degree u : ℕ) : ℚ) / (degree v : ℚ)
+  ((∑ u ∈ neighbors v, degree u : ℕ) : ℚ) / (degree v : ℚ)
 
 /-- Nineteen rows of two vertices, used by generated bounded certificates. -/
 def coordVertex (r : Fin 19) (c : Fin 2) : Vertex :=
