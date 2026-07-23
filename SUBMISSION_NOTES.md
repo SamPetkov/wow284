@@ -14,7 +14,7 @@
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-**Repository release:** `v2.0.4-arxiv`
+**Repository release:** `v2.0.5-arxiv`
 
 **Abstract:**
 

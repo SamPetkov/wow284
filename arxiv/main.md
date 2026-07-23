@@ -759,9 +759,9 @@ The scope of these non-50 results is deliberately finite and spectral: their pub
 
 The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is made that 38 is the minimum possible order among WOW-284 counterexamples, and no exhaustive search over all smaller graphs is part of this note. Calling the 40-vertex graph the $`(6,5)`$-cage refers to its classical minimum-order property among 6-regular girth-five graphs, not to minimum order for the WOW problem. The distance-spectral input for Moore graphs is credited to Howlader and Panigrahi; the classical 40-vertex cage and 42-vertex second subconstituent are separately credited above. The repository source ledger records the explicit WOW-284 connection and the limits of the targeted priority search.
 
-OpenAI ChatGPT assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.4-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.4-arxiv).
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv).
 
 # Exact distance characteristic polynomials
 
