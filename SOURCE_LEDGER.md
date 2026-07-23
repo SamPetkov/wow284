@@ -1,7 +1,7 @@
 # Source, novelty, and dependency ledger
 
 **Author:** Samuil Petkov<br>
-**Manuscript date:** 19 July 2026<br>
+**Repository revision:** 23 July 2026; active PDF date suppressed<br>
 **Last targeted search:** 23 July 2026
 
 ## Claim-level source map

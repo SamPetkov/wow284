@@ -16,5 +16,5 @@ pdflatex main.tex
 pdflatex main.tex
 ```
 
-The manuscript carries the fixed date 19 July 2026. arXiv records submission
-and revision dates separately.
+The manuscript uses `\date{}` so the PDF does not carry a stale internal
+version date. arXiv records submission and revision dates separately.

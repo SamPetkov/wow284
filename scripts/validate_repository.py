@@ -49,17 +49,25 @@ def main() -> None:
         "data/graphs/G42.graph6",
         "data/graphs/G50.graph6",
         "supplement/extended_2026-07-23/SHA256SUMS",
+        "archive/main_2026-07-19.tex",
     ]
     missing = [relative for relative in expected if not (ROOT / relative).is_file()]
     require(not missing, f"missing release files: {missing}")
 
     tex = (ROOT / "main.tex").read_text(encoding="utf-8")
     require(r"\usepackage[margin=1in]{geometry}" in tex, "one-inch margins not fixed")
-    require(r"\date{19 July 2026}" in tex, "manuscript date mismatch")
+    require(r"\date{}" in tex, "active manuscript date must be suppressed")
     require(r"\author{Samuil Petkov}" in tex, "author mismatch")
     require(r"\title[Exact counterexamples to WOW-284]" in tex, "title mismatch")
     require("Howlader and Panigrahi" in tex, "prior distance-spectrum attribution missing")
     require("No claim is made" in tex, "scope limitation missing")
+    require("OpenAI ChatGPT assisted" in tex, "generic AI disclosure missing")
+    require("OpenAI ChatGPT-5.6" not in tex, "stale AI system designation present")
+    require("A graph6 string in this fixed" in tex, "fixed-label graph6 wording missing")
+    require("canonical graph6 string" not in tex, "unsupported graph6 canonicality claim")
+    require(r"V(-\infty)=26" in tex and r"V(-28/5)=25" in tex,
+            "exact order-38 Sturm variation certificate missing")
+    require(r"fix \(P_{0,0}\)" in tex, "explicit order-42 base vertex missing")
     require("The explicit 50-vertex counterexample is fully formalized and verified" in tex,
             "completed explicit Lean verification status missing")
     require("Lean 4.31 also kernel-checks finite spectral certificates" in tex,
@@ -71,6 +79,9 @@ def main() -> None:
     require(r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}" in tex,
             "40-vertex distance spectrum missing")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
+    archived_tex = (ROOT / "archive" / "main_2026-07-19.tex").read_text(encoding="utf-8")
+    require(r"\date{19 July 2026}" in archived_tex,
+            "historical 19 July manuscript snapshot is not dated correctly")
 
     require((ROOT / "lean" / "lean-toolchain").read_text(encoding="utf-8").strip() ==
             "leanprover/lean4:v4.31.0", "Lean toolchain is not pinned to 4.31.0")

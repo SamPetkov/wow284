@@ -93,7 +93,7 @@ def verify() -> dict[str, object]:
     ]
     return {
         "certificate_version": 1,
-        "manuscript_version": "2026-07-19",
+        "manuscript_version": "2026-07-23",
         "graph": structure,
         "matrix_identities": {
             "distance_from_adjacency": "D = 3J + 3I - 2A - A^2",

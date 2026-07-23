@@ -14,6 +14,7 @@ SHA256SUMS
 SOURCE_LEDGER.md
 SUBMISSION_MANIFEST.txt
 SUBMISSION_NOTES.md
+archive/main_2026-07-19.tex
 arxiv/README.md
 arxiv/main.bbl
 arxiv/main.md
