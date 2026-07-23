@@ -183,18 +183,19 @@ import Mathlib.Analysis.Matrix.PosDef
 /-! Exact positive-definiteness bridge for the order-{spec.order} graph. -/
 namespace Wow284.{n}
 open Matrix
+noncomputable section
 def Dq : Matrix Vertex Vertex ℚ := D.map (Int.castRingHom ℚ)
 theorem Mcore_eq_shifted_distance :
     Mcore = ({a} : ℚ) • Dq + ({b} : ℚ) • (1 : Matrix Vertex Vertex ℚ) := by
-  rw [semantic_distance_eq_Dcert]
+  rw [Mcore, McoreInt, Dq, semantic_distance_eq_Dcert]
   ext i j
-  simp [Mcore, McoreInt, Dq, castCoreMatrix]
+  by_cases h : i = j <;> simp [castCoreMatrix, h]
 
 theorem deltaPad_posDef : DeltaPad.PosDef := Matrix.PosDef.diagonal pivotPad_positive
 theorem lpad_isUnit : IsUnit Lpad := Matrix.isUnit_of_left_inverse lpad_left_inverse
 theorem Mpad_posDef : Mpad.PosDef := by
   rw [← ldl_identity]
-  simpa only [conjTranspose_eq_transpose] using
+  simpa using
     deltaPad_posDef.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit lpad_isUnit)
 theorem Mcore_posDef : Mcore.PosDef := by
   rw [← Mpad_submatrix]; exact Mpad_posDef.submatrix embedPad_injective
@@ -218,11 +219,12 @@ private theorem lpadR_left_inverse : LpadInvR * LpadR = (1 : Matrix PadVertex Pa
   rw [LpadInvR, LpadR, ← Matrix.map_mul, lpad_left_inverse]; simp
 private theorem lpadR_isUnit : IsUnit LpadR := Matrix.isUnit_of_left_inverse lpadR_left_inverse
 private theorem ldl_identity_real : LpadR * DeltaPadR * LpadR.transpose = MpadR := by
-  rw [LpadR, DeltaPadR, MpadR, ← Matrix.map_mul, ← Matrix.map_mul]
-  simpa only [Matrix.map_transpose] using congrArg (Matrix.map (Rat.castHom ℝ)) ldl_identity
+  rw [LpadR, DeltaPadR, MpadR, ← Matrix.map_mul, ← Matrix.map_transpose,
+    ← Matrix.map_mul]
+  exact congrArg (Matrix.map (Rat.castHom ℝ)) ldl_identity
 private theorem MpadR_posDef : MpadR.PosDef := by
   rw [← ldl_identity_real]
-  simpa only [conjTranspose_eq_transpose] using
+  simpa using
     deltaPadR_posDef.mul_mul_conjTranspose_same (Matrix.vecMul_injective_of_isUnit lpadR_isUnit)
 private theorem MpadR_submatrix : MpadR.submatrix embedPad embedPad = McoreR := by
   ext i j
@@ -234,7 +236,9 @@ private theorem McoreR_posDef : McoreR.PosDef := by
   rw [← MpadR_submatrix]; exact MpadR_posDef.submatrix embedPad_injective
 private theorem McoreR_eq_shifted_distance :
     McoreR = ({a} : ℝ) • Dr + ({b} : ℝ) • (1 : Matrix Vertex Vertex ℝ) := by
-  rw [McoreR, Dr, Mcore_eq_shifted_distance]; ext i j; simp [Dq]
+  rw [McoreR, Dr, Mcore_eq_shifted_distance]
+  ext i j
+  by_cases h : i = j <;> simp [Dq, h]
 theorem shifted_distance_real_posDef :
     (({a} : ℝ) • Dr + ({b} : ℝ) • (1 : Matrix Vertex Vertex ℝ)).PosDef := by
   rw [← McoreR_eq_shifted_distance]; exact McoreR_posDef
@@ -243,8 +247,8 @@ theorem real_eigenpair_above_shift {{mu : ℝ}} {{x : Vertex → ℝ}}
     (hx : x ≠ 0) (heig : Dr *ᵥ x = mu • x) : (-{b} : ℝ) / {a} < mu := by
   have hpos := shifted_distance_real_posDef.dotProduct_mulVec_pos hx
   rw [add_mulVec, smul_mulVec, smul_mulVec, one_mulVec, heig] at hpos
-  simp only [star_trivial, dotProduct_smul] at hpos
-  have hnorm : 0 < x ⋝ᵥ x := dotProduct_self_pos.mpr hx
+  simp only [star_trivial, dotProduct_add, dotProduct_smul] at hpos
+  have hnorm : 0 < dotProduct x x := dotProduct_self_pos.mpr hx
   nlinarith
 end Wow284.{n}
 '''

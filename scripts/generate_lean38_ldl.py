@@ -324,8 +324,9 @@ lemma embedPad_injective : Function.Injective embedPad := by
   simpa [embedPad] using congrArg Fin.val h
 
 lemma Mpad_submatrix : Mpad.submatrix embedPad embedPad = M38q := by
-  ext i j
-  decide
+  apply Matrix.ext
+  intro i j
+  fin_cases i <;> fin_cases j <;> decide
 
 lemma M38Int_eq_shiftedCert : M38Int = shiftedCert := by
   rfl
