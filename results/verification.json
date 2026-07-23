@@ -14,7 +14,7 @@
     "order": 50,
     "size": 175
   },
-  "manuscript_version": "2026-07-23",
+  "manuscript_version": "2026-07-24",
   "matrix_identities": {
     "adjacency_square": "A^2 = 6I - A + J",
     "distance_from_adjacency": "D = 2J - 2I - A",
@@ -31,7 +31,7 @@
     "sympy": "1.14.0"
   },
   "source_sha256": {
-    "scripts/verify_exact.py": "71b9e74a7326fbc1da63b8dcfb1d262137ff1c8d178761c10eb3c879e7a25a04",
+    "scripts/verify_exact.py": "9dc44c40f59c40d9ed3c9d1e994d64d3ebf2950270d0e715ce04bd5af028a8b7",
     "src/wow284_graph.py": "0efaf54dba2f6c2bbb31478c040a638e7c4f02db41316753f981ff4b7e4afdcb"
   },
   "spectra": {

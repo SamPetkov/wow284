@@ -1,8 +1,8 @@
 # Provenance and AI-assistance record
 
 **Author:** Samuil Petkov<br>
-**Repository revision:** 23 July 2026; active PDF date suppressed<br>
-**Audit and package preparation:** 21--23 July 2026
+**Repository revision:** 24 July 2026; active PDF date suppressed<br>
+**Audit and package preparation:** 21--24 July 2026
 
 ## Submitted material
 

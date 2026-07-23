@@ -73,7 +73,7 @@
     "size": 120,
     "transmission": 75
   },
-  "manuscript_version": "2026-07-23",
+  "manuscript_version": "2026-07-24",
   "matrix_identities": {
     "block_intertwining": "A*C = C*(J-I-P)",
     "deleted_incidence_orthogonality": "C^T*C = 4I",
@@ -90,7 +90,7 @@
     "sympy": "1.14.0"
   },
   "source_sha256": {
-    "scripts/verify_40.py": "c89cbba5efed768394ee188add6ab84a401867978a5db5b1aaacbacc73706db0",
+    "scripts/verify_40.py": "e922c2d9b43f754e7d9decabdf55815389d1e24e143a6032460c91c6f3dce9b4",
     "src/wow284_graph.py": "0efaf54dba2f6c2bbb31478c040a638e7c4f02db41316753f981ff4b7e4afdcb",
     "src/wow284_induced40.py": "80b8c0e2a26e13a2cd4a827e3f6a41e59262c029f26819f96c435f61ce5a8ca7"
   },
