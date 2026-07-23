@@ -253,8 +253,13 @@ theorem ldl_identity : Lpad * DeltaPad * Lpad.transpose = Mpad := by
   rw [← castPadMatrix_transpose, ← castPadMatrix_mul, ← castPadMatrix_mul,
     ldl_scaled_identity_int]
   rw [MscaledPadInt, castPadMatrix_smul, smul_smul, one_div]
-  have hscale : ({identity_scale} : ℚ) ≠ 0 := by positivity
-  rw [inv_mul_cancel₀ hscale, one_smul]
+  change ((((({identity_scale} : ℤ) : ℚ)⁻¹ *
+      (({identity_scale} : ℤ) : ℚ)) • castPadMatrix MpadInt) =
+    castPadMatrix MpadInt)
+  have hscaleZ : ({identity_scale} : ℤ) ≠ 0 := by positivity
+  have hscaleQ : (({identity_scale} : ℤ) : ℚ) ≠ 0 := by
+    exact_mod_cast hscaleZ
+  rw [inv_mul_cancel₀ hscaleQ, one_smul]
 
 theorem lpad_left_inverse : LpadInv * Lpad =
     (1 : Matrix PadVertex PadVertex ℚ) := by
@@ -263,8 +268,14 @@ theorem lpad_left_inverse : LpadInv * Lpad =
   rw [Matrix.smul_mul, ← castPadMatrix_mul, lpad_left_inverse_scaled_int]
   rw [scaledIdentityInt, castPadMatrix_smul, castPadMatrix_one,
     smul_smul, one_div]
-  have hscale : ({inverse_scale} : ℚ) ≠ 0 := by positivity
-  rw [inv_mul_cancel₀ hscale, one_smul]
+  change ((((({inverse_scale} : ℤ) : ℚ)⁻¹ *
+      (({inverse_scale} : ℤ) : ℚ)) •
+      (1 : Matrix PadVertex PadVertex ℚ)) =
+    (1 : Matrix PadVertex PadVertex ℚ))
+  have hscaleZ : ({inverse_scale} : ℤ) ≠ 0 := by positivity
+  have hscaleQ : (({inverse_scale} : ℤ) : ℚ) ≠ 0 := by
+    exact_mod_cast hscaleZ
+  rw [inv_mul_cancel₀ hscaleQ, one_smul]
 
 private theorem wPadInt_positive : ∀ i : PadVertex, 0 < wPadInt i := by decide
 
