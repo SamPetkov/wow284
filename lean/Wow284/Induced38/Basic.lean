@@ -10,6 +10,8 @@ certificates are generated separately.
 
 namespace Wow284.Induced38
 
+open scoped BigOperators
+
 abbrev Vertex := Fin 38
 
 def embed40 (v : Vertex) : Wow284.Induced40.Vertex := ⟨v.val + 2, by omega⟩

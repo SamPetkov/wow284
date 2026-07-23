@@ -112,7 +112,7 @@ def check_family() -> None:
 
     # The factor and exact comparison identify the least root of P38.
     assert sp.rem(P38, sp.Poly(X**2 + 6 * X + 2, X)).is_zero
-    assert P38.count_roots(-sp.oo, -sp.Rational(28, 5)) == 1
+    assert P38.sqf_part().count_roots(-sp.oo, -sp.Rational(28, 5)) == 1
     assert sp.Rational(13, 5) ** 2 < 7
     assert sp.Rational(8, 3) ** 2 > 7
 

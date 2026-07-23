@@ -14,6 +14,7 @@ therefore give its complete distance spectrum.
 namespace Wow284.Induced40
 
 open Matrix
+open scoped BigOperators
 
 /-- Average degree of the neighbours of `v`. -/
 def dualDegree (v : Vertex) : ℚ :=

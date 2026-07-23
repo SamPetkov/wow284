@@ -71,7 +71,9 @@ def main() -> None:
     distance_matrix = sp.Matrix(distances)
     characteristic = sp.Poly(distance_matrix.charpoly(x).as_expr(), x)
     assert sp.rem(characteristic, sp.Poly(x**2 + 6*x + 2, x)).is_zero
-    assert characteristic.count_roots(-sp.oo, sp.Rational(-28, 5)) == 1
+    assert characteristic.sqf_part().count_roots(
+        -sp.oo, sp.Rational(-28, 5)
+    ) == 1
     assert sp.Rational(13, 5) ** 2 < 7
 
     shifted = (3 * distance_matrix + 17 * sp.eye(38)).tolist()

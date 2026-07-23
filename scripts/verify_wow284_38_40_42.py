@@ -290,7 +290,9 @@ def verify_38(graph40: Graph, labels40: tuple[Vertex, ...]) -> None:
 
     # The factor x^2+6x+2 gives the candidate least root -3-sqrt(7).
     # Exact Sturm counting shows that it is the unique distinct root below -28/5.
-    assert characteristic.count_roots(-sp.oo, sp.Rational(-28, 5)) == 1
+    assert characteristic.sqf_part().count_roots(
+        -sp.oo, sp.Rational(-28, 5)
+    ) == 1
     assert sp.Rational(7) > sp.Rational(13, 5) ** 2  # sqrt(7) > 13/5
     # Hence -3-sqrt(7) < -28/5 and no other root is smaller.
 

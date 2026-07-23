@@ -406,7 +406,7 @@ For any $`v\in V(R)`$, deleting $`v`$ leaves six vertices of degree five and 33 
 ``` math
 \delta^*=\frac{5+5\cdot6}{6}=\frac{35}{6}.
 ```
-Exact rational factorization gives $`6D+35I\succ0`$, so every distance eigenvalue is strictly greater than $`-35/6`$. This gives a 39-vertex strict counterexample.
+Exact rational factorization gives $`6D+35I\succ0`$, so every distance eigenvalue is strictly greater than $`-35/6`$. This gives a 39-vertex strict counterexample. The exhaustive verification below checks connectivity for each of the 40 choices of $`v`$; as induced subgraphs, they retain girth at least five.
 
 For another regular example, fix a vertex in the Hoffman–Singleton graph and retain its 42 vertices at distance two. The induced graph is 6-regular and has
 ``` math
@@ -421,15 +421,15 @@ Hence $`\delta^*=6>5=-\partial_{42}`$. The parameterized construction behind thi
 
 <div id="prop:descendants" class="proposition">
 
-**Proposition 7**. *For every vertex $`v`$ of $`R`$, the graph $`R-v`$ has $`\delta^*=35/6`$ and the same exact distance characteristic polynomial $`P_{39}`$ displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. Every one of these 40 labelled graphs is a strict counterexample.*
+**Proposition 7**. *For every vertex $`v`$ of $`R`$, the graph $`R-v`$ is connected, has girth at least five, has $`\delta^*=35/6`$ and the same exact distance characteristic polynomial $`P_{39}`$ displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. Every one of these 40 labelled graphs is a strict counterexample.*
 
-*For every edge $`uv`$ of $`R`$, the graph $`R-\{u,v\}`$ has $`\delta^*=17/3`$, the same exact distance characteristic polynomial $`P_{38}`$, and least distance eigenvalue $`-3-\sqrt7`$. Every one of these 120 labelled graphs is a strict counterexample.*
+*For every edge $`uv`$ of $`R`$, the graph $`R-\{u,v\}`$ is connected, has girth at least five, has $`\delta^*=17/3`$, the same exact distance characteristic polynomial $`P_{38}`$, and least distance eigenvalue $`-3-\sqrt7`$. Every one of these 120 labelled graphs is a strict counterexample.*
 
 </div>
 
 <div class="proof">
 
-*Proof.* The script `scripts/verify_descendant_families.py` enumerates all 40 vertices and all 120 edges. For every induced graph it reconstructs the integer distance matrix by breadth-first search, computes every dual degree as a rational number, and computes the characteristic polynomial over $`\mathbb Z`$. Exact equality with $`P_{39}`$ or $`P_{38}`$, followed by an exact Sturm count for each common polynomial, proves the assertions. No graph-isomorphism or transitivity assumption is used. ◻
+*Proof.* The script `scripts/verify_descendant_families.py` enumerates all 40 vertices and all 120 edges. For every induced graph, breadth-first search from every vertex checks connectivity and reconstructs the integer distance matrix. Induced deletion cannot create a cycle of length below five. The script then computes every dual degree as a rational number and the characteristic polynomial $`\det(xI-D)`$ over $`\mathbb Z`$. Exact equality with $`P_{39}`$ or $`P_{38}`$, followed by an exact Sturm count for each common polynomial, proves the assertions. No graph-isomorphism or transitivity assumption is used. ◻
 
 </div>
 
@@ -463,7 +463,7 @@ Consequently $`G`$ is a strict counterexample to WOW-284 precisely when
 
 <div class="proof">
 
-*Proof.* The absence of triangles and 4-cycles means that two vertices at distance two have exactly one common neighbor. Hence the distance-two matrix is $`A_2=A^2-kI`$. Since the diameter is three, $`A_3=J-I-A-A_2`$. Substitution into $`D=A+2A_2+3A_3`$ proves <a href="#eq:diam3-polynomial" data-reference-type="eqref" data-reference="eq:diam3-polynomial">[eq:diam3-polynomial]</a>. The asserted eigenvalues follow by applying the identity to $`\mathbf 1`$ and to $`\mathbf 1^\perp`$. Finally regularity gives $`\delta^*=k`$, so strict failure is equivalent to $`k>\max_{\theta\ne k}((\theta+1)^2-k+2)`$, which is the displayed criterion. ◻
+*Proof.* The absence of triangles and 4-cycles means that two vertices at distance two have exactly one common neighbor. Hence the distance-two matrix is $`A_2=A^2-kI`$. Since the diameter is three, $`A_3=J-I-A-A_2`$. Substitution into $`D=A+2A_2+3A_3`$ proves <a href="#eq:diam3-polynomial" data-reference-type="eqref" data-reference="eq:diam3-polynomial">[eq:diam3-polynomial]</a>. The asserted eigenvalues follow by applying the identity to $`\mathbf 1`$ and to $`\mathbf 1^\perp`$. The matrix $`D`$ is nonnegative and irreducible (indeed, every off-diagonal entry is positive), and its row sums are constant by the displayed identity. Perron–Frobenius therefore makes the principal eigenvalue its largest eigenvalue, so the least distance eigenvalue occurs among the nonprincipal images. Finally regularity gives $`\delta^*=k`$, so strict failure is equivalent to $`k>\max_{\theta\ne k}((\theta+1)^2-k+2)`$, which is the displayed criterion. ◻
 
 </div>
 
@@ -646,7 +646,7 @@ A second exact script constructs $`R`$ by the stated deletion and independently 
 
 The extended verifier reconstructs the 42-, 40-, 39-, and 38-vertex graphs from the field-coordinate rules and checks all structural, dual-degree, characteristic-polynomial, Sturm, and rational $`LDL^{\mathsf T}`$ assertions used above. A separate 38-vertex audit starts from the stored graph6 representation, reconstructs graph distances by integer breadth-first search through NetworkX ([Hagberg et al. 2008](#ref-HagbergSchultSwart2008)), and uses a handwritten `Fraction`-based decomposition. This is independent of the coordinate representation and of SymPy’s matrix factorization, although it is not an independently sourced graph.
 
-Finally, `verify_descendant_families.py` exhausts the 40 labelled single-vertex and 120 labelled edge-endpoint deletions. SymPy supplies exact integer characteristic polynomials and Sturm counts ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The cross-platform command
+Finally, `verify_descendant_families.py` exhausts the 40 labelled single-vertex and 120 labelled edge-endpoint deletions. SymPy supplies exact integer characteristic polynomials $`\det(tI-D)`$ and Sturm counts of their square-free parts ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The recorded output is `supplement/extended_2026-07-23/logs/descendant_family_output.txt`; the enclosing `SHA256SUMS` authenticates it and every other archived certificate in that supplement. The cross-platform command
 
     python scripts/verify_extended.py
 
