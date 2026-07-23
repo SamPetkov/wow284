@@ -229,7 +229,8 @@ private theorem ldl_identity_real : LpadR * DeltaPadR * LpadR.transpose = MpadR 
   change (Lpad * DeltaPad).map (Rat.castHom ℝ) *
     (Lpad.transpose.map (Rat.castHom ℝ)) = Mpad.map (Rat.castHom ℝ)
   rw [← Matrix.map_mul]
-  exact congrArg (Matrix.map (Rat.castHom ℝ)) ldl_identity
+  exact congrArg (fun M : Matrix PadVertex PadVertex ℚ =>
+    Matrix.map M (Rat.castHom ℝ)) ldl_identity
 private theorem MpadR_posDef : MpadR.PosDef := by
   rw [← ldl_identity_real]
   rw [← Matrix.conjTranspose_eq_transpose_of_trivial]
@@ -263,7 +264,7 @@ theorem real_eigenpair_above_shift {{mu : ℝ}} {{x : Vertex → ℝ}}
     have hne : dotProduct x x ≠ 0 := (dotProduct_self_eq_zero).not.mpr hx
     exact lt_of_le_of_ne hnonneg hne.symm
   have hprod : 0 < (({a} : ℝ) * mu + {b}) * dotProduct x x := by
-    convert hpos using 1 <;> ring
+    nlinarith [hpos]
   have hcoeff : 0 < ({a} : ℝ) * mu + {b} := by
     rcases (mul_pos_iff.mp hprod) with h | h
     · exact h.1
