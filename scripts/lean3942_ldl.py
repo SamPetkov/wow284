@@ -164,14 +164,15 @@ lemma castPadMatrix_mul (M N : Matrix PadVertex PadVertex ℤ) :
 
 lemma castPadMatrix_transpose (M : Matrix PadVertex PadVertex ℤ) :
     castPadMatrix M.transpose = (castPadMatrix M).transpose := by
-  exact Matrix.map_transpose
+  rfl
 
 def Mcore : Matrix Vertex Vertex ℚ := castCoreMatrix McoreInt
 def Mpad : Matrix PadVertex PadVertex ℚ := castPadMatrix MpadInt
 def Lpad : Matrix PadVertex PadVertex ℚ := castPadMatrix BpadInt
 def LpadInv : Matrix PadVertex PadVertex ℚ :=
   ((1 : ℚ) / {inverse_scale}) • castPadMatrix BpadInvNumeratorInt
-def pivotPad (i : PadVertex) : ℚ := (wPadInt i : ℚ) / {identity_scale}
+def pivotPad (i : PadVertex) : ℚ :=
+  ((1 : ℚ) / {identity_scale}) * (wPadInt i : ℚ)
 def DeltaPad : Matrix PadVertex PadVertex ℚ := diagonal pivotPad
 
 lemma DeltaPad_eq_scaled_cast :

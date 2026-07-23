@@ -112,7 +112,7 @@ private lemma dual_degree_attained_data :
 theorem dual_degree_attained : ∃ v : Vertex, dualDegree v = {dual} := by
   refine ⟨{spec.attained_vertex}, ?_⟩
   rcases dual_degree_attained_data with ⟨hdegree, hsum⟩
-  simp [dualDegree, hdegree, hsum]
+  norm_num [dualDegree, hdegree, hsum]
 
 {chr(10).join(rows)}
 private lemma diameter_coord (r s : Fin {spec.row_count}) (c d : Fin {spec.col_count}) :
