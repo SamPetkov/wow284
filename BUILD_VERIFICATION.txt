@@ -87,14 +87,14 @@ PASS  Clean multi-pass LaTeX/BibTeX build: no final warnings, undefined
       citations/references, overfull/underfull boxes, or missing glyphs.
 PASS  PDF metadata: revised title, Samuil Petkov, and fixed
       creation/modification date 19 July 2026.
-PASS  Eleven pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
+PASS  Twelve pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
 PASS  Every reported font is embedded and subset.
-PASS  All eleven pages rendered at 140 dpi and inspected at original render
-      resolution: no clipping, overlap, malformed glyphs, blank spill pages,
+PASS  All twelve pages rendered at 130 dpi and inspected at high resolution:
+      no clipping, overlap, malformed glyphs, blank spill pages,
       or broken bibliography/address layout.
 
 Verified PDF SHA-256:
-  e71eb9827cb95c7ba72dcbc687052543946c021d8773f58bfd181927d9387214  main.pdf
+  57b0b148a0e01b0d0120db4aa6dede0161567d41319cf23c12005f08ea0ccca7  main.pdf
 
 ARXIV PACKAGE
 -------------
@@ -102,11 +102,11 @@ PASS  arxiv/wow284_arxiv_source.zip contains exactly, in this order:
       main.tex, references.bib, main.bbl.
 PASS  Archive members are byte-identical to the canonical repository files
       and carry the fixed timestamp 19 July 2026 12:00:00.
-PASS  A fresh extraction of the ZIP compiled independently to an eleven-page
+PASS  A fresh extraction of the ZIP compiled independently to a twelve-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  7abbae5a93a440c62d8f659de856fc65b9902c9bbcb7301327d848e9c253e81f
+  fc7d459666230404ba0c808777bebabebe946697596129b446817861828e24bc
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT

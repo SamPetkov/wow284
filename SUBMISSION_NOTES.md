@@ -17,10 +17,9 @@ distance-spectrum content meets that category's current scope.
 **Comments:** Self-contained research note with exact Python verification for
 counterexamples of orders 38, 39, 40, 42, and 50. The explicit 50-vertex
 certificate and scalar Moore threshold have a complete Lean 4.31
-formalization; the additional results are not yet Lean-formalized. Includes a
-source and priority ledger.
-The PDF page count should be copied from `BUILD_VERIFICATION.txt` after the
-final rebuild.
+formalization; staged 38- and 40-vertex Lean sources are not included in the
+completed formal-verification claim. Includes a source and priority ledger.
+The audited PDF has 12 pages.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 

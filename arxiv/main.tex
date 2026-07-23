@@ -940,12 +940,12 @@ and uses a handwritten \texttt{Fraction}-based decomposition.  This is
 independent of the coordinate representation and of SymPy's matrix
 factorization, although it is not an independently sourced graph.
 
-Finally, \texttt{verify\_descendant\_families.py} exhausts the 40 labelled
+Finally, \path{scripts/verify_descendant_families.py} exhausts the 40 labelled
 single-vertex and 120 labelled edge-endpoint deletions.  SymPy supplies exact
 integer characteristic polynomials \(\det(tI-D)\) and Sturm counts of their
 square-free parts~\cite{MeurerEtAl2017}.  The recorded output is
-\texttt{supplement/extended\_2026-07-23/logs/descendant\_family\_output.txt};
-the enclosing \texttt{SHA256SUMS} authenticates it and every other archived
+\path{supplement/extended_2026-07-23/logs/descendant_family_output.txt}; the
+enclosing \path{SHA256SUMS} authenticates it and every other archived
 certificate in that supplement.
 The cross-platform command
 \begin{verbatim}
@@ -972,10 +972,11 @@ formalized separately.  Section~\ref{sec:moore} remains a conventional proof;
 the formal verification claim here is deliberately limited to the explicit
 50-vertex counterexample and the scalar threshold.  The 38-, 39-, 40-, and
 42-vertex results, the descendant-family statements, and the extended
-criteria are analytic and exact-computational results, but are not currently
-part of the Lean development.  The expanded formalization being developed
-separately will be incorporated only after it passes the same kernel and
-placeholder audit.
+criteria are analytic and exact-computational results.  Staged Lean sources
+for parts of the 38- and 40-vertex developments are included in the
+repository, but they are not part of the completed formal-verification claim;
+that scope will be expanded only after the staged target passes the same
+kernel, axiom, and placeholder audits.
 
 \section*{Scope, provenance, and disclosures}
 
