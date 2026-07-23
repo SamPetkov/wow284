@@ -57,9 +57,9 @@ theorem semantic_distance_exact_diagonal_form :
 /-- Concise end-to-end certificate for the order-40 example.
 
 The four diagonal counts sum to 40.  Together with the invertible change of
-basis above, they state that the semantic distance spectrum is
-`{-5^18, 0^16, 3^5, 75^1}`.  Hence the least distance eigenvalue is `-5`,
-while the minimum dual degree is `6`, leaving the positive strict gap `1`.
+basis above, they state that the diagonal form has entries
+`{-5^18, 0^16, 3^5, 75^1}` and attained minimum diagonal entry `-5`, while
+the minimum dual degree is `6`, leaving the positive strict gap `1`.
 -/
 theorem counterexample_spectral_endpoint :
     (∀ v : Vertex, degree v = 6 ∧ dualDegree v = 6) ∧

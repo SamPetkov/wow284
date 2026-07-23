@@ -39,9 +39,10 @@ lemma adjacent_irrefl (v : Vertex) : ¬ Adjacent v v := by
 
 def neighbors (v : Vertex) : Finset Vertex := Finset.univ.filter (Adjacent v)
 def degree (v : Vertex) : Nat := (neighbors v).card
+def neighborDegreeSum (v : Vertex) : Nat := ∑ u ∈ neighbors v, degree u
 
 def dualDegree (v : Vertex) : ℚ :=
-  ((∑ u ∈ neighbors v, degree u : ℕ) : ℚ) / (degree v : ℚ)
+  (neighborDegreeSum v : ℚ) / (degree v : ℚ)
 
 /-- Nineteen rows of two vertices, used by generated bounded certificates. -/
 def coordVertex (r : Fin 19) (c : Fin 2) : Vertex :=

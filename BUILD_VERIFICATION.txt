@@ -56,9 +56,16 @@ PASS  Forbidden scan: no sorry, admit, native_decide, bv_decide, unsafe
       declaration, or new axiom.
 PASS  Representative #print axioms reports only propext, Classical.choice,
       and Quot.sound.
-NOTE  The completed formal-verification claim covers the explicit 50-vertex
-      counterexample and the scalar threshold. The 38-, 39-, 40-, and
-      42-vertex results and extended criteria are not yet Lean-formalized.
+PASS  Lean 4.31 finite spectral endpoints for orders 38, 39, 40, and 42;
+      GitHub Actions compiled all public endpoints and both endpoint audit
+      modules successfully.
+PASS  Non-50 endpoint #print axioms reports only propext, Classical.choice,
+      and Quot.sound.
+NOTE  The non-50 claim is a kernel-checked finite spectral certificate, not a
+      full standard-library formalization of every graph-theoretic statement.
+NOTE  AxiomMath AXLE did not complete the expanded modular closure because the
+      remote worker exhausted memory. The incomplete fallback was rejected;
+      no AXLE verification is claimed for the non-50 endpoints.
 
 AUTOMATED CHECKS
 ----------------
@@ -94,7 +101,7 @@ PASS  All twelve pages rendered at 130 dpi and inspected at high resolution:
       or broken bibliography/address layout.
 
 Verified PDF SHA-256:
-  188bd7de039f16c8040a38bee8f7bc41bd75e3192c4afef536e908ed3e73a4b3  main.pdf
+  b6545a1c120ab9fb27d1f566f90dbae04433df777a4b48427258d8ce5244f8c6  main.pdf
 
 ARXIV PACKAGE
 -------------
@@ -106,7 +113,7 @@ PASS  A fresh extraction of the ZIP compiled independently to a twelve-page
       PDF with latexmk/BibTeX.
 
 Verified arXiv ZIP SHA-256:
-  652a59b714263650b43a160a0e4ce5f453f975fe13b5889f36b3f1872529a459
+  513745c4d22be3a10c7d85554deb8917b19a1efde5560a702de54e09f7ed6aaa
   arxiv/wow284_arxiv_source.zip
 
 SOURCE AND NOVELTY AUDIT

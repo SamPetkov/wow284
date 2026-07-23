@@ -11,9 +11,12 @@ require mathlib from git
 @[default_target]
 lean_lib Wow284
 
-/-- Opt-in build target for the induced-graph extension.  Keeping a separate
-target prevents incomplete endpoint wrappers from enlarging the public
-formal-verification claim while still making every staged module compile in
-CI. -/
+/-- Opt-in build target for the committed induced-graph extension. -/
 lean_lib Wow284Extension where
   roots := #[`Wow284Extended]
+
+/-- Deterministically generated order-39 and order-42 counterexample
+certificates. The root and its imported modules are created before this target
+is built in CI. -/
+lean_lib Wow284Generated3942 where
+  roots := #[`Wow284Generated3942]

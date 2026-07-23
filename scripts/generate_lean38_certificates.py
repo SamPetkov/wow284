@@ -43,6 +43,14 @@ def lean_int_matrix(name: str, matrix: sp.Matrix) -> str:
 
 def render() -> dict[Path, str]:
     graph, labels = graph38()
+    degrees = [len(graph[v]) for v in range(len(graph))]
+    neighbor_degree_sums = [
+        sum(degrees[u] for u in graph[v]) for v in range(len(graph))
+    ]
+    if not all(17 * degrees[v] <= 3 * neighbor_degree_sums[v] for v in range(len(graph))):
+        raise AssertionError("dual-degree cross-multiplication certificate failed")
+    if (degrees[1], neighbor_degree_sums[1]) != (6, 34):
+        raise AssertionError("unexpected attaining-vertex data")
     d = distance_matrix(graph)
     shifted = 3 * d + 17 * sp.eye(38)
     leading = [int(shifted[:k, :k].det(method="domain-ge")) for k in range(1, 39)]
@@ -100,8 +108,9 @@ lemma degree_range_row_{r} : ∀ c : Fin 2,
   fin_cases c <;> decide
 
 set_option maxRecDepth 10000 in
-lemma dual_bound_row_{r} : ∀ c : Fin 2,
-    (17 : ℚ) / 3 ≤ dualDegree (coordVertex {r} c) := by
+lemma dual_cross_bound_row_{r} : ∀ c : Fin 2,
+    17 * degree (coordVertex {r} c) ≤
+      3 * neighborDegreeSum (coordVertex {r} c) := by
   intro c
   fin_cases c <;> decide
 ''',
@@ -125,7 +134,7 @@ lemma semantic_distance_rows_{r}_{s} : ∀ c d : Fin 2,
 
     imports = "\n".join(f"import Wow284.Induced38.Finite{r}" for r in range(19))
     degree_cases = "\n".join(f"  · exact degree_range_row_{r} c" for r in range(19))
-    dual_cases = "\n".join(f"  · exact dual_bound_row_{r} c" for r in range(19))
+    dual_cases = "\n".join(f"  · exact dual_cross_bound_row_{r} c" for r in range(19))
     diameter_cases = "\n".join(f"  · exact diameter_row_{r} s c d" for r in range(19))
     semantic_cases = "\n".join(f"  · exact semantic_distance_row_{r} s c d" for r in range(19))
     row_assemblers: list[str] = []
@@ -165,20 +174,36 @@ theorem degree_profile :
     (Finset.univ.filter fun v : Vertex => degree v = 6).card = 28 := by
   decide
 
-private lemma dual_bound_coord (r : Fin 19) (c : Fin 2) :
-    (17 : ℚ) / 3 ≤ dualDegree (coordVertex r c) := by
+private lemma dual_cross_bound_coord (r : Fin 19) (c : Fin 2) :
+    17 * degree (coordVertex r c) ≤
+      3 * neighborDegreeSum (coordVertex r c) := by
   fin_cases r
 {dual_cases}
 
+private theorem dual_cross_bound (v : Vertex) :
+    17 * degree v ≤ 3 * neighborDegreeSum v := by
+  rw [← coordVertex_surj v]
+  exact dual_cross_bound_coord _ _
+
+private theorem degree_positive (v : Vertex) : 0 < degree v := by
+  rcases degree_five_or_six v with h | h <;> omega
+
 theorem dual_degree_lower_bound (v : Vertex) :
     (17 : ℚ) / 3 ≤ dualDegree v := by
-  rw [← coordVertex_surj v]
-  exact dual_bound_coord _ _
+  rw [dualDegree]
+  apply (div_le_div_iff₀ (by norm_num) (by exact_mod_cast degree_positive v)).2
+  have h :
+      (17 : ℚ) * degree v ≤
+        3 * (neighborDegreeSum v : ℚ) := by
+    exact_mod_cast dual_cross_bound v
+  simpa [mul_comm] using h
 
 theorem dual_degree_attained :
     ∃ v : Vertex, dualDegree v = (17 : ℚ) / 3 := by
   refine ⟨1, ?_⟩
-  decide
+  have hd : degree (1 : Vertex) = 6 := by decide
+  have hs : neighborDegreeSum (1 : Vertex) = 34 := by decide
+  norm_num [dualDegree, hd, hs]
 
 {''.join(row_assemblers)}
 private lemma diameter_coord (r s : Fin 19) (c d : Fin 2) :
@@ -193,7 +218,8 @@ theorem diameter_at_most_three : ∀ u v : Vertex, HasPathAtMostThree u v := by
 
 theorem explicit_distance_three :
     ¬ HasPathAtMostTwo (0 : Vertex) 5 ∧ HasPathAtMostThree (0 : Vertex) 5 := by
-  decide
+  set_option maxRecDepth 10000 in
+    decide
 
 private lemma semantic_distance_coord (r s : Fin 19) (c d : Fin 2) :
     D (coordVertex r c) (coordVertex s d) =

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
-"""Static consistency audit for the patch-style Lean extension.
+"""Static consistency audit for the Lean counterexample developments.
 
-This is not a Lean parser and is not a substitute for kernel compilation.  It
-checks source hygiene, import closure within the extension plus the documented
-base modules, and the deliberate separation of non-imported templates.
+This is not a Lean parser and is not a substitute for kernel compilation. It
+checks source hygiene, import closure within the project, and the deliberate
+separation of non-imported templates. Generated order-39 and order-42 files are
+included whenever the deterministic generator has been run.
 """
-
 from __future__ import annotations
-
 from pathlib import Path
 import re
 
@@ -32,10 +31,16 @@ FORBIDDEN = {
     "axiom declaration": re.compile(r"(?m)^\s*axiom\s+"),
 }
 IMPORT = re.compile(r"(?m)^import\s+([A-Za-z0-9_.]+)\s*$")
+ROOT_MODULES = {
+    "Wow284Extended",
+    "Wow284ExtensionAudit",
+    "Wow284Generated3942",
+    "Wow284Generated3942Audit",
+}
 
 
 def module_path(module: str) -> Path:
-    if module in {"Wow284Extended", "Wow284ExtensionAudit"}:
+    if module in ROOT_MODULES:
         return LEAN / f"{module}.lean"
     parts = module.split(".")
     if parts[0] != "Wow284":
@@ -46,18 +51,14 @@ def module_path(module: str) -> Path:
 
 
 def main() -> None:
-    # Restrict the scan to this project's sources.  A configured checkout has
-    # Mathlib under ``lean/.lake/packages``; recursively scanning all of
-    # ``lean`` is both slow and outside this audit's trust boundary.
+    # Mathlib lives below lean/.lake/packages in a configured checkout and is
+    # intentionally outside this project's source-trust boundary.
     lean_files = sorted((LEAN / "Wow284").rglob("*.lean"))
-    for root_module in (
-        LEAN / "Wow284.lean",
-        LEAN / "Wow284Extended.lean",
-        LEAN / "Wow284ExtensionAudit.lean",
-    ):
+    for name in sorted(ROOT_MODULES | {"Wow284"}):
+        root_module = LEAN / f"{name}.lean"
         if root_module.exists():
             lean_files.append(root_module)
-    lean_files.sort()
+    lean_files = sorted(set(lean_files))
     templates = sorted((LEAN / "Wow284").rglob("*.lean.template"))
     findings: dict[str, list[str]] = {key: [] for key in FORBIDDEN}
     missing_imports: list[str] = []
@@ -94,12 +95,17 @@ def main() -> None:
     if template_imports:
         raise SystemExit("template imported:\n" + "\n".join(template_imports))
 
+    def count(namespace: str) -> int:
+        return len(list((LEAN / "Wow284" / namespace).glob("*.lean")))
+
     report = [
         "LEAN STATIC AUDIT",
         "=================",
         f"Imported Lean files: {len(lean_files)}",
-        f"Induced40 imported files: {len(list((LEAN / 'Wow284' / 'Induced40').glob('*.lean')))}",
-        f"Induced38 imported files: {len(list((LEAN / 'Wow284' / 'Induced38').glob('*.lean')))}",
+        f"Induced38 imported files: {count('Induced38')}",
+        f"Induced39 generated files: {count('Induced39')}",
+        f"Induced40 imported files: {count('Induced40')}",
+        f"Induced42 generated files: {count('Induced42')}",
         f"Non-imported templates: {len(templates)}",
         f"Visible sorry occurrences in templates: {len(template_sorries)}",
         "Imported sorry occurrences: 0",

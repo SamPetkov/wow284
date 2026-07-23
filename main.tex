@@ -85,25 +85,26 @@ Hoffman--Singleton graph, \((6,5)\)-cage, WOW-284, strongly regular graph}
 \begin{abstract}
 WOW-284 asserts that the minimum dual degree of every connected graph of
 order at least three and girth at least five is at most the negative of its
-least distance eigenvalue.  We disprove the conjecture by exact constructions
-of orders \(38,39,40,42\), and \(50\), all obtained from Hoffman--Singleton
-coordinates.  The 38-vertex graph has
+least distance eigenvalue.  We disprove the conjecture through exact
+counterexamples of orders \(38,39,40,42\), and \(50\), all arising from
+Hoffman--Singleton coordinates.  A common structural picture explains much
+of this phenomenon.  For every connected \(k\)-regular graph of girth at least
+five and diameter three, we prove
 \[
- \delta^*=\frac{17}{3},\qquad
- \lambda_{\min}(D)=-3-\sqrt7,
- \qquad
- \delta^*+\lambda_{\min}(D)=\frac83-\sqrt7>0.
+ D=3J+(k-3)I-2A-A^2,
 \]
-Exact exhaustive computation further proves that every one of the 40 labelled
-single-vertex deletions of the 40-vertex graph, and every one of its 120
-labelled edge-endpoint deletions, is a strict counterexample.  We establish a
-spectral criterion for every regular girth-at-least-five graph of diameter
-three, derive a parameterized construction from Moore second subconstituents,
-and give exact positive and negative controls.  No minimality,
-first-discovery, or unconditional infinite-family claim is made.  The
-50-vertex certificate and scalar Moore threshold are fully verified in Lean
-4.31; all five listed orders are verified by reproducible exact Python
-programs, and the additional constructions are also proved analytically.
+so a nonprincipal adjacency eigenvalue \(\theta\) yields the distance
+eigenvalue \(k-2-(\theta+1)^2\) and an exact criterion for strict failure.
+This mechanism organizes the regular diameter-three examples and a
+parameterized construction from Moore second subconstituents, while induced
+subgraphs produce further nonregular descendants.  Exact enumeration proves
+that all 40 labelled single-vertex deletions and all 120 labelled
+edge-endpoint deletions of the 40-vertex graph are strict counterexamples.
+We also give exact positive and negative controls.  The finite graph data and
+associated spectral certificates are checked by exact programs.  The
+50-vertex coordinate certificate and scalar Moore threshold are fully verified
+in Lean 4.31; Lean 4.31 also kernel-checks finite spectral certificates for
+the constructions of orders \(38,39,40\), and \(42\).
 \end{abstract}
 
 \maketitle
@@ -440,7 +441,7 @@ is a Petersen graph.  This construction is the classical 40-vertex
 Wong~\cite{OKeefeWong1979}.  Its uniqueness was proved by
 Wong~\cite{Wong1979}, and its realization as a Petersen deletion from the
 Hoffman--Singleton graph is recorded explicitly by Klin, Muzychuk, and
-Ziv-Av~\cite[Section~3.4]{KlinMuzychukZivAv2009}.
+Ziv-Av~\cite[Section~3.6]{KlinMuzychukZivAv2009}.
 
 \begin{theorem}\label{thm:forty}
 The graph \(R\) is connected and 6-regular, has girth five and diameter three,
@@ -966,14 +967,27 @@ certificate, girth five, and the adjacency-square and distance-matrix
 identities.  It supplies exact rational matrices \(S,S^{-1}\), proves their
 two-sided inverse identities by denominator-cleared integer certificates,
 proves \(DS=S\operatorname{diag}(91,(-4)^{(28)},1^{(21)})\), and checks the
-multiplicities.  Thus the complete explicit proof, including its least
-distance eigenvalue, is kernel-checked.  The scalar \(k\le3\) threshold is
-formalized separately.  Section~\ref{sec:moore} remains a conventional proof;
-the formal verification claim here is deliberately limited to the explicit
-50-vertex counterexample and the scalar threshold.  The 38-, 39-, 40-, and
-42-vertex results, the descendant-family statements, and the extended
-criteria are analytic results verified by reproducible exact Python
-certificates; they are not part of the completed Lean-verification claim.
+multiplicities.  Thus the complete explicit 50-vertex proof, including its
+least distance eigenvalue, is kernel-checked.  The scalar \(k\le3\) threshold
+is formalized separately.
+
+Lean 4.31 also kernel-checks finite spectral certificates for the explicit
+38-, 39-, 40-, and 42-vertex constructions.  For orders 38, 39, and 42, the
+public endpoints certify the exact minimum dual-degree data, positive
+definiteness of a shifted finite matrix, and the resulting strict inequality
+for every nonzero real eigenpair.  For order 40, the endpoint certifies a
+two-sided invertible exact diagonalization, its diagonal-entry
+multiplicities, and that \(-5\) is an attained minimum diagonal entry, together
+with dual degree six and gap one.
+
+The scope of these non-50 results is deliberately finite and spectral: their
+public endpoints do not bundle every structural hypothesis, and the semantic
+finite matrices are not identified with Mathlib's
+\texttt{SimpleGraph.dist} in a single theorem.  They are therefore described
+here as kernel-checked finite spectral certificates, rather than as a full
+standard-library formalization of every graph-theoretic phrase in the
+manuscript.  Section~\ref{sec:moore}, the descendant-family results, and the
+extended criteria remain conventional proofs supported by exact computation.
 
 \section*{Scope, provenance, and disclosures}
 
