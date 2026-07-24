@@ -30,11 +30,16 @@ from common_graphs import (  # noqa: E402
 X = sp.symbols("x")
 
 
+def assert_zero(expression: sp.Expr) -> None:
+    if sp.simplify(expression) != 0:
+        raise AssertionError(sp.factor(expression))
+
+
 def polynomial_entry_checks() -> dict[str, str]:
     k, n, sigma = sp.symbols("k n sigma", positive=True)
     f = sp.expand((X + 2) ** 2 * (X**2 + 2 * X - (2 * k - 3)))
     constant = sp.factor(f.subs(X, k))
-    assert constant == (k + 2) ** 2 * (k**2 + 3)
+    assert_zero(constant - (k + 2) ** 2 * (k**2 + 3))
 
     poly = sp.Poly(f, X)
     diagonal_moments = {
@@ -62,14 +67,16 @@ def polynomial_entry_checks() -> dict[str, str]:
 
     f_diagonal = sp.factor(evaluate(diagonal_moments))
     f_edge = sp.factor(evaluate(edge_moments))
-    assert f_diagonal == 6 * (k + 2)
-    assert f_edge == sigma + 4 * k + 14
+    assert_zero(f_diagonal - 6 * (k + 2))
+    assert_zero(f_edge - (sigma + 4 * k + 14))
 
     gram_diagonal = sp.factor(constant / n - f_diagonal)
     gram_edge = sp.factor(constant / n - f_edge)
-    assert sp.factor(gram_diagonal - gram_edge) == sigma - (2 * k - 2)
-    assert sp.factor(gram_diagonal + gram_edge) == (
-        2 * constant / n - (10 * k + 26) - sigma
+    assert_zero(gram_diagonal - gram_edge - (sigma - (2 * k - 2)))
+    assert_zero(
+        gram_diagonal
+        + gram_edge
+        - (2 * constant / n - (10 * k + 26) - sigma)
     )
 
     return {
@@ -121,7 +128,7 @@ def degree_six_order_checks() -> dict[str, str]:
     degree_h, tau = sp.symbols(
         "degree_h tau", integer=True, nonnegative=True
     )
-    assert sp.expand(6 * 12 + degree_h - 2 * tau) == degree_h - 2 * (tau - 36)
+    assert_zero(6 * 12 + degree_h - 2 * tau - (degree_h - 2 * (tau - 36)))
     assert 1800 % 5 == 0
 
     return {
@@ -137,9 +144,9 @@ def degree_six_order_checks() -> dict[str, str]:
     }
 
 
-def edge_five_cycle_counts(graph) -> tuple[tuple[int, int], ...]:
+def edge_five_cycle_counts(graph) -> tuple[tuple[tuple[int, int], int], ...]:
     distances = distance_rows(graph)
-    rows: list[tuple[int, int]] = []
+    rows: list[tuple[tuple[int, int], int]] = []
     for u, neighbors in enumerate(graph):
         for v in neighbors:
             if u < v:
