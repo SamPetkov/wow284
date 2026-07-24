@@ -143,13 +143,13 @@ def verify_symbolic_factorization() -> dict[str, str]:
     assert sp.simplify(
         negative_multiplicity + positive_multiplicity - (k**2 - 4 * k + 2)
     ) == 0
-    assert (
+    assert sp.simplify(
         5
         + 4 * (k - 2)
         + negative_multiplicity
         + positive_multiplicity
-        == k**2 - 1
-    )
+        - (k**2 - 1)
+    ) == 0
 
     return {
         "distance_quotient_characteristic_polynomial": str(
