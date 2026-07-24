@@ -4,8 +4,16 @@
   "interpretation_rule": "An unsuccessful search is not evidence of novelty or nonexistence.",
   "topics": [
     {
+      "id": "wow284_formal_statement",
+      "status": "primary_source",
+      "closest_sources": [
+        "aouchichehansen2014"
+      ],
+      "boundary": "Aouchiche and Hansen's peer-reviewed survey records WOW-284 as Conjecture 7.16 and attributes it to Fajtlowicz's 1998 Written on the Wall report. It is the primary published source used here for the formal conjecture statement."
+    },
+    {
       "id": "punctured_moore_distance_spectra",
-      "status": "exact_derivation_priority_unresolved",
+      "status": "project_derivation_pending_proof_audit_priority_unresolved",
       "closest_sources": [
         "dalfovandamfiol2012",
         "coopertauscheck2026",
@@ -13,7 +21,7 @@
         "biggs2010",
         "howladerpanigrahi2022"
       ],
-      "boundary": "Located sources concern intact Moore distance spectra, adjacency perturbations, distance-critical deletion, or subconstituents. No direct indexed source stating the recomputed ordinary distance spectra of the one-vertex, adjacent-pair, or nonadjacent-pair punctures was located."
+      "boundary": "Located sources concern intact Moore distance spectra, adjacency perturbations, distance-critical deletion, or subconstituents. No direct indexed source stating the recomputed ordinary distance spectra of the one-vertex, adjacent-pair, or nonadjacent-pair punctures was located. Project derivations exist, but the nonadjacent-pair theorem remains subject to the direct-sum and multiplicity audit required before v2."
     },
     {
       "id": "spectral_moore_overlap",
@@ -85,7 +93,7 @@
         "cioabaetal2016",
         "cioabaetal2026"
       ],
-      "boundary": "Near-Moore diameter-three Cayley families and one-sided spectral-Moore bounds do not provide the full two-sided shifted adjacency window required by WOW. No unconditional infinite family was located."
+      "boundary": "Near-Moore diameter-three Cayley families and one-sided spectral-Moore bounds do not provide the full two-sided shifted adjacency window required by WOW. No unconditional infinite family was located. Any infinite regular counterexample family must have unbounded degree, since strictness gives diameter less than k and the Moore bound leaves only finitely many graphs for each fixed k."
     },
     {
       "id": "irregular_minimality_below_38",
@@ -98,6 +106,10 @@
     }
   ],
   "sources": {
+    "aouchichehansen2014": {
+      "citation": "M. Aouchiche, P. Hansen, Distance Spectra of Graphs: A Survey, Linear Algebra and its Applications 458 (2014), 301-386.",
+      "doi": "10.1016/j.laa.2014.06.010"
+    },
     "aalipour2016": {
       "citation": "G. Aalipour et al., On the Distance Spectra of Graphs, Linear Algebra and its Applications 497 (2016), 66-87.",
       "doi": "10.1016/j.laa.2016.02.018"
