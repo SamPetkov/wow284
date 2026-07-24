@@ -45,7 +45,12 @@ one has the exact rank-one identity
   S(a)-S(a_0)=(a-a_0)zz^{\mathsf T}\succeq0.
 \]
 Thus each ordered eigenvalue of \(S(a)\) is at least the corresponding
-eigenvalue of \(S(a_0)\).
+eigenvalue of \(S(a_0)\). The matrix \(S(a)\) is a compression of the
+adjacency matrix and has eigenvalue \(6\), with eigenvector given by the square
+roots of the layer sizes. Hence \(\lambda_1(S(a))=6\). Since
+\(S(a_0)\preceq S(a)\), we have \(\lambda_1(S(a_0))\le6\); the
+characteristic polynomial below already has the factor \(x-6\), so
+\(\lambda_1(S(a_0))=6\).
 
 The characteristic polynomial of \(S(a_0)\) is
 \[
@@ -66,8 +71,12 @@ Direct substitution gives
 \]
 Since \(2\sqrt{10}-5>0\), this is nonpositive for every \(c\ge15\).
 As \(p_{6,c}\) has positive leading coefficient, its largest real root is at
-least \(r\). Interlacing between the normalized compression and the adjacency
-matrix gives
+least \(r\). The preceding argument shows that this root is a nonprincipal
+eigenvalue of \(S(a_0)\), and therefore
+\[
+  \lambda_2(S(a))\ge \lambda_2(S(a_0))\ge r.
+\]
+Interlacing between the compression and the adjacency matrix gives
 \[
   \lambda_2(A)\ge r.
 \]
@@ -109,7 +118,14 @@ In a strict regular diameter-three counterexample,
 \[
   2k-2-y_i^2>0
 \]
-for every \(i\ge1\), so the sum is strictly positive. Therefore
+for every \(i\ge1\). The sum cannot vanish: vanishing would force
+\(y_i+1=0\), hence \(\theta_i=-2\), for every nonprincipal eigenvalue.
+The trace equation would then give
+\[
+  0=k-2(n-1),\qquad n=1+\frac{k}{2},
+\]
+whereas a simple \(k\)-regular graph has \(n\ge k+1\). Thus the sum is
+strictly positive. Therefore
 \[
   n<\frac{(k+2)(k^2+3)}6.
 \]
