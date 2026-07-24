@@ -16,6 +16,7 @@ on:
       - "scripts/verify_degree_six_gate.py"
       - "scripts/verify_spectral_moore_comparison.py"
       - "scripts/verify_two_sided_lp_ceiling.py"
+      - "scripts/verify_edge_local_order50.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -37,6 +38,7 @@ on:
       - "scripts/verify_degree_six_gate.py"
       - "scripts/verify_spectral_moore_comparison.py"
       - "scripts/verify_two_sided_lp_ceiling.py"
+      - "scripts/verify_edge_local_order50.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -72,6 +74,7 @@ jobs:
           python -m py_compile scripts/verify_degree_six_gate.py
           python -m py_compile scripts/verify_spectral_moore_comparison.py
           python -m py_compile scripts/verify_two_sided_lp_ceiling.py
+          python -m py_compile scripts/verify_edge_local_order50.py
       - name: Reject floating-point spectral decisions in proof paths
         run: python scripts/audit_no_float_proof_paths.py
       - name: Run exact structural and symbolic checks
@@ -96,3 +99,5 @@ jobs:
         run: python scripts/verify_spectral_moore_comparison.py
       - name: Prove the full-degree two-sided LP ceiling
         run: python scripts/verify_two_sided_lp_ceiling.py
+      - name: Exclude degree-six order 51 by edge-local positivity
+        run: python scripts/verify_edge_local_order50.py
