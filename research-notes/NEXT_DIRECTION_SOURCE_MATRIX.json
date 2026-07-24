@@ -12,6 +12,14 @@
       "boundary": "Aouchiche and Hansen's peer-reviewed survey records WOW-284 as Conjecture 7.16 and attributes it to Fajtlowicz's 1998 Written on the Wall report. It is the primary published source used here for the formal conjecture statement."
     },
     {
+      "id": "radius_two_dual_degree_identity",
+      "status": "literature_established_elementary_identity",
+      "closest_sources": [
+        "backelin2015"
+      ],
+      "boundary": "Backelin defines the second degree as the sum of the degrees of the neighbors and proves in Lemma 2.1 that, for girth at least five, the radius-two ball has size second-degree plus one. Dividing by d(v) gives the project's dual-degree formula. The identity must not be presented as new."
+    },
+    {
       "id": "punctured_moore_distance_spectra",
       "status": "project_derivation_pending_proof_audit_priority_unresolved",
       "closest_sources": [
@@ -109,6 +117,10 @@
     "aouchichehansen2014": {
       "citation": "M. Aouchiche, P. Hansen, Distance Spectra of Graphs: A Survey, Linear Algebra and its Applications 458 (2014), 301-386.",
       "doi": "10.1016/j.laa.2014.06.010"
+    },
+    "backelin2015": {
+      "citation": "J. Backelin, Sizes of the Extremal Girth 5 Graphs of Orders from 40 to 49, arXiv:1511.08128 (2015), Lemma 2.1.",
+      "arxiv": "1511.08128"
     },
     "aalipour2016": {
       "citation": "G. Aalipour et al., On the Distance Spectra of Graphs, Linear Algebra and its Applications 497 (2016), 66-87.",
