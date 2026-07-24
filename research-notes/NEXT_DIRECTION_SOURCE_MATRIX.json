@@ -1,0 +1,186 @@
+{
+  "audit_date": "2026-07-24",
+  "scope": "Literature and priority audit for proposed WOW-284 extensions; the submitted manuscript is unchanged.",
+  "interpretation_rule": "An unsuccessful search is not evidence of novelty or nonexistence.",
+  "topics": [
+    {
+      "id": "punctured_moore_distance_spectra",
+      "status": "exact_derivation_priority_unresolved",
+      "closest_sources": [
+        "dalfovandamfiol2012",
+        "coopertauscheck2026",
+        "aalipour2016",
+        "biggs2010",
+        "howladerpanigrahi2022"
+      ],
+      "boundary": "Located sources concern intact Moore distance spectra, adjacency perturbations, distance-critical deletion, or subconstituents. No direct indexed source stating the recomputed ordinary distance spectra of the one-vertex, adjacent-pair, or nonadjacent-pair punctures was located."
+    },
+    {
+      "id": "spectral_moore_overlap",
+      "status": "established_framework",
+      "closest_sources": [
+        "nozaki2015",
+        "cioabaetal2016",
+        "cioabaetal2026",
+        "koledin2013"
+      ],
+      "boundary": "The upper endpoint of the regular WOW adjacency window is a spectral-Moore second-eigenvalue constraint. WOW additionally imposes a lower-tail constraint, so one-sided spectral-Moore results do not settle the conjecture."
+    },
+    {
+      "id": "higher_diameter_transfer",
+      "status": "established_framework",
+      "closest_sources": [
+        "howladerpanigrahi2022",
+        "fiol2016",
+        "diegofiol2016",
+        "nozaki2015"
+      ],
+      "boundary": "Distance-polynomial, quotient-polynomial, predistance-polynomial, and minimal-cage frameworks already contain the adjacency-polynomial mechanism. Only the WOW specialization should be presented as the project contribution."
+    },
+    {
+      "id": "degree_six_census",
+      "status": "no_complete_census_located",
+      "closest_sources": [
+        "meringer1999",
+        "goedgebeurjooken2024",
+        "koledin2013",
+        "cioabaetal2016",
+        "cioabaetal2026"
+      ],
+      "boundary": "No indexed complete census was located for all connected 6-regular girth-five diameter-three graphs in the candidate order range. Structured-subclass generation and spectral order bounds exist and must be applied before any new exhaustive search."
+    },
+    {
+      "id": "jorgensen96_equality_control",
+      "status": "known_construction_project_side_distance_audit",
+      "closest_sources": [
+        "jorgensen2005",
+        "jorgensen96data"
+      ],
+      "boundary": "The 9-regular order-96 graph and its adjacency list are publicly supplied by the constructor. Its WOW equality and distance spectrum are project-side exact computations and require a provenance-checked local data copy before v2."
+    },
+    {
+      "id": "finite_field_family",
+      "status": "known_construction_specialized_obstruction_priority_unresolved",
+      "closest_sources": [
+        "jorgensen2005",
+        "abreuetal2008"
+      ],
+      "boundary": "The constructions are known. A diameter-three Fourier obstruction is a specialized project result with unresolved priority and does not cover higher-diameter members."
+    },
+    {
+      "id": "negative_type_qec",
+      "status": "open_research_direction",
+      "closest_sources": [
+        "choudhurynandi2026",
+        "campbelletal2025",
+        "louobatahuang2020"
+      ],
+      "boundary": "QEC controls the maximum distance quadratic form on the all-ones orthogonal complement, whereas WOW uses the least unrestricted distance eigenvalue. No direct implication or dual-degree link was located."
+    },
+    {
+      "id": "infinite_family",
+      "status": "open_research_direction",
+      "closest_sources": [
+        "bachratysiagiovasiran2017",
+        "cioabaetal2016",
+        "cioabaetal2026"
+      ],
+      "boundary": "Near-Moore diameter-three Cayley families and one-sided spectral-Moore bounds do not provide the full two-sided shifted adjacency window required by WOW. No unconditional infinite family was located."
+    },
+    {
+      "id": "irregular_minimality_below_38",
+      "status": "no_complete_census_located",
+      "closest_sources": [
+        "meringer1999",
+        "goedgebeurjooken2024"
+      ],
+      "boundary": "Regular and structured-subclass generators do not amount to a census of all irregular connected triangle- and 4-cycle-free graphs through order 37. Minimality remains unproved."
+    }
+  ],
+  "sources": {
+    "aalipour2016": {
+      "citation": "G. Aalipour et al., On the Distance Spectra of Graphs, Linear Algebra and its Applications 497 (2016), 66-87.",
+      "doi": "10.1016/j.laa.2016.02.018"
+    },
+    "abreuetal2008": {
+      "citation": "M. Abreu, M. Funk, D. Labbate, V. Napolitano, A Family of Regular Graphs of Girth 5, Discrete Mathematics 308 (2008), 1810-1815.",
+      "doi": "10.1016/j.disc.2007.04.031"
+    },
+    "bachratysiagiovasiran2017": {
+      "citation": "M. Bachraty, J. Siagiova, J. Siran, Asymptotically Approaching the Moore Bound for Diameter Three by Cayley Graphs.",
+      "arxiv": "1709.09760"
+    },
+    "biggs2010": {
+      "citation": "N. Biggs, The Second Subconstituent of Some Strongly Regular Graphs.",
+      "arxiv": "1003.0175"
+    },
+    "campbelletal2025": {
+      "citation": "R. Campbell, K. Hendrey, B. Lund, C. Tompkins, Metric Graphs of Negative Type.",
+      "arxiv": "2501.07098"
+    },
+    "choudhurynandi2026": {
+      "citation": "P. N. Choudhury, R. Nandi, Quadratic Embedding Constants of Graphs: Bounds and Distance Spectra.",
+      "arxiv": "2306.15589"
+    },
+    "cioabaetal2016": {
+      "citation": "S. M. Cioaba, J. H. Koolen, H. Nozaki, J. R. Vermette, Maximizing the Order of a Regular Graph of Given Valency and Second Eigenvalue, SIAM Journal on Discrete Mathematics 30 (2016), 1509-1525.",
+      "doi": "10.1137/15M1030935",
+      "arxiv": "1503.06286"
+    },
+    "cioabaetal2026": {
+      "citation": "S. M. Cioaba, V. Gupta, H. Nozaki, Z. Xiang, The Non-Existence of Some Moore Polygons and Spectral Moore Bounds.",
+      "arxiv": "2512.09680"
+    },
+    "coopertauscheck2026": {
+      "citation": "J. Cooper, G. Tauscheck, Distance Critical Graphs.",
+      "arxiv": "2405.09656"
+    },
+    "dalfovandamfiol2012": {
+      "citation": "C. Dalfo, E. R. van Dam, M. A. Fiol, On Perturbations of Almost Distance-Regular Graphs.",
+      "arxiv": "1202.3313"
+    },
+    "diegofiol2016": {
+      "citation": "V. Diego, M. A. Fiol, Distance Mean-Regular Graphs.",
+      "arxiv": "1508.03835"
+    },
+    "fiol2016": {
+      "citation": "M. A. Fiol, Quotient-Polynomial Graphs, Linear Algebra and its Applications 488 (2016), 363-376.",
+      "doi": "10.1016/j.laa.2015.09.053",
+      "arxiv": "1506.04688"
+    },
+    "goedgebeurjooken2024": {
+      "citation": "J. Goedgebeur, J. Jooken, Exhaustive Generation of Edge-Girth-Regular Graphs.",
+      "arxiv": "2401.08271"
+    },
+    "howladerpanigrahi2022": {
+      "citation": "A. Howlader, P. Panigrahi, On the Distance Spectrum of Minimal Cages and Associated Distance Biregular Graphs, Linear Algebra and its Applications 636 (2022), 115-133.",
+      "doi": "10.1016/j.laa.2021.11.014",
+      "arxiv": "2109.05274"
+    },
+    "jorgensen2005": {
+      "citation": "L. K. Jorgensen, Girth 5 Graphs from Relative Difference Sets, Discrete Mathematics 293 (2005), 177-184.",
+      "doi": "10.1016/j.disc.2004.08.029"
+    },
+    "jorgensen96data": {
+      "citation": "L. K. Jorgensen, public adjacency list: 9-regular graph with girth 5 and order 96.",
+      "url": "https://people.math.aau.dk/~leif/research/girth5/96.html"
+    },
+    "koledin2013": {
+      "citation": "T. Koledin, Regular Graphs with Girth at Least 5 and Small Second Largest Eigenvalue, Linear Algebra and its Applications 439 (2013), 1229-1244.",
+      "doi": "10.1016/j.laa.2013.04.006"
+    },
+    "louobatahuang2020": {
+      "citation": "Z. Lou, N. Obata, Q. Huang, Quadratic Embedding Constants of Graph Joins.",
+      "arxiv": "2001.06752"
+    },
+    "meringer1999": {
+      "citation": "M. Meringer, Fast Generation of Regular Graphs and Construction of Cages, Journal of Graph Theory 30 (1999), 137-146.",
+      "doi": "10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G"
+    },
+    "nozaki2015": {
+      "citation": "H. Nozaki, Linear Programming Bounds for Regular Graphs, Graphs and Combinatorics 31 (2015), 1973-1984.",
+      "doi": "10.1007/s00373-015-1613-7",
+      "arxiv": "1407.4562"
+    }
+  }
+}
