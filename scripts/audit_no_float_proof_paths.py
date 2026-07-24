@@ -27,6 +27,7 @@ EXACT_ENTRYPOINTS = (
     "scripts/verify_spectral_moore_comparison.py",
     "scripts/verify_two_sided_lp_ceiling.py",
     "scripts/verify_edge_local_order50.py",
+    "scripts/verify_layer_matching_deletions.py",
 )
 LEGACY = ROOT / "scripts" / "verify_research_extensions.py"
 
@@ -113,6 +114,7 @@ def main() -> None:
         "python scripts/audit_no_float_proof_paths.py",
         "python scripts/verify_two_sided_lp_ceiling.py",
         "python scripts/verify_edge_local_order50.py",
+        "python scripts/verify_layer_matching_deletions.py",
     ):
         if command not in workflow:
             raise AssertionError(f"workflow missing exact command: {command}")
