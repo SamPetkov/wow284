@@ -117,7 +117,7 @@ def degree_six_order_checks() -> dict[str, str]:
         "degree_h tau high_edges", integer=True, nonnegative=True
     )
     assert sp.expand(6 * 12 + degree_h - 2 * tau) == degree_h - 2 * (tau - 36)
-    assert sp.rem(1800 + high_edges, 5) == sp.rem(high_edges, 5)
+    assert sp.simplify(sp.Mod(1800 + high_edges, 5) - sp.Mod(high_edges, 5)) == 0
 
     return {
         "order_51_combinatorial_lower": str(lower51),
@@ -158,12 +158,19 @@ def concrete_controls() -> dict[str, object]:
         assert set(counts) == {expected_sigma}
         assert sum(counts) % 5 == 0
         assert sum(counts) // 5 == expected_cycles
+        edges = [
+            (u, v)
+            for u, neighbors in enumerate(graph)
+            for v in neighbors
+            if u < v
+        ]
         vertex_counts = [
-            sum(count for edge, count in zip(
-                ((u, v) for u, neighbors in enumerate(graph) for v in neighbors if u < v),
-                counts,
-                strict=True,
-            ) if vertex in edge) // 2
+            sum(
+                count
+                for edge, count in zip(edges, counts, strict=True)
+                if vertex in edge
+            )
+            // 2
             for vertex in range(len(graph))
         ]
         expected_vertex = 66 if name == "order_40" else 60
