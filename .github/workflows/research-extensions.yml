@@ -5,9 +5,11 @@ on:
     paths:
       - "scripts/verify_research_extensions.py"
       - "scripts/verify_regular_low_degree.py"
+      - "scripts/verify_nonadjacent_punctured_moore.py"
       - "data/cages55/**"
       - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
       - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
+      - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
       - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
       - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
       - ".github/workflows/research-extensions.yml"
@@ -17,9 +19,11 @@ on:
     paths:
       - "scripts/verify_research_extensions.py"
       - "scripts/verify_regular_low_degree.py"
+      - "scripts/verify_nonadjacent_punctured_moore.py"
       - "data/cages55/**"
       - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
       - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
+      - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
       - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
       - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
       - ".github/workflows/research-extensions.yml"
@@ -44,7 +48,10 @@ jobs:
         run: |
           python -m py_compile scripts/verify_research_extensions.py
           python -m py_compile scripts/verify_regular_low_degree.py
+          python -m py_compile scripts/verify_nonadjacent_punctured_moore.py
       - name: Run exact structural and symbolic checks
         run: python scripts/verify_research_extensions.py
       - name: Close the regular degree-at-most-five cases
         run: python scripts/verify_regular_low_degree.py
+      - name: Verify the nonadjacent-pair Moore puncture spectrum
+        run: python scripts/verify_nonadjacent_punctured_moore.py
