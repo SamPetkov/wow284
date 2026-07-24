@@ -1,0 +1,32 @@
+name: Literature audit validation
+
+on:
+  pull_request:
+    paths:
+      - "research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json"
+      - "scripts/validate_next_direction_source_matrix.py"
+      - ".github/workflows/literature-audit-validation.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json"
+      - "scripts/validate_next_direction_source_matrix.py"
+      - ".github/workflows/literature-audit-validation.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-source-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Compile validator
+        run: python -m py_compile scripts/validate_next_direction_source_matrix.py
+      - name: Validate literature source matrix
+        run: python scripts/validate_next_direction_source_matrix.py
