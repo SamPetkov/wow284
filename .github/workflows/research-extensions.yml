@@ -4,42 +4,40 @@ on:
   pull_request:
     paths:
       - "scripts/verify_research_extensions.py"
+      - "scripts/verify_research_extensions_exact.py"
+      - "scripts/audit_no_float_proof_paths.py"
       - "scripts/verify_regular_low_degree.py"
       - "scripts/verify_nonadjacent_punctured_moore.py"
+      - "scripts/verify_nonadjacent_direct_sum.py"
       - "scripts/verify_prime_field_obstruction.py"
       - "scripts/verify_equality_boundary.py"
       - "scripts/verify_jorgensen_96.py"
+      - "scripts/verify_jorgensen96_provenance.py"
+      - "scripts/verify_degree_six_gate.py"
+      - "scripts/verify_spectral_moore_comparison.py"
       - "data/cages55/**"
-      - "data/jorgensen96_adjacency.txt"
-      - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
-      - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
-      - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
-      - "research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md"
-      - "research-notes/EQUALITY_BOUNDARY.md"
-      - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
-      - "research-notes/LITERATURE_AUDIT_PUNCTURED_MOORE.md"
-      - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
+      - "data/jorgensen96/**"
+      - "research-notes/**"
       - ".github/workflows/research-extensions.yml"
   push:
     branches:
       - main
     paths:
       - "scripts/verify_research_extensions.py"
+      - "scripts/verify_research_extensions_exact.py"
+      - "scripts/audit_no_float_proof_paths.py"
       - "scripts/verify_regular_low_degree.py"
       - "scripts/verify_nonadjacent_punctured_moore.py"
+      - "scripts/verify_nonadjacent_direct_sum.py"
       - "scripts/verify_prime_field_obstruction.py"
       - "scripts/verify_equality_boundary.py"
       - "scripts/verify_jorgensen_96.py"
+      - "scripts/verify_jorgensen96_provenance.py"
+      - "scripts/verify_degree_six_gate.py"
+      - "scripts/verify_spectral_moore_comparison.py"
       - "data/cages55/**"
-      - "data/jorgensen96_adjacency.txt"
-      - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
-      - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
-      - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
-      - "research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md"
-      - "research-notes/EQUALITY_BOUNDARY.md"
-      - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
-      - "research-notes/LITERATURE_AUDIT_PUNCTURED_MOORE.md"
-      - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
+      - "data/jorgensen96/**"
+      - "research-notes/**"
       - ".github/workflows/research-extensions.yml"
   workflow_dispatch:
 
@@ -58,22 +56,38 @@ jobs:
           cache-dependency-path: requirements.txt
       - name: Install pinned exact dependencies
         run: python -m pip install -r requirements.txt
-      - name: Compile the verifiers
+      - name: Compile exact verifiers
         run: |
-          python -m py_compile scripts/verify_research_extensions.py
+          python -m py_compile scripts/verify_research_extensions_exact.py
+          python -m py_compile scripts/audit_no_float_proof_paths.py
           python -m py_compile scripts/verify_regular_low_degree.py
           python -m py_compile scripts/verify_nonadjacent_punctured_moore.py
+          python -m py_compile scripts/verify_nonadjacent_direct_sum.py
           python -m py_compile scripts/verify_prime_field_obstruction.py
           python -m py_compile scripts/verify_equality_boundary.py
+          python -m py_compile scripts/verify_jorgensen_96.py
+          python -m py_compile scripts/verify_jorgensen96_provenance.py
+          python -m py_compile scripts/verify_degree_six_gate.py
+          python -m py_compile scripts/verify_spectral_moore_comparison.py
+      - name: Reject floating-point spectral decisions in proof paths
+        run: python scripts/audit_no_float_proof_paths.py
       - name: Run exact structural and symbolic checks
-        run: python scripts/verify_research_extensions.py
+        run: python scripts/verify_research_extensions_exact.py
       - name: Close the regular degree-at-most-five cases
         run: python scripts/verify_regular_low_degree.py
-      - name: Verify the nonadjacent-pair Moore puncture spectrum
+      - name: Verify the nonadjacent-pair Moore puncture factorization
         run: python scripts/verify_nonadjacent_punctured_moore.py
+      - name: Verify the nonadjacent-pair invariant direct sum
+        run: python scripts/verify_nonadjacent_direct_sum.py
       - name: Verify the prime-field diameter-three obstruction
         run: python scripts/verify_prime_field_obstruction.py
       - name: Verify the regular equality boundary
         run: python scripts/verify_equality_boundary.py
-      - name: Verify the exact order-96 equality control
+      - name: Verify the legacy exact order-96 equality control
         run: python scripts/verify_jorgensen_96.py
+      - name: Verify order-96 provenance and independent reconstructions
+        run: python scripts/verify_jorgensen96_provenance.py
+      - name: Close the degree-six c-greater-than-or-equal-to-15 gate
+        run: python scripts/verify_degree_six_gate.py
+      - name: Compare exactly with the published spectral-Moore bound
+        run: python scripts/verify_spectral_moore_comparison.py
