@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Exact audit of Jørgensen's 96-vertex 9-regular girth-five graph.
 
-This graph is a useful boundary control: it has delta*=9 and least distance
-eigenvalue -9, so it gives equality rather than a strict WOW-284 violation.
+This is an independent legacy-style parser for the normalized adjacency file.
+The provenance-grade three-way reconstruction lives in
+``verify_jorgensen96_provenance.py``.
 """
 
 from __future__ import annotations
@@ -14,7 +15,7 @@ import re
 import sympy as sp
 
 ROOT = Path(__file__).resolve().parents[1]
-DATA = ROOT / "data" / "jorgensen96_adjacency.txt"
+DATA = ROOT / "data" / "jorgensen96" / "adjacency.txt"
 
 
 def load_graph() -> tuple[frozenset[int], ...]:
