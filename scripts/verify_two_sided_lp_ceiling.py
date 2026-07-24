@@ -82,7 +82,10 @@ def verify_dual_measure(polynomials: list[sp.Expr]) -> dict[str, str]:
     positivity_square_difference = sp.factor(
         (2 * K**2 - 6) ** 2 - 18 * (K - 1) ** 3
     )
-    assert positivity_square_difference == 2 * (K - 3) * (2 * K - 3) * (K**2 + 3)
+    expected_square_difference = 2 * (K - 3) * (2 * K - 3) * (K**2 + 3)
+    assert sp.expand(
+        positivity_square_difference - expected_square_difference
+    ) == 0
 
     moments: dict[int, sp.Expr] = {}
     for degree in range(1, 10):
@@ -145,20 +148,33 @@ def verify_dual_measure(polynomials: list[sp.Expr]) -> dict[str, str]:
             ).subs(K, M + 4)
         ),
     }
-    assert positive_inner_shifts == {
+    expected_shifts = {
         7: 3 * M**2 + 7 * M + 5,
         8: 6 * M**3 + 25 * M**2 + 51 * M + 38,
         9: 3 * M**4 + 21 * M**3 + 70 * M**2 + 101 * M + 54,
     }
+    for degree in expected_shifts:
+        assert sp.expand(
+            positive_inner_shifts[degree] - expected_shifts[degree]
+        ) == 0
 
-    # Uniform Chebyshev bound for every remaining degree i>=10.  Put r=k-1.
+    # Uniform Chebyshev bound for every remaining degree i>=10. Put r=k-1.
     r, i = sp.symbols("r i", integer=True, positive=True)
-    assert sp.expand(3 * r**2 - (r**2 + 4 * r + 6)) == 2 * (r - 3) * (r + 1)
     assert sp.expand(
-        (4 * i + 2) * r / 3 - ((i + 1) * r + i - 1)
-    ) == (i - 1) * (r - 3) / 3
-    assert sp.Rational(2 * 10 + 1, 3) * 3 ** (3 - sp.Rational(10, 2)) == sp.Rational(7, 9)
-    assert sp.expand(3 * (2 * i + 1) ** 2 - (2 * i + 3) ** 2) == 8 * i**2 - 6
+        3 * r**2 - (r**2 + 4 * r + 6) - 2 * (r - 3) * (r + 1)
+    ) == 0
+    assert sp.expand(
+        (4 * i + 2) * r / 3
+        - ((i + 1) * r + i - 1)
+        - (i - 1) * (r - 3) / 3
+    ) == 0
+    assert (
+        sp.Rational(2 * 10 + 1, 3) * 3 ** (3 - sp.Rational(10, 2))
+        == sp.Rational(7, 9)
+    )
+    assert sp.expand(
+        3 * (2 * i + 1) ** 2 - (2 * i + 3) ** 2 - (8 * i**2 - 6)
+    ) == 0
 
     return {
         "support": str(points),
@@ -177,7 +193,9 @@ def main() -> None:
         raise RuntimeError("verification must not be run with python -O")
     polynomials = nonbacktracking_polynomials(10)
     for degree in range(1, 11):
-        assert polynomials[degree].subs(X, K) == K * (K - 1) ** (degree - 1)
+        assert sp.simplify(
+            polynomials[degree].subs(X, K) - K * (K - 1) ** (degree - 1)
+        ) == 0
     result = {
         "extremal_primal_certificate": verify_extremal_polynomial(polynomials),
         "dual_measure_certificate": verify_dual_measure(polynomials),
