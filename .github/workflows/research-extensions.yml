@@ -7,11 +7,15 @@ on:
       - "scripts/verify_regular_low_degree.py"
       - "scripts/verify_nonadjacent_punctured_moore.py"
       - "scripts/verify_prime_field_obstruction.py"
+      - "scripts/verify_equality_boundary.py"
+      - "scripts/verify_jorgensen_96.py"
       - "data/cages55/**"
+      - "data/jorgensen96_adjacency.txt"
       - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
       - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
       - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
       - "research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md"
+      - "research-notes/EQUALITY_BOUNDARY.md"
       - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
       - "research-notes/LITERATURE_AUDIT_PUNCTURED_MOORE.md"
       - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
@@ -24,11 +28,15 @@ on:
       - "scripts/verify_regular_low_degree.py"
       - "scripts/verify_nonadjacent_punctured_moore.py"
       - "scripts/verify_prime_field_obstruction.py"
+      - "scripts/verify_equality_boundary.py"
+      - "scripts/verify_jorgensen_96.py"
       - "data/cages55/**"
+      - "data/jorgensen96_adjacency.txt"
       - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
       - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
       - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
       - "research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md"
+      - "research-notes/EQUALITY_BOUNDARY.md"
       - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
       - "research-notes/LITERATURE_AUDIT_PUNCTURED_MOORE.md"
       - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
@@ -56,6 +64,7 @@ jobs:
           python -m py_compile scripts/verify_regular_low_degree.py
           python -m py_compile scripts/verify_nonadjacent_punctured_moore.py
           python -m py_compile scripts/verify_prime_field_obstruction.py
+          python -m py_compile scripts/verify_equality_boundary.py
       - name: Run exact structural and symbolic checks
         run: python scripts/verify_research_extensions.py
       - name: Close the regular degree-at-most-five cases
@@ -64,3 +73,7 @@ jobs:
         run: python scripts/verify_nonadjacent_punctured_moore.py
       - name: Verify the prime-field diameter-three obstruction
         run: python scripts/verify_prime_field_obstruction.py
+      - name: Verify the regular equality boundary
+        run: python scripts/verify_equality_boundary.py
+      - name: Verify the exact order-96 equality control
+        run: python scripts/verify_jorgensen_96.py
