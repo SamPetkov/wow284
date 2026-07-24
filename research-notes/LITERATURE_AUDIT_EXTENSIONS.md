@@ -2,26 +2,31 @@
 
 **Audit date:** 24 July 2026  
 **Scope:** structural and spectral extensions in
-`VERIFIED_RESEARCH_EXTENSIONS.md`; this file does not assert priority from
+`VERIFIED_RESEARCH_EXTENSIONS.md` and
+`REGULAR_LOW_DEGREE_OBSTRUCTION.md`. This file does not infer priority from
 search silence.
 
 ## 1. Method
 
-The audit used several independent discovery routes:
+The audit used independent discovery routes rather than a single keyword
+search:
 
 1. arXiv title, abstract, and full-text search;
 2. Crossref/DOI and publisher landing pages;
-3. journal databases for *Linear Algebra and its Applications*, *Discrete
-   Mathematics*, *Journal of Graph Theory*, and the *Electronic Journal of
-   Combinatorics*;
-4. searches indexed through Semantic Scholar, OpenAlex, and zbMATH-facing web
-   results;
-5. exact-formula searches for the characteristic-polynomial factors occurring
-   in the Hoffman--Singleton punctures;
-6. named-graph and subconstituent searches;
-7. citation-chain checks from the most relevant primary papers.
+3. journal searches for *Linear Algebra and its Applications*, *Discrete
+   Mathematics*, *Journal of Graph Theory*, *Electronic Journal of
+   Combinatorics*, and related spectral-graph venues;
+4. searches indexed through Semantic Scholar, OpenAlex, MaRDI/zbMATH-facing
+   records, and Google Scholar-facing citation pages;
+5. exact-formula searches for the characteristic-polynomial factors in the
+   Hoffman--Singleton punctures;
+6. named-graph, subconstituent, Terwilliger, walk-regular, and perturbation
+   searches;
+7. citation-chain inspection from the most relevant primary papers;
+8. exact reconstruction of the four `(5,5)`-cages and comparison with the
+   public House of Graphs labels.
 
-Representative exact queries included:
+Representative queries included:
 
 ```text
 "distance spectrum" "vertex-deleted" "Moore graph"
@@ -33,30 +38,77 @@ Representative exact queries included:
 "x^2 - 94x + 354" graph
 Moore graph second subconstituent intersection array
 quotient-polynomial graphs distance matrices adjacency algebra
-spectral excess theorem predistance polynomials girth
+walk-regular vertex-deleted characteristic polynomial
+perturbations almost distance-regular graphs vertex deletion
+spectral excess predistance polynomials girth
 ```
 
-A failed query is evidence only that the indexed search did not locate a
-matching source. It is not a proof of novelty.
+A failed query says only that the indexed search did not locate a matching
+source. It is not a proof of novelty.
 
-## 2. Claim-by-claim assessment
+## 2. Literature layers that must not be conflated
+
+### 2.1 Distance spectra of the intact Moore graph
+
+Hoffman--Singleton supplies the strongly regular structure. Howlader and
+Panigrahi derive distance polynomials for minimal cages and explicitly place
+Moore graphs in that framework. Their full text states that the distance
+matrices of a distance-regular graph are polynomials in its adjacency matrix
+and develops the corresponding minimal-cage distance spectrum.
+
+This literature covers the 50-vertex distance spectrum. It does not make the
+spectrum new in the present project.
+
+### 2.2 Vertex-deleted **adjacency** spectra
+
+There is a substantial perturbation literature for adjacency matrices:
+walk-regular graphs are characterized by equality of all vertex-deleted
+adjacency spectra, and Dalfó--van Dam--Fiol study cospectrality under deleting
+a vertex, adding or deleting an edge, amalgamating vertices, and related
+operations.
+
+These results are close in vocabulary but not in operator: they concern the
+adjacency characteristic polynomial or local adjacency spectrum. They do not
+supply the ordinary graph-distance matrix of the deleted graph, whose entries
+can increase after deletion.
+
+### 2.3 Distance-polynomial and quotient-polynomial structure
+
+Fiol's quotient-polynomial graphs are walk-regular and distance-polynomial;
+spectral-excess and predistance-polynomial theory gives a general language for
+recovering distance layers from adjacency spectra. The higher-diameter transfer
+in the extension note belongs to this established framework.
+
+### 2.4 Subconstituents and local modules
+
+Biggs studies second subconstituents of triangle-free strongly regular graphs
+through equitable partitions. The 42-vertex Hoffman--Singleton second
+subconstituent is a standard object in distance-regular and subconstituent
+literature. The graph and its adjacency structure are not new.
+
+The one-vertex and edge-puncture calculations in the extension note use
+similar incidence modules, but the operator being diagonalized is the distance
+matrix of the punctured graph.
+
+## 3. Claim-by-claim assessment
 
 | Proposed claim | Closest located literature | Assessment |
 | --- | --- | --- |
-| Moore-graph distance spectrum and the degree threshold behind the 50-vertex example | Hoffman--Singleton (1960); Howlader--Panigrahi (2022) | The graph family, adjacency spectrum, and distance-polynomial mechanism are established. Do not claim a new spectrum. The WOW-284 application and exact packaging require conservative priority language. |
-| Radius-two interpretation `d*(v)=(|B_2(v)|-1)/d(v)` under no triangles or 4-cycles | No direct indexed statement found; follows immediately from disjoint second-neighborhood branches | Treat as an elementary lemma, not a novelty claim. |
-| Diameter-three identity and adjacency-window criterion | Closest frameworks: distance-polynomial and quotient-polynomial graphs; minimal cages; spectral-excess theory | The polynomial-in-adjacency viewpoint is known. The exact WOW-284 criterion is a specialized application; priority not established. |
-| 42-vertex second subconstituent | Biggs (2010) and the broader distance-regular/subconstituent literature; the graph is standard | The graph and adjacency structure are known. Do not claim the construction or adjacency spectrum as new. |
-| Exact distance spectrum after deleting one Moore vertex | No direct source found after phrase, formula, arXiv, Crossref, OpenAlex, Semantic Scholar, and zbMATH-oriented searches | The derivation is proved and exact, but novelty is **not established**. Use wording such as “we derive” rather than “we determine for the first time.” |
-| Exact distance spectrum after deleting an edge's endpoints from a Moore graph | Same search outcome as the one-vertex case | Proved in the extension note; priority unresolved. |
-| Deletion-stability inequality from a principal distance submatrix and the distance-increase matrix | Cauchy interlacing and Weyl inequalities are standard matrix analysis | The lemma is a direct standard consequence. Do not present the matrix inequality itself as a new theorem of independent priority; the Moore/WOW application may still be useful. |
-| Fourth-moment order bound and distance-layer compression | Standard spectral moments, quotient interlacing, predistance polynomials, and spectral Moore bounds | The tools are established. The particular WOW-284 bounds may be new applications, but this needs a focused comparison with recent spectral Moore-bound papers. |
-| Higher-diameter transfer `D=dJ+q_d(A)` | Howlader--Panigrahi's minimal-cage distance polynomials; Fiol's distance-polynomial framework; spectral-excess literature | This belongs to a known framework. The current note should not claim the general transfer formula as new without a theorem-by-theorem comparison. |
-| Exactly four `(5,5)`-cages | Meringer (1999) | Established. Any degree-five no-go theorem must import all four graphs and recompute the needed spectra locally. |
-| Prime-field coordinate family | Murty's construction and Abreu--Funk--Labbate--Napolitano (2008) | The family is known. Only a carefully scoped spectral obstruction could be new. |
-| Direct public refutation of WOW-284 | Roucairol--Cazenave (2024) still treated the relevant set as open; a non-peer-reviewed AGNT Labs note dated 23 July 2026 records an independent exact verification and makes an external-agent priority claim | The external priority claim has not been independently authenticated here. Retain the manuscript's existing no-priority language and record the note in the provenance ledger rather than asserting priority. |
+| Moore-graph distance spectrum and the degree threshold behind the 50-vertex example | Hoffman--Singleton (1960); Howlader--Panigrahi (2022) | The graph family, adjacency spectrum, and distance-polynomial mechanism are established. Do not claim a new spectrum. The WOW-284 application should retain conservative priority language. |
+| Radius-two interpretation `d*(v)=(|B_2(v)|-1)/d(v)` under no triangles or 4-cycles | No direct indexed statement found; immediate from disjoint second-neighborhood branches | Treat as an elementary lemma, not a novelty claim. |
+| Diameter-three identity and adjacency-window criterion | Distance-polynomial and quotient-polynomial graphs; minimal cages; spectral-excess theory | The polynomial-in-adjacency viewpoint is known. The precise WOW-284 operator norm and window are specialized applications; priority not established. |
+| 42-vertex second subconstituent | Biggs and the broader distance-regular/subconstituent literature | Known graph and adjacency structure. Do not claim the construction or adjacency spectrum as new. |
+| Exact distance spectrum after deleting one Moore vertex | Full-text and exact-formula searches located adjacency-deletion and quantum-walk applications, but no source stating this ordinary distance spectrum | The derivation is proved and exact. Novelty remains **not established**. Use “we derive,” not “for the first time.” |
+| Exact distance spectrum after deleting the endpoints of a Moore edge | Same distinction and search outcome as the one-vertex case | Proved in the extension note; priority unresolved. |
+| Deletion-stability inequality from a principal distance submatrix and distance-increase matrix | Cauchy interlacing and Weyl inequalities | A direct standard matrix consequence. The Moore/WOW application is useful; the matrix lemma itself should not carry a novelty claim. |
+| Fourth-moment order bound and distance-layer compression | Spectral moments, quotient interlacing, predistance polynomials, spectral Moore bounds | Established tools. The exact WOW-284 bounds appear to be a specialized application; this is not a priority finding. |
+| Higher-diameter transfer `D=dJ+q_d(A)` | Howlader--Panigrahi minimal-cage distance polynomials; Fiol distance-polynomial framework; spectral-excess literature | Known framework. Do not claim the general transfer formula as new without a theorem-by-theorem comparison. |
+| Exactly four `(5,5)`-cages | Meringer (1999) | Established exhaustive result. The branch now imports four fixed records and independently recomputes all data used in the proof. |
+| Every regular strict counterexample has degree at least six | Uses Meringer's exhaustive cage theorem plus new exact application of distance and layer bounds | The proof is now complete and reproducible. It should be described as a theorem derived here, without a first-proof claim until further literature review. |
+| Prime-field coordinate family | Murty and Abreu--Funk--Labbate--Napolitano | The construction is known. Only a carefully scoped spectral obstruction could be additional. |
+| Direct public refutation of WOW-284 | Roucairol--Cazenave (2024) still treated the relevant collection as open; a non-peer-reviewed AGNT Labs note dated 23 July 2026 records an independent exact verification and an external-agent priority narrative | The external priority narrative is not independently authenticated here. Retain the manuscript's no-priority wording and record the note in provenance rather than adopting its claim. |
 
-## 3. Primary and near-primary sources
+## 4. Primary and near-primary sources
 
 ### Moore graphs and distance spectra
 
@@ -88,6 +140,22 @@ matching source. It is not a proof of novelty.
 - M. A. Fiol and S. Penjić, “On Symmetric Association Schemes and
   Associated Quotient-Polynomial Graphs,” arXiv:
   <https://arxiv.org/abs/2009.05343>.
+- S. M. Cioabă, J. H. Koolen, H. Nozaki, and J. R. Vermette, “Maximizing
+  the Order of a Regular Graph of Given Valency and Second Eigenvalue,”
+  *SIAM Journal on Discrete Mathematics* **30** (2016), 1509–1525.
+
+### Adjacency perturbations and local spectra
+
+- C. Dalfó, E. R. van Dam, and M. A. Fiol, “On Perturbations of Almost
+  Distance-Regular Graphs,” arXiv: <https://arxiv.org/abs/1202.3313>.
+- C. Dalfó and M. A. Fiol, “A General Method to Obtain the Spectrum and
+  Local Spectra of a Graph from Its Regular Partitions,” *Electronic Journal
+  of Linear Algebra* **36** (2020), 446–460.
+  DOI: <https://doi.org/10.13001/ela.2020.5225>.
+- The classical equivalence between walk-regularity, spectral regularity, and
+  equality of all vertex-deleted adjacency spectra is recorded in work of
+  Godsil--McKay, Delorme--Tillich, and Fiol--Garriga and summarized in modern
+  walk-regular references.
 
 ### Subconstituents and cages
 
@@ -97,6 +165,10 @@ matching source. It is not a proof of novelty.
   Cages,” *Journal of Graph Theory* **30** (1999), 137–146.
   DOI:
   <https://doi.org/10.1002/(SICI)1097-0118(199902)30:2%3C137::AID-JGT7%3E3.0.CO;2-G>.
+- K. Coolsaet, S. D'hondt, and J. Goedgebeur, “House of Graphs 2.0: A
+  Database of Interesting Graphs and More,” *Discrete Applied Mathematics*
+  **325** (2023), 97–107.
+  DOI: <https://doi.org/10.1016/j.dam.2022.10.013>.
 - M. Abreu, M. Funk, D. Labbate, and V. Napolitano, “A Family of Regular
   Graphs of Girth 5,” *Discrete Mathematics* **308** (2008), 1810–1815.
   DOI: <https://doi.org/10.1016/j.disc.2007.04.031>.
@@ -113,44 +185,61 @@ matching source. It is not a proof of novelty.
   priority narrative is recorded but not adopted as an independently verified
   fact.
 
-## 4. Novelty labels permitted by this audit
+## 5. Exact cage provenance and closure
 
-The following labels are defensible:
+Meringer's primary paper proves that exactly four `(5,5)`-cages exist. The
+branch contains one fixed graph6 record for each public House of Graphs label:
+Foster, Meringer, Robertson--Wegner, and Wong.
 
-- **Known framework, new application not priority-cleared:** the
-  diameter-three operator identity as used for WOW-284, moment bounds, and
-  layer compression.
-- **Exact derivation, no direct prior source located:** the one-vertex and
+The local verifier checks, for every record:
+
+- the first ten public adjacency rows shown by House of Graphs;
+- order 30, size 75, degree five, connectedness, girth five, and diameter
+  three;
+- the complete exact adjacency and distance characteristic polynomials;
+- the expected automorphism-group order;
+- pairwise nonisomorphism.
+
+The four automorphism orders are 30, 96, 20, and 120. Meringer's exhaustive
+count and the four nonisomorphic exact records close the only finite external
+case used in the degree-at-least-six theorem.
+
+## 6. Novelty labels permitted by this audit
+
+Defensible wording:
+
+- **Known framework, specialized WOW-284 application:** the diameter-three
+  operator identity, moment bounds, and layer compression.
+- **Exact derivation; no direct prior source located:** the one-vertex and
   adjacent-edge punctured Moore distance spectra.
-- **Standard matrix lemma, useful specialized consequence:** deletion
-  stability.
+- **Standard matrix lemma; specialized consequence:** deletion stability.
 - **Known graph construction:** the Moore graphs, 40-vertex cage, 42-vertex
   second subconstituent, `(5,5)`-cages, and prime-field girth-five family.
+- **Proved in this project, priority not asserted:** regular strict
+  counterexamples have degree at least six.
 
-The following labels are not justified:
+Not justified:
 
 - “first,” “new spectrum,” “previously unknown,” or “minimal”;
 - “unconditional infinite family”;
-- “complete classification of regular counterexamples” before the four
-  `(5,5)`-cages are imported and checked;
-- novelty of the higher-diameter distance-polynomial transfer.
+- novelty of the general higher-diameter distance-polynomial transfer;
+- a claim that no puncture formula exists elsewhere merely because the indexed
+  searches were negative.
 
-## 5. Additional literature work still required
+## 7. Further literature work before a journal novelty claim
 
-Before moving the punctured-Moore theorems into a journal version:
-
-1. inspect the full texts and cited-by lists of Howlader--Panigrahi (2022),
-   Aalipour et al. (2016), and Biggs (2010), not only their abstracts;
-2. search MathSciNet and zbMATH directly through institutional access for
+1. Search MathSciNet and zbMATH directly through institutional access for
    “vertex-deleted Moore graph,” “distance spectrum of a deleted strongly
-   regular graph,” and the exact polynomial factors;
-3. inspect books and chapters on Terwilliger algebras and subconstituents for
-   an equivalent module decomposition;
-4. check dissertations and conference proceedings not indexed by general web
-   search;
-5. add every located close result to `SOURCE_LEDGER.md` before making any
-   novelty statement.
+   regular graph,” and the exact polynomial factors.
+2. Inspect the cited-by lists and full references of Howlader--Panigrahi,
+   Aalipour et al., Biggs, and Dalfó--van Dam--Fiol.
+3. Search books and chapters on Terwilliger algebras, local spectra, and
+   subconstituents for an equivalent module decomposition.
+4. Check dissertations, conference proceedings, and non-indexed technical
+   reports.
+5. Add every close source to `SOURCE_LEDGER.md` before using any novelty
+   language.
 
-The present audit is rigorous enough to control wording in a draft PR. It is
-not a proof that the punctured spectra are absent from all published or
-unpublished literature.
+The present audit is strong enough to control a draft PR and to separate the
+proved content from known frameworks. It is not a proof that the punctured
+spectra are absent from all published or unpublished literature.
