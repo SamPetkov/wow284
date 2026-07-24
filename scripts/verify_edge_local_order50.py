@@ -5,7 +5,7 @@ The proof uses the centered positive-semidefinite polynomial
 
     -(A+2I)^2(A^2+2A-(2k-3)I) + f(k)J/n
 
-on the strict WOW adjacency window.  No floating-point arithmetic is used.
+on the strict WOW adjacency window. No floating-point arithmetic is used.
 """
 from __future__ import annotations
 
@@ -20,7 +20,12 @@ HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
     sys.path.insert(0, str(HERE))
 
-from common_graphs import distance_rows, graph40, graph42  # noqa: E402
+from common_graphs import (  # noqa: E402
+    adjacency_matrix,
+    distance_rows,
+    graph40,
+    graph42,
+)
 
 X = sp.symbols("x")
 
@@ -85,21 +90,21 @@ def degree_six_order_checks() -> dict[str, str]:
     assert constant == 2496
 
     # If n=k^2+1+c, two radius-two balls around an edge have union size
-    # 2(k^2+1)-(2k+sigma_e).  Hence sigma_e >= (k-1)^2-c.
+    # 2(k^2+1)-(2k+sigma_e). Hence sigma_e >= (k-1)^2-c.
     c51 = sp.Integer(14)
     lower51 = (k - 1) ** 2 - c51
     upper51 = sp.factor(2 * constant / 51 - 10 * k - 26)
     assert lower51 == 11
     assert upper51 == sp.Rational(202, 17)
-    assert 11 <= upper51 < 12
+    assert bool(11 <= upper51 < 12)
 
-    # Thus every edge would lie in exactly 11 five-cycles.  Counting
+    # Thus every edge would lie in exactly 11 five-cycles. Counting
     # edge--five-cycle incidences gives 153*11, which is not divisible by 5.
     edges51 = sp.Integer(6 * 51 // 2)
     incidence51 = edges51 * 11
     assert edges51 == 153
     assert incidence51 == 1683
-    assert incidence51 % 5 == 3
+    assert int(incidence51 % 5) == 3
 
     # At n=50 the same argument gives a sharp local two-value restriction.
     c50 = sp.Integer(13)
@@ -107,17 +112,17 @@ def degree_six_order_checks() -> dict[str, str]:
     upper50 = sp.factor(2 * constant / 50 - 10 * k - 26)
     assert lower50 == 12
     assert upper50 == sp.Rational(346, 25)
-    assert 13 < upper50 < 14
+    assert bool(13 < upper50 < 14)
 
     # If H contains the edges lying in 13 five-cycles, then for every vertex
     # sum_{e incident v} sigma_e = 2*tau(v), where tau(v) is the number of
-    # five-cycles through v.  Hence deg_H(v)=2*tau(v)-72 is even.  Globally,
+    # five-cycles through v. Hence deg_H(v)=2*tau(v)-72 is even. Globally,
     # 1800+|E(H)| is divisible by 5.
-    degree_h, tau, high_edges = sp.symbols(
-        "degree_h tau high_edges", integer=True, nonnegative=True
+    degree_h, tau = sp.symbols(
+        "degree_h tau", integer=True, nonnegative=True
     )
     assert sp.expand(6 * 12 + degree_h - 2 * tau) == degree_h - 2 * (tau - 36)
-    assert sp.simplify(sp.Mod(1800 + high_edges, 5) - sp.Mod(high_edges, 5)) == 0
+    assert 1800 % 5 == 0
 
     return {
         "order_51_combinatorial_lower": str(lower51),
@@ -132,19 +137,18 @@ def degree_six_order_checks() -> dict[str, str]:
     }
 
 
-def edge_five_cycle_counts(graph) -> tuple[int, ...]:
+def edge_five_cycle_counts(graph) -> tuple[tuple[int, int], ...]:
     distances = distance_rows(graph)
-    counts: list[int] = []
+    rows: list[tuple[int, int]] = []
     for u, neighbors in enumerate(graph):
         for v in neighbors:
             if u < v:
-                counts.append(
-                    sum(
-                        distances[u][z] == 2 and distances[v][z] == 2
-                        for z in range(len(graph))
-                    )
+                count = sum(
+                    distances[u][z] == 2 and distances[v][z] == 2
+                    for z in range(len(graph))
                 )
-    return tuple(counts)
+                rows.append(((u, v), count))
+    return tuple(rows)
 
 
 def concrete_controls() -> dict[str, object]:
@@ -154,16 +158,23 @@ def concrete_controls() -> dict[str, object]:
         ("order_42", graph42, 20, 504),
     ):
         graph, _ = constructor()
-        counts = edge_five_cycle_counts(graph)
+        edge_counts = edge_five_cycle_counts(graph)
+        edges = tuple(edge for edge, _ in edge_counts)
+        counts = tuple(count for _, count in edge_counts)
         assert set(counts) == {expected_sigma}
         assert sum(counts) % 5 == 0
         assert sum(counts) // 5 == expected_cycles
-        edges = [
-            (u, v)
-            for u, neighbors in enumerate(graph)
-            for v in neighbors
-            if u < v
-        ]
+
+        # Directly verify the two walk-count identities used in the proof:
+        # (A^3)_{uv}=2k-1 and (A^4)_{uv}=sigma_{uv} for every edge.
+        adjacency = adjacency_matrix(graph)
+        adjacency3 = adjacency**3
+        adjacency4 = adjacency**4
+        degree = len(graph[0])
+        for (u, v), sigma in edge_counts:
+            assert adjacency3[u, v] == 2 * degree - 1
+            assert adjacency4[u, v] == sigma
+
         vertex_counts = [
             sum(
                 count
@@ -180,6 +191,8 @@ def concrete_controls() -> dict[str, object]:
             "edge_five_cycle_count": expected_sigma,
             "number_of_five_cycles": expected_cycles,
             "five_cycles_through_each_vertex": expected_vertex,
+            "A3_edge_entry": 2 * degree - 1,
+            "A4_edge_entry": expected_sigma,
         }
     return result
 
