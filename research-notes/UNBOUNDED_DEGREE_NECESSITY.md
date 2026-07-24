@@ -8,7 +8,7 @@ Regularity gives
 Choose vertices \(u,v\) at distance \(\operatorname{diam}(G)\).  The Rayleigh
 quotient of the distance matrix at \(e_u-e_v\) is
 \[
-  rac{(e_u-e_v)^{\mathsf T}D(G)(e_u-e_v)}
+  \frac{(e_u-e_v)^{\mathsf T}D(G)(e_u-e_v)}
        {\lVert e_u-e_v\rVert^2}
   =-d_G(u,v)
   =-\operatorname{diam}(G).
