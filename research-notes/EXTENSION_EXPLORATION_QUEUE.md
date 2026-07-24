@@ -8,7 +8,7 @@ or independently reproducible negative result.
 | --- | --- | --- | --- |
 | One-vertex punctured Moore graphs | Proved analytically; symbolic and `k=7` checks pass | Convert the block proof into manuscript-quality LaTeX; extend Lean only if useful | Institutional literature check and clean CI |
 | Adjacent-edge punctured Moore graphs | Proved analytically; symbolic and `k=7` checks pass | Same as above | Same as above |
-| Nonadjacent-pair punctures | Strictness proved for `k>=6` by deletion stability; exact `k=7` polynomial checked | Derive the complete generic distance spectrum or prove that the natural module decomposition is not spectrally closed | Exact invariant-subspace accounting and literature audit |
+| Nonadjacent-pair punctures | **Closed spectrally:** complete generic distance characteristic factorization proved; strictness for `k>=6` follows from deletion stability | Optional least-quotient-root analysis and Lean formalization | Exact symbolic factorization, `k=7` specialization, and literature audit remain green |
 | General deletion stability | Proved by interlacing and Weyl | Classify distance-increase matrices for larger structured deleted sets | State only as a standard matrix lemma with specialized corollaries |
 | Regular degree-at-most-five obstruction | **Closed:** every regular strict counterexample has degree at least six | Optional Lean formalization of the scalar and finite cage checks | Exact low-degree verifier and cage provenance remain green |
 | Regular degree-six classification | Reduced to `40 <= n <= 51` for diameter three | Canonically generate connected 6-regular graphs with girth at least five in this order range; use adjacency-window pruning | Reproducible generator version, canonical options, checksums, and exact survivors |
@@ -36,12 +36,13 @@ For every computational route:
 
 ## Immediate next batch
 
-1. Derive the generic nonadjacent-pair puncture spectrum.
-2. Implement a canonical degree-six search restricted to orders 40 through 51.
-3. Prove or refute the diameter-three Fourier obstruction for the full
+1. Implement a canonical degree-six search restricted to orders 40 through 51.
+2. Prove or refute the diameter-three Fourier obstruction for the full
    finite-field parameter range and keep higher-diameter cases separate.
-4. Compare the higher-diameter recurrence theorem line by line with
+3. Compare the higher-diameter recurrence theorem line by line with
    Howlader--Panigrahi and distance-polynomial sources.
-5. Search MathSciNet and zbMATH for the exact puncture factors before any
+4. Search MathSciNet and zbMATH for the exact puncture factors before any
    novelty wording enters a manuscript.
-6. Investigate whether the negative-type restriction restores WOW-284.
+5. Investigate whether the negative-type restriction restores WOW-284.
+6. Classify equality in the shifted adjacency window, starting from the exact
+   order-96 example.
