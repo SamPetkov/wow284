@@ -1,0 +1,79 @@
+name: Research extension verification
+
+on:
+  pull_request:
+    paths:
+      - "scripts/verify_research_extensions.py"
+      - "scripts/verify_regular_low_degree.py"
+      - "scripts/verify_nonadjacent_punctured_moore.py"
+      - "scripts/verify_prime_field_obstruction.py"
+      - "scripts/verify_equality_boundary.py"
+      - "scripts/verify_jorgensen_96.py"
+      - "data/cages55/**"
+      - "data/jorgensen96_adjacency.txt"
+      - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
+      - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
+      - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
+      - "research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md"
+      - "research-notes/EQUALITY_BOUNDARY.md"
+      - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
+      - "research-notes/LITERATURE_AUDIT_PUNCTURED_MOORE.md"
+      - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
+      - ".github/workflows/research-extensions.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/verify_research_extensions.py"
+      - "scripts/verify_regular_low_degree.py"
+      - "scripts/verify_nonadjacent_punctured_moore.py"
+      - "scripts/verify_prime_field_obstruction.py"
+      - "scripts/verify_equality_boundary.py"
+      - "scripts/verify_jorgensen_96.py"
+      - "data/cages55/**"
+      - "data/jorgensen96_adjacency.txt"
+      - "research-notes/VERIFIED_RESEARCH_EXTENSIONS.md"
+      - "research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md"
+      - "research-notes/NONADJACENT_PUNCTURED_MOORE.md"
+      - "research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md"
+      - "research-notes/EQUALITY_BOUNDARY.md"
+      - "research-notes/LITERATURE_AUDIT_EXTENSIONS.md"
+      - "research-notes/LITERATURE_AUDIT_PUNCTURED_MOORE.md"
+      - "research-notes/EXTENSION_EXPLORATION_QUEUE.md"
+      - ".github/workflows/research-extensions.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-research-extensions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install pinned exact dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile the verifiers
+        run: |
+          python -m py_compile scripts/verify_research_extensions.py
+          python -m py_compile scripts/verify_regular_low_degree.py
+          python -m py_compile scripts/verify_nonadjacent_punctured_moore.py
+          python -m py_compile scripts/verify_prime_field_obstruction.py
+          python -m py_compile scripts/verify_equality_boundary.py
+      - name: Run exact structural and symbolic checks
+        run: python scripts/verify_research_extensions.py
+      - name: Close the regular degree-at-most-five cases
+        run: python scripts/verify_regular_low_degree.py
+      - name: Verify the nonadjacent-pair Moore puncture spectrum
+        run: python scripts/verify_nonadjacent_punctured_moore.py
+      - name: Verify the prime-field diameter-three obstruction
+        run: python scripts/verify_prime_field_obstruction.py
+      - name: Verify the regular equality boundary
+        run: python scripts/verify_equality_boundary.py
+      - name: Verify the exact order-96 equality control
+        run: python scripts/verify_jorgensen_96.py
