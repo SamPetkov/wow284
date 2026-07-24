@@ -84,7 +84,9 @@ def verify_symbolic_obstruction() -> dict[str, str]:
 
     # The t=0 Fourier block is [[2I,J],[J,2I]]. Its eigenvalues are
     # m+2, 2-m, and 2 with multiplicity 2m-2.
-    assert sp.expand((m - 3) ** 2 - (2 * m + 2)) == (m - 1) * (m - 7)
+    assert sp.expand(
+        (m - 3) ** 2 - (2 * m + 2) - (m - 1) * (m - 7)
+    ) == 0
     for value in (1, 2, 3):
         if value == 1:
             assert abs(2 - value + 1) >= sp.sqrt(2 * value + 2)
