@@ -18,6 +18,7 @@ on:
       - "scripts/verify_two_sided_lp_ceiling.py"
       - "scripts/verify_edge_local_order50.py"
       - "scripts/verify_layer_matching_deletions.py"
+      - "scripts/verify_order50_local_feasibility.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -41,6 +42,7 @@ on:
       - "scripts/verify_two_sided_lp_ceiling.py"
       - "scripts/verify_edge_local_order50.py"
       - "scripts/verify_layer_matching_deletions.py"
+      - "scripts/verify_order50_local_feasibility.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -78,6 +80,7 @@ jobs:
           python -m py_compile scripts/verify_two_sided_lp_ceiling.py
           python -m py_compile scripts/verify_edge_local_order50.py
           python -m py_compile scripts/verify_layer_matching_deletions.py
+          python -m py_compile scripts/verify_order50_local_feasibility.py
       - name: Reject floating-point spectral decisions in proof paths
         run: python scripts/audit_no_float_proof_paths.py
       - name: Run exact structural and symbolic checks
@@ -106,3 +109,5 @@ jobs:
         run: python scripts/verify_edge_local_order50.py
       - name: Classify the 120 layer-respecting matching deletions
         run: python scripts/verify_layer_matching_deletions.py
+      - name: Verify the exact order-50 local feasibility system
+        run: python scripts/verify_order50_local_feasibility.py
