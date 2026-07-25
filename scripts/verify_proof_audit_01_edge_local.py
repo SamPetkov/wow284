@@ -160,11 +160,13 @@ def verify_symbolic_core() -> dict[str, str]:
 
     m_diagonal = constant / n - diagonal_f
     m_edge = constant / n - edge_f
-    if sp.factor(m_diagonal - m_edge) != sigma - (2 * k - 2):
+    if sp.simplify(m_diagonal - m_edge - (sigma - (2 * k - 2))) != 0:
         raise AssertionError("wrong lower edge-cycle inequality")
-    if sp.factor(m_diagonal + m_edge) != (
-        2 * constant / n - 10 * k - 26 - sigma
-    ):
+    if sp.simplify(
+        m_diagonal
+        + m_edge
+        - (2 * constant / n - 10 * k - 26 - sigma)
+    ) != 0:
         raise AssertionError("wrong upper edge-cycle inequality")
 
     # Degree-six diameter reduction.  The unordered quadratic contribution for
