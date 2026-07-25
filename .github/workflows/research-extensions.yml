@@ -20,6 +20,7 @@ on:
       - "scripts/verify_layer_matching_deletions.py"
       - "scripts/verify_order50_local_feasibility.py"
       - "scripts/verify_order50_r29_exclusion.py"
+      - "scripts/verify_proof_audit_01_edge_local.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -45,6 +46,7 @@ on:
       - "scripts/verify_layer_matching_deletions.py"
       - "scripts/verify_order50_local_feasibility.py"
       - "scripts/verify_order50_r29_exclusion.py"
+      - "scripts/verify_proof_audit_01_edge_local.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -84,6 +86,7 @@ jobs:
           python -m py_compile scripts/verify_layer_matching_deletions.py
           python -m py_compile scripts/verify_order50_local_feasibility.py
           python -m py_compile scripts/verify_order50_r29_exclusion.py
+          python -m py_compile scripts/verify_proof_audit_01_edge_local.py
       - name: Reject floating-point spectral decisions in proof paths
         run: python scripts/audit_no_float_proof_paths.py
       - name: Run exact structural and symbolic checks
@@ -116,3 +119,5 @@ jobs:
         run: python scripts/verify_order50_local_feasibility.py
       - name: Exclude r=29 from the order-50 local Gram table
         run: python scripts/verify_order50_r29_exclusion.py
+      - name: Run systematic Proof Audit 01
+        run: python scripts/verify_proof_audit_01_edge_local.py
