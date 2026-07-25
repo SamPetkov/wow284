@@ -148,14 +148,14 @@ def verify_symbolic_core() -> dict[str, str]:
         raise AssertionError("wrong polynomial expansion")
 
     constant = sp.factor(f.subs(X, k))
-    if constant != (k + 2) ** 2 * (k**2 + 3):
+    if sp.simplify(constant - (k + 2) ** 2 * (k**2 + 3)) != 0:
         raise AssertionError("wrong principal value")
 
     diagonal_f = sp.factor(k * (2 * k - 1) + (15 - 2 * k) * k + 12 - 8 * k)
     edge_f = sp.factor(sigma + 6 * (2 * k - 1) + 20 - 8 * k)
-    if diagonal_f != 6 * (k + 2):
+    if sp.simplify(diagonal_f - 6 * (k + 2)) != 0:
         raise AssertionError("wrong diagonal entry")
-    if edge_f != sigma + 4 * k + 14:
+    if sp.simplify(edge_f - (sigma + 4 * k + 14)) != 0:
         raise AssertionError("wrong edge entry")
 
     m_diagonal = constant / n - diagonal_f
@@ -174,10 +174,10 @@ def verify_symbolic_core() -> dict[str, str]:
     unordered = sp.expand(
         96 - 9 * d - 36 * (d - 1) - 36 * (d - 2)
     )
-    if unordered != 204 - 81 * d:
+    if sp.expand(unordered - (204 - 81 * d)) != 0:
         raise AssertionError("wrong diameter Rayleigh numerator")
     rayleigh = sp.factor(unordered / 15)
-    if rayleigh.subs(d, 4) != -8:
+    if sp.simplify(rayleigh.subs(d, 4) + 8) != 0:
         raise AssertionError("wrong diameter-four bound")
     if sp.diff(rayleigh, d) >= 0:
         raise AssertionError("diameter bound is not decreasing")
