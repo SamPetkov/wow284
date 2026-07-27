@@ -6,8 +6,10 @@ import base64
 import gzip
 import io
 import json
+import os
 from pathlib import Path
 import shutil
+import subprocess
 import tarfile
 import tempfile
 import traceback
@@ -107,7 +109,7 @@ def copy_sources(source: Path) -> list[str]:
     if "main.tex" not in copied:
         raise AssertionError("bootstrap is missing main.tex")
 
-    # The first preserved payload was intentionally TeX-only.  Copy the current
+    # The first preserved payload was intentionally TeX-only. Copy the current
     # canonical bibliography files as temporary build companions; the integrated
     # audit later replaces them with the expanded bibliography.
     for name in ("references.bib", "main.bbl"):
@@ -122,6 +124,50 @@ def copy_sources(source: Path) -> list[str]:
         newline="\n",
     )
     return copied
+
+
+def publish_materialized_source_in_ci() -> None:
+    """Commit ``v22/`` only in the dedicated writable materialization workflow."""
+
+    if os.environ.get("GITHUB_ACTIONS") != "true":
+        return
+    if os.environ.get("GITHUB_WORKFLOW") != "Materialize expanded v2.2 manuscript":
+        return
+    head_ref = os.environ.get("GITHUB_HEAD_REF")
+    if not head_ref:
+        return
+
+    def run(*args: str, check: bool = True) -> subprocess.CompletedProcess[str]:
+        return subprocess.run(
+            args,
+            cwd=ROOT,
+            check=check,
+            text=True,
+            capture_output=True,
+        )
+
+    run("git", "config", "user.name", "github-actions[bot]")
+    run(
+        "git",
+        "config",
+        "user.email",
+        "41898282+github-actions[bot]@users.noreply.github.com",
+    )
+    run("git", "add", "v22")
+    staged = run("git", "diff", "--cached", "--quiet", check=False)
+    if staged.returncode == 0:
+        print("materialized v2.2 source already committed")
+        return
+    if staged.returncode != 1:
+        raise RuntimeError(staged.stderr or "git diff --cached failed")
+    run(
+        "git",
+        "commit",
+        "-m",
+        "Materialize expanded v2.2 manuscript source [skip ci]",
+    )
+    run("git", "push", "origin", f"HEAD:{head_ref}")
+    print(f"materialized v2.2 source pushed to {head_ref}")
 
 
 def materialize() -> None:
@@ -146,6 +192,7 @@ def materialize() -> None:
     print(f"source files copied: {len(copied)}")
     for item in copied:
         print(item)
+    publish_materialized_source_in_ci()
 
 
 def main() -> None:
