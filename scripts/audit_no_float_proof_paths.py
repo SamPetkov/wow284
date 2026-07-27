@@ -34,6 +34,7 @@ EXACT_ENTRYPOINTS = (
     "scripts/verify_proof_audit_02_two_sided_lp.py",
     "scripts/verify_proof_audit_03_nonadjacent_puncture.py",
     "scripts/verify_proof_audit_04_regular_low_degree.py",
+    "scripts/verify_proof_audit_05_small_moore_punctures.py",
     "scripts/verify_diameter_puncture_extensions.py",
     "scripts/verify_low_degree_windows.py",
 )
@@ -129,6 +130,7 @@ def main() -> None:
         "python scripts/verify_proof_audit_02_two_sided_lp.py",
         "python scripts/verify_proof_audit_03_nonadjacent_puncture.py",
         "python scripts/verify_proof_audit_04_regular_low_degree.py",
+        "python scripts/verify_proof_audit_05_small_moore_punctures.py",
         "python scripts/verify_diameter_puncture_extensions.py",
         "python scripts/verify_low_degree_windows.py",
     ):
