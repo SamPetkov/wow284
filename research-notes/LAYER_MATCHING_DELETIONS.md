@@ -1,9 +1,10 @@
 # Layer-respecting perfect-matching deletions of the Hoffman--Singleton graph
 
-**Status:** exact finite classification with symbolic characteristic polynomials and
-Sturm/root-isolation certificates.  No manuscript claim or priority claim is made.
+**Status:** exact finite classification with symbolic characteristic polynomials,
+Sturm certificates, and a dedicated line-by-line audit. No manuscript claim or
+priority claim is made.
 
-## 1. The family
+## 1. The family and classification theorem
 
 Use the coordinate Hoffman--Singleton graph on
 
@@ -17,27 +18,58 @@ For a permutation \(\pi\in S_5\), define
 \[
  M_\pi=
  \bigl\{P_{i,j}Q_{\pi(i),\,i\pi(i)+j}:
- i,j\in\mathbb F_5\bigr\}.
+ i,j\in\mathbb F_5\bigr\},
 \]
 
-Every vertex occurs exactly once, so \(M_\pi\) is a perfect matching.  Put
+and put
 
 \[
  G_\pi=G_{HS}-M_\pi.
 \]
 
-Each \(G_\pi\) is simple and 6-regular.  Deleting edges cannot create a triangle
-or 4-cycle, and all same-layer pentagons remain; hence every member has girth
-five.  Exact breadth-first search on the two orbit representatives below gives
-diameter four, which then holds throughout their coordinate-automorphism
-orbits.
+### Theorem
 
-## 2. Explicit coordinate automorphisms
+The 120 labelled graphs \(G_\pi\) form exactly two isomorphism classes.
 
-Two finite families of automorphisms are sufficient to classify all 120
-matchings.
+- The 20 affine permutations \(\pi(i)=ai+b\), \(a\ne0\), give graphs with
+  \[
+  \lambda_{\min}(D)=-13,
+  \qquad
+  \Phi=-7.
+  \]
+- The 100 nonaffine permutations give graphs with
+  \[
+  \lambda_{\min}(D)=-6-\sqrt{61},
+  \qquad
+  \Phi=-\sqrt{61}.
+  \]
 
-### Type preserving
+Every member is connected, simple, 6-regular, of order 50, girth five, and
+diameter four.
+
+## 2. Why \(M_\pi\) is a perfect matching
+
+Each \(P_{i,j}\) occurs once by definition. Conversely, fix \(Q_{k,\ell}\).
+There is a unique \(i=\pi^{-1}(k)\), and then the equation
+
+\[
+ i\pi(i)+j=\ell
+\]
+
+has the unique solution \(j=\ell-ik\). Thus every \(Q\)-vertex occurs exactly
+once, and \(M_\pi\) is a perfect matching of 25 Hoffman--Singleton edges.
+
+Each \(G_\pi\) is therefore simple and 6-regular. Deleting edges cannot create a
+triangle or 4-cycle, while all same-layer pentagons remain. Hence every member
+has girth exactly five. Exact breadth-first search on all 120 labelled members
+gives diameter four and, in particular, connectedness.
+
+## 3. Explicit coordinate automorphisms
+
+Two finite families of automorphisms generate two orbits on the 120 matchings.
+The algebra preserving the cross edges is included explicitly.
+
+### 3.1 Type preserving
 
 Choose
 
@@ -46,7 +78,7 @@ Choose
  s\in\{1,-1\},\quad c=s/a.
 \]
 
-Then
+Define
 
 \[
  P_{i,j}\longmapsto
@@ -55,17 +87,33 @@ Then
 
 \[
  Q_{k,\ell}\longmapsto
- Q_{ck+d,\,s\ell+bc k}
+ Q_{ck+d,\,s\ell+bc k}.
 \]
 
-preserves all three edge types.  It sends \(M_\pi\) to
-\(M_{\pi'}\), where
+The first map preserves the step-one \(P\)-cycles, and the second preserves the
+step-two \(Q\)-cycles. For a cross edge \(P_{i,j}Q_{k,ik+j}\), put
+
+\[
+ i'=ai+b,\qquad k'=ck+d,\qquad j'=sj-ad i-bd.
+\]
+
+Since \(ac=s\),
+
+\[
+ i'k'+j'
+ =s(ik+j)+bc k,
+\]
+
+which is exactly the second coordinate of the image of \(Q_{k,ik+j}\).
+Therefore all cross edges are preserved as well.
+
+The map sends \(M_\pi\) to \(M_{\pi'}\), where
 
 \[
  \pi'(ai+b)=c\pi(i)+d.
 \]
 
-### Type swapping
+### 3.2 Type swapping
 
 Choose
 
@@ -74,7 +122,7 @@ Choose
  t\in\{2,-2\},\quad c=-t/a.
 \]
 
-Then
+Define
 
 \[
  P_{i,j}\longmapsto
@@ -83,33 +131,55 @@ Then
 
 \[
  Q_{k,\ell}\longmapsto
- P_{ck+d,\,t\ell-cb k}
+ P_{ck+d,\,t\ell-cb k}.
 \]
 
-is an automorphism and sends \(M_\pi\) to \(M_{\pi'}\), where
+A step of size one becomes a step of size \(t=\pm2\), and a step of size two
+becomes a step of size \(2t=\pm4=\mp1\). Thus the two same-layer cycle systems
+are interchanged.
+
+For a cross edge \(P_{i,j}Q_{k,ik+j}\), put
+
+\[
+ i'=ck+d,\qquad k'=ai+b,\qquad j'=t(ik+j)-cbk.
+\]
+
+Because \(ca=-t\),
+
+\[
+ i'k'+j'=tj+dai+db,
+\]
+
+which is the second coordinate of the image of \(P_{i,j}\). Hence the map is a
+graph automorphism. Its action on matchings is
 
 \[
  \pi'(c\pi(i)+d)=ai+b.
 \]
 
-The verifier checks each displayed map on every one of the 175
-Hoffman--Singleton edges and checks its action on every one of the 120
-matchings.
+## 4. Orbit exhaustion and exact isomorphism classification
 
-The generated action has exactly two orbits:
+The verifier checks all 400 displayed coordinate maps on every one of the 175
+Hoffman--Singleton edges and on every one of the 120 matchings. The generated
+action has exactly two disjoint orbits:
 
 \[
  20+100=120.
 \]
 
 The first orbit consists precisely of the affine permutations
-\(i\mapsto ai+b\); the second consists of all nonaffine permutations.  Since the
-coordinate maps are graph automorphisms carrying the deleted matching to the
-deleted matching, all graphs in one orbit are isomorphic.
+\(i\mapsto ai+b\); the second consists of all nonaffine permutations. Every
+orbit is contained in a graph-isomorphism class because the coordinate maps are
+graph automorphisms carrying deleted matching to deleted matching.
 
-## 3. Affine orbit
+The adjacency characteristic polynomials of an affine and a nonaffine
+representative differ. Therefore the two representatives are not isomorphic,
+and the two coordinate orbits are exactly the two graph-isomorphism classes in
+this explicit family.
 
-Take \(\pi(i)=i\).  Exact computation gives
+## 5. Affine class
+
+Take \(\pi(i)=i\). Exact computation gives
 
 \[
 \begin{aligned}
@@ -129,10 +199,10 @@ and
 \end{aligned}
 \]
 
-The factor \((x+13)^4\) shows that \(-13\) is a distance eigenvalue.  An exact
-Sturm count proves that the product of all remaining factors has no root below
-\(-13\), and direct substitution shows that none of those factors vanishes at
-\(-13\).  Therefore
+The factor \((x+13)^4\) supplies the eigenvalue \(-13\). Remove this factor and
+take the square-free part of the remaining polynomial. Its exact Sturm
+variation count is the same at \(-\infty\) and at \(-13\), and the remaining
+polynomial is nonzero at \(-13\). Hence it has no root below or at \(-13\), so
 
 \[
  \lambda_{\min}(D)=-13.
@@ -144,9 +214,10 @@ Since the graph is 6-regular,
  \Phi=6-13=-7.
 \]
 
-## 4. Nonaffine orbit
+## 6. Nonaffine class
 
-Take \(\pi=(0,1,2,4,3)\).  The exact distance polynomial is
+Take \(\pi=(0,1,2,4,3)\). Its exact adjacency polynomial differs from the
+affine polynomial. The exact distance polynomial is
 
 \[
 \begin{aligned}
@@ -165,45 +236,58 @@ The quadratic factor gives the root
  -6-\sqrt{61}.
 \]
 
-Because \(61>(39/5)^2\),
+Since
 
 \[
- -6-\sqrt{61}<-69/5.
+ 61>\left(\frac{39}{5}\right)^2,
 \]
 
-The square-free part of \(\chi_D\) is nonzero at \(-69/5\), and an exact Sturm
-count gives exactly one distinct root in
-\(( -\infty,-69/5)\).  Hence
+this root lies below \(-69/5\). The square-free part of \(\chi_D\) is nonzero
+at \(-69/5\), and its exact Sturm count gives one root in
+\(( -\infty,-69/5)\). Thus
 
 \[
  \lambda_{\min}(D)=-6-\sqrt{61}.
 \]
 
-Thus
+Consequently
 
 \[
  \Phi=6-6-\sqrt{61}=-\sqrt{61}<0.
 \]
 
-The adjacency polynomial for this representative is also recomputed exactly by
-the verifier and differs from the affine polynomial.  The two orbit classes are
-therefore spectrally distinct as well as disjoint under the displayed action.
+Because \(\sqrt{61}>7\), this least eigenvalue is strictly below \(-13\).
 
-## 5. Conclusion and search value
+## 7. Conclusion and search value
 
-All 120 explicit layer-respecting perfect-matching deletions are exact negative
-controls:
+The exact score distribution in this family is
 
 \[
- \delta^*=6,\qquad \lambda_{\min}(D)\le-13.
+ 20\text{ labelled graphs with score }-7,
+ \qquad
+ 100\text{ labelled graphs with score }-\sqrt{61}.
 \]
 
-This eliminates a natural attempt to obtain order-50 regular counterexamples by
-puncturing the Hoffman--Singleton edge set while retaining every vertex.  It
-does **not** classify arbitrary perfect matchings, arbitrary 6-regular induced
-or spanning subgraphs, or all order-50 candidates.
+Thus all 120 layer-respecting perfect-matching deletions are negative controls.
+This eliminates a natural order-50 construction while retaining every vertex.
+It does **not** classify arbitrary perfect matchings, arbitrary 6-regular
+spanning subgraphs, or all order-50 candidates.
 
-The rejected distance-matrix shortcut is intentionally absent: a simple
-bilinear formula proposed during exploration fails on the nonaffine
-representative.  The final proof uses only coordinate automorphisms, exact BFS
-distances, exact characteristic polynomials, and exact Sturm/root comparisons.
+The rejected distance-matrix shortcut remains excluded: a proposed bilinear
+formula fails on the nonaffine representative. The final proof uses only the
+coordinate automorphisms, exact breadth-first distances, exact characteristic
+polynomials, and exact Sturm comparisons.
+
+## 8. Verification
+
+Run
+
+```text
+python scripts/verify_layer_matching_deletions.py
+python scripts/verify_proof_audit_07_layer_matchings.py
+```
+
+The second script is independent of the first and verifies all 120 matchings,
+all 400 coordinate maps, all graph hypotheses, the orbit exhaustion, the two
+characteristic-polynomial pairs, and both least-root certificates without
+floating-point arithmetic.

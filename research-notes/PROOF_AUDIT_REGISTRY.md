@@ -20,11 +20,11 @@ verification route have all been checked.
 | --- | --- | --- | --- |
 | 01 | Edge-local exclusion of degree-six order 51 | walk-count identities, theorem scope, PSD entry bounds, cycle-incidence congruence | `pass_after_correction` |
 | 02 | All-degree ceiling of the two-sided nonbacktracking LP method | dual feasibility for every degree, Chebyshev tail, exact match to the admissible coefficient cone | `pass` |
-| 03 | Nonadjacent Moore-puncture distance spectrum | recomputed distances, invariant direct sum, injectivity, residual trace, multiplicities | `pass` |
+| 03 | Nonadjacent Moore-puncture distance spectrum | recomputed distances, invariant direct sum, injectivity, residual trace, multiplicities | `pass_after_correction` |
 | 04 | Every regular strict counterexample has degree at least six | diameter reductions, four `(5,5)`-cage exhaustion, interlacing direction | `pass` |
 | 05 | One-vertex and adjacent-edge Moore-puncture spectra | quotient normalization, least-root comparison, multiplicity accounting | `pass_after_correction` |
 | 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `pass_after_correction` |
-| 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `queued` |
+| 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `pass_after_correction` |
 | 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `queued` |
 | 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `queued` |
 | 10 | General endpoint-neighborhood diameter obstruction | support disjointness, cross-distance inequality direction, radical comparison, integer rounding | `queued` |
@@ -98,9 +98,8 @@ length-three paths for:
 2. two distinct vertices `a,a'` inside that neighbourhood;
 3. the symmetric cases around the second deleted vertex.
 
-This is an expository correction rather than a change to the theorem. The
-metric lemma is now included in the primary note. With it, the direct sum has
-dimensions
+This is an expository correction rather than a change to the theorem. Once the
+metric lemma is inserted, the direct sum has dimensions
 
 \[
 5+2(k-2)+2(k-2)+2(k-3)+(k-2)(k-4)=k^2-1,
@@ -127,11 +126,10 @@ and diameter branch separately:
 
 Using the already audited LP ceiling shortens the proof materially. At degree
 four, diameter three forces `n=18`, leaving only the odd-dimensional
-irreducible-quadratic contradiction.  At degree five, diameter three leaves
-only `n=30,31,32`; parity excludes `n=31`, so only excess four and six are
-needed. The excess-five calculation is retained as a robustness check. The
-rank-one positive-semidefinite derivative of the normalized layer compression
-supplies the monotonicity used in the last two cases.
+irreducible-quadratic contradiction. At degree five, diameter three leaves only
+`n=30,31,32`, so only excess four, five, and six must be checked. The rank-one
+positive-semidefinite derivative of the normalized layer compression supplies
+the monotonicity used in the last two cases.
 
 ## Audit 05 outcome
 
@@ -183,6 +181,28 @@ checks the centered three-vertex Gram minors, reconstructs the shifted moments
 through degree six from nonbacktracking trace identities, and verifies both
 Schur complements. The result remains a necessary-condition and search-pruning
 theorem; it does not prove nonexistence at order 50.
+
+## Audit 07 outcome
+
+The 120 layer-respecting matching deletions form exactly two isomorphism
+classes. The 20 affine permutations have score `-7`, and the 100 nonaffine
+permutations have score `-sqrt(61)`.
+
+The original result is correct, but three logical transitions were compressed:
+
+1. the perfect-matching assertion did not show explicitly why each `Q` vertex
+   occurs once;
+2. the cross-edge algebra for the type-preserving and type-swapping coordinate
+   maps was omitted;
+3. two coordinate orbits were not explicitly separated as graph-isomorphism
+   classes until the different adjacency characteristic polynomials were used.
+
+The audit checks all 400 coordinate maps on all 175 Hoffman--Singleton edges and
+all 120 matchings, giving 48,000 exact matching-image checks. It then verifies
+all 120 graph hypotheses, the 20/100 orbit exhaustion, both adjacency and
+distance characteristic-polynomial pairs, and both exact Sturm least-root
+certificates. The classification remains limited to the displayed
+`M_pi` family and does not cover all perfect matchings.
 
 ## Required structure of every audit
 
