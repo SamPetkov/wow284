@@ -30,12 +30,7 @@ abstract: >-
 keywords:
   - distance spectrum
   - dual degree
-  - girth
-  - Hoffman-Singleton graph
-  - (6,5)-cage
   - Moore graph
-  - spectral graph theory
-  - WOW-284
 preferred-citation:
   type: article
   title: "Exact Counterexamples and Spectral Mechanisms for WOW-284"
