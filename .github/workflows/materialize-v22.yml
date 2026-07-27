@@ -1,0 +1,74 @@
+name: Materialize expanded v2.2 manuscript
+
+on:
+  pull_request:
+    paths:
+      - "scripts/.v22-bootstrap/main.*"
+      - "scripts/materialize_v22_bootstrap.py"
+      - ".github/workflows/materialize-v22.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  materialize-and-build:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Materialize the deterministic source bundle
+        run: python scripts/materialize_v22_bootstrap.py
+      - name: Reject source corruption and placeholders
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          root = Path('v22')
+          banned = ('TODO', 'FIXME', '\\u0008', '\\r')
+          for path in sorted(root.rglob('*')):
+              if not path.is_file() or path.name == '.materialized':
+                  continue
+              data = path.read_bytes()
+              bad = [(i, byte) for i, byte in enumerate(data)
+                     if byte < 32 and byte not in {9, 10}]
+              if bad:
+                  raise SystemExit(f'{path}: forbidden control bytes {bad[:5]}')
+              text = data.decode('utf-8')
+              if '\ufffd' in text:
+                  raise SystemExit(f'{path}: replacement character')
+              if re.search(r'(?<!\\)(TODO|FIXME)', text):
+                  raise SystemExit(f'{path}: unresolved placeholder')
+          print('v2.2 prose-source hygiene: PASS')
+          PY
+      - name: Install TeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+      - name: Compile modular manuscript
+        working-directory: v22
+        run: |
+          latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+          if grep -E "undefined references|Citation .* undefined|LaTeX Warning: Reference .* undefined|Overfull \\hbox|Underfull \\hbox|Missing character" main.log; then
+            echo "publication warning found" >&2
+            exit 1
+          fi
+          pdfinfo main.pdf | tee pdfinfo.txt
+      - name: Commit materialized source on the manuscript branch
+        if: github.event_name == 'pull_request'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add v22
+          if git diff --cached --quiet; then
+            echo "No materialized source change"
+            exit 0
+          fi
+          git commit -m "Materialize expanded v2.2 manuscript source [skip ci]"
+          git push origin HEAD:${{ github.head_ref }}
