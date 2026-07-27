@@ -1,11 +1,25 @@
 Traceback (most recent call last):
-  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 147, in main
+  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 214, in main
     materialize()
     ~~~~~~~~~~~^^
-  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 136, in materialize
-    source = find_source_root(extracted)
-  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 82, in find_source_root
-    raise AssertionError(
-    ...<2 lines>...
+  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 204, in materialize
+    apply_audited_revisions()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 139, in apply_audited_revisions
+    run_revision("audit_v22_manuscript.py")
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 128, in run_revision
+    subprocess.run(
+    ~~~~~~~~~~~~~~^
+        [sys.executable, str(ROOT / "scripts" / script_name)],
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        cwd=ROOT,
+        ^^^^^^^^^
+        check=True,
+        ^^^^^^^^^^^
     )
-AssertionError: bootstrap does not contain main.tex and sections/; inventory=['main.tex']
+    ^
+  File "/opt/hostedtoolcache/Python/3.13.14/x64/lib/python3.13/subprocess.py", line 577, in run
+    raise CalledProcessError(retcode, process.args,
+                             output=stdout, stderr=stderr)
+subprocess.CalledProcessError: Command '['/opt/hostedtoolcache/Python/3.13.14/x64/bin/python', '/home/runner/work/wow284/wow284/scripts/audit_v22_manuscript.py']' returned non-zero exit status 1.
