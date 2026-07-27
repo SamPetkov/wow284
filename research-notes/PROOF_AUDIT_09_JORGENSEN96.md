@@ -1,8 +1,8 @@
 # Proof Audit 09: the Jørgensen order-96 equality control
 
 **Audited results:** `JORGENSEN96_PROVENANCE.md` and the finite example in
-`EQUALITY_BOUNDARY.md`.  
-**Verdict:** `pass_after_correction`.  
+`EQUALITY_BOUNDARY.md`.
+**Verdict:** `pass_after_correction`.
 **Claim boundary:** the graph construction and public adjacency list are due to
 Leif K. Jørgensen. The distance spectrum and WOW-284 equality statement are
 project-side exact computations.
