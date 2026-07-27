@@ -1,7 +1,8 @@
 # Proof Audit 07: layer-respecting perfect-matching deletions
 
-**Audited result:** `research-notes/LAYER_MATCHING_DELETIONS.md`.  
-**Verdict:** `pass_after_correction`.  
+**Audited result:** `research-notes/LAYER_MATCHING_DELETIONS.md`.
+
+**Verdict:** `pass_after_correction`.
 **Scope:** the explicitly defined 120 matchings \(M_\pi\), \(\pi\in S_5\), in
 the coordinate Hoffman--Singleton graph. No statement is made about all perfect
 matchings of the Hoffman--Singleton graph.
