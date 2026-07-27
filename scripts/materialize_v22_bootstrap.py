@@ -110,9 +110,6 @@ def copy_sources(source: Path) -> list[str]:
     if "main.tex" not in copied:
         raise AssertionError("bootstrap is missing main.tex")
 
-    # The first preserved payload was intentionally TeX-only. Copy the current
-    # canonical bibliography files as temporary build companions; the integrated
-    # audits then expand that bibliography deterministically.
     for name in ("references.bib", "main.bbl"):
         if name not in copied:
             fallback = ROOT / name
@@ -138,6 +135,7 @@ def run_revision(script_name: str) -> None:
 def apply_audited_revisions() -> None:
     run_revision("revise_v22_manuscript.py")
     run_revision("revise_v22_second_pass.py")
+    run_revision("revise_v22_third_pass.py")
 
 
 def publish_materialized_source_in_ci() -> None:
@@ -178,7 +176,7 @@ def publish_materialized_source_in_ci() -> None:
         "git",
         "commit",
         "-m",
-        "Materialize twice-audited v2.2 manuscript source [skip ci]",
+        "Materialize fully audited v2.2 manuscript source [skip ci]",
     )
     run("git", "push", "origin", f"HEAD:{head_ref}")
     print(f"materialized v2.2 source pushed to {head_ref}")
@@ -203,7 +201,7 @@ def materialize() -> None:
         print(f"source root: {source.relative_to(extracted)}")
         copied = copy_sources(source)
     apply_audited_revisions()
-    print("v2.2 manuscript materialization and two revision passes: PASS")
+    print("v2.2 manuscript materialization and three revision passes: PASS")
     print(f"source files copied: {len(copied)}")
     for item in copied:
         print(item)
