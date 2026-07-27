@@ -71,8 +71,16 @@ def main() -> None:
             "exact order-38 Sturm variation certificate missing")
     require(r"vertices at distance two from \(P_{0,0}\)" in tex,
             "explicit order-42 base vertex missing")
-    require(r"\texttt{v2.0.5-arxiv}" in tex, "fixed release tag missing")
     require(r"\texttt{v2.1.0}" in tex, "current research release tag missing")
+    require(
+        "This manuscript corresponds to GitHub release" in tex,
+        "submission-to-release correspondence statement missing",
+    )
+    require(
+        "v2.0.5-arxiv" not in tex
+        and "The earlier arXiv submission was withdrawn" not in tex,
+        "submission source mentions superseded release history",
+    )
     require(r"\delta^*(H_v)" in tex, "order-39 graph quantifier is not explicit")
     require(r"\mathbb R^{V(X)}" in tex, "Moore invariant-space decomposition missing")
     require(r"2K-7-\sqrt{4K-3}" in tex, "Moore threshold calculation missing")
@@ -80,7 +88,7 @@ def main() -> None:
     require(r"V(M)=U\sqcup S" in tex, "generic equitable-deletion notation not fixed")
     require("permitting byte-for-byte integrity" in tex,
             "checksum integrity wording missing")
-    require("python scripts/explore_generalizations.py" in tex,
+    require(r"python scripts/explore\_generalizations.py" in tex,
             "generalization verifier command missing")
     require("runs every extended exact certificate" not in tex,
             "verify_extended.py scope is overstated")
@@ -100,17 +108,13 @@ def main() -> None:
 
     submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
     require(
-        "**Status:** No active arXiv submission." in submission_notes,
-        "submission metadata does not record the withdrawn status",
-    )
-    require(
-        "**Prior public computational release:** `v2.0.5-arxiv`"
-        in submission_notes,
-        "submission metadata does not identify the prior v1 release",
-    )
-    require(
         "**Current public research release:** `v2.1.0`" in submission_notes,
         "submission metadata does not identify the current research release",
+    )
+    require(
+        "v2.0.5-arxiv" not in submission_notes
+        and "withdrawn" not in submission_notes.lower(),
+        "submission metadata mentions superseded release history",
     )
     require(
         "**Comments:** 14 pages." in submission_notes,

@@ -18,6 +18,4 @@ Highlights:
 - synchronized TeX, Markdown, PDF, arXiv source, citation metadata, and
   SHA-256 integrity records.
 
-The earlier arXiv submission remains withdrawn. This GitHub release does not
-represent a new arXiv submission. The fixed prior computational archive remains
-available as `v2.0.5-arxiv`.
+This is the reproducibility release corresponding to the manuscript.

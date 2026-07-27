@@ -214,15 +214,15 @@ def validate_release_text() -> None:
         "A graph6 string in this fixed",
         r"V(-\infty)=26",
         r"vertices at distance two from \(P_{0,0}\)",
-        r"\texttt{v2.0.5-arxiv}",
         r"\texttt{v2.1.0}",
+        "This manuscript corresponds to GitHub release",
         r"\delta^*(H_v)",
         r"\mathbb R^{V(X)}",
         r"2K-7-\sqrt{4K-3}",
         r"m_2+m_{-3}=35",
         r"V(M)=U\sqcup S",
         "permitting byte-for-byte integrity",
-        "python scripts/explore_generalizations.py",
+        r"python scripts/explore\_generalizations.py",
         "The explicit 50-vertex counterexample is fully formalized and verified",
         "Lean 4.31 also kernel-checks finite spectral certificates",
         "The scope of these non-50 results is deliberately finite and spectral",
@@ -250,6 +250,8 @@ def validate_release_text() -> None:
         "runs every extended exact certificate",
         "remains under verification",
         "formalization is in preparation",
+        r"\texttt{v2.0.5-arxiv}",
+        "The earlier arXiv submission was withdrawn",
     ]
     present = [item for item in forbidden if item in text]
     if present:
