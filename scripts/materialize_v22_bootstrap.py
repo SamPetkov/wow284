@@ -31,31 +31,39 @@ def safe_relative(path: Path) -> Path:
     return path
 
 
-def extract_payload(payload: bytes, target: Path) -> None:
+def extract_payload(payload: bytes, target: Path) -> str:
     bio = io.BytesIO(payload)
     try:
         with tarfile.open(fileobj=bio, mode="r:*") as archive:
-            for member in archive.getmembers():
+            members = archive.getmembers()
+            for member in members:
                 safe_relative(Path(member.name))
             archive.extractall(target, filter="data")
-            return
+            return f"tar ({len(members)} members)"
     except tarfile.ReadError:
         pass
 
     bio.seek(0)
     if zipfile.is_zipfile(bio):
         with zipfile.ZipFile(bio) as archive:
-            for name in archive.namelist():
+            names = archive.namelist()
+            for name in names:
                 safe_relative(Path(name))
             archive.extractall(target)
-        return
+            return f"zip ({len(names)} members)"
 
-    text = payload.decode("utf-8")
+    try:
+        text = payload.decode("utf-8")
+    except UnicodeDecodeError as error:
+        raise AssertionError(
+            "gzip payload is neither tar, zip, nor UTF-8; "
+            f"prefix={payload[:32].hex()} length={len(payload)}"
+        ) from error
     try:
         mapping = json.loads(text)
     except json.JSONDecodeError:
         (target / "main.tex").write_text(text, encoding="utf-8", newline="\n")
-        return
+        return "single UTF-8 file"
     if not isinstance(mapping, dict):
         raise AssertionError("JSON bootstrap must be a path-to-content object")
     for name, content in mapping.items():
@@ -65,15 +73,20 @@ def extract_payload(payload: bytes, target: Path) -> None:
         destination = target / path
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(content, encoding="utf-8", newline="\n")
+    return f"JSON map ({len(mapping)} files)"
 
 
 def find_source_root(extracted: Path) -> Path:
     candidates = [extracted]
-    candidates.extend(path for path in extracted.iterdir() if path.is_dir())
+    candidates.extend(path for path in extracted.rglob("*") if path.is_dir())
     for candidate in candidates:
         if (candidate / "main.tex").is_file() and (candidate / "sections").is_dir():
             return candidate
-    raise AssertionError("bootstrap does not contain main.tex and sections/")
+    inventory = sorted(path.relative_to(extracted).as_posix() for path in extracted.rglob("*"))
+    raise AssertionError(
+        "bootstrap does not contain main.tex and sections/; inventory="
+        + repr(inventory[:80])
+    )
 
 
 def copy_sources(source: Path) -> list[str]:
@@ -116,15 +129,18 @@ def main() -> None:
     encoded = "".join(path.read_text(encoding="ascii").strip() for path in chunks)
     compressed = base64.b64decode(encoded, validate=True)
     payload = gzip.decompress(compressed)
-    with tempfile.TemporaryDirectory(prefix="wow284-v22-") as directory:
-        extracted = Path(directory)
-        extract_payload(payload, extracted)
-        source = find_source_root(extracted)
-        copied = copy_sources(source)
-    print("v2.2 manuscript materialization: PASS")
-    print(f"chunks: {len(chunks)}")
+    print(f"bootstrap chunks: {len(chunks)}")
     print(f"compressed bytes: {len(compressed)}")
     print(f"payload bytes: {len(payload)}")
+    print(f"payload prefix: {payload[:48].hex()}")
+    with tempfile.TemporaryDirectory(prefix="wow284-v22-") as directory:
+        extracted = Path(directory)
+        payload_type = extract_payload(payload, extracted)
+        print(f"payload type: {payload_type}")
+        source = find_source_root(extracted)
+        print(f"source root: {source.relative_to(extracted)}")
+        copied = copy_sources(source)
+    print("v2.2 manuscript materialization: PASS")
     print(f"source files copied: {len(copied)}")
     for item in copied:
         print(item)
