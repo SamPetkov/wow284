@@ -1,0 +1,138 @@
+name: Research extension verification
+
+on:
+  pull_request:
+    paths:
+      - "scripts/verify_research_extensions.py"
+      - "scripts/verify_research_extensions_exact.py"
+      - "scripts/audit_no_float_proof_paths.py"
+      - "scripts/verify_regular_low_degree.py"
+      - "scripts/verify_nonadjacent_punctured_moore.py"
+      - "scripts/verify_nonadjacent_direct_sum.py"
+      - "scripts/verify_prime_field_obstruction.py"
+      - "scripts/verify_equality_boundary.py"
+      - "scripts/verify_jorgensen_96.py"
+      - "scripts/verify_jorgensen96_provenance.py"
+      - "scripts/verify_degree_six_gate.py"
+      - "scripts/verify_spectral_moore_comparison.py"
+      - "scripts/verify_two_sided_lp_ceiling.py"
+      - "scripts/verify_edge_local_order50.py"
+      - "scripts/verify_layer_matching_deletions.py"
+      - "scripts/verify_order50_local_feasibility.py"
+      - "scripts/verify_order50_r29_exclusion.py"
+      - "scripts/verify_proof_audit_01_edge_local.py"
+      - "scripts/verify_proof_audit_02_two_sided_lp.py"
+      - "scripts/verify_diameter_puncture_extensions.py"
+      - "scripts/verify_low_degree_windows.py"
+      - "data/cages55/**"
+      - "data/jorgensen96/**"
+      - "research-notes/**"
+      - ".github/workflows/research-extensions.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/verify_research_extensions.py"
+      - "scripts/verify_research_extensions_exact.py"
+      - "scripts/audit_no_float_proof_paths.py"
+      - "scripts/verify_regular_low_degree.py"
+      - "scripts/verify_nonadjacent_punctured_moore.py"
+      - "scripts/verify_nonadjacent_direct_sum.py"
+      - "scripts/verify_prime_field_obstruction.py"
+      - "scripts/verify_equality_boundary.py"
+      - "scripts/verify_jorgensen_96.py"
+      - "scripts/verify_jorgensen96_provenance.py"
+      - "scripts/verify_degree_six_gate.py"
+      - "scripts/verify_spectral_moore_comparison.py"
+      - "scripts/verify_two_sided_lp_ceiling.py"
+      - "scripts/verify_edge_local_order50.py"
+      - "scripts/verify_layer_matching_deletions.py"
+      - "scripts/verify_order50_local_feasibility.py"
+      - "scripts/verify_order50_r29_exclusion.py"
+      - "scripts/verify_proof_audit_01_edge_local.py"
+      - "scripts/verify_proof_audit_02_two_sided_lp.py"
+      - "scripts/verify_diameter_puncture_extensions.py"
+      - "scripts/verify_low_degree_windows.py"
+      - "data/cages55/**"
+      - "data/jorgensen96/**"
+      - "research-notes/**"
+      - ".github/workflows/research-extensions.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-research-extensions:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install pinned exact dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile exact verifiers
+        run: |
+          python -m py_compile scripts/verify_research_extensions_exact.py
+          python -m py_compile scripts/audit_no_float_proof_paths.py
+          python -m py_compile scripts/verify_regular_low_degree.py
+          python -m py_compile scripts/verify_nonadjacent_punctured_moore.py
+          python -m py_compile scripts/verify_nonadjacent_direct_sum.py
+          python -m py_compile scripts/verify_prime_field_obstruction.py
+          python -m py_compile scripts/verify_equality_boundary.py
+          python -m py_compile scripts/verify_jorgensen_96.py
+          python -m py_compile scripts/verify_jorgensen96_provenance.py
+          python -m py_compile scripts/verify_degree_six_gate.py
+          python -m py_compile scripts/verify_spectral_moore_comparison.py
+          python -m py_compile scripts/verify_two_sided_lp_ceiling.py
+          python -m py_compile scripts/verify_edge_local_order50.py
+          python -m py_compile scripts/verify_layer_matching_deletions.py
+          python -m py_compile scripts/verify_order50_local_feasibility.py
+          python -m py_compile scripts/verify_order50_r29_exclusion.py
+          python -m py_compile scripts/verify_proof_audit_01_edge_local.py
+          python -m py_compile scripts/verify_proof_audit_02_two_sided_lp.py
+          python -m py_compile scripts/verify_diameter_puncture_extensions.py
+          python -m py_compile scripts/verify_low_degree_windows.py
+      - name: Reject floating-point spectral decisions in proof paths
+        run: python scripts/audit_no_float_proof_paths.py
+      - name: Run exact structural and symbolic checks
+        run: python scripts/verify_research_extensions_exact.py
+      - name: Close the regular degree-at-most-five cases
+        run: python scripts/verify_regular_low_degree.py
+      - name: Verify the nonadjacent-pair Moore puncture factorization
+        run: python scripts/verify_nonadjacent_punctured_moore.py
+      - name: Verify the nonadjacent-pair invariant direct sum
+        run: python scripts/verify_nonadjacent_direct_sum.py
+      - name: Verify the prime-field diameter-three obstruction
+        run: python scripts/verify_prime_field_obstruction.py
+      - name: Verify the regular equality boundary
+        run: python scripts/verify_equality_boundary.py
+      - name: Verify the legacy exact order-96 equality control
+        run: python scripts/verify_jorgensen_96.py
+      - name: Verify order-96 provenance and independent reconstructions
+        run: python scripts/verify_jorgensen96_provenance.py
+      - name: Close the degree-six c-greater-than-or-equal-to-15 gate
+        run: python scripts/verify_degree_six_gate.py
+      - name: Compare exactly with the published spectral-Moore bound
+        run: python scripts/verify_spectral_moore_comparison.py
+      - name: Prove the full-degree two-sided LP ceiling
+        run: python scripts/verify_two_sided_lp_ceiling.py
+      - name: Exclude degree-six order 51 by edge-local positivity
+        run: python scripts/verify_edge_local_order50.py
+      - name: Classify the 120 layer-respecting matching deletions
+        run: python scripts/verify_layer_matching_deletions.py
+      - name: Verify the exact order-50 local feasibility system
+        run: python scripts/verify_order50_local_feasibility.py
+      - name: Exclude r=29 from the order-50 local Gram table
+        run: python scripts/verify_order50_r29_exclusion.py
+      - name: Run systematic Proof Audit 01
+        run: python scripts/verify_proof_audit_01_edge_local.py
+      - name: Run systematic Proof Audit 02
+        run: python scripts/verify_proof_audit_02_two_sided_lp.py
+      - name: Verify diameter obstructions and puncture robustness
+        run: python scripts/verify_diameter_puncture_extensions.py
+      - name: Verify low-degree regular windows
+        run: python scripts/verify_low_degree_windows.py
