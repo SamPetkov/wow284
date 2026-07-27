@@ -1,0 +1,57 @@
+name: Proof Audit 11 verification
+
+on:
+  pull_request:
+    paths:
+      - "research-notes/PROOF_AUDIT_11_DIAMETER_FOUR.md"
+      - "scripts/verify_proof_audit_11_diameter_four.py"
+      - ".github/workflows/proof-audit-11.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-proof-audit-11:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install pinned dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Compile exact verifier
+        run: python -m py_compile scripts/verify_proof_audit_11_diameter_four.py
+      - name: Reject floating-point proof operations
+        run: |
+          python - <<'PY'
+          import ast
+          from pathlib import Path
+          path = Path('scripts/verify_proof_audit_11_diameter_four.py')
+          tree = ast.parse(path.read_text(encoding='utf-8'))
+          banned = []
+          for node in ast.walk(tree):
+              if isinstance(node, (ast.Import, ast.ImportFrom)):
+                  names = [a.name for a in node.names] if isinstance(node, ast.Import) else [node.module or '']
+                  if any(name == 'numpy' or name.startswith('numpy.') for name in names):
+                      banned.append((node.lineno, 'numpy import'))
+              if isinstance(node, ast.Call):
+                  def qname(value):
+                      if isinstance(value, ast.Name):
+                          return value.id
+                      if isinstance(value, ast.Attribute):
+                          prefix = qname(value.value)
+                          return f'{prefix}.{value.attr}' if prefix else value.attr
+                      return ''
+                  name = qname(node.func)
+                  if name in {'float', 'complex', 'sp.N', 'sympy.N'} or name.endswith('.evalf') or '.linalg.' in name:
+                      banned.append((node.lineno, name))
+          if banned:
+              raise SystemExit(f'banned floating proof operations: {banned}')
+          print('Audit 11 no-floating check: PASS')
+          PY
+      - name: Run Proof Audit 11
+        run: python scripts/verify_proof_audit_11_diameter_four.py
