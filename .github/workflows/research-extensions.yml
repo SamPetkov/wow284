@@ -15,6 +15,15 @@ on:
       - "scripts/verify_jorgensen96_provenance.py"
       - "scripts/verify_degree_six_gate.py"
       - "scripts/verify_spectral_moore_comparison.py"
+      - "scripts/verify_two_sided_lp_ceiling.py"
+      - "scripts/verify_edge_local_order50.py"
+      - "scripts/verify_layer_matching_deletions.py"
+      - "scripts/verify_order50_local_feasibility.py"
+      - "scripts/verify_order50_r29_exclusion.py"
+      - "scripts/verify_proof_audit_01_edge_local.py"
+      - "scripts/verify_proof_audit_02_two_sided_lp.py"
+      - "scripts/verify_diameter_puncture_extensions.py"
+      - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -35,6 +44,15 @@ on:
       - "scripts/verify_jorgensen96_provenance.py"
       - "scripts/verify_degree_six_gate.py"
       - "scripts/verify_spectral_moore_comparison.py"
+      - "scripts/verify_two_sided_lp_ceiling.py"
+      - "scripts/verify_edge_local_order50.py"
+      - "scripts/verify_layer_matching_deletions.py"
+      - "scripts/verify_order50_local_feasibility.py"
+      - "scripts/verify_order50_r29_exclusion.py"
+      - "scripts/verify_proof_audit_01_edge_local.py"
+      - "scripts/verify_proof_audit_02_two_sided_lp.py"
+      - "scripts/verify_diameter_puncture_extensions.py"
+      - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
       - "research-notes/**"
@@ -69,6 +87,15 @@ jobs:
           python -m py_compile scripts/verify_jorgensen96_provenance.py
           python -m py_compile scripts/verify_degree_six_gate.py
           python -m py_compile scripts/verify_spectral_moore_comparison.py
+          python -m py_compile scripts/verify_two_sided_lp_ceiling.py
+          python -m py_compile scripts/verify_edge_local_order50.py
+          python -m py_compile scripts/verify_layer_matching_deletions.py
+          python -m py_compile scripts/verify_order50_local_feasibility.py
+          python -m py_compile scripts/verify_order50_r29_exclusion.py
+          python -m py_compile scripts/verify_proof_audit_01_edge_local.py
+          python -m py_compile scripts/verify_proof_audit_02_two_sided_lp.py
+          python -m py_compile scripts/verify_diameter_puncture_extensions.py
+          python -m py_compile scripts/verify_low_degree_windows.py
       - name: Reject floating-point spectral decisions in proof paths
         run: python scripts/audit_no_float_proof_paths.py
       - name: Run exact structural and symbolic checks
@@ -91,3 +118,21 @@ jobs:
         run: python scripts/verify_degree_six_gate.py
       - name: Compare exactly with the published spectral-Moore bound
         run: python scripts/verify_spectral_moore_comparison.py
+      - name: Prove the full-degree two-sided LP ceiling
+        run: python scripts/verify_two_sided_lp_ceiling.py
+      - name: Exclude degree-six order 51 by edge-local positivity
+        run: python scripts/verify_edge_local_order50.py
+      - name: Classify the 120 layer-respecting matching deletions
+        run: python scripts/verify_layer_matching_deletions.py
+      - name: Verify the exact order-50 local feasibility system
+        run: python scripts/verify_order50_local_feasibility.py
+      - name: Exclude r=29 from the order-50 local Gram table
+        run: python scripts/verify_order50_r29_exclusion.py
+      - name: Run systematic Proof Audit 01
+        run: python scripts/verify_proof_audit_01_edge_local.py
+      - name: Run systematic Proof Audit 02
+        run: python scripts/verify_proof_audit_02_two_sided_lp.py
+      - name: Verify diameter obstructions and puncture robustness
+        run: python scripts/verify_diameter_puncture_extensions.py
+      - name: Verify low-degree regular windows
+        run: python scripts/verify_low_degree_windows.py
