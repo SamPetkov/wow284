@@ -230,7 +230,7 @@ def control_audit(name: str, graph: Graph) -> dict[str, object]:
         raise AssertionError("compressed and full Rayleigh quotients disagree")
 
     uniform_bound = -delta * (diameter - 4) - 2
-    if sp.ask(sp.Q.nonnegative(endpoint_bound - uniform_bound)) is not True:
+    if sp.ask(sp.Q.nonnegative(uniform_bound - endpoint_bound)) is not True:
         raise AssertionError("endpoint bound does not imply uniform bound")
 
     # When the uniform bound is not itself a root, independently confirm that
