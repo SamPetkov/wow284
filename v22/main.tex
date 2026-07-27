@@ -1,0 +1,131 @@
+\documentclass[a4paper,11pt,reqno]{amsart}
+
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{booktabs}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+\usepackage[numbers,sort&compress]{natbib}
+\usepackage{enumitem}
+\usepackage{needspace}
+\usepackage{etoolbox}
+\usepackage{xurl}
+\usepackage[hidelinks,pdfencoding=auto,psdextra]{hyperref}
+\usepackage{bookmark}
+
+\setcounter{secnumdepth}{2}
+\setcounter{tocdepth}{1}
+\setlength{\parindent}{1.5em}
+\setlength{\parskip}{0pt}
+\setlength{\emergencystretch}{3em}
+\setlist[itemize]{leftmargin=2em,itemsep=0.15em,topsep=0.35em}
+\setlist[enumerate]{leftmargin=2.2em,itemsep=0.15em,topsep=0.35em}
+\allowdisplaybreaks[2]
+\raggedbottom
+\frenchspacing
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem*{theoremA}{Theorem A}
+\newtheorem*{theoremB}{Theorem B}
+\newtheorem*{theoremC}{Theorem C}
+\newtheorem*{theoremD}{Theorem D}
+\newtheorem*{theoremE}{Theorem E}
+\newtheorem*{theoremF}{Theorem F}
+\newtheorem*{wowconjecture}{Conjecture (WOW-284)}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\BeforeBeginEnvironment{theorem}{\Needspace{6\baselineskip}}
+\BeforeBeginEnvironment{proposition}{\Needspace{6\baselineskip}}
+\BeforeBeginEnvironment{lemma}{\Needspace{5\baselineskip}}
+\BeforeBeginEnvironment{corollary}{\Needspace{5\baselineskip}}
+\BeforeBeginEnvironment{proof}{\Needspace{4\baselineskip}}
+
+\newcommand{\F}{\mathbb F_5}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\Spec}{\operatorname{Spec}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\lammin}{\lambda_{\min}}
+\newcommand{\repoRef}{v2.2.0}
+\newcommand{\codefile}[1]{%
+  \href{https://github.com/SamPetkov/wow284/blob/\repoRef/#1}{\path{#1}}}
+
+\hypersetup{
+  pdftitle={Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284},
+  pdfauthor={Samuil Petkov},
+  pdfsubject={Counterexamples and structural results for the minimum-dual-degree and least-distance-eigenvalue conjecture WOW-284},
+  pdfkeywords={distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability},
+  pdfcreator={LaTeX with amsart},
+  pdfproducer={pdfTeX},
+  pdfdisplaydoctitle=true
+}
+
+\title[Counterexamples and obstructions for WOW-284]
+{Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284}
+\author{Samuil Petkov}
+\address{Department of Physics, \'Ecole normale sup\'erieure, Universit\'e PSL, Paris, France}
+\email{samuil.petkov@phys.ens.psl.eu}
+\date{}
+\subjclass[2020]{Primary 05C50; Secondary 05C12, 05E30, 90C22}
+\keywords{distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability}
+
+\begin{document}
+
+\begin{abstract}
+WOW-284 predicts that the minimum dual degree of every connected graph of
+order at least three and girth at least five is at most the negative of its
+least distance eigenvalue.  We first give exact counterexamples of orders
+\(38,39,40,42\), and \(50\), including the degree-seven Hoffman--Singleton
+graph.  We then study the mechanism of failure.  For regular graphs of
+diameter three, the counterexample score is an exact shifted adjacency-spectral
+quantity.  Every regular strict counterexample has degree at least six and
+diameter at most four; the diameter-four case starts, if at all, in degree ten.
+We determine the exact ceiling of the standard one-variable nonbacktracking
+linear-programming method and prove that its optimizer is unique up to scale.
+Localizing the same polynomial to an edge yields a five-cycle obstruction and
+shows that every 6-regular strict counterexample has at most 50 vertices.  We
+also derive exact distance spectra for one- and two-vertex punctures of Moore
+graphs, prove a general deletion-stability inequality, and determine that the
+Hoffman--Singleton counterexample survives every deletion of at most five
+vertices, with this radius sharp.  All finite spectral decisions are certified
+by exact arithmetic; the principal computer-assisted steps are linked inline
+to independent verification scripts.
+\end{abstract}
+
+\maketitle
+
+\input{sections/01_introduction}
+\input{sections/02_moore_examples}
+\input{sections/03_score_calculus}
+\input{sections/04_regular_obstructions}
+\input{sections/05_lp_edge_local}
+\input{sections/06_order50}
+\input{sections/07_moore_punctures}
+\input{sections/08_deletion_stability}
+\input{sections/09_equality_and_obstructions}
+\input{sections/10_verification_and_outlook}
+
+\appendix
+\input{sections/A_explicit_data}
+\input{sections/B_nonadjacent_factorization}
+
+\clearpage
+\begingroup
+\footnotesize
+\setlength{\bibsep}{0pt}
+\renewcommand{\bibsection}{\section*{References}}
+\bibliographystyle{unsrtnat}
+\bibliography{references}
+\endgroup
+
+\end{document}
