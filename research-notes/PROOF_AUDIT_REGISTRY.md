@@ -22,7 +22,7 @@ verification route have all been checked.
 | 02 | All-degree ceiling of the two-sided nonbacktracking LP method | dual feasibility for every degree, Chebyshev tail, exact match to the admissible coefficient cone | `pass` |
 | 03 | Nonadjacent Moore-puncture distance spectrum | recomputed distances, invariant direct sum, injectivity, residual trace, multiplicities | `pass_after_correction` |
 | 04 | Every regular strict counterexample has degree at least six | diameter reductions, four `(5,5)`-cage exhaustion, interlacing direction | `pass` |
-| 05 | One-vertex and adjacent-edge Moore-puncture spectra | quotient normalization, least-root comparison, multiplicity accounting | `queued` |
+| 05 | One-vertex and adjacent-edge Moore-puncture spectra | quotient normalization, least-root comparison, multiplicity accounting | `pass_after_correction` |
 | 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `queued` |
 | 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `queued` |
 | 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `queued` |
@@ -110,7 +110,7 @@ so every distance eigenspace and algebraic multiplicity is accounted for.
 ## Audit 04 outcome
 
 The theorem that every regular strict counterexample has degree at least six
-passes without a theorem-strength correction.  The audit verifies every degree
+passes without a theorem-strength correction. The audit verifies every degree
 and diameter branch separately:
 
 1. the Rayleigh vector `e_u-e_v` gives
@@ -124,12 +124,37 @@ and diameter branch separately:
 6. all remaining degree-five cages have an exact distance eigenvalue at most
    `-5`.
 
-Using the already audited LP ceiling shortens the proof materially.  At degree
+Using the already audited LP ceiling shortens the proof materially. At degree
 four, diameter three forces `n=18`, leaving only the odd-dimensional
-irreducible-quadratic contradiction.  At degree five, diameter three leaves
-only `n=30,31,32`, so only excess four, five, and six must be checked.  The
-rank-one positive-semidefinite derivative of the normalized layer compression
-supplies the monotonicity used in the last two cases.
+irreducible-quadratic contradiction. At degree five, diameter three leaves only
+`n=30,31,32`, so only excess four, five, and six must be checked. The rank-one
+positive-semidefinite derivative of the normalized layer compression supplies
+the monotonicity used in the last two cases.
+
+## Audit 05 outcome
+
+The one-vertex and adjacent-edge Moore-puncture spectrum formulas are correct.
+The one-vertex proof had compressed the metric replacement-path and
+orthogonality arguments; the adjacent-edge result was only a proof outline.
+The audit expands both into complete invariant-space proofs.
+
+For one deleted vertex, the full decomposition has dimensions
+
+\[
+2+2(k-1)+k(k-2)=k^2.
+\]
+
+For the endpoints of an edge, the decomposition has dimensions
+
+\[
+3+2(2k-4)+(k-2)^2=k^2-1.
+\]
+
+The audit checks the normalized quotients, incidence-module matrices, residual
+quadratic relation, trace-to-multiplicity equations, exact least-root
+comparisons, dual-degree minima, and score thresholds. It also supplies
+explicit surviving length-three paths for every pair whose unique length-two
+route used a deleted vertex. No spectrum or threshold changes.
 
 ## Required structure of every audit
 
