@@ -32,10 +32,10 @@ theorem diameter_three_scalar_criterion (k theta : ℝ) (hk : 1 ≤ k) :
     rw [abs_lt]
     constructor
     · by_contra hnot
-      push_neg at hnot
+      push Not at hnot
       nlinarith [sq_nonneg ((theta + 1) + Real.sqrt (2 * k - 2))]
     · by_contra hnot
-      push_neg at hnot
+      push Not at hnot
       nlinarith [sq_nonneg ((theta + 1) - Real.sqrt (2 * k - 2))]
   · intro h
     rw [abs_lt] at h

@@ -21,7 +21,7 @@ import Wow284.Induced42.Counterexample
 /-! Generated compilation target for the explicit order-39 and order-42 certificates. -/
 '''
     outputs[ROOT/'lean/Wow284Generated3942Audit.lean']='''import Wow284Generated3942
-/-! Generated axiom report for the order-39 and order-42 public endpoints. -/
+/-! Generated trust report for the order-39 and order-42 public endpoints. -/
 #print axioms Wow284.Induced39.degree_profile
 #print axioms Wow284.Induced39.semantic_distance_eq_Dcert
 #print axioms Wow284.Induced39.ldl_identity

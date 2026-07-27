@@ -1,7 +1,7 @@
 # Backelin correction for the radius-two dual-degree identity
 
-**Audit status:** literature-established elementary identity.  
-**Effect on the submitted manuscript:** none; this note controls future v2 wording.
+**Audit status:** literature-established elementary identity.
+**Effect on the prior v1 manuscript package:** none; this note controls the completed v2 wording.
 
 For a graph with no triangle or 4-cycle, the project uses
 

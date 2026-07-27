@@ -41,7 +41,8 @@ jobs:
           python scripts/generate_lean40_diagonalization.py --check
           python scripts/generate_lean38_certificates.py --check
           python scripts/generate_lean38_ldl.py --check
-          python scripts/generate_lean39_42.py --verify-only
+          python scripts/generate_lean39_42.py --check
+          python scripts/generate_lean_standalone.py --check
       - name: Regenerate graph data and compare
         run: |
           python scripts/export_graph_data.py --output-dir tmp/export
@@ -124,8 +125,10 @@ jobs:
           cache-dependency-path: requirements.txt
       - name: Install exact generator dependency
         run: python -m pip install -r requirements.txt
-      - name: Generate order-39 and order-42 Lean certificates
-        run: python scripts/generate_lean39_42.py
+      - name: Check committed generated and standalone Lean sources
+        run: |
+          python scripts/generate_lean39_42.py --check
+          python scripts/generate_lean_standalone.py --check
       - name: Audit generated source hygiene and import closure
         run: python scripts/static_lean_audit.py
       - name: Record generated-source checksums
@@ -136,7 +139,8 @@ jobs:
             sort -z |
             xargs -0 sha256sum > lean/GENERATED_39_42_SHA256SUMS
           sha256sum lean/Wow284Generated3942.lean \
-            lean/Wow284Generated3942Audit.lean >> lean/GENERATED_39_42_SHA256SUMS
+            lean/Wow284Generated3942Audit.lean \
+            lean/Wow284Standalone.lean >> lean/GENERATED_39_42_SHA256SUMS
       - name: Upload exact generated Lean sources
         uses: actions/upload-artifact@v4
         with:
@@ -146,6 +150,7 @@ jobs:
             lean/Wow284/Induced42
             lean/Wow284Generated3942.lean
             lean/Wow284Generated3942Audit.lean
+            lean/Wow284Standalone.lean
             lean/GENERATED_39_42_SHA256SUMS
           if-no-files-found: error
       - name: Install Lean 4.31 and restore the Mathlib cache
@@ -181,5 +186,10 @@ jobs:
           fi
           tail -n 180 /tmp/lean-39-42-build.log
           exit 1
+      - name: Compile the standalone development with warnings fatal
+        run: cd lean && lake env lean -DwarningAsError=true Wow284Standalone.lean
       - name: Report order-39 and order-42 endpoint axioms
-        run: cd lean && lake env lean Wow284Generated3942Audit.lean
+        run: |
+          cd lean
+          lake env lean Wow284CoreAudit.lean
+          lake env lean Wow284Generated3942Audit.lean

@@ -99,8 +99,17 @@ def main() -> None:
 
     submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
     require(
-        "**Repository release:** `v2.0.5-arxiv`" in submission_notes,
-        "submission metadata does not identify release v2.0.5-arxiv",
+        "**Status:** No active arXiv submission." in submission_notes,
+        "submission metadata does not record the withdrawn status",
+    )
+    require(
+        "**Prior public computational release:** `v2.0.5-arxiv`"
+        in submission_notes,
+        "submission metadata does not identify the prior v1 release",
+    )
+    require(
+        "**Comments:** 14 pages." in submission_notes,
+        "submission metadata page count is stale",
     )
 
     build_report = (ROOT / "BUILD_VERIFICATION.txt").read_text(encoding="utf-8")

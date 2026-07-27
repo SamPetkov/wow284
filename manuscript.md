@@ -8,11 +8,11 @@ Department of Physics, École normale supérieure, Université PSL, Paris, Franc
 
 # Introduction
 
-Let $`G`$ be a finite simple connected graph on $`n\ge2`$ vertices. Its distance matrix is $`D(G)=(d_G(u,v))_{u,v\in V(G)}`$, where $`d_G`$ is graph distance. This matrix is real symmetric; order its real eigenvalues as
+Let $`G`$ be a finite simple connected graph on $`n\ge2`$ vertices. Its distance matrix is $`D(G)=(d_G(u,v))_{u,v\in V(G)}`$, where $`d_G`$ is graph distance. Since this matrix is real symmetric, write its eigenvalues as
 ``` math
 \partial_1(G)\ge \partial_2(G)\ge\cdots\ge\partial_n(G).
 ```
-For a vertex $`v`$, its *dual degree* is the average degree of its neighbors,
+For a vertex $`v`$, define its *dual degree* and the minimum dual degree by
 ``` math
 d^*(v)=\frac{1}{d(v)}\sum_{u\in N(v)}d(u),
   \qquad
@@ -22,9 +22,11 @@ Write $`g(G)`$ for the shortest-cycle length, with $`g(G)=\infty`$ for an acycli
 
 Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)).
 
-<div id="conj:wow284" class="conjecture">
+<span id="conj:wow284" label="conj:wow284"></span>
 
-**Conjecture 1** (WOW-284). *If $`G`$ is connected, has $`n\ge3`$ vertices, and has girth $`g(G)\ge5`$, then
+<div class="wowconjecture">
+
+**Conjecture (WOW-284) 1**. *If $`G`$ is connected, has $`n\ge3`$ vertices, and has girth $`g(G)\ge5`$, then
 ``` math
 \delta^*(G)\le -\partial_n(G).
 ```*
@@ -37,9 +39,29 @@ For such a graph, write
 ```
 Thus $`G`$ is a strict counterexample precisely when $`\Phi(G)>0`$.
 
-In that 2014 survey, the authors reported that the conjecture remained open and noted equality for the Petersen graph ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370). This equality is the degree-3 boundary case of a general Moore-graph calculation. The degree-7 Moore graph constructed by Hoffman and Singleton ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) lies beyond that boundary and gives a strict violation.
+The disproof is short. In a degree-$`k`$ Moore graph of diameter two, adjacent vertices have no common neighbor and nonadjacent vertices have exactly one. If $`A`$, $`I`$, and $`J`$ denote the adjacency, identity, and all-ones matrices, then
+``` math
+A^2=(k-1)I-A+J,
+ \qquad
+ D=2J-2I-A.
+```
+On the orthogonal complement of the all-ones vector, the nonprincipal adjacency eigenvalues are the roots of $`x^2+x-(k-1)=0`$. It follows that
+``` math
+\partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
+```
+Regularity gives $`\delta^*(G)=k`$, so the conjectured inequality holds exactly when $`k\le3`$. The Petersen graph is the equality case $`k=3`$. The degree-seven Hoffman–Singleton graph ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) has
+``` math
+\delta^*=7,\qquad \partial_{50}=-4,
+```
+and therefore violates WOW-284 by the strict gap $`3`$.
 
-Howlader and Panigrahi provide the relevant prior spectral calculation. They determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove Conjecture <a href="#conj:wow284" data-reference-type="ref" data-reference="conj:wow284">1</a>. The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies a self-contained coordinate certificate. It also extracts the 40-vertex $`(6,5)`$-cage from the same coordinates and gives its distance spectrum directly. No claim is made that the distance spectra are new, that this observation has priority over every unpublished observation, or that the 38-vertex example has minimum possible order among all counterexamples.
+This paper develops that observation in three directions. First, a fully labelled coordinate construction verifies the Hoffman–Singleton common-neighbor identity directly, making the disproof self-contained and supplying exact graph data for independent checking. Second, natural deletions give smaller counterexamples of orders $`38,39,40`$, and $`42`$. Third, the identity
+``` math
+D=3J+(k-3)I-2A-A^2
+```
+isolates the operator mechanism for regular diameter-three graphs and turns the conjecture into a shifted adjacency-spectrum condition. Exact characteristic polynomials, Sturm certificates, rational $`LDL^{\mathsf T}`$ decompositions, and formal-verification details are included only where they certify a stated mathematical step.
+
+Howlader and Panigrahi provide the relevant prior spectral calculation. They determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove [WOW-284](#conj:wow284). The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies independent exact certificates. No claim is made that the classical distance spectra are new, that this observation has priority over every unpublished observation, that the 38-vertex example has minimum possible order among all counterexamples, or that the parameterized constructions form an unconditional infinite family.
 
 <span id="thm:moore-wow" label="thm:moore-wow"></span>
 
@@ -121,7 +143,7 @@ For $`k\ge2`$, comparison after moving 3 to the left is legitimate, and
 ```
 Thus the inequality is strict for $`k=2`$, is an equality for $`k=3`$, and fails precisely for $`k>3`$. This proves [Theorem A](#thm:moore-wow).
 
-The smallest explicit example constructed in this note has 38 vertices. By Theorem <a href="#thm:thirty-eight" data-reference-type="ref" data-reference="thm:thirty-eight">6</a>, its minimum dual degree is $`17/3`$, its least distance eigenvalue is $`-3-\sqrt7`$, and its counterexample score is $`8/3-\sqrt7>0`$.
+The smallest explicit example constructed in this note has 38 vertices. By Theorem <a href="#thm:thirty-eight" data-reference-type="ref" data-reference="thm:thirty-eight">5</a>, its minimum dual degree is $`17/3`$, its least distance eigenvalue is $`-3-\sqrt7`$, and its counterexample score is $`8/3-\sqrt7>0`$.
 
 # Coordinate construction
 
@@ -162,7 +184,7 @@ The complete neighborhood formulas are
 
 <div id="lem:simple-regular" class="lemma">
 
-**Lemma 2**. *The construction defines a simple 7-regular graph with 175 edges.*
+**Lemma 1**. *The construction defines a simple 7-regular graph with 175 edges.*
 
 </div>
 
@@ -178,7 +200,7 @@ Equations <a href="#eq:p-neighborhood" data-reference-type="eqref" data-referen
 
 <div id="prop:common-neighbors" class="proposition">
 
-**Proposition 3**. *For any two distinct vertices $`x,y`$,
+**Proposition 2**. *For any two distinct vertices $`x,y`$,
 ``` math
 |N(x)\cap N(y)|=
  \begin{cases}
@@ -225,7 +247,7 @@ which proves every cross case and completes the certificate. ◻
 
 <div id="cor:geometry" class="corollary">
 
-**Corollary 4**. *The graph is connected, has diameter two, and has girth five.*
+**Corollary 3**. *The graph is connected, has diameter two, and has girth five.*
 
 </div>
 
@@ -233,7 +255,7 @@ which proves every cross case and completes the certificate. ◻
 
 *Proof.* Every pair of distinct vertices is adjacent or has a common neighbor, so the graph is connected and has diameter at most two. It is not complete, since it is 7-regular on 50 vertices, so its diameter is exactly two.
 
-A triangle would give an adjacent pair a common neighbor. In a 4-cycle, two opposite vertices would have the other two cycle vertices as distinct common neighbors. Both possibilities contradict Proposition <a href="#prop:common-neighbors" data-reference-type="ref" data-reference="prop:common-neighbors">3</a>. Thus $`g(G)\ge5`$. On the other hand, for every fixed $`i`$,
+A triangle would give an adjacent pair a common neighbor. In a 4-cycle, two opposite vertices would have the other two cycle vertices as distinct common neighbors. Both possibilities contradict Proposition <a href="#prop:common-neighbors" data-reference-type="ref" data-reference="prop:common-neighbors">2</a>. Thus $`g(G)\ge5`$. On the other hand, for every fixed $`i`$,
 ``` math
 P_{i,0}P_{i,1}P_{i,2}P_{i,3}P_{i,4}P_{i,0}
 ```
@@ -277,7 +299,7 @@ and let $`R=G-\mathcal P`$ be the induced graph on the remaining 40 vertices. Th
 
 <div id="thm:forty" class="theorem">
 
-**Theorem 5**. *The graph $`R`$ is connected and 6-regular, has girth five and diameter three, and has distance spectrum
+**Theorem 4**. *The graph $`R`$ is connected and 6-regular, has girth five and diameter three, and has distance spectrum
 ``` math
 \operatorname{Spec}(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}.
 ```
@@ -367,7 +389,7 @@ from $`R`$, and call the resulting graph $`H`$. A graph6 string in this fixed la
 
 <div id="thm:thirty-eight" class="theorem">
 
-**Theorem 6**. *The graph $`H`$ is connected, has 38 vertices, 109 edges, girth five, diameter three, and degree multiset $`6^{(28)},5^{(10)}`$. Moreover,
+**Theorem 5**. *The graph $`H`$ is connected, has 38 vertices, 109 edges, girth five, diameter three, and degree multiset $`6^{(28)},5^{(10)}`$. Moreover,
 ``` math
 \delta^*(H)=\frac{17}{3},
  \qquad
@@ -423,7 +445,7 @@ For the explicit representative
 ``` math
 H_{39}:=R-P_{1,0},
 ```
-an exact rational $`LDL^{\mathsf T}`$ decomposition of $`6D(H_{39})+35I`$ has all 39 pivots strictly positive. Thus $`6D(H_{39})+35I\succ0`$, so $`H_{39}`$ is a strict counterexample. Proposition <a href="#prop:descendants" data-reference-type="ref" data-reference="prop:descendants">7</a> below verifies the corresponding assertion for every choice of $`v`$.
+an exact rational $`LDL^{\mathsf T}`$ decomposition of $`6D(H_{39})+35I`$ has all 39 pivots strictly positive. Thus $`6D(H_{39})+35I\succ0`$, so $`H_{39}`$ is a strict counterexample. Proposition <a href="#prop:descendants" data-reference-type="ref" data-reference="prop:descendants">6</a> below verifies the corresponding assertion for every choice of $`v`$.
 
 For another regular example, let $`X_{42}`$ be the graph induced by the vertices at distance two from $`P_{0,0}`$ in the Hoffman–Singleton graph. The graph $`X_{42}`$ is 6-regular and has
 ``` math
@@ -438,7 +460,7 @@ Hence $`\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})`$. Section <a href="#sec:su
 
 <div id="prop:descendants" class="proposition">
 
-**Proposition 7**. *For every vertex $`v`$ of $`R`$, the graph $`R-v`$ is connected, has girth at least five, has $`\delta^*=35/6`$ and the same exact distance characteristic polynomial $`P_{39}`$ displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. Every one of these 40 labelled graphs is a strict counterexample.*
+**Proposition 6**. *For every vertex $`v`$ of $`R`$, the graph $`R-v`$ is connected, has girth at least five, has $`\delta^*=35/6`$ and the same exact distance characteristic polynomial $`P_{39}`$ displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. Every one of these 40 labelled graphs is a strict counterexample.*
 
 *For every edge $`uv`$ of $`R`$, the graph $`R-\{u,v\}`$ is connected, has girth at least five, has $`\delta^*=17/3`$, the same exact distance characteristic polynomial $`P_{38}`$, and least distance eigenvalue $`-3-\sqrt7`$. Every one of these 120 labelled graphs is a strict counterexample.*
 
@@ -452,7 +474,7 @@ Hence $`\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})`$. Section <a href="#sec:su
 
 <div class="remark">
 
-*Remark 8*. A numerical screen of all $`\binom{40}{3}=9880`$ three-vertex deletions found no graph with $`\Phi>0`$; its best value was approximately $`-0.306979936667`$. This is exploratory evidence only, not an exact elimination of order 37 and not a minimality proof.
+*Remark 7*. A numerical screen of all $`\binom{40}{3}=9880`$ three-vertex deletions found no graph with $`\Phi>0`$; its best value was approximately $`-0.306979936667`$. This is exploratory evidence only, not an exact elimination of order 37 and not a minimality proof.
 
 </div>
 
@@ -460,7 +482,7 @@ Hence $`\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})`$. Section <a href="#sec:su
 
 <div id="thm:diam3" class="theorem">
 
-**Theorem 9**. *Let $`G`$ be a connected $`k`$-regular graph on $`n`$ vertices, of girth at least five and diameter three. Then
+**Theorem 8**. *Let $`G`$ be a connected $`k`$-regular graph on $`n`$ vertices, of girth at least five and diameter three. Then
 ``` math
 \begin{equation}
 \label{eq:diam3-polynomial}
@@ -488,7 +510,7 @@ Thus, in diameter three, WOW-284 is governed by the spread of the nonprincipal a
 
 <div class="corollary">
 
-**Corollary 10** (Bipartite obstruction). *A connected $`k`$-regular bipartite graph of diameter three and girth at least five is not a strict counterexample for $`k\ge3`$.*
+**Corollary 9** (Bipartite obstruction). *A connected $`k`$-regular bipartite graph of diameter three and girth at least five is not a strict counterexample for $`k\ge3`$.*
 
 </div>
 
@@ -502,7 +524,7 @@ Its negative is at least $`k`$ for $`k\ge3`$, with equality only at $`k=3`$. �
 
 </div>
 
-For comparison, negative controls follow directly from Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a>. The Odd graph $`O_4=KG(7,3)`$ has adjacency spectrum
+For comparison, negative controls follow directly from Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">8</a>. The Odd graph $`O_4=KG(7,3)`$ has adjacency spectrum
 ``` math
 \{4^{(1)},2^{(14)},(-1)^{(14)},(-3)^{(6)}\},
 ```
@@ -516,7 +538,7 @@ so $`\delta^*=3`$ and $`\partial_n=-2-2\sqrt2`$.
 
 <div id="thm:second-sub" class="theorem">
 
-**Theorem 11**. *Let $`M`$ be a degree-$`K`$ Moore graph of diameter two, where $`K\ge3`$, and fix a vertex $`v`$. Let $`X`$ be the graph induced by the vertices at distance two from $`v`$. Then
+**Theorem 10**. *Let $`M`$ be a degree-$`K`$ Moore graph of diameter two, where $`K\ge3`$, and fix a vertex $`v`$. Let $`X`$ be the graph induced by the vertices at distance two from $`v`$. Then
 ``` math
 |V(X)|=K(K-1),\qquad X\text{ is }(K-1)\text{-regular},
 ```
@@ -589,7 +611,7 @@ dimensions. If the multiplicities of $`r,s`$ there are $`m_r,m_s`$, then the tra
 
 It remains to prove that $`X`$ has diameter three. Around any $`x\in X`$, girth at least five gives $`1`$, $`K-1`$, and $`(K-1)(K-2)`$ distinct vertices in the first three distance layers of $`X`$. The remaining $`K-2`$ vertices are exactly the other vertices of $`X`$ sharing the unique neighbor of $`x`$ in $`N(v)`$. They have no path of length at most two to $`x`$, since such a path would create a triangle or 4-cycle in $`M`$. Every neighbor of any such remaining vertex $`z`$ is nonadjacent to $`x`$, since an edge to $`x`$ would complete the 4-cycle through their shared neighbor in $`N(v)`$. If $`w\in N_X(z)`$, the unique ambient common neighbor of $`x`$ and $`w`$ cannot lie in $`N(v)`$: it would have to be the unique such neighbor of $`x`$, and would then form a triangle with $`w,z`$. It therefore lies in $`X`$, giving a path of length three from $`x`$ to $`z`$. Hence all remaining vertices are at distance three. This proves connectivity and diameter three.
 
-Apply Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a> with $`k=K-1`$. The eigenvalue $`-1`$ maps to $`K-3`$, while $`r`$ and $`s`$ map respectively to
+Apply Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">8</a> with $`k=K-1`$. The eigenvalue $`-1`$ maps to $`K-3`$, while $`r`$ and $`s`$ map respectively to
 ``` math
 -\frac{5+\sqrt{4K-3}}2
  \quad\text{and}\quad
@@ -623,7 +645,7 @@ This gives the explicit 42-vertex graph above. A degree-57 Moore graph, if it ex
 
 <div id="prop:equitable-delete" class="proposition">
 
-**Proposition 12**. *Let $`M`$ be a degree-$`K`$ Moore graph of diameter two. Partition its vertices as $`V(M)=U\sqcup S`$, write
+**Proposition 11**. *Let $`M`$ be a degree-$`K`$ Moore graph of diameter two. Partition its vertices as $`V(M)=U\sqcup S`$, write
 ``` math
 A(M)=\begin{pmatrix}B&C\\C^{\mathsf T}&P\end{pmatrix},
 ```
@@ -637,7 +659,7 @@ Moreover, on $`\ker C^{\mathsf T}`$,
 ``` math
 B^2+B-(K-1)I=0.
 ```
-Whenever $`M[U]`$ has diameter three, these adjacency data feed directly into Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">9</a>.*
+Whenever $`M[U]`$ has diameter three, these adjacency data feed directly into Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">8</a>.*
 
 </div>
 
@@ -761,11 +783,11 @@ The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is mad
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The computational archive corresponding to this manuscript is release [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv).
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The earlier arXiv submission was withdrawn. The prior v1 computational archive remains available as GitHub release [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv). The current v2 release-candidate package is identified by the repository manifest and `SHA256SUMS`; it is not an active arXiv submission.
 
 # Exact distance characteristic polynomials
 
-For every labelled single-vertex deletion considered in Proposition <a href="#prop:descendants" data-reference-type="ref" data-reference="prop:descendants">7</a>,
+For every labelled single-vertex deletion considered in Proposition <a href="#prop:descendants" data-reference-type="ref" data-reference="prop:descendants">6</a>,
 ``` math
 \begin{align*}
 P_{39}(x)={}&x^9(x+5)^{12}(x^2+6x+3)\\

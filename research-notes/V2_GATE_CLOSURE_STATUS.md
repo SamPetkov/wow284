@@ -1,20 +1,19 @@
-# Candidate closure status for the four mandatory v2 gates
+# Closure status for the four mandatory v2 gates
 
-This branch is stacked on PR #12 and does not modify the submitted manuscript
-or arXiv package. A gate is not approved merely because its files exist: it
-still requires independent mathematical review and green CI.
+The former public PR #12--#23 stack has been integrated, and each gate below
+has an exact verifier, an independent check that does not merely call the
+original verifier, and a written claim-boundary audit. The completed private
+release replay also covers the generated Lean endpoints and standalone source.
+Public promotion still requires the exact candidate head to retain green CI
+and no unresolved review feedback.
 
-| Gate | Candidate artifact | Independent route | Status |
+| Gate | Primary artifact | Independent route | Status |
 | --- | --- | --- | --- |
-| Jørgensen order-96 provenance | source snapshot, normalized rows, graph6, provenance JSON, exact verifier | legacy row parser plus new three-way reconstruction | candidate closed |
-| No floating spectral decisions | exact extension entrypoint and AST workflow audit | exact characteristic polynomials, Sturm, LDL, quotient arguments | candidate closed |
-| Degree-six \(c\ge15\) | exact layer-compression proof | independent fourth-moment proof | candidate closed |
-| Nonadjacent puncture direct sum | generic orthogonal decomposition and multiplicity proof | explicit 48-dimensional \(k=7\) basis audit | candidate closed |
+| Jørgensen order-96 provenance | source snapshot, normalized rows, graph6, provenance JSON, exact verifier | legacy row parser plus three-way reconstruction | closed |
+| No floating spectral decisions | exact extension entrypoint and AST workflow audit | exact characteristic polynomials, Sturm, LDL, and quotient arguments | closed |
+| Degree-six \(c\ge15\) | exact layer-compression proof | independent fourth-moment proof | closed |
+| Nonadjacent puncture direct sum | generic orthogonal decomposition and multiplicity proof | explicit 48-dimensional \(k=7\) basis audit and Proof Audit 03 | closed |
 
-Promotion to a manuscript PR requires:
-
-1. all exact gate workflows green;
-2. independent review of the written proofs;
-3. no unresolved review thread affecting a gate;
-4. refreshed literature wording;
-5. a separate PR for any `main.tex` change.
+The release gate is fail-closed: any change to a proof-path verifier, generated
+Lean source, manuscript mirror, manifest, or recorded hash must be followed by
+the corresponding freshness and replay checks before public merge.

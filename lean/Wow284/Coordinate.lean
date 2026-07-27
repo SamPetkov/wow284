@@ -82,7 +82,7 @@ the mixed common-neighbor argument. -/
 theorem zmod5_partition (x : F) :
     x = 0 ∨ x = 1 ∨ x = -1 ∨ x = 2 ∨ x = -2 := by
   letI : Fact (Nat.Prime 5) := ⟨by norm_num⟩
-  have hp : x ^ 5 = x := by simpa using ZMod.pow_card x
+  have hp : x ^ 5 = x := ZMod.pow_card x
   have hz : x * (x - 1) * (x + 1) * (x - 2) * (x + 2) = 0 := by
     calc
       _ = x ^ 5 - x := by

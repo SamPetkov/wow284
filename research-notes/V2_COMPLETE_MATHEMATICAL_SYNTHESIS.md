@@ -1,7 +1,7 @@
 # Complete mathematical synthesis of the post-v1 WOW-284 programme
 
 **Scope.** This document consolidates the mathematical content developed after
-the submitted v1 manuscript. It is a theorem ledger and manuscript-planning
+the prior v1 manuscript package. It is a theorem ledger and manuscript-planning
 record, not a replacement for the individual proof notes. Every result is
 classified by proof status, exact-verification status, and literature boundary.
 No result in this document is automatically promoted into `main.tex`.
@@ -18,7 +18,7 @@ Thus G is a strict counterexample to WOW-284 exactly when `Phi(G) > 0`.
 
 ## Status legend
 
-- **v1:** already present in the submitted manuscript.
+- **v1:** already present in the prior v1 manuscript package.
 - **proved / exact:** an analytic proof and an exact executable certificate are
   present in the stacked branch.
 - **audited:** a separate one-proof-at-a-time audit has checked the statement,

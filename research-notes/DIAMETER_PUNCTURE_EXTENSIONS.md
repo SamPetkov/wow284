@@ -2,7 +2,7 @@
 
 **Status:** exact project derivations with an exact verifier; pending independent
 mathematical review and literature-priority clearance.  This note is not part of
-the submitted v1 manuscript, and no novelty claim is made here.
+the prior v1 manuscript package, and no novelty claim is made here.
 
 Write
 

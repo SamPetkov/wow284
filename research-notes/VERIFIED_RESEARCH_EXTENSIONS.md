@@ -1,6 +1,6 @@
 # Verified research extensions for WOW-284
 
-**Status:** draft research note, not part of the submitted manuscript. Every
+**Status:** draft research note, not part of the prior v1 manuscript package. Every
 claim labelled **proved** below has an analytic proof and an exact check in
 `scripts/verify_research_extensions.py`. Literature priority is handled
 separately in `LITERATURE_AUDIT_EXTENSIONS.md`.

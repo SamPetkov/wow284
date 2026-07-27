@@ -1,8 +1,8 @@
 WOW-284 RELEASE VERIFICATION
 ============================
 
-Repository revision: 24 July 2026; active PDF date suppressed
-Verification run: 24 July 2026
+Repository revision: 27 July 2026; active PDF date suppressed
+Verification run: 27 July 2026
 Author: Samuil Petkov
 
 MATHEMATICAL CERTIFICATE
@@ -48,7 +48,17 @@ PASS  Spectral module: deterministic 250-scaled integer inverse, exact
       distance diagonalization, and multiplicity counts 1, 28, and 21.
 PASS  Scalar Moore threshold: k <= 3 exactly, with strictness at k = 2,
       equality at k = 3, and failure for k > 3.
-PASS  Generator freshness check covers all 24 generated Lean files.
+PASS  Generator freshness checks cover the core generated files, the 74
+      checked-in order-39/order-42 modules and roots, and the standalone
+      185-module source.
+PASS  Isolated ProciDA replay at commit 9974a7326df062fd7d863a57ae7b9bebd3462775:
+      the original modular Wow284 and Wow284Extension targets completed all
+      8,669 Lake jobs; the generated order-39/order-42 focused closure and
+      audit roots passed with warnings fatal.
+PASS  Standalone source lean/Wow284Standalone.lean, SHA-256
+      340b0445e591b9cc3925b1aa92d78b9e32bb81516cd22e71160c5df7d88b1480,
+      replayed independently under Lean/Mathlib 4.31.0 on ProciDA with
+      -DwarningAsError=true.
 PASS  AXLE strict in environment lean-4.31.0:
       20/20 final computational shards passed with zero failed declarations,
       errors, or warnings; both dispatchers and every public wrapper passed.
@@ -57,12 +67,15 @@ PASS  Forbidden scan: no sorry, admit, native_decide, bv_decide, unsafe
 PASS  Representative #print axioms reports only propext, Classical.choice,
       and Quot.sound.
 PASS  Lean 4.31 finite spectral endpoints for orders 38, 39, 40, and 42;
-      GitHub Actions compiled all public endpoints and both endpoint audit
-      modules successfully.
+      isolated ProciDA replay compiled the generated order-39/order-42
+      endpoints and audit root after the final linter correction.
 PASS  Non-50 endpoint #print axioms reports only propext, Classical.choice,
       and Quot.sound.
 NOTE  The non-50 claim is a kernel-checked finite spectral certificate, not a
       full standard-library formalization of every graph-theoretic statement.
+NOTE  Public GitHub Actions is an additional promotion gate for the exact
+      candidate head; it does not replace the independent ProciDA replay
+      recorded above.
 NOTE  AxiomMath AXLE did not complete the expanded modular closure because the
       remote worker exhausted memory. The incomplete fallback was rejected;
       no AXLE verification is claimed for the non-50 endpoints.
@@ -108,13 +121,14 @@ MANUSCRIPT AND PDF
 ------------------
 PASS  Clean multi-pass LaTeX/BibTeX build: no final warnings, undefined
       citations/references, overfull/underfull boxes, or missing glyphs.
-PASS  PDF metadata: revised title, Samuil Petkov, and fixed
-      creation/modification date 24 July 2026.
-PASS  Thirteen pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
+PASS  PDF metadata: revised title, Samuil Petkov, and deterministic
+      creation/modification metadata.
+PASS  Fourteen pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
 PASS  Every reported font is embedded and subset.
-PASS  All thirteen pages rendered at 130 dpi and inspected at high resolution:
-      no clipping, overlap, malformed glyphs, blank spill pages,
-      or broken bibliography/address layout.
+PASS  TeX source, bibliography, references, page count, and synchronized PDF
+      hashes checked directly; all fourteen pages were rendered at 120 dpi
+      and visually checked for clipping, overlap, blank spill pages, and
+      broken glyphs.
 
 The authoritative SHA-256 digests for main.pdf and
       arxiv/wow284_arxiv_source.zip are recorded in SHA256SUMS.
@@ -125,7 +139,7 @@ PASS  arxiv/wow284_arxiv_source.zip contains exactly, in this order:
       main.tex, references.bib, main.bbl.
 PASS  Archive members are deterministic LF serializations of the canonical
       source files and carry the fixed timestamp 24 July 2026 12:00:00.
-PASS  A fresh extraction of the ZIP compiled independently to a thirteen-page
+PASS  A fresh extraction of the ZIP compiled independently to a fourteen-page
       PDF with latexmk/BibTeX.
 
 SOURCE AND NOVELTY AUDIT
