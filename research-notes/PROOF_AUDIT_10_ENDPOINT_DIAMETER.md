@@ -1,8 +1,8 @@
 # Proof Audit 10: endpoint-neighborhood diameter obstruction
 
 **Audited result:** Theorem 1 and Corollary 2 of
-`DIAMETER_PUNCTURE_EXTENSIONS.md`.  
-**Verdict:** `pass_with_strengthening`.  
+`DIAMETER_PUNCTURE_EXTENSIONS.md`.
+**Verdict:** `pass_with_strengthening`.
 **Main correction:** the proof does not use the girth assumption. The theorem
 holds for every connected finite simple graph of diameter at least five.
 
