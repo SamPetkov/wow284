@@ -193,3 +193,45 @@ jobs:
           cd lean
           lake env lean Wow284CoreAudit.lean
           lake env lean Wow284Generated3942Audit.lean
+
+  v22-source-export:
+    if: github.head_ref == 'agent/v2.2-expanded-manuscript'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Materialize expanded source
+        run: python scripts/materialize_v22_bootstrap.py
+      - name: Upload materialized source
+        uses: actions/upload-artifact@v4
+        with:
+          name: v22-materialized-source
+          path: v22
+          if-no-files-found: error
+      - name: Install TeX build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended poppler-utils
+      - name: Compile expanded source
+        id: compile
+        continue-on-error: true
+        working-directory: v22
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+      - name: Upload expanded build diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v22-build-diagnostic
+          path: |
+            v22/main.log
+            v22/main.pdf
+          if-no-files-found: warn
+      - name: Enforce expanded build
+        if: always()
+        run: |
+          if [[ '${{ steps.compile.outcome }}' != 'success' ]]; then
+            tail -n 180 v22/main.log || true
+            exit 1
+          fi
