@@ -1,17 +1,68 @@
 # Edge-local spectral obstruction at degree six
 
-**Status:** exact analytic theorem with an independent symbolic verifier.  
-**Scope:** connected 6-regular graphs of girth at least five and diameter three.
+**Status:** exact analytic theorem with independent symbolic verifiers and a
+separate proof audit.  
+**Scope:** connected 6-regular graphs of girth at least five.
 
 ## Theorem
 
-Every regular strict counterexample to WOW-284 of degree six has order at most
+Every connected 6-regular strict counterexample to WOW-284 has order at most
 
 \[
   \boxed{50}.
 \]
 
 This improves the previous exact bound \(n\le 51\).
+
+## 0. Reduction to diameter three
+
+The spectral-window argument below assumes diameter three.  We first show that
+this is automatic for a degree-six regular strict counterexample.
+
+Suppose \(u,v\) have distance \(d\ge4\).  Define \(x\) by assigning weight \(3\)
+to \(u\), weight \(1\) to each of its six neighbors, weight \(-3\) to \(v\),
+weight \(-1\) to each of its six neighbors, and zero elsewhere.  The two closed
+neighborhoods are disjoint and
+
+\[
+ \lVert x\rVert^2=30.
+\]
+
+The absence of triangles makes the distance between two distinct neighbors of
+one center exactly two.  Across the two closed neighborhoods, triangle
+inequality gives the lower bounds \(d,d-1,d-1,d-2\) for the four types of
+pairs.  Since the cross-coordinate products are negative,
+
+\[
+ \frac{x^{\mathsf T}D(G)x}{\lVert x\rVert^2}
+ \le \frac{204-81d}{15}\le-8.
+\]
+
+Hence \(\lambda_{\min}(D(G))\le-8\), contradicting strict violation because
+\(\delta^*(G)=6\).
+
+Diameter two is also impossible.  The girth and regularity hypotheses would
+force \(n=37\) and
+
+\[
+ A^2=5I-A+J.
+\]
+
+On \(\mathbf1^\perp\), the adjacency eigenvalues would be roots of the
+irreducible polynomial \(x^2+x-5\).  Therefore the characteristic polynomial
+would be
+
+\[
+ (x-6)(x^2+x-5)^{18},
+\]
+
+whose trace is \(6-18=-12\), contrary to \(\operatorname{tr}A=0\).  Diameter
+one is excluded by the girth hypothesis.  Thus every degree-six regular strict
+counterexample has diameter three.
+
+A complete audit of this reduction is recorded in
+`DEGREE_SIX_DIAMETER_REDUCTION.md` and
+`PROOF_AUDIT_01_EDGE_LOCAL_ORDER51.md`.
 
 ## 1. A centered positive-semidefinite polynomial
 
@@ -228,5 +279,6 @@ vertex.
 
 The radius-two ball identity is published in Backelin, arXiv:1511.08128,
 Lemma 2.1. The centered polynomial uses the standard nonbacktracking/LP
-framework. No priority claim is made for the edge-local combination or the
-order-51 exclusion pending a dedicated literature search.
+framework. No priority claim is made for the edge-local combination, the
+diameter reduction, or the order-51 exclusion pending a dedicated literature
+search.
