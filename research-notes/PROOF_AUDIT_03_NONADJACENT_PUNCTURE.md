@@ -7,14 +7,14 @@
 assigned to a separate lemma, and the finite Hoffman--Singleton check is
 independent of the original two verification scripts.
 
-**Provisional verdict:** `pass_after_expository_correction`.
+**Verdict:** `pass`.
 
 The characteristic factorisation, invariant-space dimensions, multiplicities,
-and dual-degree calculation are correct. The original note compressed one
-necessary metric step: it asserted the recomputed-distance formula without
-showing that pairs whose unique length-two route used a deleted vertex still
-have a surviving path of length three. The proof below supplies that path
-explicitly and thereby justifies the distance-matrix formula.
+and dual-degree calculation are correct. During the audit, one compressed
+metric step was expanded: pairs whose unique length-two route used a deleted
+vertex are now given explicit surviving paths of length three in both this
+audit and the primary theorem note. This justifies the distance-matrix formula
+without requiring the audit to be read as a separate patch.
 
 ## 1. Normalised theorem
 
@@ -323,7 +323,6 @@ import either original puncture verifier. It checks:
 
 ## 11. Verdict
 
-The spectrum theorem is valid. The only correction required is expository but
-logically material: the distance-three replacement paths must be stated before
-using \(D=2(J-I)-A+F\). With that lemma inserted, the proof is complete and all
-multiplicities are accounted for.
+The spectrum theorem is valid. The logically material expository correction
+has been inserted into the primary note before \(D=2(J-I)-A+F\). The proof is
+complete and all multiplicities are accounted for.

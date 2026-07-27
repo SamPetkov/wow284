@@ -91,6 +91,8 @@ def symbolic_case_audit() -> dict[str, str]:
     bound5 = sp.Rational((5 + 2) * (5**2 + 3), 6)
     if bound4 != 19 or bound5 != sp.Rational(98, 3):
         raise AssertionError("wrong LP specialisation")
+    if (5 * 31) % 2 != 1:
+        raise AssertionError("degree-five odd-order parity check failed")
 
     # Degree-four excess-one rational-space obstruction.
     polynomial4 = X**2 + X - 4
@@ -149,7 +151,7 @@ def symbolic_case_audit() -> dict[str, str]:
     return {
         "diameter_rayleigh_quotient": "-d(u,v)",
         "degree_4_LP_bound": "n<19, hence n=18 in diameter three",
-        "degree_5_LP_bound": "n<98/3, hence n<=32",
+        "degree_5_LP_bound": "n<98/3 and 5n is even, hence n in {30,32}",
         "degree_4_irreducible_factor": str(polynomial4),
         "P5_distance_polynomial": str(path_charpoly),
         "degree_5_excess_6_compression": str(factor6),

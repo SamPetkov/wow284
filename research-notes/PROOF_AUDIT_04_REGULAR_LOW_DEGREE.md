@@ -197,7 +197,9 @@ which contradicts strict violation at degree five.
 
 ### 7.3 Diameter three: order reduction
 
-Meringer's exhaustive theorem gives \(n\ge30\) for a 5-regular girth-five graph.
+Meringer's exhaustive theorem gives \(n\ge30\) for a 5-regular girth-five graph
+(*Journal of Graph Theory* 30 (1999), 137--146,
+DOI `10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G`).
 The audited LP ceiling gives
 
 \[
@@ -210,7 +212,10 @@ so
  \boxed{n\in\{30,31,32\}.}
 \]
 
-Writing \(n=26+c\), only \(c=4,5,6\) remain.
+The handshake identity \(5n=2|E(G)|\) makes \(n\) even, so the logical core
+already reduces to \(n\in\{30,32\}\). Writing \(n=26+c\), only \(c=4,6\)
+remain.  The excess-five calculation below is retained as an independent
+robustness check, even though parity excludes that case.
 
 ### 7.4 Excess six
 
@@ -263,8 +268,9 @@ Positive-semidefinite monotonicity and interlacing exclude excess five.
 
 ### 7.6 Excess four
 
-Here \(n=30\).  Meringer proved that exactly four nonisomorphic 5-regular
-30-vertex girth-five graphs exist.  The four committed graph6 records are
+Here \(n=30\).  Meringer proved in the cited exhaustive-generation paper that
+exactly four nonisomorphic 5-regular 30-vertex girth-five graphs exist.  The four
+committed graph6 records are
 independently reconstructed, checked to be pairwise nonisomorphic cages, and
 have exact distance characteristic polynomials containing either
 

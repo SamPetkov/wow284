@@ -208,6 +208,8 @@ research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md
 research-notes/PROBLEM_BRIEF.md
 research-notes/PROOF_AUDIT_01_EDGE_LOCAL_ORDER51.md
 research-notes/PROOF_AUDIT_02_TWO_SIDED_LP.md
+research-notes/PROOF_AUDIT_03_NONADJACENT_PUNCTURE.md
+research-notes/PROOF_AUDIT_04_REGULAR_LOW_DEGREE.md
 research-notes/PROOF_AUDIT_REGISTRY.md
 research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md
 research-notes/REGULAR_SCORE_CALCULUS.md
@@ -268,6 +270,8 @@ scripts/verify_order50_r29_exclusion.py
 scripts/verify_prime_field_obstruction.py
 scripts/verify_proof_audit_01_edge_local.py
 scripts/verify_proof_audit_02_two_sided_lp.py
+scripts/verify_proof_audit_03_nonadjacent_puncture.py
+scripts/verify_proof_audit_04_regular_low_degree.py
 scripts/verify_regular_induced_subgraphs.py
 scripts/verify_regular_low_degree.py
 scripts/verify_regular_score_calculus.py
