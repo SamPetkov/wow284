@@ -21,7 +21,7 @@ verification route have all been checked.
 | 01 | Edge-local exclusion of degree-six order 51 | walk-count identities, theorem scope, PSD entry bounds, cycle-incidence congruence | `pass_after_correction` |
 | 02 | All-degree ceiling of the two-sided nonbacktracking LP method | dual feasibility for every degree, Chebyshev tail, exact match to the admissible coefficient cone | `pass` |
 | 03 | Nonadjacent Moore-puncture distance spectrum | recomputed distances, invariant direct sum, injectivity, residual trace, multiplicities | `pass_after_correction` |
-| 04 | Every regular strict counterexample has degree at least six | diameter reductions, four `(5,5)`-cage exhaustion, interlacing direction | `queued` |
+| 04 | Every regular strict counterexample has degree at least six | diameter reductions, four `(5,5)`-cage exhaustion, interlacing direction | `pass` |
 | 05 | One-vertex and adjacent-edge Moore-puncture spectra | quotient normalization, least-root comparison, multiplicity accounting | `queued` |
 | 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `queued` |
 | 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `queued` |
@@ -106,6 +106,30 @@ metric lemma is inserted, the direct sum has dimensions
 \]
 
 so every distance eigenspace and algebraic multiplicity is accounted for.
+
+## Audit 04 outcome
+
+The theorem that every regular strict counterexample has degree at least six
+passes without a theorem-strength correction.  The audit verifies every degree
+and diameter branch separately:
+
+1. the Rayleigh vector `e_u-e_v` gives
+   `lambda_min(D) <= -diam(G)`;
+2. degrees zero, one, and two are excluded immediately;
+3. degree three reaches the Moore boundary and gives equality;
+4. degree-four and degree-five diameter-two cases fail the Moore multiplicity
+   integrality test;
+5. a degree-five diameter-four graph is excluded by the principal `D(P_5)`
+   submatrix and Cauchy interlacing;
+6. all remaining degree-five cages have an exact distance eigenvalue at most
+   `-5`.
+
+Using the already audited LP ceiling shortens the proof materially.  At degree
+four, diameter three forces `n=18`, leaving only the odd-dimensional
+irreducible-quadratic contradiction.  At degree five, diameter three leaves
+only `n=30,31,32`, so only excess four, five, and six must be checked.  The
+rank-one positive-semidefinite derivative of the normalized layer compression
+supplies the monotonicity used in the last two cases.
 
 ## Required structure of every audit
 
