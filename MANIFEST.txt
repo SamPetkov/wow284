@@ -1,5 +1,6 @@
 .gitattributes
 .github/workflows/literature-audit-validation.yml
+.github/workflows/proof-audit-10.yml
 .github/workflows/regular-score-calculus.yml
 .github/workflows/research-extensions.yml
 .github/workflows/verify.yml
@@ -12,6 +13,7 @@ MANIFEST.txt
 Makefile
 PROVENANCE.md
 README.md
+RELEASE_NOTES_v2.1.0.md
 REVIEW.md
 SHA256SUMS
 SOURCE_LEDGER.md
@@ -292,10 +294,17 @@ research-notes/PROOF_AUDIT_01_EDGE_LOCAL_ORDER51.md
 research-notes/PROOF_AUDIT_02_TWO_SIDED_LP.md
 research-notes/PROOF_AUDIT_03_NONADJACENT_PUNCTURE.md
 research-notes/PROOF_AUDIT_04_REGULAR_LOW_DEGREE.md
+research-notes/PROOF_AUDIT_05_SMALL_MOORE_PUNCTURES.md
+research-notes/PROOF_AUDIT_06_ORDER50_FEASIBILITY.md
+research-notes/PROOF_AUDIT_07_LAYER_MATCHINGS.md
+research-notes/PROOF_AUDIT_08_PRIME_FIELD.md
+research-notes/PROOF_AUDIT_09_JORGENSEN96.md
+research-notes/PROOF_AUDIT_10_ENDPOINT_DIAMETER.md
 research-notes/PROOF_AUDIT_REGISTRY.md
 research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md
 research-notes/REGULAR_SCORE_CALCULUS.md
 research-notes/SPECTRAL_MOORE_COMPARISON.md
+research-notes/STANDARD_DEFINITIONS_AND_TERMINOLOGY.md
 research-notes/TWO_SIDED_LP_CEILING.md
 research-notes/UNBOUNDED_DEGREE_NECESSITY.md
 research-notes/V2_COMPLETE_MATHEMATICAL_SYNTHESIS.md
@@ -358,6 +367,12 @@ scripts/verify_proof_audit_01_edge_local.py
 scripts/verify_proof_audit_02_two_sided_lp.py
 scripts/verify_proof_audit_03_nonadjacent_puncture.py
 scripts/verify_proof_audit_04_regular_low_degree.py
+scripts/verify_proof_audit_05_small_moore_punctures.py
+scripts/verify_proof_audit_06_order50_feasibility.py
+scripts/verify_proof_audit_07_layer_matchings.py
+scripts/verify_proof_audit_08_prime_field.py
+scripts/verify_proof_audit_09_jorgensen96.py
+scripts/verify_proof_audit_10_endpoint_diameter.py
 scripts/verify_regular_induced_subgraphs.py
 scripts/verify_regular_low_degree.py
 scripts/verify_regular_score_calculus.py

@@ -87,6 +87,9 @@ PASS  scripts/verify_exact.py.
 PASS  scripts/verify_extended.py.
 PASS  scripts/verify_regular_score_calculus.py: exact diameter-two/three
       transfer formulas and representative regular WOW scores.
+PASS  scripts/verify_proof_audit_01_edge_local.py: exact diameter reduction,
+      local spectral window, and order-51 exclusion after the recorded scope
+      repair.
 PASS  scripts/verify_proof_audit_02_two_sided_lp.py: exact primal/dual
       identities, positive finite and uniform-tail slacks, and optimizer
       rigidity for the stated one-variable girth-five LP cone.
@@ -99,6 +102,18 @@ PASS  scripts/verify_proof_audit_04_regular_low_degree.py: exact case
 NOTE  Audit 04 uses Meringer's published isomorph-free exhaustion as an
       external classification input; the repository checks the four resulting
       records but does not reproduce the exhaustive generation.
+PASS  scripts/verify_proof_audit_05_small_moore_punctures.py: exact quotient,
+      invariant-module, multiplicity, and least-root certificates.
+PASS  scripts/verify_proof_audit_06_order50_feasibility.py: exact local
+      walk-count, Gram-minor, and moment feasibility checks.
+PASS  scripts/verify_proof_audit_07_layer_matchings.py: all 120 matchings,
+      coordinate automorphisms, orbit exhaustion, and exact root certificates.
+PASS  scripts/verify_proof_audit_08_prime_field.py: exact finite-field
+      obstruction, Fourier-block controls, and rational Sturm separators.
+PASS  scripts/verify_proof_audit_09_jorgensen96.py: independent public-data
+      parsing, graph6 decoding, and exact equality-spectrum certificate.
+PASS  scripts/verify_proof_audit_10_endpoint_diameter.py: exact two-neighborhood
+      compression, radical comparison, integer rounding, and finite controls.
 PASS  scripts/generate_lean_diagonalization.py --check.
 PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
       distance CSV files.
