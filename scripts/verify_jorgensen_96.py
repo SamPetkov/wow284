@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Exact audit of Jørgensen's 96-vertex 9-regular girth-five graph.
+"""Exact audit of Jorgensen's 96-vertex 9-regular girth-five graph.
 
 This is an independent legacy-style parser for the normalized adjacency file.
-The provenance-grade three-way reconstruction lives in
-``verify_jorgensen96_provenance.py``.
+The provenance-grade representation audit lives in
+``verify_jorgensen96_provenance.py``. No floating-point ordering is used.
 """
-
 from __future__ import annotations
 
 from collections import deque
@@ -16,6 +15,7 @@ import sympy as sp
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "jorgensen96" / "adjacency.txt"
+X = sp.symbols("x")
 
 
 def load_graph() -> tuple[frozenset[int], ...]:
@@ -40,7 +40,7 @@ def load_graph() -> tuple[frozenset[int], ...]:
     return graph
 
 
-def distances(graph) -> sp.Matrix:
+def distances(graph: tuple[frozenset[int], ...]) -> sp.Matrix:
     rows = []
     for source in range(96):
         dist = [-1] * 96
@@ -59,6 +59,8 @@ def distances(graph) -> sp.Matrix:
 
 
 def main() -> None:
+    if not __debug__:
+        raise RuntimeError("verification must not be run with python -O")
     graph = load_graph()
     for u in range(96):
         for v in range(u + 1, 96):
@@ -75,40 +77,66 @@ def main() -> None:
     if d != 3 * sp.ones(96) + 6 * sp.eye(96) - 2 * a - a * a:
         raise AssertionError("diameter-three distance polynomial failed")
 
-    x = sp.symbols("x")
     expected_a = (
-        (x - 9)
-        * (x - 3) ** 7
-        * (x - 1) ** 7
-        * (x + 5)
-        * (x**2 - 8) ** 16
-        * (x**2 + 2 * x - 6) ** 8
-        * (x**4 + 2 * x**3 - 17 * x**2 - 18 * x + 74) ** 8
+        (X - 9)
+        * (X - 3) ** 7
+        * (X - 1) ** 7
+        * (X + 5)
+        * (X**2 - 8) ** 16
+        * (X**2 + 2 * X - 6) ** 8
+        * (X**4 + 2 * X**3 - 17 * X**2 - 18 * X + 74) ** 8
     )
     expected_d = (
-        x**16
-        * (x - 195)
-        * (x - 3) ** 7
-        * (x + 9) ** 8
-        * (x**2 + 4 * x - 28) ** 16
-        * (x**4 + 10 * x**3 + 5 * x**2 - 72 * x - 96) ** 8
+        X**16
+        * (X - 195)
+        * (X - 3) ** 7
+        * (X + 9) ** 8
+        * (X**2 + 4 * X - 28) ** 16
+        * (X**4 + 10 * X**3 + 5 * X**2 - 72 * X - 96) ** 8
     )
-    char_a = sp.factor(a.charpoly(x).as_expr())
-    char_d = sp.factor(d.charpoly(x).as_expr())
-    if sp.Poly(char_a - expected_a, x) != sp.Poly(0, x):
+    char_a = sp.factor(a.charpoly(X).as_expr())
+    char_d = sp.factor(d.charpoly(X).as_expr())
+    if not sp.Poly(char_a - expected_a, X).is_zero:
         raise AssertionError(char_a)
-    if sp.Poly(char_d - expected_d, x) != sp.Poly(0, x):
+    if not sp.Poly(char_d - expected_d, X).is_zero:
         raise AssertionError(char_d)
 
-    polynomial = sp.Poly(char_d, x)
-    if polynomial.eval(-9) != 0 or polynomial.count_roots(-sp.oo, -9) != 1:
-        raise AssertionError("Sturm least-root certificate failed")
+    # Exact adjacency-interval certificate for D+9I >= 0 on 1-perp.
+    quartic = X**4 + 2 * X**3 - 17 * X**2 - 18 * X + 74
+    quartic_poly = sp.Poly(quartic, X)
+    if quartic_poly.eval(-5) != 114 or quartic_poly.eval(3) != 2:
+        raise AssertionError("wrong quartic endpoint values")
+    if quartic_poly.count_roots(-sp.oo, -5) != 0:
+        raise AssertionError("quartic root at or below -5")
+    if quartic_poly.count_roots(3, sp.oo) != 0:
+        raise AssertionError("quartic root at or above 3")
+    if quartic_poly.count_roots(-5, 3) != 4:
+        raise AssertionError("quartic roots are not all in (-5,3)")
+
+    # Direct distance certificate with the boundary factor removed first, so
+    # the interval endpoint convention is irrelevant.
+    remaining = sp.Poly(sp.cancel(expected_d / (X + 9) ** 8), X)
+    if remaining.eval(-9) == 0:
+        raise AssertionError("remaining factor also vanishes at -9")
+    if remaining.count_roots(-sp.oo, -9) != 0:
+        raise AssertionError("remaining factor has a root below -9")
+
+    polynomial = sp.Poly(char_d, X)
+    multiplicity = 0
+    divisor = sp.Poly(X + 9, X)
+    while polynomial.eval(-9) == 0:
+        polynomial, remainder = sp.div(polynomial, divisor)
+        if not remainder.is_zero:
+            raise AssertionError("failed exact division by x+9")
+        multiplicity += 1
+    if multiplicity != 8:
+        raise AssertionError("wrong multiplicity at -9")
 
     print("Jorgensen order-96 exact audit: PASS")
     print("order=96 degree=9 girth=5 diameter=3 transmission=195")
     print(f"chi_A={char_a}")
     print(f"chi_D={char_d}")
-    print("delta*=9; lambda_min(D)=-9; WOW-284 score=0 (equality)")
+    print("delta*=9; lambda_min(D)=-9 with multiplicity 8; score=0")
 
 
 if __name__ == "__main__":
