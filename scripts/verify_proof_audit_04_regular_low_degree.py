@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Independent exact audit of the regular degree-at-least-six theorem.
 
-The script does not import the original low-degree verifier.  It checks the
+The script does not import the original low-degree verifier. It checks the
 symbolic reductions, the streamlined LP order bounds, the two layer-compression
 arguments, and all four committed (5,5)-cage records using exact arithmetic.
 """
@@ -40,12 +40,8 @@ def exact_girth(graph: nx.Graph) -> int:
 
 def adjacency_matrix(graph: nx.Graph) -> sp.Matrix:
     nodes = sorted(graph)
-    index = {v: i for i, v in enumerate(nodes)}
     return sp.Matrix(
-        [
-            [int(graph.has_edge(u, v)) for v in nodes]
-            for u in nodes
-        ]
+        [[int(graph.has_edge(u, v)) for v in nodes] for u in nodes]
     )
 
 
@@ -90,8 +86,8 @@ def symbolic_case_audit() -> dict[str, str]:
     if multiplicity5.is_integer is not False:
         raise AssertionError("degree-five Moore multiplicity not excluded")
 
-    # Audited all-degree LP ceiling.
-    bound4 = sp.factor((4 + 2) * (4**2 + 3) / 6)
+    # Audited all-degree LP ceiling, kept rational throughout.
+    bound4 = sp.Rational((4 + 2) * (4**2 + 3), 6)
     bound5 = sp.Rational((5 + 2) * (5**2 + 3), 6)
     if bound4 != 19 or bound5 != sp.Rational(98, 3):
         raise AssertionError("wrong LP specialisation")
@@ -100,7 +96,7 @@ def symbolic_case_audit() -> dict[str, str]:
     polynomial4 = X**2 + X - 4
     if sp.discriminant(polynomial4, X) != 17:
         raise AssertionError("wrong degree-four discriminant")
-    if sp.factor(polynomial4).is_irreducible is not True:
+    if sp.Poly(polynomial4, X).is_irreducible is not True:
         raise AssertionError("degree-four polynomial is not certified irreducible")
     if 9 % 2 != 1:
         raise AssertionError("wrong parity check")
