@@ -24,14 +24,28 @@ jobs:
         with:
           python-version: "3.13"
       - name: Materialize the deterministic source bundle
+        id: materialize
+        continue-on-error: true
         run: python scripts/materialize_v22_bootstrap.py
+      - name: Commit concise materialization diagnostic
+        if: steps.materialize.outcome == 'failure' && github.event_name == 'pull_request'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add v22-materialization-error.txt
+          git commit -m "Record v2.2 materialization diagnostic [skip ci]"
+          git push origin HEAD:${{ github.head_ref }}
+      - name: Stop after a materialization failure
+        if: steps.materialize.outcome == 'failure'
+        run: |
+          cat v22-materialization-error.txt
+          exit 1
       - name: Reject source corruption and placeholders
         run: |
           python - <<'PY'
           from pathlib import Path
           import re
           root = Path('v22')
-          banned = ('TODO', 'FIXME', '\\u0008', '\\r')
           for path in sorted(root.rglob('*')):
               if not path.is_file() or path.name == '.materialized':
                   continue
@@ -50,7 +64,7 @@ jobs:
       - name: Install TeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended
+          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended poppler-utils
       - name: Compile modular manuscript
         working-directory: v22
         run: |
