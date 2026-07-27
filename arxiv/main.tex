@@ -38,6 +38,7 @@
 \newtheorem{lemma}[theorem]{Lemma}
 \newtheorem{corollary}[theorem]{Corollary}
 \newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem*{wowconjecture}{Conjecture (WOW-284)}
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition}
 \theoremstyle{remark}
@@ -49,6 +50,7 @@
 \BeforeBeginEnvironment{lemma}{\Needspace{6\baselineskip}}
 \BeforeBeginEnvironment{corollary}{\Needspace{5\baselineskip}}
 \BeforeBeginEnvironment{conjecture}{\Needspace{6\baselineskip}}
+\BeforeBeginEnvironment{wowconjecture}{\Needspace{6\baselineskip}}
 \BeforeBeginEnvironment{definition}{\Needspace{5\baselineskip}}
 \BeforeBeginEnvironment{remark}{\Needspace{4\baselineskip}}
 \BeforeBeginEnvironment{proof}{\Needspace{4\baselineskip}}
@@ -83,20 +85,28 @@ Hoffman--Singleton graph, \((6,5)\)-cage, WOW-284, strongly regular graph}
 \begin{document}
 
 \begin{abstract}
-WOW-284 asserts that the minimum dual degree of every connected graph of
-order at least three and girth at least five is at most the negative of
-its least distance eigenvalue.  We give explicit counterexamples of orders
-\(38,39,40,42\), and \(50\), all obtained from the
-Hoffman--Singleton graph.  More generally, for every connected
-\(k\)-regular graph of girth at least five and diameter three,
+WOW-284 predicts that the minimum dual degree of every connected graph of
+order at least three and girth at least five is at most the negative of its
+least distance eigenvalue.  The degree-seven Hoffman--Singleton graph
+disproves the conjecture.  More generally, a degree-\(k\) Moore graph of
+diameter two satisfies
+\[
+ \delta^*(G)=k,
+ \qquad
+ \partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
+\]
+Thus WOW-284 holds for these graphs exactly when \(k\le3\), with equality at
+\(k=3\), and fails for every realizable \(k>3\).  We give a self-contained
+coordinate certificate for the degree-seven example and exact induced
+counterexamples of orders \(38,39,40\), and \(42\).  For every connected
+\(k\)-regular graph of girth at least five and diameter three we also prove
 \[
  D=3J+(k-3)I-2A-A^2,
 \]
-which yields an exact adjacency-spectral criterion for violating
-WOW-284.  Moore second subconstituents provide a further parameterized
-construction.  All finite certificates use exact arithmetic.  Lean 4.31
-kernel-checks the complete 50-vertex proof and finite spectral
-certificates for the four smaller constructions.
+which converts WOW-284 into an exact shifted adjacency-spectrum condition.
+All finite spectral decisions use exact arithmetic.  Lean 4.31 kernel-checks
+the complete 50-vertex proof and finite spectral certificates for the four
+smaller constructions.
 \end{abstract}
 
 \maketitle
@@ -105,12 +115,11 @@ certificates for the four smaller constructions.
 
 Let \(G\) be a finite simple connected graph on \(n\ge2\) vertices.  Its
 distance matrix is \(D(G)=(d_G(u,v))_{u,v\in V(G)}\), where \(d_G\) is graph
-distance.  This matrix is real symmetric; order its real eigenvalues as
+distance.  Since this matrix is real symmetric, write its eigenvalues as
 \[
   \partial_1(G)\ge \partial_2(G)\ge\cdots\ge\partial_n(G).
 \]
-For a vertex \(v\), its \emph{dual degree} is the average degree of its
-neighbors,
+For a vertex \(v\), define its \emph{dual degree} and the minimum dual degree by
 \[
   d^*(v)=\frac{1}{d(v)}\sum_{u\in N(v)}d(u),
   \qquad
@@ -124,13 +133,14 @@ of distance spectra~\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}; they
 attribute it to Fajtlowicz's 1998 \emph{Written on the Wall}
 report~\cite{Fajtlowicz1998}.
 
-\begin{conjecture}[WOW-284]\label{conj:wow284}
+\phantomsection\label{conj:wow284}
+\begin{wowconjecture}
 If \(G\) is connected, has \(n\ge3\) vertices, and has girth
 \(g(G)\ge5\), then
 \[
   \delta^*(G)\le -\partial_n(G).
 \]
-\end{conjecture}
+\end{wowconjecture}
 
 For such a graph, write
 \[
@@ -138,13 +148,42 @@ For such a graph, write
 \]
 Thus \(G\) is a strict counterexample precisely when \(\Phi(G)>0\).
 
-In that 2014 survey, the authors reported that the conjecture remained open
-and noted equality for the Petersen
-graph~\cite[Conjecture~7.16, p.~370]{AouchicheHansen2014}.  This equality is the
-degree-3 boundary case of a general Moore-graph calculation.  The degree-7
-Moore graph constructed by Hoffman and
-Singleton~\cite{HoffmanSingleton1960} lies beyond that boundary and gives a strict
-violation.
+The disproof is short.  In a degree-\(k\) Moore graph of diameter two,
+adjacent vertices have no common neighbor and nonadjacent vertices have
+exactly one.  If \(A\), \(I\), and \(J\) denote the adjacency, identity, and
+all-ones matrices, then
+\[
+ A^2=(k-1)I-A+J,
+ \qquad
+ D=2J-2I-A.
+\]
+On the orthogonal complement of the all-ones vector, the nonprincipal
+adjacency eigenvalues are the roots of \(x^2+x-(k-1)=0\).  It follows that
+\[
+ \partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
+\]
+Regularity gives \(\delta^*(G)=k\), so the conjectured inequality holds
+exactly when \(k\le3\).  The Petersen graph is the equality case \(k=3\).
+The degree-seven Hoffman--Singleton graph~\cite{HoffmanSingleton1960} has
+\[
+ \delta^*=7,\qquad \partial_{50}=-4,
+\]
+and therefore violates WOW-284 by the strict gap \(3\).
+
+This paper develops that observation in three directions.  First, a fully
+labelled coordinate construction verifies the Hoffman--Singleton
+common-neighbor identity directly, making the disproof self-contained and
+supplying exact graph data for independent checking.  Second, natural
+deletions give smaller counterexamples of orders \(38,39,40\), and \(42\).
+Third, the identity
+\[
+ D=3J+(k-3)I-2A-A^2
+\]
+isolates the operator mechanism for regular diameter-three graphs and turns
+the conjecture into a shifted adjacency-spectrum condition.  Exact
+characteristic polynomials, Sturm certificates, rational
+\(LDL^{\mathsf T}\) decompositions, and formal-verification details are
+included only where they certify a stated mathematical step.
 
 Howlader and Panigrahi provide the relevant prior spectral calculation.  They
 determine a distance polynomial for minimal \((k,5)\)-cages and explicitly list the
@@ -153,13 +192,13 @@ degree-57 Moore
 graphs~\cite[Theorems~2.3 and~2.5(1)]{HowladerPanigrahi2022}; the existence of the
 last graph remains open~\cite{SmithMontemanni2026}.  Their \(k=7\) calculation,
 together with regularity and the girth condition, already supplies every
-ingredient needed to disprove Conjecture~\ref{conj:wow284}.  The present note
+ingredient needed to disprove \hyperref[conj:wow284]{WOW-284}.  The present note
 records the sharp degree criterion, makes the WOW-284 connection explicit,
-and supplies a self-contained coordinate certificate.  It also extracts the
-40-vertex \((6,5)\)-cage from the same coordinates and gives its distance
-spectrum directly.  No claim is made that the distance spectra are new, that
-this observation has priority over every unpublished observation, or that the
-38-vertex example has minimum possible order among all counterexamples.
+and supplies independent exact certificates.  No claim is made that the
+classical distance spectra are new, that this observation has priority over
+every unpublished observation, that the 38-vertex example has minimum
+possible order among all counterexamples, or that the parameterized
+constructions form an unconditional infinite family.
 
 \phantomsection\label{thm:moore-wow}
 \begin{theoremA}
@@ -1139,9 +1178,12 @@ The author received no funding for this work and declares no competing
 interests.  The manuscript source, exact verification code, machine-readable
 certificates, and build instructions are available in the public repository
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
-The computational archive corresponding to this manuscript is release
+The earlier arXiv submission was withdrawn.  The prior v1 computational
+archive remains available as GitHub release
 \href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv}
-{\texttt{v2.0.5-arxiv}}.
+{\texttt{v2.0.5-arxiv}}.  The current v2 release-candidate package is
+identified by the repository manifest and \texttt{SHA256SUMS}; it is not an
+active arXiv submission.
 
 \appendix
 \section{Exact distance characteristic polynomials}\label{app:polynomials}

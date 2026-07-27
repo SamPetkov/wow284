@@ -3,8 +3,8 @@
 **Author:** Samuil Petkov<br>
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
-**Repository revision:** 24 July 2026 (`2026-07-24`); PDF date suppressed<br>
-**Repository status:** Public research note; arXiv submission received and revision package prepared
+**Repository revision:** 27 July 2026 (`2026-07-27`); PDF date suppressed<br>
+**Repository status:** Public research note; earlier arXiv submission withdrawn; completed v2 release candidate and arXiv-ready package under review
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
@@ -137,6 +137,7 @@ Primary links:
 - `scripts/generate_lean_diagonalization.py` - deterministic exact-data generator for the Lean spectral certificate.
 - `scripts/generate_lean40_structural.py`, `scripts/generate_lean40_diagonalization.py` - deterministic generators for the 40-vertex Lean certificate.
 - `scripts/generate_lean38_certificates.py`, `scripts/generate_lean38_ldl.py` - deterministic generators for the 38-vertex finite and LDL certificate.
+- `scripts/generate_lean_standalone.py` - deterministic flattener for the complete committed and generated Lean development.
 - `tests/` - exhaustive structural and exact spectral regression tests.
 - `results/verification.json` - machine-readable exact verification record.
 - `results/verification_40.json` - machine-readable exact verification record for the 40-vertex graph.
@@ -148,6 +149,10 @@ Primary links:
 - `CITATION.cff`, `LICENSE`, `LICENSE_SCOPE.md` - citation and CC BY 4.0 metadata.
 - `BUILD_VERIFICATION.txt`, `MANIFEST.txt`, `SHA256SUMS` - release preflight and integrity records.
 - `lean/` - Lean 4.31/Mathlib 4.31 development and pinned project configuration.
+- `lean/Wow284Standalone.lean` - generated single-file form of all completed Lean certificate modules and trust reports.
+- `lean/Wow284/Induced39/` and `lean/Wow284/Induced42/` - checked-in,
+  deterministically generated small-file certificate DAGs for direct modular
+  replay.
 
 ## Formal verification
 
@@ -242,8 +247,11 @@ file uses `\date{}` rather than a dynamic `\today`.
 
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
-The fixed computational archive for this manuscript is GitHub release
+The earlier arXiv submission was withdrawn. The fixed computational archive
+for the prior v1 package remains available as GitHub release
 [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv).
+The current completed v2 candidate is identified by `MANIFEST.txt` and
+`SHA256SUMS` and is not an active arXiv submission.
 
 Suggested arXiv primary category: `math.CO`. See
 [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) for title, abstract, comments,

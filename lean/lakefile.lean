@@ -16,7 +16,7 @@ lean_lib Wow284Extension where
   roots := #[`Wow284Extended]
 
 /-- Deterministically generated order-39 and order-42 counterexample
-certificates. The root and its imported modules are created before this target
-is built in CI. -/
+certificates. The checked-in root and imported modules can be regenerated
+before this target is built in CI. -/
 lean_lib Wow284Generated3942 where
   roots := #[`Wow284Generated3942]

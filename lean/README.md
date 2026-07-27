@@ -41,13 +41,22 @@ lake env lean Wow284ExtensionAudit.lean
 
 ## Orders 39 and 42
 
-These larger generated source sets are produced deterministically during CI:
+These larger generated source sets are checked in for direct small-file
+replay and reproduced deterministically by the generator:
 
 ```text
 python scripts/generate_lean39_42.py
 cd lean
-lake env lean Wow284Generated3942.lean
-lake env lean Wow284Generated3942Audit.lean
+lake build Wow284Generated3942
+lake env lean -DwarningAsError=true Wow284Generated3942.lean
+lake env lean -DwarningAsError=true Wow284Generated3942Audit.lean
+```
+
+On a server where Lake's default whole-DAG parallelism is too memory-hungry,
+run the warnings-fatal bounded builder from the repository root:
+
+```text
+bash scripts/build_lean3942_bounded.sh
 ```
 
 The order-39 endpoint proves minimum dual degree `35/6` and
@@ -63,7 +72,32 @@ files:
 python scripts/generate_lean39_42.py --verify-only
 ```
 
+## Standalone full development
+
+The deterministic standalone generator flattens both the committed module
+graph and the generated order-39/order-42 graph into one Lean source. The
+result retains only Mathlib imports, so it does not depend on any local
+`Wow284.*` module.
+
+```text
+python scripts/generate_lean_standalone.py
+python scripts/generate_lean_standalone.py --check
+cd lean
+lake env lean -DwarningAsError=true Wow284Standalone.lean
+```
+
+The standalone file includes the trust reports from
+`Wow284ExtensionAudit.lean` and `Wow284Generated3942Audit.lean`. It is a
+packaging of the formal scope described above; it does not enlarge that scope.
+
 ## Trust and source hygiene
+
+Run the core trust report separately with:
+
+```text
+cd lean
+lake env lean -DwarningAsError=true Wow284CoreAudit.lean
+```
 
 The CI source audit rejects imported occurrences of:
 

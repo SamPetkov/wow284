@@ -1,7 +1,7 @@
 # Deep literature audit for the next WOW-284 research directions
 
-**Audit date:** 24 July 2026  
-**Scope:** proposed extensions and open directions after the submitted manuscript  
+**Audit date:** 24 July 2026
+**Scope:** proposed extensions and open directions after the prior v1 manuscript package
 **Policy:** this audit controls wording and research priorities; it does not modify `main.tex` or the arXiv package.
 
 ## Executive assessment

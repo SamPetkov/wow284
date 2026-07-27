@@ -20,7 +20,8 @@ theorem M38q_eq_shifted_distance :
   by_cases h : i = j <;> simp [h, Int.cast_add, Int.cast_mul]
 
 theorem deltaPad_posDef : DeltaPad.PosDef := Matrix.PosDef.diagonal pivotPad_positive
-theorem lpad_isUnit : IsUnit Lpad := Matrix.isUnit_of_left_inverse lpad_left_inverse
+theorem lpad_isUnit : IsUnit Lpad :=
+  IsUnit.of_mul_eq_one_right LpadInv lpad_left_inverse
 theorem Mpad_posDef : Mpad.PosDef := by
   rw [← ldl_identity]
   rw [← Matrix.conjTranspose_eq_transpose_of_trivial]
@@ -49,7 +50,8 @@ private theorem deltaPadR_posDef : DeltaPadR.PosDef := by
   rw [deltaPadR_eq]; exact Matrix.PosDef.diagonal pivotPadR_positive
 private theorem lpadR_left_inverse : LpadInvR * LpadR = (1 : Matrix PadVertex PadVertex ℝ) := by
   rw [LpadInvR, LpadR, ← Matrix.map_mul, lpad_left_inverse]; simp
-private theorem lpadR_isUnit : IsUnit LpadR := Matrix.isUnit_of_left_inverse lpadR_left_inverse
+private theorem lpadR_isUnit : IsUnit LpadR :=
+  IsUnit.of_mul_eq_one_right LpadInvR lpadR_left_inverse
 private theorem ldl_identity_real : LpadR * DeltaPadR * LpadR.transpose = MpadR := by
   rw [LpadR, DeltaPadR, MpadR, ← Matrix.map_mul]
   change (Lpad * DeltaPad).map (Rat.castHom ℝ) *
