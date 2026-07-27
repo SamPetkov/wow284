@@ -1,0 +1,30 @@
+{
+  "claim_boundary": "The graph construction and adjacency list are attributed to Jorgensen. The distance characteristic polynomial and WOW-284 equality are project-side exact computations.",
+  "graph": "Jorgensen 9-regular girth-five graph of order 96",
+  "graph6": {
+    "bytes": 765,
+    "encoding": "NetworkX graph6 without the >>graph6<< header, fixed labels 0..95.",
+    "path": "data/jorgensen96/jorgensen96.graph6",
+    "sha256": "109adb04a5dc1cf3f6e91f8340ddad3561aff1df360c1372f85339d3eb4acb98"
+  },
+  "normalized_adjacency": {
+    "bytes": 4028,
+    "normalization": "Rows 0 through 95; neighbors sorted increasingly; one ASCII space around the colon and after the opening brace; comma-space separators; LF ending.",
+    "path": "data/jorgensen96/adjacency.txt",
+    "sha256": "5f58115d78b3c280720c6958ef43f256f96a9499f94c66e77df7ecb71bbde38a"
+  },
+  "published_construction": {
+    "author": "Leif K. Jorgensen",
+    "doi": "10.1016/j.disc.2004.08.029",
+    "journal": "Discrete Mathematics 293 (2005), 177-184",
+    "title": "Girth 5 Graphs from Relative Difference Sets"
+  },
+  "retrieved_at_utc": "2026-07-24T17:03:28Z",
+  "source_snapshot": {
+    "bytes": 4105,
+    "normalization": "Human-readable text displayed by the source page, preserved in row order; line endings normalized to LF. This is a text snapshot, not raw HTML bytes.",
+    "path": "data/jorgensen96/source_page_text.txt",
+    "sha256": "9589d90637d95d134a5de90cdc121b3fe002ed5dce71e5207593d995752e7974"
+  },
+  "source_url": "https://people.math.aau.dk/~leif/research/girth5/96.html"
+}
