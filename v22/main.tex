@@ -103,7 +103,8 @@ least five and diameter three, the counterexample score is
 \]
 where \(\theta\) ranges over the nonprincipal adjacency eigenvalues.  Every
 regular strict counterexample has degree at least six and diameter at most
-four; diameter-four counterexamples are excluded through degree nine.  We determine the
+four, and every diameter-four counterexample has degree at least ten.  We
+determine the
 exact optimum, and the unique optimizer up to scale, of the standard
 one-variable nonbacktracking linear-programming bound.  Localizing its
 extremal polynomial at an edge yields a five-cycle certificate which excludes
@@ -864,28 +865,45 @@ and
 \[
  M=-f_k(A)+\frac{C_k}{n}J.
 \]
-The spectral window gives \(M\succeq0\).  On an edge,
+The spectral window gives \(M\succeq0\).  For an edge \(uv\),
 \[
- (A^3)_{uv}=2k-1,
- \qquad (A^4)_{uv}=\sigma_{uv},
+ (A^3)_{uv}=\sum_{z\sim v}(A^2)_{uz}=k+(k-1)=2k-1.
 \]
-so the diagonal and edge entries of \(M\) are
+Here \(z=u\) contributes \(k\), while every other neighbour of \(v\) is at
+distance two from \(u\) and has a unique length-two path from \(u\).
+Moreover,
+\[
+ (A^4)_{uv}=\sum_z(A^2)_{uz}(A^2)_{zv}=\sigma_{uv}.
+\]
+Indeed, the nonzero summands away from the diagonal are precisely the vertices
+at distance two from both \(u\) and \(v\).  Their two unique length-two
+paths, together with \(uv\), form a five-cycle, and each five-cycle through
+\(uv\) yields one such vertex.  Since
+\(C_k=(k+2)^2(k^2+3)\), the diagonal and edge entries of \(M\) are
 \[
  a=\frac{C_k}{n}-6(k+2),
- \quad
+ \qquad
  b=\frac{C_k}{n}-(4k+14)-\sigma_{uv}.
 \]
-The \(2\times2\) principal minor gives \(-a\le b\le a\), yielding the first
-two bounds with their stated directions.
+The principal submatrix on \(\{u,v\}\) is
+\(\bigl(\begin{smallmatrix}a&b\\b&a\end{smallmatrix}\bigr)\), so
+\(a\ge0\) and \(-a\le b\le a\).  The inequality \(b\le a\) gives
+\(\sigma_{uv}\ge2k-2\), while \(b\ge-a\) gives the stated upper bound.
 
-For the last bound, radius-two balls have size \(k^2+1\), and
+For the final bound, every radius-two ball has size \(k^2+1\).  The set
+\[
+ \{u,v\}\cup(N(u)\setminus\{v\})\cup(N(v)\setminus\{u\})
+\]
+contains \(2k\) vertices and lies in \(B_2(u)\cap B_2(v)\).  Every further
+intersection vertex is at distance two from both endpoints and is therefore in
+the preceding five-cycle bijection.  Hence
 \[
  |B_2(u)\cap B_2(v)|=2k+\sigma_{uv}.
 \]
-The vertices at distance two from both endpoints are in bijection with the
-\(5\)-cycles through \(uv\).  Inclusion--exclusion gives the result.  The walk
-classification, sign directions, and radius-two bijection are independently
-checked by \codefile{scripts/verify_proof_audit_01_edge_local.py}.
+Inclusion--exclusion and \(n=k^2+1+c\) now give
+\(\sigma_{uv}\ge(k-1)^2-c\).  The complete walk classification, sign
+directions, and radius-two bijection are independently checked by
+\codefile{scripts/verify_proof_audit_01_edge_local.py}.
 \end{proof}
 
 \begin{theorem}\label{thm:degree-six-fifty}
@@ -930,9 +948,15 @@ k=9&:\quad n\le152.
 \end{corollary}
 
 \begin{proof}
-Apply Theorems~\ref{thm:diameter-four} and~\ref{thm:lp-ceiling}, then use the
-parity of \(kn\).  At \(k=8,n=111\), the edge-local bounds force every edge
-into exactly \(14\) five-cycles, but
+Theorem~\ref{thm:diameter-four} removes diameter four for these degrees.  At
+\(k=7\), the diameter-two case is the order-\(50\) Hoffman--Singleton graph,
+whereas Theorem~\ref{thm:lp-ceiling} gives \(n<78\) in diameter three;
+the handshake lemma makes \(n\) even, so \(n\le76\).  At \(k=8\) and
+\(k=9\), the Moore multiplicities are nonintegral, so diameter two is
+impossible.  The LP ceiling gives \(n\le111\) for \(k=8\) and
+\(n\le153\) for \(k=9\); parity improves the latter to \(152\).  Finally,
+at \(k=8,n=111\), the edge-local bounds force every edge into exactly
+\(14\) five-cycles, but
 \[
  5N_5=14\cdot444=6216
 \]
@@ -989,21 +1013,33 @@ possibilities.
 \end{theorem}
 
 \begin{proof}
-By Theorem~\ref{thm:degree-six-fifty}, the diameter is three.  Around a fixed
-vertex the distance layers have sizes \(1,6,30,13\).  If \(\tau\) is the
-number of five-cycles through the centre, the average row quotient is similar
-to the symmetric compression on normalized layer indicators.  Its
-nonprincipal factor \(q_\tau\) satisfies
+The diameter reduction used in Theorem~\ref{thm:degree-six-fifty} applies
+verbatim: diameter at least four gives a Rayleigh quotient at most \(-8\), and
+diameter two gives the trace contradiction from
+\((x-6)(x^2+x-5)^{18}\).  Hence the diameter is three.  Around a fixed vertex
+the distance layers have sizes \(1,6,30,13\).  If \(\tau\) is the number of
+five-cycles through the centre, the average row quotient is similar to the
+symmetric compression on normalized layer indicators.  Its nonprincipal factor
+\(q_\tau\) satisfies
 \[
  195q_\tau(-1+\sqrt{10})
- =(-215+56\sqrt{10})\tau+7350-1860\sqrt{10},
+ =(-215+56\sqrt{10})\tau+7350-1860\sqrt{10}.
 \]
-and \(195q_\tau(6)=1500(75-\tau)>0\).  Hence \(\tau\ge39\) would
-create a compression eigenvalue above the open WOW endpoint.  Conversely, the
-number \(150-2\tau\) of edges from the second to the third layer is at most
-\(13\cdot6\), so \(\tau\ge36\).  Thus
-\(\tau\in\{36,37,38\}\), and edge--cycle incidence gives the even
-high-edge subgraph and the formula for \(N_5\).
+The coefficient of \(\tau\) is negative because
+\(56^2\cdot10<215^2\), and at \(\tau=39\) the right-hand side is
+\(9(-115+36\sqrt{10})<0\).  Also
+\[
+ 195q_\tau(6)=1500(75-\tau)>0.
+\]
+The last inequality is strict: the third layer is nonempty and connected to the
+second, while their edge count is \(150-2\tau\).  Thus \(\tau\ge39\)
+would place a nonprincipal compression eigenvalue in
+\((-1+\sqrt{10},6)\), contradicting interlacing and the open WOW window.
+Conversely, \(150-2\tau\le13\cdot6\), so \(\tau\ge36\).  Hence
+\(\tau\in\{36,37,38\}\).  Finally,
+\(\sum_{e\ni v}\sigma_e=2\tau(v)\), so the high-edge degree is
+\(2\tau(v)-72\); counting edge--five-cycle incidences gives
+\(5N_5=12\cdot150+m\).
 
 For a two-path \(u-v-w\), girth at least five gives
 \((A^3)_{uw}=\alpha_{uvw}\) and
@@ -1011,8 +1047,10 @@ For a two-path \(u-v-w\), girth at least five gives
 minor of the centered positive-semidefinite matrix yields the displayed finite
 sets for \(r_{uvw}\), except for an apparent equality value \(r=29\).
 At equality, the Gram norm of \(e_u-e_w\) vanishes, so this vector lies in
-the kernel of the centered matrix.  On \(\one^\perp\), that kernel is the
-adjacency \(-2\)-eigenspace; however, the \(u\)-coordinate of
+the kernel of the centered matrix.  On \(\one^\perp\), that matrix is
+\(-f_6(A)\).  The strict shifted window excludes the two endpoint zeros of
+\(f_6\), leaving only its double zero at \(-2\); hence the kernel there is
+exactly the adjacency \(-2\)-eigenspace.  However, the \(u\)-coordinate of
 \(A(e_u-e_w)\) is zero because \(u\not\sim w\), whereas the
 \(u\)-coordinate of \(-2(e_u-e_w)\) is \(-2\).  This excludes
 \(r=29\).  Summing the local inequalities gives the first pair of
@@ -1091,36 +1129,66 @@ which is positive exactly for integers \(k\ge5\).
 \ref{thm:edge-puncture}]
 For one deleted vertex, put \(A=N(v)\), \(B=\Gamma_2(v)\), let \(C\) be
 the \(A\)-by-\(B\) incidence matrix, and let \(B_0\) be the adjacency
-matrix on \(B\).  Recomputed distances give
+matrix on \(B\).  Only pairs inside \(A\) lose their unique length-two path.
+For distinct \(a,a'\in A\), choose a neighbour \(b\in B\) of \(a\).  The
+unique common neighbour \(c\) of \(b,a'\) lies in \(B\), giving the
+surviving path \(a-b-c-a'\).  Hence
 \[
  D(H)=\begin{pmatrix}3(J-I)&2J-C\\2J-C^{\mathsf T}&2(J-I)-B_0\end{pmatrix}.
 \]
-The identities \(CC^{\mathsf T}=(k-1)I\), \(CB_0=J-C\), and the
-bottom-right block of the Moore relation yield the orthogonal decomposition
+The normalized constant quotient is
+\[
+ Q_1=\begin{pmatrix}
+ 3(k-1)&(2k-1)\sqrt{k-1}\\
+ (2k-1)\sqrt{k-1}&2k^2-3k-1
+ \end{pmatrix},
+\]
+whose eigenvalues are \(\rho_\pm\).  The identities
+\(CC^{\mathsf T}=(k-1)I\), \(CB_0=J-C\), and the bottom-right block of the
+Moore relation yield
 \[
  \mathbb R^{V(H)}=W_{\mathrm{const}}\perp W_{\mathrm{inc}}\perp\ker C,
  \qquad 2+2(k-1)+k(k-2)=k^2.
 \]
 On each zero-sum incidence module the action matrix is
 \(\bigl(\begin{smallmatrix}-3&-(k-1)\\-1&-1\end{smallmatrix}\bigr)\),
-giving \(-2\pm\sqrt{k}\); on \(\ker C\),
-\(B_0^2+B_0-(k-1)I=0\) and \(D=-2I-B_0\).  The normalized constant
-quotient supplies \(\rho_\pm\).
+giving \(-2\pm\sqrt{k}\).  On \(\ker C\),
+\(B_0^2+B_0-(k-1)I=0\), \(D=-2I-B_0\), and the trace of \(B_0\) is
+zero after removing the constant and incidence images; dimension and trace give
+\(m_\pm\).
 
-For an adjacent deleted pair, the cells
-\(A=N(u)\setminus\{v\}\), \(B=N(v)\setminus\{u\}\), and the residual
-cell give an antisymmetric constant line, a symmetric two-dimensional
-quotient, two zero-sum incidence modules, and a residual kernel.  Their
-dimensions add to
+For an adjacent deleted pair, put
+\(A=N(u)\setminus\{v\}\), \(B=N(v)\setminus\{u\}\), and let \(C\) be
+the residual cell.  Only pairs inside \(A\) or inside \(B\) lose a
+length-two path; the same unique-common-neighbour construction supplies a
+surviving length-three path.  The antisymmetric constant line has eigenvalue
+\(k-4\), and the normalized symmetric quotient is
+\[
+ Q_2=\begin{pmatrix}
+ 5k-8&\sqrt{(k-1)(2k-3)(4k-6)}\\
+ \sqrt{(k-1)(2k-3)(4k-6)}&2k^2-5k+2
+ \end{pmatrix},
+\]
+with eigenvalues \(\sigma_\pm\).  Two zero-sum incidence modules and a
+residual kernel complete the decomposition, with
 \[
  3+2(2k-4)+(k-2)^2=k^2-1.
 \]
-The same incidence action gives \(-2\pm\sqrt{k}\), the residual Moore
-relation gives the \(a_\pm\) factors, and positive definiteness of the two
-shifted constant quotients shows that no quotient or residual root lies below
-\(-2-\sqrt{k}\).  Exact quotient normalization, trace-to-multiplicity
-equations, replacement paths, and all least-root comparisons are independently
-checked by \codefile{scripts/verify_proof_audit_05_small_moore_punctures.py}.
+The residual adjacency trace is \(k-2\), giving \(a_\pm\).  The residual
+negative root is greater than \(-2-\sqrt{k}\), and the same is true of the
+smaller constant-quotient roots because
+\[
+ \det(Q_1+(2+\sqrt{k})I)
+ =k(2k^2+2k^{3/2}-3k+2)>0,
+\]
+\[
+ \det(Q_2+(2+\sqrt{k})I)
+ =(\sqrt{k}-1)(\sqrt{k}+1)
+ (2k^2+2k^{3/2}-3k+2\sqrt{k}+6)>0.
+\]
+Exact quotient normalization, trace-to-multiplicity equations, replacement
+paths, and all least-root comparisons are independently checked by
+\codefile{scripts/verify_proof_audit_05_small_moore_punctures.py}.
 \end{proof}
 
 \begin{theorem}[Two nonadjacent deleted vertices]\label{thm:nonadjacent-puncture}
@@ -1193,7 +1261,15 @@ the remaining condition is \(P(k)>0\), where
 \[
  P(k)=4k^8-39k^7+95k^6+9k^5-173k^4-36k^3+116k^2+80k+16.
 \]
-Writing \(k=m+6\) makes every coefficient positive.  The direct sum,
+Writing \(k=m+6\) gives
+\[
+\begin{aligned}
+ P(m+6)={}&4m^8+153m^7+2489m^6+22329m^5\\
+ &+119437m^4+382236m^3+685268m^2\\
+ &+559616m+75952>0.
+\end{aligned}
+\]
+The direct sum,
 injectivity, orthogonality, all recomputed distances, and the polynomial sign
 are independently checked by
 \codefile{scripts/verify_proof_audit_03_nonadjacent_puncture.py} and
@@ -1252,16 +1328,24 @@ Let \(B\) be the surviving-vertex by deleted-vertex incidence matrix.  Then
 \end{theorem}
 
 \begin{proof}
-If the unique common neighbour of two surviving nonadjacent vertices is
-deleted, the Moore geometry constructs \(k-1\) internally vertex-disjoint
-length-three replacement paths.  Since at most \(s-1\le k-2\) further
-vertices are deleted, one survives.  Thus the distance increases from two to
-exactly three precisely when a deleted vertex was the unique common neighbour,
-which proves the matrix formula.
-
-For \(x\in V(H)\), let \(t_x=|N_M(x)\cap S|\).  Then
+Let \(x,y\in V(H)\) be nonadjacent in \(M\), and suppose their unique common
+neighbour \(z\) lies in \(S\).  For every
+\(a\in N_M(x)\setminus\{z\}\), the vertices \(a,y\) are nonadjacent and
+have a unique common neighbour \(b_a\).  Thus
 \[
- \sum_{y\in N_H(x)}t_y\le s-t_x
+ x-a-b_a-y
+\]
+is a length-three path.  These \(k-1\) paths are internally vertex-disjoint:
+a shared vertex \(b_a=b_{a'}\) would give a four-cycle, while
+\(b_a=a'\) would give a triangle through \(x\).  Besides \(z\), at most
+\(s-1\le k-2\) vertices are deleted, so one path survives.  Hence a destroyed
+length-two path becomes distance exactly three, which proves the matrix formula.
+
+For \(x\in V(H)\), let \(t_x=|N_M(x)\cap S|\).  A deleted neighbour of
+\(x\) is adjacent to no surviving neighbour of \(x\), by triangle-freeness;
+each other deleted vertex has at most one common neighbour with \(x\).  Thus
+\[
+ \sum_{y\in N_H(x)}t_y\le s-t_x.
 \]
 and
 \[
@@ -1352,13 +1436,13 @@ case, \(2k-2=s^2\) forces \(s\) even.  The exact scalar audit is
 \codefile{scripts/verify_equality_boundary.py}.
 \end{proof}
 
-J\o rgensen's \(9\)-regular order-\(96\) graph of girth five is an exact equality
+J{\o}rgensen's \(9\)-regular order-\(96\) graph of girth five is an exact equality
 case:
 \[
  \delta^*=9,
  \qquad \lambda_{\min}(D)=-9,
 \]
-with multiplicity eight.  The construction is due to J\o rgensen
+with multiplicity eight.  The construction is due to J{\o}rgensen
 \cite{Jorgensen2005}; the three local graph representations, handwritten
 graph6 decoder, characteristic polynomials, root intervals, and provenance
 boundary are checked by
@@ -1388,18 +1472,33 @@ WOW-284.
 \begin{proof}
 The zero Fourier block has eigenvalues \(m+2\), \(2-m\), and \(2\) with
 multiplicity \(2m-2\); the shifted WOW window leaves only
-\(m\in\{4,5,6\}\).  Let \(\omega=e^{2\pi\mathrm i/q}\).  On the nonzero character
-\(t=1\), the adjacency block has form
+\(m\in\{4,5,6\}\).  Let \(\omega=e^{2\pi\mathrm i/q}\).  On the nonzero
+character \(t=1\), the adjacency block has form
 \[
  \begin{pmatrix}aI&M\\M^*&bI\end{pmatrix},
- \qquad M_{ik}=\omega^{ik},
+ \qquad a=2\cos\frac{2\pi}{q},
+ \quad b=2\cos\frac{4\pi}{q},
+ \quad M_{ik}=\omega^{ik}.
 \]
-and \(\|M\|_F^2=m^2\), so its largest singular value is at least
-\(\sqrt m\).  The block therefore has a nonprincipal eigenvalue at least
+If \(\sigma\) is a singular value of \(M\), the associated two-dimensional
+invariant subspace carries
+\(\bigl(\begin{smallmatrix}a&\sigma\\\sigma&b\end{smallmatrix}\bigr)\).
+Since \(\|M\|_F^2=m^2\), one singular value satisfies
+\(\sigma^2\ge m\), and the block has a nonprincipal eigenvalue at least
 \[
- \sqrt m+\cos(\pi/7)-\frac12,
+ \sqrt m+\frac{a+b}{2}
+ \ge \sqrt m+\cos(\pi/7)-\frac12.
 \]
-which lies above \(-1+\sqrt{2m+2}\) for \(m=4,5,6\).  The common-neighbour
+Here the last inequality uses
+\(2\cos(2\pi/7)+2\cos(4\pi/7)=2\cos(\pi/7)-1\).
+Moreover \(\cos(\pi/7)>\sqrt3/2\), and the increasing function
+\(h(m)=\sqrt{2m+2}-\sqrt m\) satisfies
+\[
+ h(m)\le h(6)=\sqrt{14}-\sqrt6
+ <\frac{27}{20}<\frac{\sqrt3+1}{2}.
+\]
+Thus the displayed nonprincipal eigenvalue lies above
+\(-1+\sqrt{2m+2}\) for \(m=4,5,6\).  The common-neighbour
 case split, Fourier reduction, radical comparisons, and exact \(q=7\) controls
 are independently checked by
 \codefile{scripts/verify_proof_audit_08_prime_field.py}.
@@ -1442,7 +1541,7 @@ orbits of sizes \(20\) and \(100\).  The representatives have different
 adjacency characteristic polynomials, so the orbits are distinct isomorphism
 classes.  Exact distance characteristic polynomials and Sturm separators give
 the stated least roots.  All \(120\) matchings, \(400\) coordinate maps,
-\(48000\) matching images, orbit coverage, graph hypotheses, and root
+\(48{,}000\) matching images, orbit coverage, graph hypotheses, and root
 certificates are checked
 by \codefile{scripts/verify_proof_audit_07_layer_matchings.py}.
 \end{proof}
