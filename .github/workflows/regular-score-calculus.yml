@@ -1,0 +1,30 @@
+name: Regular WOW-score calculus
+
+on:
+  pull_request:
+    paths:
+      - "research-notes/REGULAR_SCORE_CALCULUS.md"
+      - "scripts/verify_regular_score_calculus.py"
+      - ".github/workflows/regular-score-calculus.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-score-calculus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compile verifier
+        run: python -m py_compile scripts/verify_regular_score_calculus.py
+      - name: Run exact verifier
+        run: python scripts/verify_regular_score_calculus.py
+      - name: Check theorem markers
+        run: |
+          grep -F "Phi(G)=2k-2-rho_{-1}(G)^2" research-notes/REGULAR_SCORE_CALCULUS.md >/dev/null || \
+            grep -F '\Phi(G)=2k-2-\rho_{-1}(G)^2' research-notes/REGULAR_SCORE_CALCULUS.md >/dev/null
+          grep -F "k-2-\\lambda_2(A)" research-notes/REGULAR_SCORE_CALCULUS.md >/dev/null
