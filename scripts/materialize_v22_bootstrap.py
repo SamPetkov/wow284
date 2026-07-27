@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import shutil
 import subprocess
+import sys
 import tarfile
 import tempfile
 import traceback
@@ -111,7 +112,7 @@ def copy_sources(source: Path) -> list[str]:
 
     # The first preserved payload was intentionally TeX-only. Copy the current
     # canonical bibliography files as temporary build companions; the integrated
-    # audit later replaces them with the expanded bibliography.
+    # audit then expands that bibliography deterministically.
     for name in ("references.bib", "main.bbl"):
         if name not in copied:
             fallback = ROOT / name
@@ -124,6 +125,14 @@ def copy_sources(source: Path) -> list[str]:
         newline="\n",
     )
     return copied
+
+
+def apply_audited_revision() -> None:
+    subprocess.run(
+        [sys.executable, str(ROOT / "scripts" / "revise_v22_manuscript.py")],
+        cwd=ROOT,
+        check=True,
+    )
 
 
 def publish_materialized_source_in_ci() -> None:
@@ -164,7 +173,7 @@ def publish_materialized_source_in_ci() -> None:
         "git",
         "commit",
         "-m",
-        "Materialize expanded v2.2 manuscript source [skip ci]",
+        "Materialize revised v2.2 manuscript source [skip ci]",
     )
     run("git", "push", "origin", f"HEAD:{head_ref}")
     print(f"materialized v2.2 source pushed to {head_ref}")
@@ -188,7 +197,8 @@ def materialize() -> None:
         source = find_source_root(extracted)
         print(f"source root: {source.relative_to(extracted)}")
         copied = copy_sources(source)
-    print("v2.2 manuscript materialization: PASS")
+    apply_audited_revision()
+    print("v2.2 manuscript materialization and revision: PASS")
     print(f"source files copied: {len(copied)}")
     for item in copied:
         print(item)
