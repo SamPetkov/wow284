@@ -27,6 +27,10 @@ verification route have all been checked.
 | 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `queued` |
 | 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `queued` |
 | 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `queued` |
+| 10 | General endpoint-neighborhood diameter obstruction | support disjointness, cross-distance inequality direction, radical comparison, integer rounding | `queued` |
+| 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
+| 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `queued` |
+| 13 | Hoffman--Singleton deletion robustness radius five | generator provenance, orbit exhaustion, exact LDL signs, explicit six-deletion sharpness | `queued` |
 
 ## Audit 01 outcome
 
@@ -86,6 +90,6 @@ Each audit PR must contain:
 7. a list of discovered corrections, including wording-only corrections;
 8. a CI entry and inclusion in the no-floating proof-path audit.
 
-No audit may silently strengthen a theorem. If a missing reduction can be
-proved, it must be stated as a separate lemma. Otherwise the theorem statement
+No audit may silently strengthen a theorem.  If a missing reduction can be
+proved, it must be stated as a separate lemma.  Otherwise the theorem statement
 must be narrowed.

@@ -208,6 +208,10 @@ def main() -> None:
             continue
         if any(part in {".git", ".lake", ".venv", "tmp", "__pycache__"} for part in path.relative_to(ROOT).parts):
             continue
+        raw = path.read_bytes()
+        if path.suffix.lower() in {".md", ".tex"}:
+            require(b"\t" not in raw, f"tab control byte in prose source {path}")
+            require(b"\r" not in raw, f"carriage-return control byte in prose source {path}")
         text = path.read_text(encoding="utf-8")
         require(not any(marker in text for marker in mojibake_markers), f"mojibake marker in {path}")
 
