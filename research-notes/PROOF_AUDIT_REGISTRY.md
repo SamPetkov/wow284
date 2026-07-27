@@ -25,7 +25,7 @@ verification route have all been checked.
 | 05 | One-vertex and adjacent-edge Moore-puncture spectra | quotient normalization, least-root comparison, multiplicity accounting | `pass_after_correction` |
 | 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `pass_after_correction` |
 | 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `pass_after_correction` |
-| 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `queued` |
+| 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `pass_after_correction` |
 | 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `queued` |
 | 10 | General endpoint-neighborhood diameter obstruction | support disjointness, cross-distance inequality direction, radical comparison, integer rounding | `queued` |
 | 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
@@ -203,6 +203,28 @@ all 120 graph hypotheses, the 20/100 orbit exhaustion, both adjacency and
 distance characteristic-polynomial pairs, and both exact Sturm least-root
 certificates. The classification remains limited to the displayed
 `M_pi` family and does not cover all perfect matchings.
+
+## Audit 08 outcome
+
+The balanced prime-field diameter-three obstruction is correct. The zero
+character reduces the possible layer count to `m in {4,5,6}`. A nonzero
+character block then contains a nonprincipal adjacency eigenvalue above the
+upper WOW boundary.
+
+Three proof transitions were expanded:
+
+1. the full common-neighbor case split now separately excludes triangles and
+   4-cycles;
+2. a singular-vector pair for the cross matrix gives an explicit invariant
+   two-dimensional Hermitian block;
+3. the exact `q=7` controls now certify a nonprincipal root beyond the upper
+   boundary, rather than merely recomputing characteristic polynomials.
+
+The independent verifier checks the graph hypotheses for all seven `q=7`
+members, the complete characteristic polynomials for `m=4,5,6`, and exact
+Sturm counts beyond rational separators. The theorem remains conditional on
+diameter three and does not address higher-diameter or different finite-field
+families.
 
 ## Required structure of every audit
 
