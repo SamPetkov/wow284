@@ -23,7 +23,7 @@ verification route have all been checked.
 | 03 | Nonadjacent Moore-puncture distance spectrum | recomputed distances, invariant direct sum, injectivity, residual trace, multiplicities | `pass` |
 | 04 | Every regular strict counterexample has degree at least six | diameter reductions, four `(5,5)`-cage exhaustion, interlacing direction | `pass` |
 | 05 | One-vertex and adjacent-edge Moore-puncture spectra | quotient normalization, least-root comparison, multiplicity accounting | `pass_after_correction` |
-| 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `queued` |
+| 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `pass_after_correction` |
 | 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `queued` |
 | 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `queued` |
 | 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `queued` |
@@ -157,6 +157,32 @@ quadratic relation, trace-to-multiplicity equations, exact least-root
 comparisons, dual-degree minima, and score thresholds. It also supplies
 explicit surviving length-three paths for every pair whose unique length-two
 route used a deleted vertex. No spectrum or threshold changes.
+
+## Audit 06 outcome
+
+The order-50 feasibility system passes. The vertex-cycle range, high-edge
+subgraph constraints, refined two-path table, four bounds on the number of
+6-cycles, and the 266-profile enumeration all survive independent exact checks.
+
+Two expository corrections are required. First, the displayed layer matrix is
+an average row quotient, not necessarily an equitable quotient. It is similar
+to the symmetric normalized compression through the layer-size matrix, and
+that symmetric compression is the object to which interlacing applies. Second,
+the final theorem must combine the original determinant table with the later
+kernel argument excluding `r=29`.
+
+The audit proves the walk-to-cycle identities
+
+\[
+(A^3)_{uw}=\alpha_{uvw},
+\qquad
+(A^4)_{uw}=16+\beta_{uvw},
+\]
+
+checks the centered three-vertex Gram minors, reconstructs the shifted moments
+through degree six from nonbacktracking trace identities, and verifies both
+Schur complements. The result remains a necessary-condition and search-pruning
+theorem; it does not prove nonexistence at order 50.
 
 ## Required structure of every audit
 
