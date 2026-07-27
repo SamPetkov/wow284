@@ -6,6 +6,7 @@ on:
       - "scripts/.v22-bootstrap/main.*"
       - "scripts/materialize_v22_bootstrap.py"
       - ".github/workflows/materialize-v22.yml"
+      - "v22/**"
   workflow_dispatch:
 
 permissions:
@@ -76,12 +77,12 @@ jobs:
       - name: Install TeX
         run: |
           sudo apt-get update
-          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended poppler-utils
-      - name: Compile modular manuscript
+          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-bibtex-extra poppler-utils
+      - name: Compile expanded manuscript
         working-directory: v22
         run: |
-          latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
-          if grep -E "undefined references|Citation .* undefined|LaTeX Warning: Reference .* undefined|Overfull \\hbox|Underfull \\hbox|Missing character" main.log; then
+          latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
+          if grep -E "undefined citations|undefined references|There were undefined|Overfull \\hbox|Underfull \\hbox|Missing character" main.log; then
             echo "publication warning found" >&2
             exit 1
           fi
