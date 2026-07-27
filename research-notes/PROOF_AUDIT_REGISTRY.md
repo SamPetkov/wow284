@@ -20,7 +20,7 @@ verification route have all been checked.
 | --- | --- | --- | --- |
 | 01 | Edge-local exclusion of degree-six order 51 | walk-count identities, theorem scope, PSD entry bounds, cycle-incidence congruence | `pass_after_correction` |
 | 02 | All-degree ceiling of the two-sided nonbacktracking LP method | dual feasibility for every degree, Chebyshev tail, exact match to the admissible coefficient cone | `pass` |
-| 03 | Nonadjacent Moore-puncture distance spectrum | invariant direct sum, injectivity, residual trace, multiplicities | `queued` |
+| 03 | Nonadjacent Moore-puncture distance spectrum | recomputed distances, invariant direct sum, injectivity, residual trace, multiplicities | `pass_after_correction` |
 | 04 | Every regular strict counterexample has degree at least six | diameter reductions, four `(5,5)`-cage exhaustion, interlacing direction | `queued` |
 | 05 | One-vertex and adjacent-edge Moore-puncture spectra | quotient normalization, least-root comparison, multiplicity accounting | `queued` |
 | 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `queued` |
@@ -76,6 +76,37 @@ The wording is narrowed to the exact method being optimized: the one-variable,
 girth-five nonbacktracking LP cone. No statement is made about multipoint or
 semidefinite hierarchies.
 
+## Audit 03 outcome
+
+The nonadjacent Moore-puncture factorisation is correct. The five-cell quotient,
+incidence identities, invariant modules, residual quadratic relation, trace
+calculation, multiplicities, and dual-degree minimum all pass independent exact
+checks.
+
+One logically necessary step was compressed in the original exposition. It
+asserted
+
+\[
+D(H)=2(J-I)-A(H)+F
+\]
+
+without explicitly proving that pairs whose unique two-step path used a deleted
+vertex still have distance exactly three. The audit supplies explicit surviving
+length-three paths for:
+
+1. a pair `w,a` inside one deleted neighbourhood;
+2. two distinct vertices `a,a'` inside that neighbourhood;
+3. the symmetric cases around the second deleted vertex.
+
+This is an expository correction rather than a change to the theorem. Once the
+metric lemma is inserted, the direct sum has dimensions
+
+\[
+5+2(k-2)+2(k-2)+2(k-3)+(k-2)(k-4)=k^2-1,
+\]
+
+so every distance eigenspace and algebraic multiplicity is accounted for.
+
 ## Required structure of every audit
 
 Each audit PR must contain:
@@ -90,6 +121,6 @@ Each audit PR must contain:
 7. a list of discovered corrections, including wording-only corrections;
 8. a CI entry and inclusion in the no-floating proof-path audit.
 
-No audit may silently strengthen a theorem.  If a missing reduction can be
-proved, it must be stated as a separate lemma.  Otherwise the theorem statement
+No audit may silently strengthen a theorem. If a missing reduction can be
+proved, it must be stated as a separate lemma. Otherwise the theorem statement
 must be narrowed.
