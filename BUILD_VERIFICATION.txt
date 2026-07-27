@@ -77,6 +77,15 @@ PASS  scripts/verify_regular_score_calculus.py: exact diameter-two/three
 PASS  scripts/verify_proof_audit_02_two_sided_lp.py: exact primal/dual
       identities, positive finite and uniform-tail slacks, and optimizer
       rigidity for the stated one-variable girth-five LP cone.
+PASS  scripts/verify_proof_audit_03_nonadjacent_puncture.py: symbolic
+      quotient/module factorization plus independent finite order-48
+      reconstruction, direct-sum, characteristic-polynomial, and LDL audit.
+PASS  scripts/verify_proof_audit_04_regular_low_degree.py: exact case
+      reductions, compression inequalities, and independent reconstruction
+      of all four committed (5,5)-cage records.
+NOTE  Audit 04 uses Meringer's published isomorph-free exhaustion as an
+      external classification input; the repository checks the four resulting
+      records but does not reproduce the exhaustive generation.
 PASS  scripts/generate_lean_diagonalization.py --check.
 PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
       distance CSV files.

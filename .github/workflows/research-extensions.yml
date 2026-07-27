@@ -23,6 +23,7 @@ on:
       - "scripts/verify_proof_audit_01_edge_local.py"
       - "scripts/verify_proof_audit_02_two_sided_lp.py"
       - "scripts/verify_proof_audit_03_nonadjacent_puncture.py"
+      - "scripts/verify_proof_audit_04_regular_low_degree.py"
       - "scripts/verify_diameter_puncture_extensions.py"
       - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
@@ -53,6 +54,7 @@ on:
       - "scripts/verify_proof_audit_01_edge_local.py"
       - "scripts/verify_proof_audit_02_two_sided_lp.py"
       - "scripts/verify_proof_audit_03_nonadjacent_puncture.py"
+      - "scripts/verify_proof_audit_04_regular_low_degree.py"
       - "scripts/verify_diameter_puncture_extensions.py"
       - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
@@ -97,6 +99,7 @@ jobs:
           python -m py_compile scripts/verify_proof_audit_01_edge_local.py
           python -m py_compile scripts/verify_proof_audit_02_two_sided_lp.py
           python -m py_compile scripts/verify_proof_audit_03_nonadjacent_puncture.py
+          python -m py_compile scripts/verify_proof_audit_04_regular_low_degree.py
           python -m py_compile scripts/verify_diameter_puncture_extensions.py
           python -m py_compile scripts/verify_low_degree_windows.py
       - name: Reject floating-point spectral decisions in proof paths
@@ -137,6 +140,8 @@ jobs:
         run: python scripts/verify_proof_audit_02_two_sided_lp.py
       - name: Run systematic Proof Audit 03
         run: python scripts/verify_proof_audit_03_nonadjacent_puncture.py
+      - name: Run systematic Proof Audit 04
+        run: python scripts/verify_proof_audit_04_regular_low_degree.py
       - name: Verify diameter obstructions and puncture robustness
         run: python scripts/verify_diameter_puncture_extensions.py
       - name: Verify low-degree regular windows

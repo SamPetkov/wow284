@@ -1,8 +1,8 @@
 # Source, novelty, and dependency ledger
 
 **Author:** Samuil Petkov<br>
-**Repository revision:** 24 July 2026; active PDF date suppressed<br>
-**Last targeted search:** 23 July 2026
+**Repository revision:** 27 July 2026; active PDF date suppressed<br>
+**Last targeted search:** 27 July 2026
 
 ## Claim-level source map
 
@@ -15,6 +15,7 @@
 | Exact coordinate realization | Paul R. Hafner, *Journal of Algebraic Combinatorics* 18 (2003), Theorem 2.1, DOI `10.1023/A:1025136524481` | Published affine-coordinate form of Robertson's pentagon-and-pentagram construction; after reindexing the `Q`-layers by `k -> -k`, its adjacency rules are exactly those used here. |
 | Distance spectra of minimal cages | Aditi Howlader and Pratima Panigrahi, *Linear Algebra and its Applications* 636 (2022), Theorems 2.3 and 2.5(1), DOI `10.1016/j.laa.2021.11.014`, arXiv:2109.05274 | Prior distance-polynomial framework for minimal `(k,5)`-cages and explicit Petersen, Hoffman-Singleton, and hypothetical degree-57 spectra; explicitly credited. |
 | Classical 40-vertex `(6,5)`-cage | O'Keefe and Wong, *Journal of Combinatorial Theory B* 26 (1979), DOI `10.1016/0095-8956(79)90052-2`; Wong, *Journal of Graph Theory* 3 (1979), DOI `10.1002/jgt.3190030413` | Construction and uniqueness of the classical cage; this is a minimum-order statement among 6-regular girth-five graphs, not among WOW-284 counterexamples. |
+| Exhaustion of the `(5,5)`-cages | Markus Meringer, *Journal of Graph Theory* 30 (1999), 137--146, DOI `10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G` | External exhaustive input that the minimum order is 30 and exactly four nonisomorphic `(5,5)`-cages exist. The repository independently reconstructs and checks the four committed records but does not re-run the isomorph-free exhaustion. |
 | Petersen deletion realization | Klin, Muzychuk, and Ziv-Av, *Michigan Mathematical Journal* 58 (2009), Section 3.6, DOI `10.1307/mmj/1242071692` | Published structural context for obtaining the 40-vertex graph from Hoffman-Singleton. |
 | Hoffman-Singleton second subconstituent | van Dam and Haemers, *Linear Algebra and its Applications* 373 (2003), Table 3, DOI `10.1016/S0024-3795(03)00483-X` | Published identification and adjacency spectrum of the classical 42-vertex graph. |
 | Jørgensen order-96 `(9,5)` graph | Leif K. Jørgensen, *Discrete Mathematics* 293 (2005), 177-184, DOI `10.1016/j.disc.2004.08.029`; author-hosted adjacency list at `https://people.math.aau.dk/~leif/research/girth5/96.html` | The published source supports the relative-difference-set construction, order 96, degree 9, and girth five. The stored 96-line adjacency list matches the author-hosted list after whitespace normalization. Diameter, transmission, distance polynomial, least distance eigenvalue `-9`, WOW equality, and deletion screens are repository computations, not claims attributed to the paper. This research-only control is not currently part of the manuscript. |

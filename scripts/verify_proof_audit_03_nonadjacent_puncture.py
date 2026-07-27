@@ -178,6 +178,10 @@ def generic_symbolic_audit() -> dict[str, str]:
     trace_k = 2 * (k - 2)
     r = (-1 + delta) / 2
     s = (-1 - delta) / 2
+    residual_relation = sp.expand(4 * (r**2 + r - (k - 1)))
+    expected_relation = delta**2 - (4 * k - 3)
+    if residual_relation != expected_relation:
+        raise AssertionError("wrong residual quadratic relation")
     mult_r = (k - 2) * (k + (k - 4) * delta) / (2 * delta)
     mult_s = (k - 2) * ((k - 4) * delta - k) / (2 * delta)
     if sp.simplify(mult_r + mult_s - dim_k) != 0:
@@ -215,6 +219,7 @@ def generic_symbolic_audit() -> dict[str, str]:
         "module_factors": str(expected_factors),
         "residual_dimension": str(dim_k),
         "residual_trace": str(trace_k),
+        "residual_discriminant_relation": str(expected_relation),
         "total_dimension": str(total_dimension),
         "dual_degree_gap": str(dual_gap),
     }
