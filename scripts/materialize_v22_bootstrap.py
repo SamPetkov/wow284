@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Materialize the reviewed v2.2 manuscript source from deterministic chunks."""
+"""Materialize the preserved expanded manuscript from deterministic chunks."""
 from __future__ import annotations
 
 import base64
@@ -59,7 +59,7 @@ def extract_payload(payload: bytes, target: Path) -> str:
         mapping = json.loads(text)
     except json.JSONDecodeError:
         (target / "main.tex").write_text(text, encoding="utf-8", newline="\n")
-        return "single UTF-8 file"
+        return "single monolithic UTF-8 TeX file"
     if not isinstance(mapping, dict):
         raise AssertionError("JSON bootstrap must be a path-to-content object")
     for name, content in mapping.items():
@@ -76,13 +76,19 @@ def find_source_root(extracted: Path) -> Path:
     candidates = [extracted]
     candidates.extend(path for path in extracted.rglob("*") if path.is_dir())
     for candidate in candidates:
-        if (candidate / "main.tex").is_file() and (candidate / "sections").is_dir():
+        if (candidate / "main.tex").is_file():
             return candidate
     inventory = sorted(path.relative_to(extracted).as_posix() for path in extracted.rglob("*"))
-    raise AssertionError(
-        "bootstrap does not contain main.tex and sections/; inventory="
-        + repr(inventory[:80])
-    )
+    raise AssertionError("bootstrap contains no main.tex; inventory=" + repr(inventory[:80]))
+
+
+def copy_text(path: Path, destination: Path) -> None:
+    data = path.read_bytes()
+    if any(byte < 32 and byte not in {9, 10} for byte in data):
+        raise AssertionError(f"forbidden control byte in {path}")
+    text = data.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
+    destination.parent.mkdir(parents=True, exist_ok=True)
+    destination.write_text(text, encoding="utf-8", newline="\n")
 
 
 def copy_sources(source: Path) -> list[str]:
@@ -96,20 +102,20 @@ def copy_sources(source: Path) -> list[str]:
         relative = path.relative_to(source)
         if path.suffix not in ALLOWED_SUFFIXES and path.name not in ALLOWED_NAMES:
             continue
-        destination = OUTPUT / relative
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        data = path.read_bytes()
-        if any(byte < 32 and byte not in {9, 10} for byte in data):
-            raise AssertionError(f"forbidden control byte in {relative}")
-        text = data.decode("utf-8").replace("\r\n", "\n").replace("\r", "\n")
-        destination.write_text(text, encoding="utf-8", newline="\n")
+        copy_text(path, OUTPUT / relative)
         copied.append(relative.as_posix())
-    required = {"main.tex", "references.bib", "main.bbl"}
-    missing = required - set(copied)
-    if missing:
-        raise AssertionError(f"bootstrap is missing publication files: {sorted(missing)}")
-    if not any(item.startswith("sections/") and item.endswith(".tex") for item in copied):
-        raise AssertionError("bootstrap contains no modular section sources")
+    if "main.tex" not in copied:
+        raise AssertionError("bootstrap is missing main.tex")
+
+    # The first preserved payload was intentionally TeX-only.  Copy the current
+    # canonical bibliography files as temporary build companions; the integrated
+    # audit later replaces them with the expanded bibliography.
+    for name in ("references.bib", "main.bbl"):
+        if name not in copied:
+            fallback = ROOT / name
+            if fallback.is_file():
+                copy_text(fallback, OUTPUT / name)
+                copied.append(name)
     (OUTPUT / ".materialized").write_text(
         "Generated deterministically from scripts/.v22-bootstrap/main.*\n",
         encoding="utf-8",
