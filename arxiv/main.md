@@ -761,11 +761,19 @@ The extended verifier reconstructs the 42-, 40-, 39-, and 38-vertex graphs from 
 
 Finally, `scripts/verify_descendant_families.py` exhausts the 40 labelled single-vertex and 120 labelled edge-endpoint deletions. SymPy supplies exact integer characteristic polynomials $`\det(tI-D)`$ and Sturm counts of their square-free parts ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The recorded output is `supplement/extended_2026-07-23/logs/descendant_family_output.txt`; the enclosing `SHA256SUMS` records the expected SHA-256 digest of that output and every other archived certificate, permitting byte-for-byte integrity checks. The cross-platform command
 
-    python scripts/verify_extended.py
+<div class="center">
+
+`python scripts/verify_extended.py`
+
+</div>
 
 runs the exact certificates for the explicit non-50 constructions, the independent graph6 audit, the descendant-family verification, and the byte-for-byte graph-export checks. The balanced layer-deletion chain, the Odd graph, and the Heawood graph are checked by
 
-    python scripts/explore_generalizations.py
+<div class="center">
+
+`python scripts/explore_generalizations.py`
+
+</div>
 
 which also performs the separately labelled floating-point three-vertex screen. No floating-point eigenvalue evidence is used for any theorem.
 
@@ -783,7 +791,7 @@ The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is mad
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The earlier arXiv submission was withdrawn. The prior computational archive remains available as GitHub release [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv). The verified v2 research release is [`v2.1.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.1.0); its contents are identified by the repository manifest and `SHA256SUMS`. It is not an active arXiv submission.
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). This manuscript corresponds to GitHub release [`v2.1.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.1.0). Its contents are identified by the repository manifest and `SHA256SUMS`.
 
 # Exact distance characteristic polynomials
 

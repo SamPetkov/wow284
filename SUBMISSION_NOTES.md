@@ -1,8 +1,6 @@
 # arXiv metadata
 
-**Status:** No active arXiv submission. The earlier submission was withdrawn.
-This file describes the verified v2 research release and source package for a
-possible future submission.
+**Release:** This manuscript corresponds to GitHub release `v2.1.0`.
 
 **Title:** Exact Counterexamples and Spectral Mechanisms for WOW-284
 
@@ -17,8 +15,6 @@ possible future submission.
 **Comments:** 14 pages. Exact computations and Lean 4.31 certificates.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
-
-**Prior public computational release:** `v2.0.5-arxiv`
 
 **Current public research release:** `v2.1.0`
 

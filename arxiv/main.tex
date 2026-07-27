@@ -1110,16 +1110,16 @@ enclosing \path{SHA256SUMS} records the expected SHA-256 digest of that output
 and every other archived certificate, permitting byte-for-byte integrity
 checks.
 The cross-platform command
-\begin{verbatim}
-python scripts/verify_extended.py
-\end{verbatim}
+\begin{center}
+\mbox{\texttt{python scripts/verify\_extended.py}}
+\end{center}
 runs the exact certificates for the explicit non-50 constructions, the
 independent graph6 audit, the descendant-family verification, and the
 byte-for-byte graph-export checks.  The balanced layer-deletion chain,
 the Odd graph, and the Heawood graph are checked by
-\begin{verbatim}
-python scripts/explore_generalizations.py
-\end{verbatim}
+\begin{center}
+\mbox{\texttt{python scripts/explore\_generalizations.py}}
+\end{center}
 which also performs the separately labelled floating-point three-vertex
 screen.  No floating-point eigenvalue evidence is used for any theorem.
 
@@ -1178,13 +1178,10 @@ The author received no funding for this work and declares no competing
 interests.  The manuscript source, exact verification code, machine-readable
 certificates, and build instructions are available in the public repository
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
-The earlier arXiv submission was withdrawn.  The prior computational archive
-remains available as GitHub release
-\href{https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv}
-{\texttt{v2.0.5-arxiv}}.  The verified v2 research release is
+This manuscript corresponds to GitHub release
 \href{https://github.com/SamPetkov/wow284/releases/tag/v2.1.0}
-{\texttt{v2.1.0}}; its contents are identified by the repository manifest
-and \texttt{SHA256SUMS}.  It is not an active arXiv submission.
+{\texttt{v2.1.0}}.  Its contents are identified by the repository manifest
+and \texttt{SHA256SUMS}.
 
 \appendix
 \section{Exact distance characteristic polynomials}\label{app:polynomials}
