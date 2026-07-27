@@ -1,8 +1,8 @@
 # arXiv metadata
 
 **Status:** No active arXiv submission. The earlier submission was withdrawn.
-This file describes the completed v2 release-candidate package for a possible
-future submission.
+This file describes the verified v2 research release and source package for a
+possible future submission.
 
 **Title:** Exact Counterexamples and Spectral Mechanisms for WOW-284
 
@@ -20,8 +20,9 @@ future submission.
 
 **Prior public computational release:** `v2.0.5-arxiv`
 
-**Current package:** Completed v2 release candidate, identified by
-`MANIFEST.txt` and `SHA256SUMS`.
+**Current public research release:** `v2.1.0`
+
+**Current package:** Identified by `MANIFEST.txt` and `SHA256SUMS`.
 
 **Abstract:**
 

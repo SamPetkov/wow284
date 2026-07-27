@@ -4,7 +4,7 @@
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
 **Repository revision:** 27 July 2026 (`2026-07-27`); PDF date suppressed<br>
-**Repository status:** Public research note; earlier arXiv submission withdrawn; completed v2 release candidate and arXiv-ready package under review
+**Repository status:** Public research note; earlier arXiv submission withdrawn; verified v2 research release and arXiv-ready source package
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
@@ -189,6 +189,17 @@ GitHub Actions compiled every public endpoint with Lean/Mathlib 4.31.  A
 separate AxiomMath AXLE attempt on the expanded modular closure exhausted the
 remote worker's memory, so no AXLE claim is made for the non-50 endpoints.
 
+## Audited research extensions
+
+The repository also contains ten systematic proof audits of results developed
+after the focused manuscript was completed. Their statements, corrections,
+claim boundaries, and independent exact verifiers are indexed in
+[`research-notes/PROOF_AUDIT_REGISTRY.md`](research-notes/PROOF_AUDIT_REGISTRY.md).
+A consolidated map is given in
+[`research-notes/V2_COMPLETE_MATHEMATICAL_SYNTHESIS.md`](research-notes/V2_COMPLETE_MATHEMATICAL_SYNTHESIS.md).
+These files are research extensions, not silent additions to the fourteen-page
+paper; only results explicitly stated in `main.tex` belong to the manuscript.
+
 ## Reproduce the exact certificate
 
 Python 3.11 or later is supported. Create an isolated environment and install
@@ -247,11 +258,13 @@ file uses `\date{}` rather than a dynamic `\today`.
 
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
-The earlier arXiv submission was withdrawn. The fixed computational archive
-for the prior v1 package remains available as GitHub release
+The earlier arXiv submission was withdrawn. The fixed prior computational
+archive remains available as GitHub release
 [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv).
-The current completed v2 candidate is identified by `MANIFEST.txt` and
-`SHA256SUMS` and is not an active arXiv submission.
+The verified v2 research release is
+[`v2.1.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.1.0).
+Its contents are identified by `MANIFEST.txt` and `SHA256SUMS`; it is not an
+active arXiv submission.
 
 Suggested arXiv primary category: `math.CO`. See
 [`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) for title, abstract, comments,

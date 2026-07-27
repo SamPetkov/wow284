@@ -199,7 +199,7 @@ Write
  t=d-2,
 \]
 
-with \(\alpha,eta\ge0\) and \(t\ge3\). The exact identity
+with \(\alpha,\beta\ge0\) and \(t\ge3\). The exact identity
 
 \[
 \begin{aligned}

@@ -27,7 +27,7 @@ verification route have all been checked.
 | 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `pass_after_correction` |
 | 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `pass_after_correction` |
 | 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `pass_after_correction` |
-| 10 | General endpoint-neighborhood diameter obstruction | support disjointness, cross-distance inequality direction, radical comparison, integer rounding | `queued` |
+| 10 | General endpoint-neighborhood diameter obstruction | support disjointness, cross-distance inequality direction, radical comparison, integer rounding | `pass_after_correction` |
 | 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
 | 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `queued` |
 | 13 | Hoffman--Singleton deletion robustness radius five | generator provenance, orbit exhaustion, exact LDL signs, explicit six-deletion sharpness | `queued` |
@@ -256,6 +256,22 @@ A separate distance-polynomial Sturm certificate confirms that no root lies
 below `-9` after the boundary factor is removed. The graph construction and
 public adjacency data remain attributed to Jørgensen; no uniqueness or novelty
 claim is made.
+
+## Audit 10 outcome
+
+The endpoint-neighborhood diameter obstruction is sound after a strengthening
+and one previously implicit sign check. The spectral inequality does not use
+girth at least five: it holds for every connected finite simple graph whose
+chosen endpoints are at distance at least five. The audit supplies an explicit
+positive eigenvector for the least eigenvalue of the compressed two-by-two
+matrix, records the radical comparison without an unproved sign choice, and
+writes out the strict integer-rounding step in the diameter consequence.
+
+The independent verifier checks the characteristic polynomial, eigenvector,
+radical identity, rounding implication, regular specialization, Moore bound,
+and exact finite-graph controls. The result is an obstruction rather than a
+classification; in particular, it does not settle the remaining
+diameter-four regular case.
 
 ## Required structure of every audit
 

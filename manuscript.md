@@ -26,7 +26,7 @@ Aouchiche and Hansen record the following Graffiti conjecture in their survey of
 
 <div class="wowconjecture">
 
-**Conjecture (WOW-284) 1**. *If $`G`$ is connected, has $`n\ge3`$ vertices, and has girth $`g(G)\ge5`$, then
+**Conjecture (WOW-284)**. *If $`G`$ is connected, has $`n\ge3`$ vertices, and has girth $`g(G)\ge5`$, then
 ``` math
 \delta^*(G)\le -\partial_n(G).
 ```*
@@ -67,7 +67,7 @@ Howlader and Panigrahi provide the relevant prior spectral calculation. They det
 
 <div class="theoremA">
 
-**Theorem A 1**. *Let $`G`$ be a Moore graph of diameter two and degree $`k\ge2`$. Then
+**Theorem A**. *Let $`G`$ be a Moore graph of diameter two and degree $`k\ge2`$. Then
 ``` math
 |V(G)|=k^2+1,\qquad g(G)=5,\qquad \delta^*(G)=k,
  \qquad
@@ -783,7 +783,7 @@ The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is mad
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The earlier arXiv submission was withdrawn. The prior v1 computational archive remains available as GitHub release [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv). The current v2 release-candidate package is identified by the repository manifest and `SHA256SUMS`; it is not an active arXiv submission.
+The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). The earlier arXiv submission was withdrawn. The prior computational archive remains available as GitHub release [`v2.0.5-arxiv`](https://github.com/SamPetkov/wow284/releases/tag/v2.0.5-arxiv). The verified v2 research release is [`v2.1.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.1.0); its contents are identified by the repository manifest and `SHA256SUMS`. It is not an active arXiv submission.
 
 # Exact distance characteristic polynomials
 

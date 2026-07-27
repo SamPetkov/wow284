@@ -1,8 +1,8 @@
 # Provenance and AI-assistance record
 
 **Author:** Samuil Petkov<br>
-**Repository revision:** 24 July 2026; active PDF date suppressed<br>
-**Audit and package preparation:** 21--24 July 2026
+**Repository revision:** 27 July 2026; active PDF date suppressed<br>
+**Audit and package preparation:** 21--27 July 2026
 
 ## Submitted material
 
@@ -33,6 +33,13 @@ every public endpoint with the pinned Lean/Mathlib 4.31 toolchain; the
 transitive axiom reports contain only `propext`, `Classical.choice`, and
 `Quot.sound`. Static source scans and deterministic generator checks reject
 proof placeholders, unsafe declarations, and new axioms.
+
+The integrated repository also contains Proof Audits 01--10. Each records an
+exact theorem statement, corrections or strengthening discovered during
+review, a claim boundary, and an independent exact verifier. These later
+research artifacts are indexed in `research-notes/PROOF_AUDIT_REGISTRY.md`;
+they are not presented as additional theorems of the focused fourteen-page
+manuscript unless they also appear in `main.tex`.
 
 ## AI assistance
 

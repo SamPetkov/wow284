@@ -93,7 +93,7 @@ def verify() -> dict[str, object]:
     ]
     return {
         "certificate_version": 1,
-        "manuscript_version": "2026-07-24",
+        "manuscript_version": "2026-07-27",
         "graph": structure,
         "matrix_identities": {
             "distance_from_adjacency": "D = 3J + 3I - 2A - A^2",
@@ -120,7 +120,10 @@ def verify() -> dict[str, object]:
             "minimum_ldl_pivot": str(min(pivots)),
             "all_pivots_positive": True,
         },
-        "formalization_scope": "exact Python certificate; not currently Lean-formalized",
+        "formalization_scope": (
+            "exact Python graph-and-spectrum certificate; Lean 4.31 separately "
+            "kernel-checks the finite spectral diagonalization"
+        ),
         "software": {
             "python": platform.python_version(),
             "sympy": sp.__version__,

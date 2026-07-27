@@ -138,6 +138,13 @@ def generate_markdown() -> None:
             cwd=ROOT,
         )
         body = raw.read_text(encoding="utf-8")
+        # Pandoc numbers theorem-like environments even when their printed
+        # titles already carry the intended public labels.
+        body = body.replace(
+            "**Conjecture (WOW-284) 1**.",
+            "**Conjecture (WOW-284)**.",
+        )
+        body = body.replace("**Theorem A 1**.", "**Theorem A**.")
         for expected_path in (
             "scripts/verify_descendant_families.py",
             "supplement/extended_2026-07-23/logs/descendant_family_output.txt",
@@ -208,6 +215,7 @@ def validate_release_text() -> None:
         r"V(-\infty)=26",
         r"vertices at distance two from \(P_{0,0}\)",
         r"\texttt{v2.0.5-arxiv}",
+        r"\texttt{v2.1.0}",
         r"\delta^*(H_v)",
         r"\mathbb R^{V(X)}",
         r"2K-7-\sqrt{4K-3}",

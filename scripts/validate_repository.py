@@ -72,6 +72,7 @@ def main() -> None:
     require(r"vertices at distance two from \(P_{0,0}\)" in tex,
             "explicit order-42 base vertex missing")
     require(r"\texttt{v2.0.5-arxiv}" in tex, "fixed release tag missing")
+    require(r"\texttt{v2.1.0}" in tex, "current research release tag missing")
     require(r"\delta^*(H_v)" in tex, "order-39 graph quantifier is not explicit")
     require(r"\mathbb R^{V(X)}" in tex, "Moore invariant-space decomposition missing")
     require(r"2K-7-\sqrt{4K-3}" in tex, "Moore threshold calculation missing")
@@ -106,6 +107,10 @@ def main() -> None:
         "**Prior public computational release:** `v2.0.5-arxiv`"
         in submission_notes,
         "submission metadata does not identify the prior v1 release",
+    )
+    require(
+        "**Current public research release:** `v2.1.0`" in submission_notes,
+        "submission metadata does not identify the current research release",
     )
     require(
         "**Comments:** 14 pages." in submission_notes,
@@ -185,6 +190,12 @@ def main() -> None:
             "40-certificate spectrum mismatch")
     require(certificate_40["wow284"]["strict_gap"] == 1,
             "40-certificate gap mismatch")
+    require(
+        "Lean 4.31" in certificate_40["formalization_scope"]
+        and "not currently Lean-formalized"
+        not in certificate_40["formalization_scope"],
+        "40-certificate formalization scope is stale",
+    )
 
     with (ROOT / "results" / "edges.csv").open(encoding="utf-8", newline="") as handle:
         require(sum(1 for _ in csv.reader(handle)) == 176, "edge CSV row count mismatch")
