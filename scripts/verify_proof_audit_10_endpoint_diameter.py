@@ -59,7 +59,7 @@ def distance_rows(graph: Graph) -> tuple[tuple[int, ...], ...]:
     return tuple(rows)
 
 
-def exact_girth(graph: Graph) -> int:
+def exact_girth(graph: Graph) -> int | None:
     best = len(graph) + 1
     for source in range(len(graph)):
         distance = [-1] * len(graph)
@@ -75,7 +75,7 @@ def exact_girth(graph: Graph) -> int:
                     queue.append(v)
                 elif parent[u] != v and parent[v] != u:
                     best = min(best, distance[u] + distance[v] + 1)
-    return best
+    return best if best <= len(graph) else None
 
 
 def adjacency_matrix(graph: Graph) -> sp.Matrix:

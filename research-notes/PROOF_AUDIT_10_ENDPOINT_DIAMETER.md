@@ -42,8 +42,9 @@ If \(\delta\) is the minimum degree, then
 \tag{2}
 \]
 
-Consequently, if \(G\) is a strict WOW-284 counterexample and \(\Delta\) is its
-maximum degree, then
+Consequently, if \(u,v\) are diametral, so
+\(d=\operatorname{diam}(G)\ge5\), and \(G\) is a strict WOW-284
+counterexample with maximum degree \(\Delta\), then
 
 \[
 \boxed{
@@ -61,7 +62,9 @@ and
 \]
 
 The WOW consequence retains the conjecture's girth hypothesis, but the spectral
-inequality itself does not require it.
+inequality itself does not require it. The displayed diameter corollary is
+explicitly scoped to the diameter-at-least-five regime; the regular argument
+below separately rules out that regime for a regular strict counterexample.
 
 ## 2. Corrections and strengthening found
 
@@ -227,6 +230,9 @@ made before taking square roots. Inserting this into (1) gives
 \]
 
 ## 7. WOW and integer-rounding consequences
+
+For this consequence, take \(u,v\) diametral and assume
+\(d=\operatorname{diam}(G)\ge5\).
 
 For every graph,
 
