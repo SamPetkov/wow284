@@ -1,0 +1,135 @@
+% Reader-first, claim-preserving front matter for WOW-284.
+% This fragment is not included automatically.  It rewrites the submitted-paper
+% opening without promoting any post-v1 theorem whose audit gate remains open.
+
+\begin{abstract}
+WOW-284 predicts that the minimum dual degree of every connected graph of order
+at least three and girth at least five is at most the negative of its least
+distance eigenvalue.  The degree-seven Hoffman--Singleton graph disproves the
+conjecture.  More generally, a degree-$k$ Moore graph of diameter two satisfies
+\[
+  \delta^*(G)=k,
+  \qquad
+  \lambda_{\min}(D(G))=-\frac{3+\sqrt{4k-3}}2,
+\]
+so WOW-284 holds exactly for $k\le3$, with equality at $k=3$, and fails for every
+realisable $k>3$.  We give a self-contained coordinate certificate for the
+Hoffman--Singleton example and exact induced counterexamples of orders
+$38,39,40$, and $42$.  For every connected $k$-regular graph of girth at least
+five and diameter three we also prove
+\[
+  D=3J+(k-3)I-2A-A^2,
+\]
+which converts WOW-284 into an exact shifted adjacency-spectrum condition.  All
+finite spectral decisions use exact arithmetic.  Lean~4.31 kernel-checks the
+complete $50$-vertex proof and finite spectral certificates for the four smaller
+constructions.
+\end{abstract}
+
+\section*{Introduction}
+
+Let $G$ be a finite simple connected graph.  Write $D(G)$ for its distance
+matrix and $\lambda_{\min}(D(G))$ for the least distance eigenvalue.  For a
+vertex $v$, define
+\[
+  d^*(v)=\frac1{d(v)}\sum_{u\in N(v)}d(u),
+  \qquad
+  \delta^*(G)=\min_{v\in V(G)}d^*(v).
+\]
+Aouchiche and Hansen record the following Graffiti conjecture, attributed to
+Fajtlowicz's \emph{Written on the Wall} report.
+
+\begin{conjecture}[WOW-284]\label{conj:wow284-reader-first}
+If $G$ is connected, has at least three vertices, and has girth at least five,
+then
+\[
+  \delta^*(G)\le-\lambda_{\min}(D(G)).
+\]
+\end{conjecture}
+
+The conjecture is false for a simple reason.  In a degree-$k$ Moore graph of
+diameter two, adjacent vertices have no common neighbour and nonadjacent
+vertices have exactly one.  If $A$, $I$, and $J$ denote the adjacency, identity,
+and all-ones matrices, then
+\[
+  A^2=(k-1)I-A+J,
+  \qquad
+  D=2J-2I-A.
+\]
+On the orthogonal complement of the all-ones vector, the nonprincipal adjacency
+eigenvalues are the roots of
+\[
+  x^2+x-(k-1)=0.
+\]
+It follows that
+\[
+  \lambda_{\min}(D)=-\frac{3+\sqrt{4k-3}}2.
+\]
+Regularity gives $\delta^*(G)=k$, and therefore the conjectured inequality is
+equivalent to
+\[
+  k\le\frac{3+\sqrt{4k-3}}2.
+\]
+For integers $k\ge2$, this holds exactly when $k\le3$.  The Petersen graph is
+the equality case $k=3$, whereas the degree-seven Hoffman--Singleton graph has
+\[
+  \delta^*=7,
+  \qquad
+  \lambda_{\min}(D)=-4,
+\]
+and hence violates WOW-284 by the strict gap $3$.
+
+This paper develops that observation in three directions.  First, we give a
+fully labelled coordinate construction of the Hoffman--Singleton graph and
+verify the common-neighbour identity directly.  This makes the disproof
+self-contained and supplies exact graph data for independent checking.  Second,
+we extract smaller induced counterexamples of orders $38,39,40$, and $42$.
+The $40$- and $42$-vertex examples are regular; the $38$- and $39$-vertex
+examples show that the phenomenon persists after small asymmetric deletions.
+Third, we isolate the operator mechanism behind the regular diameter-three
+examples.  If $G$ is connected, $k$-regular, has girth at least five, and has
+diameter three, then
+\[
+  D=3J+(k-3)I-2A-A^2.
+\]
+Thus every nonprincipal adjacency eigenvalue $\theta$ produces the distance
+eigenvalue
+\[
+  k-2-(\theta+1)^2,
+\]
+and $G$ is a strict counterexample precisely when all nonprincipal adjacency
+eigenvalues lie in the open interval centred at $-1$ with radius
+$\sqrt{2k-2}$.
+
+The distance spectra of the classical Moore graphs and the general
+minimal-cage distance-polynomial framework are established in the literature.
+Our contribution is to make the connection with WOW-284 explicit, record the
+sharp Moore-degree threshold, provide self-contained exact certificates, and
+organise the smaller constructions through a common spectral mechanism.  We do
+not claim that the displayed classical distance spectra are new, that the
+$38$-vertex example is globally minimal, or that a targeted literature search
+settles priority over unpublished observations.
+
+The proof is organised accordingly.  Section~\ref{sec:moore} gives the short
+Moore-graph calculation.  The next section supplies the coordinate certificate.
+We then derive the smaller induced examples, prove the general diameter-three
+identity, and treat Moore second subconstituents.  Exact characteristic
+polynomials, Sturm certificates, rational $LDL^{\mathsf T}$ decompositions, and
+formal-verification details are recorded only where they certify a stated
+mathematical step.
+
+\phantomsection\label{thm:moore-wow-reader-first}
+\begin{theoremA}
+Let $G$ be a Moore graph of diameter two and degree $k\ge2$.  Then
+\[
+  |V(G)|=k^2+1,
+  \qquad
+  g(G)=5,
+  \qquad
+  \delta^*(G)=k,
+  \qquad
+  \lambda_{\min}(D(G))=-\frac{3+\sqrt{4k-3}}2.
+\]
+Consequently, $G$ satisfies WOW-284 if and only if $k\le3$, with equality
+exactly when $k=3$.
+\end{theoremA}
