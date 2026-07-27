@@ -128,7 +128,7 @@ def symbolic_audit() -> dict[str, str]:
     k = sp.symbols("k", integer=True, positive=True)
     d = sp.symbols("d", integer=True, positive=True)
     score_bound = sp.expand(k + (-k * (d - 4) - 2))
-    if score_bound != k * (5 - d) - 2:
+    if sp.expand(score_bound - (k * (5 - d) - 2)) != 0:
         raise AssertionError("wrong regular score bound")
     moore_bound = sp.expand(1 + k * sum((k - 1) ** i for i in range(4)))
     if moore_bound != k**4 - 2 * k**3 + 2 * k**2 + 1:
