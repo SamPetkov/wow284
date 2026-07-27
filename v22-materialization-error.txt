@@ -1,0 +1,11 @@
+Traceback (most recent call last):
+  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 147, in main
+    materialize()
+    ~~~~~~~~~~~^^
+  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 136, in materialize
+    source = find_source_root(extracted)
+  File "/home/runner/work/wow284/wow284/scripts/materialize_v22_bootstrap.py", line 82, in find_source_root
+    raise AssertionError(
+    ...<2 lines>...
+    )
+AssertionError: bootstrap does not contain main.tex and sections/; inventory=['main.tex']
