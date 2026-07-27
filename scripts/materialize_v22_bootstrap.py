@@ -112,7 +112,7 @@ def copy_sources(source: Path) -> list[str]:
 
     # The first preserved payload was intentionally TeX-only. Copy the current
     # canonical bibliography files as temporary build companions; the integrated
-    # audit then expands that bibliography deterministically.
+    # audits then expand that bibliography deterministically.
     for name in ("references.bib", "main.bbl"):
         if name not in copied:
             fallback = ROOT / name
@@ -127,12 +127,17 @@ def copy_sources(source: Path) -> list[str]:
     return copied
 
 
-def apply_audited_revision() -> None:
+def run_revision(script_name: str) -> None:
     subprocess.run(
-        [sys.executable, str(ROOT / "scripts" / "revise_v22_manuscript.py")],
+        [sys.executable, str(ROOT / "scripts" / script_name)],
         cwd=ROOT,
         check=True,
     )
+
+
+def apply_audited_revisions() -> None:
+    run_revision("revise_v22_manuscript.py")
+    run_revision("revise_v22_second_pass.py")
 
 
 def publish_materialized_source_in_ci() -> None:
@@ -173,7 +178,7 @@ def publish_materialized_source_in_ci() -> None:
         "git",
         "commit",
         "-m",
-        "Materialize revised v2.2 manuscript source [skip ci]",
+        "Materialize twice-audited v2.2 manuscript source [skip ci]",
     )
     run("git", "push", "origin", f"HEAD:{head_ref}")
     print(f"materialized v2.2 source pushed to {head_ref}")
@@ -197,8 +202,8 @@ def materialize() -> None:
         source = find_source_root(extracted)
         print(f"source root: {source.relative_to(extracted)}")
         copied = copy_sources(source)
-    apply_audited_revision()
-    print("v2.2 manuscript materialization and revision: PASS")
+    apply_audited_revisions()
+    print("v2.2 manuscript materialization and two revision passes: PASS")
     print(f"source files copied: {len(copied)}")
     for item in copied:
         print(item)
