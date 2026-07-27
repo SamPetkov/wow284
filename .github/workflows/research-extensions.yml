@@ -28,6 +28,7 @@ on:
       - "scripts/verify_proof_audit_06_order50_feasibility.py"
       - "scripts/verify_proof_audit_07_layer_matchings.py"
       - "scripts/verify_proof_audit_08_prime_field.py"
+      - "scripts/verify_proof_audit_09_jorgensen96.py"
       - "scripts/verify_diameter_puncture_extensions.py"
       - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
@@ -63,6 +64,7 @@ on:
       - "scripts/verify_proof_audit_06_order50_feasibility.py"
       - "scripts/verify_proof_audit_07_layer_matchings.py"
       - "scripts/verify_proof_audit_08_prime_field.py"
+      - "scripts/verify_proof_audit_09_jorgensen96.py"
       - "scripts/verify_diameter_puncture_extensions.py"
       - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
@@ -112,6 +114,7 @@ jobs:
           python -m py_compile scripts/verify_proof_audit_06_order50_feasibility.py
           python -m py_compile scripts/verify_proof_audit_07_layer_matchings.py
           python -m py_compile scripts/verify_proof_audit_08_prime_field.py
+          python -m py_compile scripts/verify_proof_audit_09_jorgensen96.py
           python -m py_compile scripts/verify_diameter_puncture_extensions.py
           python -m py_compile scripts/verify_low_degree_windows.py
       - name: Reject floating-point spectral decisions in proof paths
@@ -162,6 +165,8 @@ jobs:
         run: python scripts/verify_proof_audit_07_layer_matchings.py
       - name: Run systematic Proof Audit 08
         run: python scripts/verify_proof_audit_08_prime_field.py
+      - name: Run systematic Proof Audit 09
+        run: python scripts/verify_proof_audit_09_jorgensen96.py
       - name: Verify diameter obstructions and puncture robustness
         run: python scripts/verify_diameter_puncture_extensions.py
       - name: Verify low-degree regular windows
