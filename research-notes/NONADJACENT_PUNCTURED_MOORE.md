@@ -108,7 +108,16 @@ is equitable for the adjacency matrix.
 
 Every surviving pair has its original distance except pairs contained in
 `N(u)` or in `N(v)`. Those pairs had the deleted vertex as their unique common
-neighbor and now have distance three. Hence
+neighbor, so no surviving path of length two remains.  A surviving path of
+length three always exists:
+
+- for `w,a` with `a\in A`, choose `c\in C`; the nonadjacent pair `a,c` has a
+  unique common neighbor `z\in Z`, giving `w-c-z-a`;
+- for distinct `a,a'\in A`, let `b\in B` be matched to `a`; the nonadjacent
+  pair `b,a'` has a unique common neighbor `z\in Z`, giving `a-b-z-a'`;
+- the cases inside `\{w\}\cup B` are symmetric.
+
+Thus every exceptional distance is exactly three, and hence
 
 \[
  D(H)=2(J-I)-A(H)+F,

@@ -1,4 +1,5 @@
 .gitattributes
+.github/workflows/literature-audit-validation.yml
 .github/workflows/regular-score-calculus.yml
 .github/workflows/research-extensions.yml
 .github/workflows/verify.yml
@@ -184,7 +185,9 @@ pyproject.toml
 references.bib
 requirements-dev.txt
 requirements.txt
+research-notes/BACKELIN_RADIUS_TWO_CORRECTION.md
 research-notes/CLAIM_REGISTRY.md
+research-notes/DEEP_LITERATURE_AUDIT_NEXT_DIRECTIONS.md
 research-notes/DEGREE_SIX_DIAMETER_REDUCTION.md
 research-notes/DEGREE_SIX_GATE_CLOSURE.md
 research-notes/DIAMETER_PUNCTURE_EXTENSIONS.md
@@ -199,6 +202,9 @@ research-notes/LITERATURE_AUDIT_EDGE_LOCAL_ORDER50.md
 research-notes/LITERATURE_AUDIT_EXTENSIONS.md
 research-notes/LITERATURE_AUDIT_LAYER_MATCHINGS.md
 research-notes/LITERATURE_AUDIT_PUNCTURED_MOORE.md
+research-notes/LITERATURE_QUERY_LOG_NEXT_DIRECTIONS.md
+research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json
+research-notes/NEXT_RESEARCH_PRIORITIES.md
 research-notes/NONADJACENT_DIRECT_SUM_AUDIT.md
 research-notes/NONADJACENT_PUNCTURED_MOORE.md
 research-notes/ORDER50_LOCAL_FEASIBILITY.md
@@ -208,15 +214,19 @@ research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md
 research-notes/PROBLEM_BRIEF.md
 research-notes/PROOF_AUDIT_01_EDGE_LOCAL_ORDER51.md
 research-notes/PROOF_AUDIT_02_TWO_SIDED_LP.md
+research-notes/PROOF_AUDIT_03_NONADJACENT_PUNCTURE.md
+research-notes/PROOF_AUDIT_04_REGULAR_LOW_DEGREE.md
 research-notes/PROOF_AUDIT_REGISTRY.md
 research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md
 research-notes/REGULAR_SCORE_CALCULUS.md
 research-notes/SPECTRAL_MOORE_COMPARISON.md
 research-notes/TWO_SIDED_LP_CEILING.md
+research-notes/UNBOUNDED_DEGREE_NECESSITY.md
 research-notes/V2_COMPLETE_MATHEMATICAL_SYNTHESIS.md
 research-notes/V2_GATE_CLOSURE_STATUS.md
 research-notes/V2_READER_FIRST_FRONT_MATTER.tex
 research-notes/V2_READER_FIRST_PROSE_REVISION.md
+research-notes/V2_REQUIRED_AUDIT_GATES.md
 research-notes/VERIFIED_RESEARCH_EXTENSIONS.md
 results/README.md
 results/adjacency_matrix.csv
@@ -243,6 +253,7 @@ scripts/lean3942_finite.py
 scripts/lean3942_ldl.py
 scripts/static_lean_audit.py
 scripts/sync_manuscript_artifacts.py
+scripts/validate_next_direction_source_matrix.py
 scripts/validate_repository.py
 scripts/verify_38_graph6_independent.py
 scripts/verify_40.py
@@ -268,6 +279,8 @@ scripts/verify_order50_r29_exclusion.py
 scripts/verify_prime_field_obstruction.py
 scripts/verify_proof_audit_01_edge_local.py
 scripts/verify_proof_audit_02_two_sided_lp.py
+scripts/verify_proof_audit_03_nonadjacent_puncture.py
+scripts/verify_proof_audit_04_regular_low_degree.py
 scripts/verify_regular_induced_subgraphs.py
 scripts/verify_regular_low_degree.py
 scripts/verify_regular_score_calculus.py
