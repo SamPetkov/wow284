@@ -136,6 +136,7 @@ def apply_audited_revisions() -> None:
     run_revision("revise_v22_manuscript.py")
     run_revision("revise_v22_second_pass.py")
     run_revision("revise_v22_third_pass.py")
+    run_revision("audit_v22_manuscript.py")
 
 
 def publish_materialized_source_in_ci() -> None:
@@ -201,7 +202,7 @@ def materialize() -> None:
         print(f"source root: {source.relative_to(extracted)}")
         copied = copy_sources(source)
     apply_audited_revisions()
-    print("v2.2 manuscript materialization and three revision passes: PASS")
+    print("v2.2 manuscript materialization, revisions, and audit: PASS")
     print(f"source files copied: {len(copied)}")
     for item in copied:
         print(item)
