@@ -26,7 +26,7 @@ verification route have all been checked.
 | 06 | Order-50 local feasibility system | walk/cycle interpretation, Gram minors, moment Schur complements | `pass_after_correction` |
 | 07 | Classification of 120 layer-respecting matching deletions | automorphism formulas, orbit exhaustion, exact least-root certificates | `pass_after_correction` |
 | 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `pass_after_correction` |
-| 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `queued` |
+| 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `pass_after_correction` |
 | 10 | General endpoint-neighborhood diameter obstruction | support disjointness, cross-distance inequality direction, radical comparison, integer rounding | `queued` |
 | 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
 | 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `queued` |
@@ -227,6 +227,35 @@ members, the complete characteristic polynomials for `m=4,5,6`, and exact
 Sturm counts beyond rational separators. The theorem remains conditional on
 diameter three and does not address higher-diameter or different finite-field
 families.
+
+## Audit 09 outcome
+
+The Jørgensen order-96 equality calculation is correct:
+
+\[
+\delta^*=9,
+\qquad
+\lambda_{\min}(D)=-9
+\]
+
+with multiplicity eight, so the score is zero.
+
+The audit makes three evidentiary distinctions explicit. First, the source-page
+snapshot, normalized adjacency list, and graph6 file are independently parsed
+representations of one public adjacency list, not three independent historical
+sources. Second, the recorded SHA-256 values certify local-file integrity but do
+not authenticate the remote page. Third, the least-root proof is recast as an
+exact adjacency-interval certificate, avoiding ambiguity about endpoint
+conventions in a root-counting API.
+
+A handwritten graph6 decoder agrees with the two row parsers. Exact Sturm
+sequences place every root of the quartic adjacency factor in `(-5,3)`, while
+the remaining nonprincipal factors lie in `[-5,3]` with boundary roots `3` and
+`-5`. Thus `D+9I` is positive semidefinite and has an eight-dimensional kernel.
+A separate distance-polynomial Sturm certificate confirms that no root lies
+below `-9` after the boundary factor is removed. The graph construction and
+public adjacency data remain attributed to Jørgensen; no uniqueness or novelty
+claim is made.
 
 ## Required structure of every audit
 
