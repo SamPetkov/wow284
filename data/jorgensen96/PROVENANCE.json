@@ -1,5 +1,5 @@
 {
-  "claim_boundary": "The graph construction and adjacency list are attributed to Jorgensen. The distance characteristic polynomial and WOW-284 equality are project-side exact computations.",
+  "claim_boundary": "The graph construction and public adjacency list are attributed to Jorgensen. The distance characteristic polynomial and WOW-284 equality are project-side exact computations. Local hashes certify committed-file integrity, not remote-page authenticity.",
   "graph": "Jorgensen 9-regular girth-five graph of order 96",
   "graph6": {
     "bytes": 765,
@@ -19,6 +19,7 @@
     "journal": "Discrete Mathematics 293 (2005), 177-184",
     "title": "Girth 5 Graphs from Relative Difference Sets"
   },
+  "representation_boundary": "The normalized adjacency and graph6 files are derived representations of the same source-page list; parser agreement is not source-independent provenance.",
   "retrieved_at_utc": "2026-07-24T17:03:28Z",
   "source_snapshot": {
     "bytes": 4105,
