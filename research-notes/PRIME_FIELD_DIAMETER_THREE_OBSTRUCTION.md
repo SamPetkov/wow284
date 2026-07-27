@@ -1,41 +1,42 @@
-# A spectral obstruction in the prime-field girth-five family
+# A spectral obstruction in the balanced prime-field family
 
-**Status:** proved for the balanced prime-field layer construction below. The
-symbolic inequalities and the exact `q=7`, `m=4,5,6` controls are checked by
-`scripts/verify_prime_field_obstruction.py`. The construction belongs to the
-Murty/Abreu--Funk--Labbate--Napolitano girth-five framework; no construction
-novelty is claimed.
+**Status:** exact theorem for the construction below, with an independent
+line-by-line audit. The construction belongs to the Murty/Abreu--Funk--Labbate--
+Napolitano girth-five framework; no construction or priority claim is made.
 
-## 1. Construction
+## Theorem
 
-Let `q\ge7` be an odd prime and let `1\le m\le q`. Introduce vertices
+Let \(q\ge7\) be an odd prime and \(1\le m\le q\). Construct \(G(q,m)\) as below.
+If \(G(q,m)\) has diameter three, then it is not a strict counterexample to
+WOW-284.
+
+The theorem is conditional on diameter three. It says nothing about the
+higher-diameter members of this family.
+
+## 1. Construction and graph hypotheses
+
+Introduce vertices
 
 \[
  P_{i,j},\quad Q_{k,\ell},
  \qquad
- 0\le i,k<m,\quad j,\ell\in\mathbb F_q.
+ 0\le i,k<m,\quad j,\ell\in\mathbb F_q,
 \]
 
-Add the edges
+and edges
 
 \[
  P_{i,j}\sim P_{i,j\pm1},
-\]
-
-\[
+ \qquad
  Q_{k,\ell}\sim Q_{k,\ell\pm2},
 \]
-
-and
 
 \[
  P_{i,j}\sim Q_{k,ik+j}.
 \]
 
-Call the graph `G(q,m)`.
-
-Every vertex has two same-layer neighbors and one neighbor in each opposite
-layer, so
+Each vertex has two same-layer neighbors and one neighbor in every opposite
+layer. Thus
 
 \[
  |V(G(q,m))|=2qm,
@@ -43,41 +44,61 @@ layer, so
  d=m+2.
 \]
 
-The graph is connected. Each `P`-layer is a `q`-cycle, each `Q`-layer is a
-`q`-cycle because `2` generates the same additive subgroup as `1`, and cross
-edges join every `P`-layer to every `Q`-layer.
+Each \(P\)-layer is a \(q\)-cycle. Each \(Q\)-layer is also a \(q\)-cycle because
+addition by two generates the additive group of \(\mathbb F_q\). Cross edges
+join every \(P\)-layer to every \(Q\)-layer. Therefore the graph is connected.
 
-The graph has no triangle or 4-cycle. The verification is the same coordinate
-case split used for the Hoffman--Singleton graph:
+We now exclude triangles and 4-cycles by checking common neighbors.
 
-- two vertices of the same `P`- or `Q`-layer have at most one same-layer
-  common neighbor and no cross common neighbor;
-- two vertices in distinct `P`-layers, or in distinct `Q`-layers, have at most
-  one cross common neighbor because a nonzero linear equation over
-  `\mathbb F_q` has at most one solution;
-- for a pair `P_{i,j},Q_{k,\ell}`, put
-
+- Two distinct vertices in one \(P\)-layer have no common cross neighbor, and
+  have at most one common neighbor in their cycle. The same holds in one
+  \(Q\)-layer.
+- If \(i\ne i'\), a common \(Q\)-neighbor of \(P_{i,j}\) and \(P_{i',j'}\) must
+  solve
+  \[
+  (i-i')k=j'-j,
+  \]
+  which has at most one solution. The analogous equation for two distinct
+  \(Q\)-layers also has at most one solution.
+- For a mixed pair \(P_{i,j},Q_{k,\ell}\), put
   \[
   r=\ell-(ik+j).
   \]
+  A common \(P\)-neighbor is possible exactly when \(r\in\{\pm1\}\), and a
+  common \(Q\)-neighbor exactly when \(r\in\{\pm2\}\). Each is then unique, and
+  the two alternatives are disjoint for \(q\ge7\). An adjacent mixed pair has
+  \(r=0\), so it has no common neighbor.
 
-  A common `P`-neighbor is possible only for `r\in\{\pm1\}`, while a common
-  `Q`-neighbor is possible only for `r\in\{\pm2\}`. These sets are disjoint
-  when `q\ge7`, and an adjacent pair has `r=0`.
-
-Thus
+Hence adjacent pairs have no common neighbor and arbitrary pairs have at most
+one. Thus
 
 \[
  g(G(q,m))\ge5.
 \]
 
-## 2. Zero Fourier mode
+## 2. Character decomposition
 
-Simultaneous translation of all second coordinates is an automorphism. Over
-`\mathbb C`, decompose the adjacency operator into the `q` additive-character
-spaces.
+Translation of every second coordinate by the same element of \(\mathbb F_q\)
+is an automorphism. Let
 
-On the zero character, the block is
+\[
+ \omega=e^{2\pi i/q}.
+\]
+
+For \(t\in\mathbb F_q\), the character space consists of vectors
+
+\[
+ f(P_{i,j})=x_i\omega^{tj},
+ \qquad
+ f(Q_{k,\ell})=y_k\omega^{t\ell}.
+\]
+
+These \(q\) spaces are mutually orthogonal and exhaust the complexified vertex
+space.
+
+### 2.1 Zero character
+
+For \(t=0\), the adjacency block is
 
 \[
  \begin{pmatrix}
@@ -96,25 +117,20 @@ Its eigenvalues are
  2^{(2m-2)}.
 \]
 
-Suppose that `G(q,m)` has diameter three and is a strict WOW-284
-counterexample. The diameter-three criterion requires every nonprincipal
-adjacency eigenvalue `\theta` to satisfy
+Assume now that \(G(q,m)\) has diameter three and is a strict counterexample.
+The regular diameter-three criterion requires every nonprincipal adjacency
+eigenvalue \(	heta\) to satisfy
 
 \[
- |\theta+1|<\sqrt{2(m+2)-2}=\sqrt{2m+2}.
+ |\theta+1|<\sqrt{2m+2}.
 \]
 
-For `m=1`, the eigenvalue `2-m=1` lies on the boundary. For `m\ge2`, the
-eigenvalue `2` requires
+For \(m=1\), the eigenvalue \(2-m=1\) lies on the boundary. For \(m=2,3\), the
+eigenvalue \(2\) lies outside the interval. For \(m\ge4\), the eigenvalue
+\(2-m\) requires
 
 \[
- 3<\sqrt{2m+2},
-\]
-
-so `m\ge4`. The eigenvalue `2-m` requires
-
-\[
- |3-m|<\sqrt{2m+2}.
+ (m-3)^2<2m+2.
 \]
 
 Since
@@ -123,24 +139,18 @@ Since
  (m-3)^2-(2m+2)=(m-1)(m-7),
 \]
 
-we must also have `m\le6`. Therefore only
+only
 
 \[
  m\in\{4,5,6\}
 \]
 
-can survive the zero-mode test.
+survive the zero-character test. At \(m=7\) there is equality at the boundary;
+for \(m>7\) the inequality fails.
 
-## 3. A nontrivial Fourier block
+### 2.2 A nonzero character
 
-Let
-
-\[
- \omega=e^{2\pi i/q}.
-\]
-
-On the character `j\mapsto\omega^j`, the adjacency block has the Hermitian
-form
+Take \(t=1\). The adjacency block has Hermitian form
 
 \[
  A_1=
@@ -156,27 +166,30 @@ where
  a=2\cos\frac{2\pi}{q},
  \qquad
  b=2\cos\frac{4\pi}{q},
-\]
-
-and
-
-\[
+ \qquad
  M_{ik}=\omega^{ik}.
 \]
 
-Every entry of `M` has modulus one, so
+Let \(Mv=\sigma u\) and \(M^*u=\sigma v\) be a singular-vector pair. The span
+of \((u,0)\) and \((0,v)\) is invariant and carries
 
 \[
- \lVert M\rVert_F^2=m^2.
+ \begin{pmatrix}a&\sigma\\\sigma&b\end{pmatrix}.
 \]
 
-Hence its largest singular value satisfies
+Its upper eigenvalue is
 
 \[
- \sigma_{\max}(M)^2\ge m.
+ \frac{a+b+\sqrt{(a-b)^2+4\sigma^2}}2.
 \]
 
-The block `A_1` therefore has an eigenvalue at least
+All \(m^2\) entries of \(M\) have modulus one, so
+
+\[
+ \sum_{r=1}^m\sigma_r^2=\lVert M\rVert_F^2=m^2.
+\]
+
+Therefore \(\sigma_{\max}^2\ge m\), and \(A_1\) has an eigenvalue at least
 
 \[
  L(q,m)=
@@ -184,46 +197,54 @@ The block `A_1` therefore has an eigenvalue at least
  \ge\sqrt m+\frac{a+b}{2}.
 \]
 
-This eigenvalue belongs to a nonzero character space and is therefore
+This eigenvalue lies in a nonzero character space and is therefore
 nonprincipal.
 
-For `q\ge7`, both cosines are bounded below by their values at `q=7`. The
-seventh-root identity
+## 3. The nonzero mode crosses the WOW boundary
+
+For \(q\ge7\), the angles \(2\pi/q\) and \(4\pi/q\) lie in \((0,\pi)\) and are no
+larger than their values at \(q=7\). Hence
 
 \[
- 1+2\cos\frac{2\pi}{7}
- +2\cos\frac{4\pi}{7}
- +2\cos\frac{6\pi}{7}=0
+ a+b\ge
+ 2\cos\frac{2\pi}{7}+2\cos\frac{4\pi}{7}.
 \]
 
-gives
+The seventh-root identity gives
 
 \[
  2\cos\frac{2\pi}{7}+2\cos\frac{4\pi}{7}
  =2\cos\frac{\pi}{7}-1.
 \]
 
-Thus
+Since \(\pi/7<\pi/6\),
 
 \[
- L(q,m)
- \ge\sqrt m+\cos\frac{\pi}{7}-\frac12
- >\sqrt m+\frac{\sqrt3-1}{2},
+ \cos\frac{\pi}{7}>\frac{\sqrt3}{2},
 \]
 
-because `\pi/7<\pi/6`.
-
-For `m=4,5,6`,
+and therefore
 
 \[
- \sqrt m+\frac{\sqrt3-1}{2}
- >-1+\sqrt{2m+2}.
+ L(q,m)>\sqrt m+\frac{\sqrt3-1}{2}.
 \]
 
-An exact certificate for the worst case `m=6` is
+Define
 
 \[
- \sqrt{14}-\sqrt6
+ h(m)=\sqrt{2m+2}-\sqrt m.
+\]
+
+For \(m>1\),
+
+\[
+ h'(m)=\frac1{\sqrt{2m+2}}-\frac1{2\sqrt m}>0.
+\]
+
+Thus \(h(m)\le h(6)\) for \(m=4,5,6\). Exact rational estimates give
+
+\[
+ h(6)=\sqrt{14}-\sqrt6
  <\frac{15}{4}-\frac{12}{5}
  =\frac{27}{20}
  <\frac{\sqrt3+1}{2},
@@ -232,47 +253,67 @@ An exact certificate for the worst case `m=6` is
 using
 
 \[
- \sqrt{14}<\frac{15}{4},
+ 14<\left(\frac{15}{4}\right)^2,
  \qquad
- \sqrt6>\frac{12}{5},
+ 6>\left(\frac{12}{5}\right)^2,
  \qquad
- \sqrt3>\frac{17}{10}.
+ 3>\left(\frac{17}{10}\right)^2.
 \]
 
-The function `\sqrt{2m+2}-\sqrt m` is increasing for `m>1`, so the same
-comparison holds for `m=4,5`.
+Consequently, for every \(m\in\{4,5,6\}\),
 
-We have found a nonprincipal adjacency eigenvalue outside the strict WOW
-window. This proves the theorem below.
+\[
+ \sqrt m+\frac{\sqrt3-1}{2}
+ >-1+\sqrt{2m+2}.
+\]
 
-## Theorem
+The nonzero character block therefore contains a nonprincipal adjacency
+eigenvalue beyond the upper endpoint of the strict WOW window. This proves the
+theorem.
 
-Let `q\ge7` be an odd prime. If `G(q,m)` has diameter three, then it is not a
-strict counterexample to WOW-284.
+## 4. Exact \(q=7\) controls
 
-## 4. Exact `q=7` controls
+The independent verifiers reconstruct \(G(7,m)\) and check the complete integer
+adjacency characteristic polynomials for \(m=4,5,6\). They also certify a
+nonprincipal root beyond the upper WOW endpoint by exact Sturm counts.
 
-The only zero-mode survivors are `m=4,5,6`. The verifier reconstructs all
-three graphs and checks exactly that they have:
+Use the rational separators
+
+\[
+ \frac94,
+ \qquad
+ \frac52,
+ \qquad
+ \frac{11}{4}
+\]
+
+for \(m=4,5,6\), respectively. Each lies strictly above the corresponding upper
+WOW endpoint. The square-free characteristic polynomials have respectively
+5, 4, and 3 distinct roots above the separator. Since only one can be the
+principal eigenvalue, every graph has a nonprincipal root outside the window.
+
+The graph data are
 
 \[
  (|V|,d,g,\operatorname{diam})
  =(56,6,5,3),
  (70,7,5,3),
- (84,8,5,3),
+ (84,8,5,3).
 \]
 
-respectively. It then recomputes their complete integer adjacency
-characteristic polynomials. Each fails the shifted adjacency window, in
-agreement with the general Fourier proof.
+## 5. Verification and scope
 
-## 5. Scope
+Run
 
-This theorem excludes only the diameter-three members of this balanced
-prime-field layer family. It does not prove that all higher-diameter members
-satisfy WOW-284, and it does not rule out an infinite family from a different
-finite-field construction.
+```text
+python scripts/verify_prime_field_obstruction.py
+python scripts/verify_proof_audit_08_prime_field.py
+```
 
-The construction itself is part of the known Murty/Abreu family of regular
-girth-five graphs. The spectral obstruction above is a specialized WOW-284
-application; literature priority has not been established.
+The second verifier is independent of the first. It checks the symbolic block
+reductions, exact radical comparisons, all \(q=7\) graph hypotheses, the three
+complete characteristic polynomials, and the exact nonprincipal-root counts.
+
+The theorem excludes only diameter-three members of this balanced prime-field
+family. It does not address higher-diameter members, other finite-field
+families, or an unconditional infinite counterexample family.
