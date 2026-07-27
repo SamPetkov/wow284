@@ -97,8 +97,8 @@ Every nonedge has distance two, whence
 \]
 
 On the all-ones line, \(D\) has the positive transmission eigenvalue
-\(2(k^2)-k\).  On \(\mathbf 1^\perp\), an adjacency eigenvalue \(	heta\)
-therefore maps to \(-2-	heta\).  The least distance eigenvalue is obtained from
+\(2(k^2)-k\).  On \(\mathbf 1^\perp\), an adjacency eigenvalue \(\theta\)
+therefore maps to \(-2-\theta\).  The least distance eigenvalue is obtained from
 the largest nonprincipal adjacency eigenvalue, giving
 
 \[
@@ -143,7 +143,7 @@ The all-ones vector has distance eigenvalue
 
 Because every off-diagonal entry of \(D\) is positive and every row sum is the
 same, this is the Perron eigenvalue and hence the largest distance eigenvalue.
-On \(\mathbf 1^\perp\), an adjacency eigenvalue \(	heta\) maps to
+On \(\mathbf 1^\perp\), an adjacency eigenvalue \(\theta\) maps to
 
 \[
   k-3-2\theta-\theta^2
@@ -165,8 +165,8 @@ Regularity gives \(\delta^*(G)=k\), proving the displayed score formula.
 |---|---:|---:|---:|---:|---:|
 | Petersen | 3 | 2 | \(\lambda_2=1\) | \(-3\) | \(0\) |
 | Hoffman--Singleton | 7 | 2 | \(\lambda_2=2\) | \(-4\) | \(3\) |
-| O'Keefe--Wong 40-vertex graph | 6 | 3 | \(ho_{-1}^2=9\) | \(-5\) | \(1\) |
-| Hoffman--Singleton second subconstituent | 6 | 3 | \(ho_{-1}^2=9\) | \(-5\) | \(1\) |
+| O'Keefe--Wong 40-vertex graph | 6 | 3 | \(\rho_{-1}^2=9\) | \(-5\) | \(1\) |
+| Hoffman--Singleton second subconstituent | 6 | 3 | \(\rho_{-1}^2=9\) | \(-5\) | \(1\) |
 
 The order-96 Jørgensen graph is an exact diameter-three equality control:
 \(\delta^*=9\) and \(\lambda_{\min}(D)=-9\).  Its provenance and complete exact
@@ -180,7 +180,7 @@ manuscript.
 
 - The Moore section proves the diameter-two line once.
 - The regular 40- and 42-vertex examples need only display their adjacency
-  spectra and evaluate \(ho_{-1}\).
+  spectra and evaluate \(\rho_{-1}\).
 - Equality and negative controls can be discussed in the same scalar language.
 - Later degree and diameter obstructions can be introduced as restrictions on
   the two remaining regular regimes.
@@ -201,7 +201,7 @@ A compact transition is:
 - the diameter-two scalar identity
   \(\Phi=k-2-\lambda_2(A)\);
 - the diameter-three scalar identity
-  \(\Phi=2k-2-ho_{-1}^2\);
+  \(\Phi=2k-2-\rho_{-1}^2\);
 - the Moore threshold through degree \(10\,000\) using only the exact identity
   \(4(k-1)(k-3)\).
 

@@ -72,10 +72,14 @@ AUTOMATED CHECKS
 PASS  pytest: 9 tests passed.
 PASS  scripts/verify_exact.py.
 PASS  scripts/verify_extended.py.
+PASS  scripts/verify_regular_score_calculus.py: exact diameter-two/three
+      transfer formulas and representative regular WOW scores.
 PASS  scripts/generate_lean_diagonalization.py --check.
 PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
       distance CSV files.
 PASS  scripts/validate_repository.py.
+PASS  Prose-source validation rejects mojibake plus tab/carriage-return
+      control-byte corruption in Markdown and TeX.
 PASS  scripts/sync_manuscript_artifacts.py --check.
 PASS  CITATION.cff validates against CFF schema version 1.2.0.
 
