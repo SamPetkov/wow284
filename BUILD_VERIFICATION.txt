@@ -74,6 +74,9 @@ PASS  scripts/verify_exact.py.
 PASS  scripts/verify_extended.py.
 PASS  scripts/verify_regular_score_calculus.py: exact diameter-two/three
       transfer formulas and representative regular WOW scores.
+PASS  scripts/verify_proof_audit_02_two_sided_lp.py: exact primal/dual
+      identities, positive finite and uniform-tail slacks, and optimizer
+      rigidity for the stated one-variable girth-five LP cone.
 PASS  scripts/generate_lean_diagonalization.py --check.
 PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
       distance CSV files.
