@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Materialize the reviewed v2.2 manuscript source from deterministic chunks.
-
-The bootstrap chunks contain one base64-encoded gzip payload.  The payload may
-be a tar archive, a zip archive, a JSON path-to-content map, or a single UTF-8
-file.  Only publication source files are copied into ``v22/``; build products
-are deliberately ignored.
-"""
+"""Materialize the reviewed v2.2 manuscript source from deterministic chunks."""
 from __future__ import annotations
 
 import base64
@@ -16,11 +10,13 @@ from pathlib import Path
 import shutil
 import tarfile
 import tempfile
+import traceback
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 CHUNK_DIR = ROOT / "scripts" / ".v22-bootstrap"
 OUTPUT = ROOT / "v22"
+DIAGNOSTIC = ROOT / "v22-materialization-error.txt"
 ALLOWED_SUFFIXES = {".tex", ".bib", ".bbl", ".md", ".json"}
 ALLOWED_NAMES = {"latexmkrc", "Makefile"}
 
@@ -122,7 +118,7 @@ def copy_sources(source: Path) -> list[str]:
     return copied
 
 
-def main() -> None:
+def materialize() -> None:
     chunks = sorted(CHUNK_DIR.glob("main.*"))
     if not chunks:
         raise AssertionError("no bootstrap chunks found")
@@ -144,6 +140,17 @@ def main() -> None:
     print(f"source files copied: {len(copied)}")
     for item in copied:
         print(item)
+
+
+def main() -> None:
+    try:
+        materialize()
+    except Exception:
+        DIAGNOSTIC.write_text(traceback.format_exc(), encoding="utf-8", newline="\n")
+        print(DIAGNOSTIC.read_text(encoding="utf-8"))
+        raise
+    else:
+        DIAGNOSTIC.unlink(missing_ok=True)
 
 
 if __name__ == "__main__":
