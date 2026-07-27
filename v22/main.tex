@@ -83,7 +83,7 @@
 \author{Samuil Petkov}
 \address{Department of Physics, \'Ecole normale sup\'erieure,
 Universit\'e PSL, Paris, France}
-\email{samuil.petkov@phys.ens.psl.eu}
+\email{samuil.petkov@ens.psl.eu}
 \date{}
 \subjclass[2020]{Primary 05C50; Secondary 05C12, 05C35, 05E30}
 \keywords{distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability}
@@ -435,8 +435,15 @@ and on \(\ker C\),
 \]
 Thus \(B\) has principal eigenvalue \(K-1\), eigenvalue \(-1\) on
 \(C^{\mathsf T}(\one^\perp)\), and the two Moore roots
-\((-1\pm\sqrt{4K-3})/2\) on \(\ker C\).  The remaining vertices sharing
-the unique neighbour of a chosen vertex are at distance three, so
+\((-1\pm\sqrt{4K-3})/2\) on \(\ker C\).  It remains to identify the
+diameter of \(X\).  If the unique common neighbour in \(M\) of two
+nonadjacent vertices \(x,y\in X\) lies in \(X\), their distance in \(X\)
+is two.  Otherwise it is their common parent in \(N(v)\).  Choose
+\(b\in N_X(x)\).  Then \(b\not\sim y\), and the unique common neighbour
+\(c\) of \(b,y\) belongs to \(X\): it cannot be \(v\), and it cannot
+lie in \(N(v)\), since \(b\) and \(y\) have different parents there.
+Thus \(x-b-c-y\) is a path in \(X\).  Pairs with a common parent have no
+length-two path in \(X\), so \(X\) has diameter three and
 Theorem~\ref{thm:diameter-three-score} applies.  Among the nonprincipal
 adjacency eigenvalues, \((-1+\sqrt{4K-3})/2\) maximizes
 \(|\theta+1|\); substitution gives
@@ -553,8 +560,10 @@ six.
 \end{theorem}
 
 \begin{proof}
-Let the degree be \(k\).  Lemma~\ref{lem:diam-rayleigh} and strictness give
-\(\diam(G)<k\).  The cases \(k\le2\) are immediate.  For \(k=3\), the girth
+We use the LP ceiling proved independently in
+Theorem~\ref{thm:lp-ceiling}; that theorem does not depend on the present
+degree reduction.  Let the degree be \(k\).
+Lemma~\ref{lem:diam-rayleigh} and strictness give \(\diam(G)<k\).  The cases \(k\le2\) are immediate.  For \(k=3\), the girth
 lower bound and diameter at most two force the Petersen graph, which is an
 equality case of Theorem~\ref{thm:moore-threshold}.
 
@@ -1131,8 +1140,10 @@ For one deleted vertex, put \(A=N(v)\), \(B=\Gamma_2(v)\), let \(C\) be
 the \(A\)-by-\(B\) incidence matrix, and let \(B_0\) be the adjacency
 matrix on \(B\).  Only pairs inside \(A\) lose their unique length-two path.
 For distinct \(a,a'\in A\), choose a neighbour \(b\in B\) of \(a\).  The
-unique common neighbour \(c\) of \(b,a'\) lies in \(B\), giving the
-surviving path \(a-b-c-a'\).  Hence
+vertices \(b,a'\) are nonadjacent, and their unique common neighbour \(c\)
+lies in \(B\): it is not \(v\), since \(b\not\sim v\), and it is not in
+\(A\), since an edge inside \(A\) would form a triangle through \(v\).
+Hence \(a-b-c-a'\) is a surviving path.  Hence
 \[
  D(H)=\begin{pmatrix}3(J-I)&2J-C\\2J-C^{\mathsf T}&2(J-I)-B_0\end{pmatrix}.
 \]
@@ -1159,9 +1170,13 @@ zero after removing the constant and incidence images; dimension and trace give
 
 For an adjacent deleted pair, put
 \(A=N(u)\setminus\{v\}\), \(B=N(v)\setminus\{u\}\), and let \(C\) be
-the residual cell.  Only pairs inside \(A\) or inside \(B\) lose a
-length-two path; the same unique-common-neighbour construction supplies a
-surviving length-three path.  The antisymmetric constant line has eigenvalue
+the residual cell.  Only pairs inside \(A\) or inside \(B\) lose a length-two path.  For
+distinct \(a,a'\in A\), choose a residual neighbour \(c\) of \(a\).  The
+vertices \(c,a'\) are nonadjacent, and their unique common neighbour is also
+residual: it cannot be one of the deleted endpoints, cannot lie in \(A\) by
+triangle-freeness, and cannot lie in \(B\) because no edge joins \(A\) to
+\(B\).  This gives a surviving length-three path; the argument for \(B\) is
+symmetric.  The antisymmetric constant line has eigenvalue
 \(k-4\), and the normalized symmetric quotient is
 \[
  Q_2=\begin{pmatrix}
@@ -1255,9 +1270,15 @@ copies of \(K_k\) meeting in \(w\), and hence has least eigenvalue
 \[
  \lambda_{\min}(E_S)=\frac{k-2-\sqrt{k^2+4k-4}}2.
 \]
-Proposition~\ref{prop:deletion-stability} gives a positive lower bound for
-the child score for every \(k\ge6\).  After the sign-preserving squarings,
-the remaining condition is \(P(k)>0\), where
+Since the parent Moore graph has score
+\(k-(3+\Delta)/2\) and \(a-b=2/k\),
+Proposition~\ref{prop:deletion-stability} gives
+\[
+ \Phi(H)\ge
+ \frac{3k-5-\Delta-\sqrt{k^2+4k-4}}2-\frac2k.
+\]
+For \(k\ge6\), the sign-preserving squarings reduce positivity of this
+lower bound to \(P(k)>0\), where
 \[
  P(k)=4k^8-39k^7+95k^6+9k^5-173k^4-36k^3+116k^2+80k+16.
 \]
@@ -1269,8 +1290,8 @@ Writing \(k=m+6\) gives
  &+559616m+75952>0.
 \end{aligned}
 \]
-The direct sum,
-injectivity, orthogonality, all recomputed distances, and the polynomial sign
+The direct-sum decomposition, injectivity, orthogonality, all recomputed
+distances, and the polynomial sign
 are independently checked by
 \codefile{scripts/verify_proof_audit_03_nonadjacent_puncture.py} and
 \codefile{scripts/verify_research_extensions_exact.py}.
@@ -1347,11 +1368,16 @@ each other deleted vertex has at most one common neighbour with \(x\).  Thus
 \[
  \sum_{y\in N_H(x)}t_y\le s-t_x.
 \]
-and
+Consequently,
 \[
  d_H^*(x)
  \ge k-\frac{s-t_x}{k-t_x}
- \ge k-\frac{s}{k}.
+ \ge k-\frac{s}{k},
+\]
+where the last inequality follows from
+\[
+ \left(k-\frac{s-t}{k-t}\right)-\left(k-\frac{s}{k}\right)
+ =\frac{t(k-s)}{k(k-t)}\ge0.
 \]
 The intersection bound
 \[
