@@ -1,0 +1,22 @@
+Title:           Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284
+Subject:         Counterexamples and structural spectral theory for the minimum-dual-degree conjecture WOW-284
+Keywords:        distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability
+Author:          Samuil Petkov
+Creator:         LaTeX with amsart
+Producer:        pdfTeX
+CreationDate:    Mon Jul 27 22:41:41 2026 UTC
+ModDate:         Mon Jul 27 22:41:41 2026 UTC
+Custom Metadata: yes
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           20
+Encrypted:       no
+Page size:       595.276 x 841.89 pts (A4)
+Page rot:        0
+File size:       486331 bytes
+Optimized:       no
+PDF version:     1.5
