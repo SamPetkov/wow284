@@ -1,7 +1,7 @@
 # Proof Audit 06: the degree-six order-50 feasibility system
 
 **Audited results:** `ORDER50_LOCAL_FEASIBILITY.md` and
-`ORDER50_R29_EXCLUSION.md`.
+`ORDER50_R29_REFINEMENT.md`.
 
 **Audit mode:** line-by-line, with the layer compression, local walk counts,
 positive-semidefinite minors, global cycle identities, shifted moments, Schur
