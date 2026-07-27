@@ -208,6 +208,8 @@ def validate_release_text() -> None:
         r"\author{Samuil Petkov}",
         r"\date{}",
         r"\usepackage[margin=1in]{geometry}",
+        r"\keywords{distance spectrum, dual degree, Moore graph}",
+        "pdfkeywords={distance spectrum, dual degree, Moore graph}",
         "Howlader and Panigrahi",
         "No claim is made",
         "OpenAI ChatGPT-5.6 Sol Pro assisted",

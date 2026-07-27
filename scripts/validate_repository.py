@@ -56,6 +56,14 @@ def main() -> None:
 
     tex = (ROOT / "main.tex").read_text(encoding="utf-8")
     require(r"\usepackage[margin=1in]{geometry}" in tex, "one-inch margins not fixed")
+    require(
+        r"\keywords{distance spectrum, dual degree, Moore graph}" in tex,
+        "manuscript keywords are not the requested focused three",
+    )
+    require(
+        "pdfkeywords={distance spectrum, dual degree, Moore graph}" in tex,
+        "PDF metadata keywords are not synchronized",
+    )
     require(r"\date{}" in tex, "active manuscript date must be suppressed")
     require(r"\author{Samuil Petkov}" in tex, "author mismatch")
     require(r"\title[Exact counterexamples to WOW-284]" in tex, "title mismatch")
