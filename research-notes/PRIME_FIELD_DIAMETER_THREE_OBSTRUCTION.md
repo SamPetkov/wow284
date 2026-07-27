@@ -119,7 +119,7 @@ Its eigenvalues are
 
 Assume now that \(G(q,m)\) has diameter three and is a strict counterexample.
 The regular diameter-three criterion requires every nonprincipal adjacency
-eigenvalue \(	heta\) to satisfy
+eigenvalue \(\theta\) to satisfy
 
 \[
  |\theta+1|<\sqrt{2m+2}.

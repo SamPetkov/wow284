@@ -118,10 +118,18 @@ def distinct_roots_above(expression: sp.Expr, point: sp.Rational) -> int:
 
 def symbolic_audit() -> dict[str, object]:
     m = sp.symbols("m", integer=True, positive=True)
-    a, b, sigma, lam = sp.symbols("a b sigma lambda", real=True)
+    a, b, sigma = sp.symbols("a b sigma", real=True)
+    # Matrix.charpoly normalizes its generator to an assumption-free symbol.
+    # Use the same kind of symbol so algebraic identity checks compare like
+    # expressions rather than same-named symbols with different assumptions.
+    lam = sp.symbols("lambda")
 
     zero_block = sp.Matrix([[2, m], [m, 2]])
-    if sp.factor(zero_block.charpoly(lam).as_expr()) != (lam - m - 2) * (lam + m - 2):
+    expected_zero_characteristic = (lam - m - 2) * (lam + m - 2)
+    if (
+        sp.expand(zero_block.charpoly(lam).as_expr() - expected_zero_characteristic)
+        != 0
+    ):
         raise AssertionError("wrong zero-character constant block")
     if sp.expand((m - 3) ** 2 - (2 * m + 2) - (m - 1) * (m - 7)) != 0:
         raise AssertionError("wrong zero-mode boundary factorization")

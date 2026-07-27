@@ -1,7 +1,8 @@
 # Proof Audit 08: the balanced prime-field diameter-three obstruction
 
-**Audited result:** `PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md`.  
-**Verdict:** `pass_after_correction`.  
+**Audited result:** `PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md`.
+
+**Verdict:** `pass_after_correction`.
 **Scope:** the balanced prime-field construction \(G(q,m)\), with \(q\ge7\) an
 odd prime and \(1\le m\le q\), under the additional hypothesis that the graph
 has diameter three.
