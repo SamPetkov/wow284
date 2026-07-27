@@ -39,6 +39,7 @@ EXACT_ENTRYPOINTS = (
     "scripts/verify_proof_audit_07_layer_matchings.py",
     "scripts/verify_proof_audit_08_prime_field.py",
     "scripts/verify_proof_audit_09_jorgensen96.py",
+    "scripts/verify_proof_audit_10_endpoint_diameter.py",
     "scripts/verify_diameter_puncture_extensions.py",
     "scripts/verify_low_degree_windows.py",
 )
