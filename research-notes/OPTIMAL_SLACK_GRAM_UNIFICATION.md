@@ -32,7 +32,7 @@ and
 \]
 
 On the principal adjacency eigenspace the two terms cancel. On a nonprincipal
-adjacency eigenvector of eigenvalue \(	heta\), the eigenvalue of
+adjacency eigenvector of eigenvalue \(\theta\), the eigenvalue of
 \(\mathcal M_k(G)\) is
 
 \[
