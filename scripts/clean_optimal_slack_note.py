@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Repair the one escaped beta control byte in the Audit 14 Markdown note."""
+"""Repair the escaped beta byte and reject hidden control characters."""
 from pathlib import Path
 
 PATH = Path("research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md")
@@ -13,6 +13,6 @@ if count == 1:
     data = data.replace(needle, replacement)
     PATH.write_bytes(data)
 for value in data:
-    if value < 32 and value not in {9, 10}:
+    if value < 32 and value != 10:
         raise SystemExit(f"remaining control byte: {value}")
 print("optimal-slack note control-byte cleanup: PASS")
