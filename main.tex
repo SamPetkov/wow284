@@ -62,7 +62,7 @@
 \newcommand{\Spec}{\operatorname{Spec}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\diam}{\operatorname{diam}}
-\newcommand{\RepoTag}{v2.2.3}
+\newcommand{\RepoTag}{v2.2.4}
 \newcommand{\codefile}[1]{%
   \href{https://github.com/SamPetkov/wow284/blob/\RepoTag/#1}{\path{#1}}}
 \newcommand{\datafile}[1]{%
@@ -1792,29 +1792,40 @@ part of the Lean claim.
 The public Lean development is sorry-free and kernel-checked by Lean 4.31
 within the scope stated above.
 
-\section{Scope and open directions}\label{sec:scope}
+\section{Broader mathematical questions}\label{sec:scope}
 
-Classical inputs are cited where they first enter the argument.  The contribution
-of this paper is the combined mechanism developed above: the shifted spectral
-score, the exact LP ceiling and its local semidefinite refinements, the puncture
-spectra, and the deletion-stability theory.  The natural next questions concern
-how far these mechanisms extend.
+The mechanisms in this paper point beyond the conjecture that motivated them.
+They connect extremal polynomial certificates, local positive-semidefinite
+constraints, perturbations of metric operators, exact computation, and formal
+proof.  At that methodological level, they suggest the following questions.
 
 \begin{enumerate}
-\item What are the minimum order and possible degree sequences of strict
-counterexamples, and can the extremal examples be classified?
-\item Can a systematic multipoint semidefinite or higher-moment hierarchy
-extend the exact one-point LP and local-minor bounds, in particular at the
-degree-six order-\(50\) boundary?
-\item What replaces the diameter-three score calculus for irregular graphs and
-for regular graphs of diameter four, and does either setting produce new
-counterexamples?
-\item Does an unconditional infinite family of strict counterexamples exist,
-and which graph operations preserve strictness?  Any infinite regular family
-must have unbounded degree.
-\item Can the puncture and metric-damage theory be extended from Moore graphs
-to broader distance-regular or distance-polynomial families, with sharp
-robustness thresholds?
+\item Given an optimal polynomial or semidefinite certificate for a global
+spectral inequality, when do the principal minors of its slack operator form a
+complete hierarchy of local constraints?  Can rank or flat-extension
+conditions force finite convergence and reconstruct the extremal discrete
+objects?
+\item Is there a general inverse theory for spectral inequalities in which a
+small global defect forces an object to lie quantitatively near a structured
+algebraic model?  What notions of distance and stability are natural for such
+statements?
+\item Which one-variable spectral arguments survive when homogeneity or
+commutativity is lost?  Can degree-weighted operators, nonbacktracking
+operators, or matrix-valued orthogonal polynomials provide comparably sharp
+certificates for irregular or multitype systems?
+\item Can one develop a perturbation theory for distance and other globally
+defined metric operators under local modifications?  In particular, when can
+combinatorial replacement paths be converted into sharp low-rank,
+interlacing, or positive-semidefinite stability principles?
+\item When do sporadic finite counterexamples reflect an underlying scalable
+mechanism?  Can local convergence, graph limits, or operator limits
+distinguish genuinely isolated phenomena from the finite shadows of infinite
+families?
+\item Which computer-discovered spectral proofs admit certificates that are
+simultaneously human-compressible, independently reproducible, and
+kernel-checkable?  Is there a general certificate architecture that cleanly
+separates finite data verification from the conceptual argument without
+weakening the theorem's quantifiers?
 \end{enumerate}
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
@@ -1823,8 +1834,9 @@ author.  The author assumes full responsibility for the mathematics,
 attribution, and conclusions.  The source, exact certificates, and build
 instructions are available at
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}
-and correspond to release \texttt{v2.2.3}.
+and correspond to release \texttt{v2.2.4}.
 
+\clearpage
 \appendix
 
 \section{Characteristic polynomials for the order-39 and order-38 descendants}
