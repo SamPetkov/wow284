@@ -5,27 +5,43 @@ on:
     paths:
       - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
+      - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
     paths:
       - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
+      - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   exact:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
           cache: pip
           cache-dependency-path: requirements.txt
+      - name: Clean and persist the audited note
+        run: |
+          python scripts/clean_optimal_slack_note.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md
+          if git diff --cached --quiet; then
+            echo "No note cleanup required."
+          else
+            git commit -m "Repair Audit 14 source hygiene [skip ci]"
+            git push origin "HEAD:${{ github.head_ref || github.ref_name }}"
+          fi
       - name: Install exact dependencies
         run: python -m pip install -r requirements.txt
       - name: Run the independent exact audit
@@ -37,6 +53,7 @@ jobs:
           for name in (
               "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
               "scripts/verify_optimal_slack_gram_unification.py",
+              "scripts/clean_optimal_slack_note.py",
           ):
               data = Path(name).read_bytes()
               assert not any(byte < 32 and byte not in {9, 10} for byte in data), name
