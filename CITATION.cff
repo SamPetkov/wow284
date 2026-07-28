@@ -1,39 +1,37 @@
 cff-version: 1.2.0
 message: >-
-  Please cite the manuscript using the metadata below. The published
-  distance-spectrum calculation of Howlader and Panigrahi should also be
-  cited where that prior result is used.
-title: "wow284: Reproducible artifacts for Exact Counterexamples and Spectral Mechanisms for WOW-284"
+  Please cite the manuscript using the metadata below. Cite the published
+  distance-spectrum calculation of Howlader and Panigrahi wherever that prior
+  result is used.
+title: "wow284: Reproducible artifacts for Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 type: software
 authors:
   - family-names: Petkov
     given-names: Samuil
     affiliation: "Department of Physics, École normale supérieure, Université PSL"
     email: samuil.petkov@phys.ens.psl.eu
-version: 2.1.0
-date-released: 2026-07-27
+version: 2.2.0
+date-released: 2026-07-28
 url: "https://github.com/SamPetkov/wow284"
 repository-code: "https://github.com/SamPetkov/wow284"
 license: CC-BY-4.0
 abstract: >-
-  A degree-k Moore graph of diameter two has minimum dual degree k and least
-  distance eigenvalue -(3 + sqrt(4k - 3))/2, so WOW-284 fails precisely for
-  realizable degrees k > 3. An explicit coordinate construction of the
-  degree-7 Hoffman-Singleton graph gives a 50-vertex counterexample. Exact
-  induced constructions give further counterexamples of orders 38, 39, 40,
-  and 42, together with exhaustive labelled descendant families and a regular
-  diameter-three criterion. The 50-vertex certificate and scalar threshold
-  have a complete Lean 4.31 formalization. Lean 4.31 also kernel-checks finite
-  spectral certificates for the constructions of orders 38, 39, 40, and 42;
-  the generic criteria and descendant-family results remain analytic and
-  exact-computational.
+  WOW-284 asserts a bound relating minimum dual degree and the least distance
+  eigenvalue for connected graphs of girth at least five. This release gives
+  exact counterexamples of orders 38, 39, 40, 42, and 50 and develops regular
+  spectral criteria, degree and diameter obstructions, the exact all-degree
+  one-variable nonbacktracking linear-programming optimum, Moore-graph
+  puncture spectra, and deletion-stability results. Lean 4.31 kernel-checks
+  the complete graph-level 50-vertex proof, finite spectral certificates for
+  orders 38, 39, 40, and 42, and the separate analytic LP optimum,
+  attainment, and coefficient-level optimizer rigidity.
 keywords:
   - distance spectrum
   - dual degree
   - Moore graph
 preferred-citation:
   type: article
-  title: "Exact Counterexamples and Spectral Mechanisms for WOW-284"
+  title: "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
   authors:
     - family-names: Petkov
       given-names: Samuil
@@ -41,6 +39,6 @@ preferred-citation:
       email: samuil.petkov@phys.ens.psl.eu
   year: 2026
   month: 7
-  date-released: 2026-07-27
+  date-released: 2026-07-28
   status: preprint
   repository-code: "https://github.com/SamPetkov/wow284"

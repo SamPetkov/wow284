@@ -92,7 +92,7 @@ S&:=\sum_{a\in U}\sum_{b\in V}d_G(a,b)\\
 
 ## 4. Exact quadratic-form accounting
 
-For \(\alpha,eta>0\), define \(x\in\mathbb R^{V(G)}\) by
+For \(\alpha,\beta>0\), define \(x\in\mathbb R^{V(G)}\) by
 
 \[
 x_u=\alpha,\qquad x_a=\beta\ (a\in U),
@@ -183,7 +183,7 @@ y=
 \]
 
 has two strictly positive coordinates and satisfies \(M_ky=\mu_ky\). Hence it
-corresponds to admissible \(\alpha,eta>0\). Rayleigh--Ritz applied to (2)
+corresponds to admissible \(\alpha,\beta>0\). Rayleigh--Ritz applied to (2)
 proves the theorem.
 
 ## 6. Exact degree threshold

@@ -1,184 +1,110 @@
-WOW-284 RELEASE VERIFICATION
-============================
+WOW-284 v2.2.0 RELEASE VERIFICATION
+==================================
 
-Repository revision: 27 July 2026; active PDF date suppressed
-Verification run: 27 July 2026
+Repository revision: 28 July 2026; active PDF date suppressed
 Author: Samuil Petkov
+Manuscript: Counterexamples, Spectral Obstructions, and Deletion Stability
+            for WOW-284
 
-MATHEMATICAL CERTIFICATE
-------------------------
-PASS  General theorem: for every degree-k Moore graph of diameter two,
-      |V| = k^2 + 1, girth = 5, minimum dual degree = k, and the least
-      distance eigenvalue is -(3 + sqrt(4k - 3))/2.
-PASS  Threshold: WOW-284 holds at k = 2, is an equality at k = 3, and fails
-      for every realizable degree k > 3.
-PASS  Coordinate construction: 50 vertices, 175 edges, degree set {7}.
-PASS  Pair certificate: 0 common neighbors on 175 adjacent pairs and exactly
-      1 common neighbor on 1,050 nonadjacent pairs.
-PASS  Independent BFS: connected, diameter 2, girth 5.
-PASS  Exact identities: A^2 = 6I - A + J and D = 2J - 2I - A.
-PASS  Adjacency characteristic polynomial:
-      (x - 7)(x - 2)^28(x + 3)^21.
-PASS  Distance characteristic polynomial:
-      (x - 91)(x - 1)^21(x + 4)^28.
-PASS  D + 7I: exact rational LDL^T factorization with 50 positive pivots;
-      smallest pivot in the chosen ordering is 2352/563.
-PASS  WOW-284 values: delta* = 7, least distance eigenvalue = -4,
-      and strict violation gap 7 - 4 = 3.
-PASS  Extended exact examples: orders 38, 39, 40, and 42 reconstructed from
-      coordinates with the claimed girth, diameter, dual degrees, spectra,
-      Sturm bounds, and positive rational LDL^T certificates.
-PASS  Independent G38 graph6 audit: integer BFS and handwritten Fraction-LDL;
-      delta* = 17/3 and least distance eigenvalue = -3 - sqrt(7).
-PASS  Exact descendant families: 40/40 singleton deletions and 120/120
-      edge-endpoint deletions are strict counterexamples.
-PASS  Deterministic graph6, adjacency-list, edge-list, and summary export for
-      orders 38, 39, 40, 42, and 50.
+MATHEMATICAL AND EXACT-COMPUTATION SCOPE
+----------------------------------------
+PASS  Explicit counterexamples of orders 38, 39, 40, 42, and 50.
+PASS  Regular diameter-three score identity and Moore-graph threshold.
+PASS  Regular degree and diameter obstructions, including the degree-six
+      order-50 ceiling and the diameter-four degree lower bound.
+PASS  Exact all-degree one-variable nonbacktracking LP optimum and rigidity.
+PASS  One- and two-vertex punctured-Moore spectra, deletion stability,
+      small-puncture normal form, and Hoffman--Singleton deletion radius.
+PASS  Every theorem-level computational certificate cited in main.tex uses
+      exact arithmetic. The separately labelled three-vertex screen remains
+      exploratory and is not used as a theorem.
 
-LEAN 4.31 CERTIFICATE
----------------------
-PASS  Lean and Mathlib are pinned to 4.31.0 in lean-toolchain, lakefile.lean,
-      and lake-manifest.json.
-PASS  Structural module: graph definition, symmetry, irreflexivity,
-      7-regularity, exhaustive common-neighbor counts, diameter two,
-      exclusion of 3- and 4-cycles, explicit 5-cycle, A^2 identity, and
-      distance-matrix formula.
-PASS  Spectral module: deterministic 250-scaled integer inverse, exact
-      left inverse, algebraically derived right inverse, exact rational
-      distance diagonalization, and multiplicity counts 1, 28, and 21.
-PASS  Scalar Moore threshold: k <= 3 exactly, with strictness at k = 2,
-      equality at k = 3, and failure for k > 3.
-PASS  Generator freshness checks cover the core generated files, the 74
-      checked-in order-39/order-42 modules and roots, and the standalone
-      185-module source.
-PASS  Isolated ProciDA replay at commit 9974a7326df062fd7d863a57ae7b9bebd3462775:
-      the original modular Wow284 and Wow284Extension targets completed all
-      8,669 Lake jobs; the generated order-39/order-42 focused closure and
-      audit roots passed with warnings fatal.
-PASS  Standalone source lean/Wow284Standalone.lean, SHA-256
-      340b0445e591b9cc3925b1aa92d78b9e32bb81516cd22e71160c5df7d88b1480,
-      replayed independently under Lean/Mathlib 4.31.0 on ProciDA with
-      -DwarningAsError=true.
-PASS  AXLE strict in environment lean-4.31.0:
-      20/20 final computational shards passed with zero failed declarations,
-      errors, or warnings; both dispatchers and every public wrapper passed.
-PASS  Forbidden scan: no sorry, admit, native_decide, bv_decide, unsafe
-      declaration, or new axiom.
-PASS  Representative #print axioms reports only propext, Classical.choice,
-      and Quot.sound.
-PASS  Lean 4.31 finite spectral endpoints for orders 38, 39, 40, and 42;
-      isolated ProciDA replay compiled the generated order-39/order-42
-      endpoints and audit root after the final linter correction.
-PASS  Non-50 endpoint #print axioms reports only propext, Classical.choice,
-      and Quot.sound.
-NOTE  The non-50 claim is a kernel-checked finite spectral certificate, not a
-      full standard-library formalization of every graph-theoretic statement.
-NOTE  Public GitHub Actions is an additional promotion gate for the exact
-      candidate head; it does not replace the independent ProciDA replay
-      recorded above.
-NOTE  AxiomMath AXLE did not complete the expanded modular closure because the
-      remote worker exhausted memory. The incomplete fallback was rejected;
-      no AXLE verification is claimed for the non-50 endpoints.
+LEAN 4.31 SCOPE
+---------------
+PASS  The 50-vertex graph-level development checks the coordinate graph,
+      regularity, common-neighbour certificate, girth, distance identity,
+      exact diagonalization, least distance eigenvalue, and strict gap.
+PASS  Orders 38, 39, and 42 have shifted-positive-definiteness/eigenpair
+      certificates; order 40 has an exact invertible diagonalization,
+      multiplicities, attained least eigenvalue, dual degree, and gap.
+PASS  The separate analytic LP development proves the nonbacktracking
+      recurrence, extremal coefficient witness, admissibility and attainment,
+      dual moments and all positive slacks, the uniform Chebyshev tail,
+      finite-support weak duality, complementary slackness, and optimizer
+      uniqueness both polynomially and coefficientwise.
+PASS  Hosted pre-promotion audits of the LP development used Lean/Mathlib
+      4.31 with warnings fatal, rejected proof shortcuts and new axioms, and
+      reported only propext, Classical.choice, and Quot.sound.
+PASS  The complete post-attainment LP closure passed AXLE strict in
+      environment lean-4.31.0 under request
+      6e762796-d2d7-4e7e-98c0-973b75efbf41. The checked 104-declaration
+      bundle has SHA-256
+      d6b51abaa8cd72c137fe295f57a7329206b9032487b65008d7338e7c93252731.
+PASS  The public LP source regenerates that byte-identical AXLE bundle and
+      the 194-module standalone file with SHA-256
+      2af62102d9d2acb88bc608cb1b631a1cd249758372ae4d5380474bfb2e826e85.
+PASS  The exact promoted public standalone source, with the SHA-256 recorded
+      above, compiled on Procida under Lean/Mathlib 4.31 with
+      `lake env lean -DwarningAsError=true Wow284Standalone.lean`.
+      The process returned exit code 0; its endpoint axiom reports contain
+      only propext, Classical.choice, and Quot.sound.
+NOTE  The LP formalization is graph-independent. The trace interpretation,
+      girth-five trace facts, spectral graph bridge, graph-order corollaries,
+      punctured-Moore theorems, and deletion theory are outside its Lean claim.
 
-AUTOMATED CHECKS
-----------------
-PASS  pytest: 9 tests passed.
-PASS  scripts/verify_exact.py.
+REPOSITORY CHECKS
+-----------------
+PASS  scripts/audit_v22_manuscript.py.
 PASS  scripts/verify_extended.py.
-PASS  scripts/verify_regular_score_calculus.py: exact diameter-two/three
-      transfer formulas and representative regular WOW scores.
-PASS  scripts/verify_proof_audit_01_edge_local.py: exact diameter reduction,
-      local spectral window, and order-51 exclusion after the recorded scope
-      repair.
-PASS  scripts/verify_proof_audit_02_two_sided_lp.py: exact primal/dual
-      identities, positive finite and uniform-tail slacks, and optimizer
-      rigidity for the stated one-variable girth-five LP cone.
-PASS  scripts/verify_proof_audit_03_nonadjacent_puncture.py: symbolic
-      quotient/module factorization plus independent finite order-48
-      reconstruction, direct-sum, characteristic-polynomial, and LDL audit.
-PASS  scripts/verify_proof_audit_04_regular_low_degree.py: exact case
-      reductions, compression inequalities, and independent reconstruction
-      of all four committed (5,5)-cage records.
-NOTE  Audit 04 uses Meringer's published isomorph-free exhaustion as an
-      external classification input; the repository checks the four resulting
-      records but does not reproduce the exhaustive generation.
-PASS  scripts/verify_proof_audit_05_small_moore_punctures.py: exact quotient,
-      invariant-module, multiplicity, and least-root certificates.
-PASS  scripts/verify_proof_audit_06_order50_feasibility.py: exact local
-      walk-count, Gram-minor, and moment feasibility checks.
-PASS  scripts/verify_proof_audit_07_layer_matchings.py: all 120 matchings,
-      coordinate automorphisms, orbit exhaustion, and exact root certificates.
-PASS  scripts/verify_proof_audit_08_prime_field.py: exact finite-field
-      obstruction, Fourier-block controls, and rational Sturm separators.
-PASS  scripts/verify_proof_audit_09_jorgensen96.py: independent public-data
-      parsing, graph6 decoding, and exact equality-spectrum certificate.
-PASS  scripts/verify_proof_audit_10_endpoint_diameter.py: exact two-neighborhood
-      compression, radical comparison, integer rounding, and finite controls.
-PASS  scripts/generate_lean_diagonalization.py --check.
-PASS  scripts/export_graph_data.py generated exact edge, adjacency, and
-      distance CSV files.
-PASS  scripts/validate_repository.py.
-PASS  Prose-source validation rejects mojibake plus tab/carriage-return
-      control-byte corruption in Markdown and TeX.
+PASS  scripts/verify_proof_audit_01_edge_local.py.
+PASS  scripts/verify_proof_audit_02_two_sided_lp.py.
+PASS  scripts/verify_proof_audit_03_nonadjacent_puncture.py.
+PASS  scripts/verify_proof_audit_04_regular_low_degree.py.
+PASS  scripts/verify_proof_audit_05_small_moore_punctures.py.
+PASS  scripts/verify_proof_audit_06_order50_feasibility.py.
+PASS  scripts/verify_proof_audit_07_layer_matchings.py.
+PASS  scripts/verify_proof_audit_08_prime_field.py.
+PASS  scripts/verify_proof_audit_09_jorgensen96.py.
+PASS  scripts/verify_proof_audit_10_endpoint_diameter.py.
+PASS  scripts/verify_proof_audit_11_diameter_four.py.
+PASS  scripts/verify_proof_audit_12_small_puncture.py.
+PASS  scripts/verify_proof_audit_13_hs_robustness.py.
 PASS  scripts/sync_manuscript_artifacts.py --check.
-PASS  CITATION.cff validates against CFF schema version 1.2.0.
-
-Toolchain used:
-  Python 3.14.3
-  SymPy 1.14.0
-  pytest 8.4.1
-  Lean 4.31.0 / Mathlib 4.31.0
-  MiKTeX 26.2 / pdfTeX 1.40.29
-  latexmk 4.88
-  Pandoc 3.9.0.2
+PASS  scripts/validate_repository.py, subject to the exact-tree Lean gate
+      above before publication.
 
 MANUSCRIPT AND PDF
 ------------------
-PASS  Clean multi-pass LaTeX/BibTeX build: no final warnings, undefined
-      citations/references, overfull/underfull boxes, or missing glyphs.
-PASS  PDF metadata: revised title, Samuil Petkov, and deterministic
-      creation/modification metadata.
-PASS  Fourteen pages, A4 (595.276 x 841.890 pt), exact 1-inch geometry setting.
-PASS  Every reported font is embedded and subset.
-PASS  TeX source, bibliography, references, page count, and synchronized PDF
-      hashes checked directly; all fourteen pages were rendered at 120 dpi
-      and visually checked for clipping, overlap, blank spill pages, and
-      broken glyphs.
+PASS  Clean multi-pass LaTeX/BibTeX build with no unresolved citations or
+      references, no overfull/underfull boxes, and no missing glyphs.
+PASS  PDF metadata carries the expanded v2.2 title and Samuil Petkov as author.
+PASS  PDF page count: 20.
+PASS  A4 paper with the explicit one-inch geometry setting.
+PASS  References begin on a fresh page.
+PASS  Canonical root TeX/Bib, arXiv mirrors, Markdown reading copy, PDF, BBL,
+      and deterministic source ZIP are synchronized.
+
+ARXIV PACKAGE
+-------------
+PASS  arxiv/wow284_arxiv_source.zip contains exactly, in order:
+      main.tex, references.bib, main.bbl.
+PASS  The ZIP members are LF-normalized copies of the canonical files and
+      carry a deterministic timestamp.
+PASS  A clean isolated extraction compiles with latexmk and BibTeX.
+
+INTEGRITY
+---------
+PASS  MANIFEST.txt is the complete release-visible file inventory.
+PASS  SHA256SUMS has exactly one digest for every manifest file except the
+      checksum ledger itself; no missing, duplicate, stale, or extra entry is
+      accepted.
 
 The authoritative SHA-256 digests for main.pdf and
       arxiv/wow284_arxiv_source.zip are recorded in SHA256SUMS.
 
-ARXIV PACKAGE
--------------
-PASS  arxiv/wow284_arxiv_source.zip contains exactly, in this order:
-      main.tex, references.bib, main.bbl.
-PASS  Archive members are deterministic LF serializations of the canonical
-      source files and carry the fixed timestamp 24 July 2026 12:00:00.
-PASS  A fresh extraction of the ZIP compiled independently to a fourteen-page
-      PDF with latexmk/BibTeX.
-
-SOURCE AND NOVELTY AUDIT
-------------------------
-PASS  Published WOW-284 wording checked against Aouchiche--Hansen (2014),
-      Conjecture 7.16.
-PASS  Howlader--Panigrahi (2022), Theorems 2.3 and 2.5(1), credited for the
-      general minimal-cage distance-polynomial framework and the classical
-      Moore-graph distance spectra.
-PASS  Exact coordinate rules matched, after the stated reindexing, to Hafner's
-      published affine-coordinate construction (2003), Theorem 2.1.
-PASS  Smith--Montemanni (2026) cited for the current open status of the
-      degree-57 Moore graph.
-PASS  User-supplied Written on the Wall II catalogue URL recorded. Its server
-      timed out during the audit, so the exact wording is sourced from the
-      peer-reviewed survey.
-PASS  Targeted web, Crossref, arXiv, source-text, and public GitHub searches
-      found no accessible earlier source explicitly making the WOW-284 /
-      Moore-graph connection. This is not an exhaustive priority proof, and
-      the manuscript makes no first-discovery, new-spectrum, or minimality
-      claim.
-
-LICENSING
----------
-PASS  Canonical Creative Commons Attribution 4.0 International legal code is
-      in LICENSE; LICENSE_SCOPE.md identifies covered and excluded material;
-      CITATION.cff declares CC-BY-4.0.
+LICENSING AND RESPONSIBILITY
+----------------------------
+PASS  Original repository material is released under CC BY 4.0, subject to
+      the exclusions in LICENSE_SCOPE.md.
+PASS  Samuil Petkov is the sole author and accepts responsibility for all
+      mathematical, bibliographic, submission, and attribution claims.

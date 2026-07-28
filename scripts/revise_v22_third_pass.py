@@ -19,9 +19,31 @@ def main() -> None:
     text = TEX.read_text(encoding="utf-8")
     replacements: list[tuple[str, str, str]] = [
         (
-            "publication-email",
-            r"\email{samuil.petkov@phys.ens.psl.eu}",
-            r"\email{samuil.petkov@ens.psl.eu}",
+            "abstract-conjecture-verb",
+            "WOW-284 predicts that the minimum dual degree",
+            "WOW-284 asserts that the minimum dual degree",
+        ),
+        (
+            "pdf-keywords",
+            "pdfkeywords={distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability}",
+            "pdfkeywords={distance spectrum, dual degree, Moore graph}",
+        ),
+        (
+            "manuscript-keywords",
+            r"\keywords{distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability}",
+            r"\keywords{distance spectrum, dual degree, Moore graph}",
+        ),
+        (
+            "abstract-formal-verification-scope",
+            "All theorem-level computations use exact arithmetic; independent Python\n"
+            "certificates are cited inline, and the explicit finite counterexamples have\n"
+            "Lean 4.31 kernel-checked certificates.",
+            "All theorem-level computations use exact arithmetic, with independent Python\n"
+            "certificates cited inline.  Lean 4.31 kernel-checks the complete graph-level\n"
+            "proof for the 50-vertex counterexample, finite spectral certificates for the\n"
+            "constructions of orders \\(38,39,40,42\\), and, as a separate analytic theorem,\n"
+            "the exact one-variable LP optimum and coefficient-level optimizer rigidity for\n"
+            "every integer \\(k\\ge4\\).",
         ),
         (
             "forward-dependency",
@@ -125,6 +147,116 @@ def main() -> None:
             "injectivity, orthogonality, all recomputed distances, and the polynomial sign\n",
             "The direct-sum decomposition, injectivity, orthogonality, all recomputed\n"
             "distances, and the polynomial sign\n",
+        ),
+        (
+            "verification-table-layout",
+            "\\begin{center}\n"
+            "\\begin{tabular}{p{0.39\\textwidth}p{0.53\\textwidth}}\n",
+            "\\begin{center}\n"
+            "\\begingroup\n"
+            "\\scriptsize\n"
+            "\\setlength{\\tabcolsep}{4pt}\n"
+            "\\renewcommand{\\arraystretch}{1.15}\n"
+            "\\begin{tabular}{@{}p{0.30\\textwidth}p{0.67\\textwidth}@{}}\n",
+        ),
+        (
+            "verification-table-end",
+            "\\bottomrule\n"
+            "\\end{tabular}\n"
+            "\\end{center}\n"
+            "\n"
+            "The explicit \\(50\\)-vertex counterexample",
+            "\\bottomrule\n"
+            "\\end{tabular}\n"
+            "\\endgroup\n"
+            "\\end{center}\n"
+            "\n"
+            "The explicit \\(50\\)-vertex counterexample",
+        ),
+        (
+            "ai-disclosure-scope",
+            "OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, literature\n"
+            "search, exact verification code, and Lean formalization.",
+            "OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof\n"
+            "exploration, and Lean formalization.",
+        ),
+        (
+            "novelty-disclaimer-wording",
+            "Search silence is not proof\n"
+            "of novelty.  Accordingly, we use ``derive'' and ``prove'' rather than ``first''\n"
+            "or ``previously unknown'', and make no minimum-order claim.",
+            "Search silence is not proof of novelty.  Accordingly, we avoid unsupported\n"
+            "priority language and make no minimum-order claim.",
+        ),
+        (
+            "completed-lean-scope",
+            "The explicit \\(50\\)-vertex counterexample is fully formalized in Lean 4.31 with\n"
+            "Mathlib 4.31 \\cite{deMouraUllrich2021,Mathlib2020}.  The development checks the\n"
+            "coordinate graph, regularity, the complete common-neighbour certificate, girth,\n"
+            "the adjacency-square and distance-matrix identities, and an exact rational\n"
+            "diagonalization with multiplicities.  Lean also kernel-checks finite spectral\n"
+            "certificates for the orders \\(38,39,40,42\\).  For orders \\(38,39,42\\), these\n"
+            "are positive-definiteness certificates for the corresponding shifted distance\n"
+            "matrices; the order-\\(40\\) endpoint contains a complete exact diagonalization.\n"
+            "The non-\\(50\\) formal statements are deliberately described as finite spectral\n"
+            "certificates rather than as a single Mathlib theorem bundling every\n"
+            "graph-theoretic phrase.  The LP ceiling, optimizer rigidity, punctured-Moore\n"
+            "spectra, and deletion-robustness theorems remain conventional analytic proofs\n"
+            "with exact executable audits; they are not included in the Lean claim above.",
+            "The explicit \\(50\\)-vertex counterexample is fully formalized in Lean 4.31\n"
+            "with Mathlib 4.31 \\cite{deMouraUllrich2021,Mathlib2020}.  The development\n"
+            "checks the coordinate graph, regularity, the exhaustive common-neighbour\n"
+            "certificate, girth five, the adjacency-square and distance-matrix identities,\n"
+            "and an exact rational diagonalization with multiplicities.  Thus the\n"
+            "\\(50\\)-vertex result is verified at graph level, including its least distance\n"
+            "eigenvalue and strict WOW-284 gap.\n"
+            "\n"
+            "Lean also kernel-checks finite spectral certificates attached to the explicit\n"
+            "constructions of orders \\(38,39,40,42\\).  For orders \\(38,39,42\\), the\n"
+            "endpoints certify the stated minimum dual-degree data, positive definiteness of\n"
+            "the corresponding shifted finite distance matrix, and hence the strict bound\n"
+            "for every nonzero real eigenpair.  For order \\(40\\), Lean certifies a two-sided\n"
+            "invertible exact diagonalization, the diagonal-entry multiplicities, the\n"
+            "attained least eigenvalue \\(-5\\), dual degree six, and gap one.  These\n"
+            "non-\\(50\\) endpoints are finite spectral certificates: they do not identify\n"
+            "each semantic matrix with \\texttt{SimpleGraph.dist} and bundle every\n"
+            "structural hypothesis into one public theorem.\n"
+            "\n"
+            "Separately, Lean formalizes the analytic optimization statement in\n"
+            "Theorem~\\ref{thm:lp-ceiling}.  For every integer \\(k\\ge4\\) and every admissible\n"
+            "finitely supported expansion\n"
+            "\\[\n"
+            "  f=\\sum_i c_iF_i,\n"
+            "  \\qquad c_0>0,\n"
+            "  \\qquad c_i\\ge0\\quad(i\\ge5),\n"
+            "  \\qquad f\\vert_{I_k}\\le0,\n"
+            "\\]\n"
+            "it proves\n"
+            "\\[\n"
+            "  B_kc_0\\le f(k),\n"
+            "  \\qquad B_k=\\frac{(k+2)(k^2+3)}6.\n"
+            "\\]\n"
+            "The formal development defines the coefficient family of the displayed\n"
+            "quartic \\(f_*\\), proves that it is admissible and attains equality, and proves\n"
+            "that every equality case is its unique positive scalar multiple, both as a\n"
+            "polynomial and at coefficient level.  The kernel-checked dependency chain\n"
+            "includes the nonbacktracking recurrence, the exact primal expansion, positivity\n"
+            "and moment identities for the three-point dual certificate, strict slacks in\n"
+            "degrees \\(5\\) through \\(9\\), the Chebyshev tail for every degree at least\n"
+            "\\(10\\), finite-support weak duality, complementary slackness, and optimizer\n"
+            "rigidity.\n"
+            "\n"
+            "This LP formalization is deliberately graph-independent.  It does not\n"
+            "formalize the trace interpretation of the \\(F_i(A)\\), the girth-five\n"
+            "vanishing and nonnegativity statements, the spectral trace decomposition, or\n"
+            "the passage from the analytic LP inequality to graph-order bounds.\n"
+            "Consequently the graph conclusions \\(n<B_k\\), the degree-six reductions\n"
+            "\\(n\\le51\\) and \\(n\\le50\\), and the edge-local cycle argument remain\n"
+            "conventional analytic proofs, with exact executable audits where cited.  The\n"
+            "punctured-Moore spectra, the general deletion-stability inequality, the\n"
+            "small-puncture normal form, and the Hoffman--Singleton deletion-radius theorem\n"
+            "are likewise analytic results supported by exact Python audits; they are not\n"
+            "part of the Lean claim.",
         ),
     ]
 

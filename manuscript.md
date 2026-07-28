@@ -1,4 +1,4 @@
-# Exact Counterexamples and Spectral Mechanisms for WOW-284
+# Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284
 
 **Samuil Petkov**<br>
 Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
@@ -8,548 +8,251 @@ Department of Physics, École normale supérieure, Université PSL, Paris, Franc
 
 # Introduction
 
-Let $`G`$ be a finite simple connected graph on $`n\ge2`$ vertices. Its distance matrix is $`D(G)=(d_G(u,v))_{u,v\in V(G)}`$, where $`d_G`$ is graph distance. Since this matrix is real symmetric, write its eigenvalues as
+Let $`G`$ be a finite simple connected graph. Write $`d(v)`$ for the degree of $`v`$, $`N(v)`$ for its open neighbourhood, and
 ``` math
-\partial_1(G)\ge \partial_2(G)\ge\cdots\ge\partial_n(G).
+d^*(v)=\frac1{d(v)}\sum_{u\in N(v)}d(u),
+ \qquad
+ \delta^*(G)=\min_{v\in V(G)}d^*(v).
 ```
-For a vertex $`v`$, define its *dual degree* and the minimum dual degree by
+The distance matrix is $`D(G)=(d_G(u,v))_{u,v\in V(G)}`$. Its eigenvalues are ordered as
 ``` math
-d^*(v)=\frac{1}{d(v)}\sum_{u\in N(v)}d(u),
-  \qquad
-  \delta^*(G)=\min_{v\in V(G)}d^*(v).
+\partial_1(G)\ge\cdots\ge\partial_n(G),
+ \qquad \partial_n(G)=\lambda_{\min}(D(G)).
 ```
-Write $`g(G)`$ for the shortest-cycle length, with $`g(G)=\infty`$ for an acyclic graph; spectral superscripts indicate algebraic multiplicity.
+Aouchiche and Hansen record the following Graffiti conjecture as Conjecture 7.16 and attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)) (see also ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16)).
 
-Aouchiche and Hansen record the following Graffiti conjecture in their survey of distance spectra ([Aouchiche and Hansen 2014](#ref-AouchicheHansen2014), Conjecture 7.16, p. 370); they attribute it to Fajtlowicz’s 1998 *Written on the Wall* report ([Fajtlowicz 1998](#ref-Fajtlowicz1998)).
+<div id="conj:wow284" class="wowconjecture">
 
-<span id="conj:wow284" label="conj:wow284"></span>
-
-<div class="wowconjecture">
-
-**Conjecture (WOW-284)**. *If $`G`$ is connected, has $`n\ge3`$ vertices, and has girth $`g(G)\ge5`$, then
+**Conjecture (WOW-284)**. *If $`G`$ has order at least three and girth at least five, then
 ``` math
-\delta^*(G)\le -\partial_n(G).
+\delta^*(G)\le-\lambda_{\min}(D(G)).
 ```*
 
 </div>
 
-For such a graph, write
+For graphs in the domain of the conjecture, put
 ``` math
-\Phi(G):=\delta^*(G)+\partial_{|V(G)|}(G).
+\Phi(G)=\delta^*(G)+\lambda_{\min}(D(G)).
 ```
 Thus $`G`$ is a strict counterexample precisely when $`\Phi(G)>0`$.
 
-The disproof is short. In a degree-$`k`$ Moore graph of diameter two, adjacent vertices have no common neighbor and nonadjacent vertices have exactly one. If $`A`$, $`I`$, and $`J`$ denote the adjacency, identity, and all-ones matrices, then
+The initial disproof is short. A degree-$`k`$ Moore graph of diameter two has
 ``` math
 A^2=(k-1)I-A+J,
  \qquad
- D=2J-2I-A.
+ D=2J-2I-A,
 ```
-On the orthogonal complement of the all-ones vector, the nonprincipal adjacency eigenvalues are the roots of $`x^2+x-(k-1)=0`$. It follows that
+and hence
 ``` math
-\partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
-```
-Regularity gives $`\delta^*(G)=k`$, so the conjectured inequality holds exactly when $`k\le3`$. The Petersen graph is the equality case $`k=3`$. The degree-seven Hoffman–Singleton graph ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960)) has
-``` math
-\delta^*=7,\qquad \partial_{50}=-4,
-```
-and therefore violates WOW-284 by the strict gap $`3`$.
-
-This paper develops that observation in three directions. First, a fully labelled coordinate construction verifies the Hoffman–Singleton common-neighbor identity directly, making the disproof self-contained and supplying exact graph data for independent checking. Second, natural deletions give smaller counterexamples of orders $`38,39,40`$, and $`42`$. Third, the identity
-``` math
-D=3J+(k-3)I-2A-A^2
-```
-isolates the operator mechanism for regular diameter-three graphs and turns the conjecture into a shifted adjacency-spectrum condition. Exact characteristic polynomials, Sturm certificates, rational $`LDL^{\mathsf T}`$ decompositions, and formal-verification details are included only where they certify a stated mathematical step.
-
-Howlader and Panigrahi provide the relevant prior spectral calculation. They determine a distance polynomial for minimal $`(k,5)`$-cages and explicitly list the distance spectra of the Petersen, Hoffman–Singleton, and hypothetical degree-57 Moore graphs ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022), Theorems 2.3 and 2.5(1)); the existence of the last graph remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)). Their $`k=7`$ calculation, together with regularity and the girth condition, already supplies every ingredient needed to disprove [WOW-284](#conj:wow284). The present note records the sharp degree criterion, makes the WOW-284 connection explicit, and supplies independent exact certificates. No claim is made that the classical distance spectra are new, that this observation has priority over every unpublished observation, that the 38-vertex example has minimum possible order among all counterexamples, or that the parameterized constructions form an unconditional infinite family.
-
-<span id="thm:moore-wow" label="thm:moore-wow"></span>
-
-<div class="theoremA">
-
-**Theorem A**. *Let $`G`$ be a Moore graph of diameter two and degree $`k\ge2`$. Then
-``` math
-|V(G)|=k^2+1,\qquad g(G)=5,\qquad \delta^*(G)=k,
+\delta^*(G)=k,
  \qquad
- \partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
+ \lambda_{\min}(D)=-\frac{3+\sqrt{4k-3}}2.
 ```
-Consequently $`G`$ satisfies the inequality in WOW-284 if and only if $`k\le3`$, with equality exactly when $`k=3`$.*
+The conjecture holds on these graphs exactly for $`k\le3`$, with equality at $`k=3`$, and fails for every realizable $`k>3`$. The degree-seven Hoffman–Singleton graph therefore gives a gap of three.
+
+The purpose of this paper is not merely to list descendants of this graph. It addresses three structural questions.
+
+1.  Which spectral mechanism governs regular counterexamples?
+
+2.  How restrictive are the degree, diameter, and order conditions?
+
+3.  How stable is the counterexample property under deletion?
+
+Our main conclusions are as follows.
+
+- In diameter three, WOW-284 is equivalent to a two-sided adjacency spectrum window centred at $`-1`$; see Theorem <a href="#thm:diameter-three-score" data-reference-type="ref" data-reference="thm:diameter-three-score">6</a>.
+
+- Every regular strict counterexample has degree at least six and diameter at most four. A diameter-four example, if one exists, has degree at least ten; see Theorems <a href="#thm:regular-degree-six" data-reference-type="ref" data-reference="thm:regular-degree-six">10</a>, <a href="#thm:endpoint-diameter" data-reference-type="ref" data-reference="thm:endpoint-diameter">11</a>, and <a href="#thm:diameter-four" data-reference-type="ref" data-reference="thm:diameter-four">12</a>.
+
+- The standard one-variable nonbacktracking linear-programming hierarchy has exact ceiling
+  ``` math
+  B_k=\frac{(k+2)(k^2+3)}6,
+  ```
+  with a unique optimizer up to positive scaling; see Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a>.
+
+- The LP ceiling gives $`n\le51`$ at degree six. An edge-local positive-semidefinite certificate then rules out $`n=51`$ by the congruence
+  ``` math
+  5N_5=153\cdot11=1683,
+  ```
+  so $`n\le50`$; see Theorem <a href="#thm:degree-six-fifty" data-reference-type="ref" data-reference="thm:degree-six-fifty">18</a>.
+
+- One-vertex, adjacent-pair, and nonadjacent-pair deletions of Moore graphs admit exact invariant-subspace decompositions for their recomputed distance matrices; see Section <a href="#sec:punctures" data-reference-type="ref" data-reference="sec:punctures">7</a>.
+
+- Every deletion of at most five vertices from the Hoffman–Singleton graph remains a strict counterexample, and this universal radius is sharp; see Theorem <a href="#thm:hs-radius" data-reference-type="ref" data-reference="thm:hs-radius">26</a>.
+
+The distance-polynomial viewpoint is established in the theory of minimal cages, distance-polynomial graphs, and spectral excess ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022); [Fiol 2016](#ref-Fiol2016)). Nonbacktracking linear-programming bounds are due to Nozaki and related spectral-Moore work ([Nozaki 2015](#ref-Nozaki2015); [Cioabă et al. 2016](#ref-CioabaEtAl2016)). Our contribution is the specialization to the two-sided WOW window, the exact method ceiling, the edge-local cycle certificate, and the deletion theory developed below. We make no claim that the classical Hoffman–Singleton or Moore spectra are new, that order $`38`$ is minimal, or that the project-derived extensions have uncontested priority. The literature boundaries are returned to in Section <a href="#sec:scope" data-reference-type="ref" data-reference="sec:scope">11</a>.
+
+The analytic arguments are proved in the text. Precisely specified finite classifications and matrix certificates are treated as computer-assisted proof components, each with an inline reference to an independent exact verifier. The code is part of release `v2.2.0`; a path such as [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_01_edge_local.py) identifies the exact file used for the corresponding audit.
+
+# Local growth, Moore graphs, and explicit counterexamples
+
+## Dual degree as radius-two growth
+
+For $`v\in V(G)`$, write $`\Gamma_i(v)`$ for the distance-$`i`$ sphere and $`B_2(v)=\Gamma_0(v)\cup\Gamma_1(v)\cup\Gamma_2(v)`$.
+
+<div id="prop:radius-two" class="proposition">
+
+**Proposition 1** (Backelin’s second-degree identity). *If $`G`$ contains no triangle and no $`4`$-cycle, then
+``` math
+|B_2(v)|=1+\sum_{u\in N(v)}d(u),
+ \qquad
+ d^*(v)=\frac{|B_2(v)|-1}{d(v)}.
+```*
 
 </div>
 
-# The Moore-graph mechanism
+<div class="proof">
 
-A *Moore graph of diameter two and degree $`k`$* is a finite simple connected $`k`$-regular graph of diameter two attaining the Moore bound $`|V(G)|\le 1+k+k(k-1)=k^2+1`$. We include the short derivation needed for [Theorem A](#thm:moore-wow); no classification of Moore graphs is used.
+*Proof.* For distinct neighbours $`u,w`$ of $`v`$, the sets $`N(u)\setminus\{v\}`$ and $`N(w)\setminus\{v\}`$ are disjoint; an intersection would form a $`4`$-cycle, and a member in $`N(v)`$ would form a triangle. These sets partition $`\Gamma_2(v)`$, so
+``` math
+|\Gamma_2(v)|=\sum_{u\in N(v)}(d(u)-1).
+```
+Adding the centre and first sphere proves the formula. This is the normalized form of Backelin’s second-degree lemma ([Backelin 2015](#ref-Backelin2015), Lemma 2.1). ◻
 
-Fix a vertex $`v`$. There are exactly $`k(k-1)`$ nonbacktracking walks $`vuw`$ of length two. There are also exactly $`k(k-1)`$ vertices outside $`\{v\}\cup N(v)`$, and diameter two implies that each such vertex is the endpoint of at least one of these walks. Walks with distinct endpoints are distinct, so these required walks already exhaust all $`k(k-1)`$ nonbacktracking walks. Consequently every such walk ends outside $`\{v\}\cup N(v)`$, and every outside vertex is reached exactly once. Applying this at every vertex shows that adjacent vertices have no common neighbor and nonadjacent vertices have exactly one. Thus there are no triangles or 4-cycles. To exhibit a 5-cycle, take an edge $`uv`$, choose $`x\in N(u)\setminus\{v\}`$ and $`y\in N(v)\setminus\{u\}`$, and let $`z`$ be the unique common neighbor of the necessarily nonadjacent vertices $`x,y`$. The absence of triangles and 4-cycles makes these five vertices distinct, so $`uxzyvu`$ is a 5-cycle. Hence $`g(G)=5`$.
+</div>
 
-Let $`A`$, $`I`$, and $`J`$ denote the adjacency, identity, and all-ones matrices of order $`n=k^2+1`$. The common-neighbor counts give, entry by entry,
-``` math
-\begin{equation}
-\label{eq:general-a-square}
- A^2=(k-1)I-A+J.
-\end{equation}
-```
-Indeed, the diagonal entries are $`k`$, the entries indexed by edges are zero, and the remaining off-diagonal entries are one. Since $`A\mathbf 1=k\mathbf 1`$ and the graph is connected, the eigenvalue $`k`$ is simple. For example, for $`x\in\mathbb R^n`$,
-``` math
-x^{\mathsf T}(kI-A)x
-   =\sum_{\{u,v\}\in E(G)}(x_u-x_v)^2,
-```
-so equality holds only for constant $`x`$. The real symmetric matrix $`A`$ preserves $`\mathbf 1^\perp`$, and <a href="#eq:general-a-square" data-reference-type="eqref" data-reference="eq:general-a-square">[eq:general-a-square]</a> restricts there to
-``` math
-A^2+A-(k-1)I=0.
-```
-Writing $`q=\sqrt{4k-3}`$, the two nonprincipal adjacency eigenvalues are
-``` math
-r=\frac{-1+q}{2},\qquad s=\frac{-1-q}{2}.
-```
-If $`m_r,m_s`$ are the respective multiplicities, then
-``` math
-m_r+m_s=k^2,\qquad k+m_rr+m_ss=0.
-```
-Solving gives
-``` math
-\begin{equation}
-\label{eq:general-multiplicities}
- m_r=\frac12\left(k^2+\frac{k(k-2)}q\right),\qquad
- m_s=\frac12\left(k^2-\frac{k(k-2)}q\right).
-\end{equation}
-```
+## The Moore threshold
 
-Every nonedge joins vertices at distance two, so
-``` math
-\begin{equation}
-\label{eq:general-distance}
- D=2J-2I-A.
-\end{equation}
-```
-It follows that the full distance spectrum is
-``` math
-\begin{equation}
-\label{eq:general-distance-spectrum}
- \operatorname{Spec}(D)=
- \left\{(2k^2-k)^{(1)},
- \left(\frac{q-3}{2}\right)^{(m_s)},
- \left(-\frac{q+3}{2}\right)^{(m_r)}\right\}.
-\end{equation}
-```
-In particular, the last displayed eigenvalue is the least one. Regularity gives $`\delta^*(G)=k`$. Hence the conjectured inequality is
-``` math
-k\le\frac{3+\sqrt{4k-3}}2.
-```
-For $`k\ge2`$, comparison after moving 3 to the left is legitimate, and
-``` math
-(2k-3)^2-(4k-3)=4(k-1)(k-3).
-```
-Thus the inequality is strict for $`k=2`$, is an equality for $`k=3`$, and fails precisely for $`k>3`$. This proves [Theorem A](#thm:moore-wow).
+<div id="thm:moore-threshold" class="theorem">
 
-The smallest explicit example constructed in this note has 38 vertices. By Theorem <a href="#thm:thirty-eight" data-reference-type="ref" data-reference="thm:thirty-eight">5</a>, its minimum dual degree is $`17/3`$, its least distance eigenvalue is $`-3-\sqrt7`$, and its counterexample score is $`8/3-\sqrt7>0`$.
-
-# Coordinate construction
-
-All subscripts in this section lie in the field $`\mathbb F_5=\mathbb Z/5\mathbb Z`$. Introduce vertices
+**Theorem 2**. *Let $`M`$ be a degree-$`k`$ Moore graph of diameter two, $`k\ge2`$. Then
 ``` math
-V(G)=\{P_{i,j}:i,j\in\mathbb F_5\}\mathbin{\dot\cup}
-      \{Q_{k,\ell}:k,\ell\in\mathbb F_5\}.
+|V(M)|=k^2+1,
+ \qquad g(M)=5,
+ \qquad \delta^*(M)=k,
 ```
-Thus $`|V(G)|=50`$. The edges are the following unordered pairs:
+``` math
+\lambda_{\min}(D(M))=-\frac{3+\sqrt{4k-3}}2,
+```
+and
+``` math
+\Phi(M)=k-\frac{3+\sqrt{4k-3}}2.
+```
+Thus $`M`$ satisfies WOW-284 exactly for $`k\le3`$, with equality exactly at $`k=3`$.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* The Moore bound is attained, so adjacent vertices have no common neighbour and nonadjacent vertices have exactly one. Therefore
+``` math
+A^2=(k-1)I-A+J.
+```
+On $`\mathbf 1^\perp`$, the nonprincipal adjacency eigenvalues are the roots
+``` math
+r,s=\frac{-1\pm\sqrt{4k-3}}2.
+```
+Every nonedge has distance two, hence $`D=2J-2I-A`$. The least distance eigenvalue is $`-2-r=-(3+\sqrt{4k-3})/2`$. Regularity gives $`\delta^*=k`$, and
+``` math
+(2k-3)^2-(4k-3)=4(k-1)(k-3)
+```
+gives the threshold. The exact scalar and finite checks are independently repeated by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_regular_score_calculus.py). ◻
+
+</div>
+
+## A coordinate Hoffman–Singleton certificate
+
+All subscripts below lie in $`\mathbb F_5=\mathbb Z/5\mathbb Z`$. Let
+``` math
+V(M)=\{P_{i,j}:i,j\in\mathbb F_5\}\mathbin{\dot\cup}
+      \{Q_{k,\ell}:k,\ell\in\mathbb F_5\},
+```
+with edges
 ``` math
 \begin{align*}
- E_P&=\bigl\{\{P_{i,j},P_{i,j+1}\}:i,j\in\mathbb F_5\bigr\},\\
- E_Q&=\bigl\{\{Q_{k,\ell},Q_{k,\ell+2}\}:k,\ell\in\mathbb F_5\bigr\},\\
- E_X&=\bigl\{\{P_{i,j},Q_{k,ik+j}\}:i,j,k\in\mathbb F_5\bigr\}.
+ P_{i,j}&\sim P_{i,j\pm1},\\
+ Q_{k,\ell}&\sim Q_{k,\ell\pm2},\\
+ P_{i,j}&\sim Q_{k,ik+j}.
 \end{align*}
 ```
-Set $`E(G)=E_P\cup E_Q\cup E_X`$. For a fixed numerical labeling, with representatives in $`\{0,1,2,3,4\}`$, use
+This is Hafner’s affine-coordinate form of the Hoffman–Singleton graph after a minor reindexing ([Hafner 2003](#ref-Hafner2003)).
+
+<div id="prop:hs-coordinate" class="proposition">
+
+**Proposition 3**. *The coordinate construction is a simple connected $`7`$-regular graph on $`50`$ vertices. Adjacent pairs have no common neighbour and nonadjacent pairs have exactly one. Consequently it has girth five, diameter two, and
 ``` math
-P_{i,j}\longleftrightarrow 5i+j,
- \qquad
- Q_{k,\ell}\longleftrightarrow 25+5k+\ell.
+\operatorname{Spec}D(M)=\{91^{(1)},1^{(21)},(-4)^{(28)}\}.
 ```
-
-After reindexing the $`Q`$-layers by $`k\mapsto-k`$, these are exactly Hafner’s affine-coordinate form of Robertson’s pentagon-and-pentagram construction ([Hafner 2003, sec. 2](#ref-Hafner2003) and Theorem 2.1). Thus $`G`$ is the Hoffman–Singleton graph; all properties needed here are proved directly.
-
-The complete neighborhood formulas are
-``` math
-\begin{align}
- N(P_{i,j})
- &=\{P_{i,j-1},P_{i,j+1}\}
-   \cup\{Q_{k,ik+j}:k\in\mathbb F_5\},\label{eq:p-neighborhood}\\
- N(Q_{k,\ell})
- &=\{Q_{k,\ell-2},Q_{k,\ell+2}\}
-   \cup\{P_{i,\ell-ik}:i\in\mathbb F_5\}.
-   \label{eq:q-neighborhood}
-\end{align}
-```
-
-<div id="lem:simple-regular" class="lemma">
-
-**Lemma 1**. *The construction defines a simple 7-regular graph with 175 edges.*
+In particular, $`\delta^*(M)=7`$ and $`\Phi(M)=3`$.*
 
 </div>
 
 <div class="proof">
 
-*Proof.* Every listed edge has distinct endpoints. Within each of the five fixed $`P`$-layers, addition by $`1`$ gives a 5-cycle; within each fixed $`Q`$-layer, addition by $`2`$ gives a 5-cycle. The cross edges have one endpoint of each type. The set notation removes any possibility of parallel edges.
-
-Equations <a href="#eq:p-neighborhood" data-reference-type="eqref" data-reference="eq:p-neighborhood">[eq:p-neighborhood]</a>–<a href="#eq:q-neighborhood" data-reference-type="eqref" data-reference="eq:q-neighborhood">[eq:q-neighborhood]</a> list seven distinct neighbors at every vertex. For a $`P`$-vertex, the two same-layer neighbors are distinct because $`1\ne-1`$ in $`\mathbb F_5`$; the five cross neighbors are distinct because their first $`Q`$-coordinates are distinct; and the two types cannot overlap. The $`Q`$-case is identical with steps $`\pm2`$. There are 25 edges of type $`E_P`$, 25 of type $`E_Q`$, and 125 cross edges, hence 175 in total. Equivalently, the handshake identity gives $`50\cdot7/2=175`$. ◻
+*Proof.* The neighbourhoods are
+``` math
+\begin{align*}
+N(P_{i,j})&=\{P_{i,j-1},P_{i,j+1}\}
+ \cup\{Q_{k,ik+j}:k\in\mathbb F_5\},\\
+N(Q_{k,\ell})&=\{Q_{k,\ell-2},Q_{k,\ell+2}\}
+ \cup\{P_{i,\ell-ik}:i\in\mathbb F_5\}.
+\end{align*}
+```
+They have seven distinct entries. For two vertices of the same type, common neighbours are determined by one nonzero linear equation over $`\mathbb F_5`$; for a cross pair $`P_{i,j},Q_{k,\ell}`$, put $`r=\ell-(ik+j)`$. The pair is adjacent for $`r=0`$, has one common $`P`$-neighbour for $`r\in\{\pm1\}`$, and one common $`Q`$-neighbour for $`r\in\{\pm2\}`$. The five residues are exhausted. The claimed geometry and spectrum now follow from Theorem <a href="#thm:moore-threshold" data-reference-type="ref" data-reference="thm:moore-threshold">2</a>. The exhaustive pair certificate, integer BFS distances, characteristic polynomial, and exact positive-definiteness check are in [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_exact.py). ◻
 
 </div>
 
-# The common-neighbor certificate
+## Smaller exact counterexamples
 
-<div id="prop:common-neighbors" class="proposition">
-
-**Proposition 2**. *For any two distinct vertices $`x,y`$,
+Let
 ``` math
-|N(x)\cap N(y)|=
- \begin{cases}
- 0,&x\sim y,\\
- 1,&x\not\sim y.
- \end{cases}
-```*
-
-</div>
-
-<div class="proof">
-
-*Proof.* First consider two $`P`$-vertices $`P_{i,j}`$ and $`P_{i',j'}`$. If $`i=i'`$, their layer is a 5-cycle. Adjacent pairs have no common $`P`$-neighbor. If, for example, $`j'=j+2`$, the unique common $`P`$-neighbor is $`P_{i,j+1}`$; the case $`j'=j-2`$ is analogous. They cannot have a common $`Q`$-neighbor: for fixed $`i`$ and $`k`$, the equation $`Q_{k,\ell}\sim P_{i,j}`$ determines $`j=\ell-ik`$ uniquely. If $`i\ne i'`$, there is no common $`P`$-neighbor, and a common $`Q`$-neighbor must satisfy
-``` math
-ik+j=i'k+j'.
+\mathcal P=\{P_{0,j},Q_{0,j}:j\in\mathbb F_5\}.
 ```
-This has the unique solution
+The induced graph $`M[\mathcal P]`$ is a Petersen graph. Put
 ``` math
-k=\frac{j'-j}{i-i'},\qquad \ell=ik+j,
+R=M-\mathcal P,
+ \quad H_{39}=R-P_{1,0},
+ \quad H_{38}=R-\{P_{1,0},P_{1,1}\},
 ```
-because $`\mathbb F_5`$ is a field.
+and let $`X_{42}`$ be the second subconstituent of $`P_{0,0}`$, namely the graph induced by the vertices at distance two from it.
 
-The argument for two $`Q`$-vertices is dual. If their first coordinates agree, they lie in the 5-cycle generated by steps $`\pm2`$. Adjacent pairs have no common $`Q`$-neighbor. For a nonadjacent pair, whose second coordinates differ by $`\pm1`$, direct intersection of the two sets of $`\pm2`$-neighbors gives exactly one common $`Q`$-neighbor; no common $`P`$-neighbor is possible. If $`k\ne k'`$, a common $`P_{i,j}`$ is determined uniquely by
+<div id="thm:explicit-examples" class="theorem">
+
+**Theorem 4**. *The following are strict counterexamples.
 ``` math
-\ell=ik+j,\qquad \ell'=ik'+j,
+\begin{array}{c@{\quad}c@{\quad}c@{\quad}c}
+\toprule
+G&|V(G)|&\delta^*(G)&\lambda_{\min}(D(G))\\
+\midrule
+H_{38}&38&17/3&-3-\sqrt7\\
+H_{39}&39&35/6&>-35/6\\
+R&40&6&-5\\
+X_{42}&42&6&-5\\
+M&50&7&-4\\
+\bottomrule
+\end{array}
 ```
-namely
-``` math
-i=\frac{\ell-\ell'}{k-k'},\qquad j=\ell-ik.
-```
-
-It remains to compare $`P_{i,j}`$ with $`Q_{k,\ell}`$. Put
-``` math
-r=\ell-(ik+j)\in\mathbb F_5.
-```
-The pair is adjacent precisely when $`r=0`$. A common $`P`$-vertex must be $`P_{i,j+s}`$ with $`s\in\{\pm1\}`$, and it is adjacent to $`Q_{k,\ell}`$ precisely when $`r=s`$. Hence there is exactly one common $`P`$-neighbor if $`r\in\{\pm1\}`$, and none otherwise. A common $`Q`$-vertex must be $`Q_{k,\ell+t}`$ with $`t\in\{\pm2\}`$, and it is adjacent to $`P_{i,j}`$ precisely when $`t=-r`$. Hence there is exactly one common $`Q`$-neighbor if $`r\in\{\pm2\}`$, and none otherwise. Finally,
-``` math
-\mathbb F_5=\{0\}\mathbin{\dot\cup}\{\pm1\}
-          \mathbin{\dot\cup}\{\pm2\},
-```
-which proves every cross case and completes the certificate. ◻
-
-</div>
-
-<div id="cor:geometry" class="corollary">
-
-**Corollary 3**. *The graph is connected, has diameter two, and has girth five.*
+The entry for $`H_{39}`$ records an exact strict lower bound obtained from positive definiteness of $`6D+35I`$; it is not a decimal approximation to the least eigenvalue. Moreover, all $`40`$ labelled singleton deletions of $`R`$, and all $`120`$ labelled deletions of the endpoints of an edge of $`R`$, are strict counterexamples with the same respective characteristic polynomials.*
 
 </div>
 
 <div class="proof">
 
-*Proof.* Every pair of distinct vertices is adjacent or has a common neighbor, so the graph is connected and has diameter at most two. It is not complete, since it is 7-regular on 50 vertices, so its diameter is exactly two.
-
-A triangle would give an adjacent pair a common neighbor. In a 4-cycle, two opposite vertices would have the other two cycle vertices as distinct common neighbors. Both possibilities contradict Proposition <a href="#prop:common-neighbors" data-reference-type="ref" data-reference="prop:common-neighbors">2</a>. Thus $`g(G)\ge5`$. On the other hand, for every fixed $`i`$,
+*Proof.* The graph $`R`$ is the classical $`(6,5)`$-cage of O’Keefe and Wong ([O’Keefe and Wong 1979](#ref-OKeefeWong1979); [Wong 1979](#ref-Wong1979)). The Moore block identity gives
 ``` math
-P_{i,0}P_{i,1}P_{i,2}P_{i,3}P_{i,4}P_{i,0}
+\operatorname{Spec}A(R)=\{6^{(1)},2^{(18)},1^{(4)},(-2)^{(5)},(-3)^{(12)}\},
 ```
-is a 5-cycle, so $`g(G)=5`$. ◻
+and Theorem <a href="#thm:diameter-three-score" data-reference-type="ref" data-reference="thm:diameter-three-score">6</a> below maps this to
+``` math
+\operatorname{Spec}D(R)=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}.
+```
+The second-subconstituent calculation gives
+``` math
+\operatorname{Spec}D(X_{42})=\{81^{(1)},4^{(6)},0^{(14)},(-5)^{(21)}\}.
+```
+For $`H_{38}`$, a direct degree count gives $`\delta^*=17/3`$, while the factor $`x^2+6x+2`$, together with an exact Sturm isolation, gives the least root $`-3-\sqrt7`$. For $`H_{39}`$, the exact matrix $`6D+35I`$ is positive definite. All graph, girth, distance, dual-degree, Sturm, and rational $`LDL^{\mathsf T}`$ certificates are checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_extended.py); the labelled deletion families are exhausted by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_descendant_families.py). No transitivity or numerical root ordering is used. ◻
 
 </div>
 
-# The 50-vertex coordinate counterexample
+<div id="thm:second-subconstituent" class="theorem">
 
-The graph just constructed is 7-regular on $`50=7^2+1`$ vertices and has diameter two. It is therefore a Moore graph to which [Theorem A](#thm:moore-wow) applies. Substituting $`k=7`$ into <a href="#eq:general-distance-spectrum" data-reference-type="eqref" data-reference="eq:general-distance-spectrum">[eq:general-distance-spectrum]</a> gives
+**Theorem 5** (Moore second subconstituents). *Let $`M`$ be a degree-$`K`$ Moore graph of diameter two, $`K\ge3`$, and let $`X`$ be the graph induced by $`\Gamma_2(v)`$ for a fixed vertex $`v`$. Then $`X`$ has order $`K(K-1)`$, degree $`K-1`$, girth at least five, diameter three, and
 ``` math
-\begin{equation}
-\label{eq:distance-spectrum}
- \operatorname{Spec}(D)=\{91^{(1)},1^{(21)},(-4)^{(28)}\},
-\end{equation}
-```
-or equivalently
-``` math
-\det(tI-D)=(t-91)(t-1)^{21}(t+4)^{28}.
-```
-Every vertex and every one of its neighbors has degree 7, so
-``` math
-d^*(v)=\frac{1}{7}\sum_{u\in N(v)}7=7.
+\lambda_{\min}(D(X))=-\frac{5+\sqrt{4K-3}}2.
 ```
 Consequently
 ``` math
-g(G)=5,\qquad \delta^*(G)=7>4=-\partial_{50}(G),
- \qquad \delta^*(G)+\partial_{50}(G)=3.
-```
-This proves that the explicitly constructed Hoffman–Singleton graph is a strict counterexample to WOW-284.
-
-Equivalently, $`D+\delta^*(G)I=D+7I`$ has eigenvalues $`98`$, $`8`$ with multiplicity 21, and $`3`$ with multiplicity 28. Thus it is positive definite, which is the matrix form of the strict inequality $`\delta^*(G)>-\partial_{50}(G)`$.
-
-# A 40-vertex induced counterexample
-
-The same coordinates contain a smaller regular counterexample. Delete
-``` math
-\mathcal P=\{P_{0,j},Q_{0,j}:j\in\mathbb F_5\}
-```
-and let $`R=G-\mathcal P`$ be the induced graph on the remaining 40 vertices. The deleted graph consists of the $`P_{0,\bullet}`$ pentagon, the $`Q_{0,\bullet}`$ pentagram, and the matching $`P_{0,j}Q_{0,j}`$; hence it is a Petersen graph. This construction is the classical 40-vertex $`(6,5)`$-cage of O’Keefe and Wong ([O’Keefe and Wong 1979](#ref-OKeefeWong1979)). Its uniqueness was proved by Wong ([Wong 1979](#ref-Wong1979)), and its realization as a Petersen deletion from the Hoffman–Singleton graph is recorded explicitly by Klin, Muzychuk, and Ziv-Av ([Klin et al. 2009, sec. 3.6](#ref-KlinMuzychukZivAv2009)).
-
-<div id="thm:forty" class="theorem">
-
-**Theorem 4**. *The graph $`R`$ is connected and 6-regular, has girth five and diameter three, and has distance spectrum
-``` math
-\operatorname{Spec}(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}.
-```
-Consequently
-``` math
-\delta^*(R)=6>5=-\partial_{40}(R),
- \qquad \delta^*(R)+\partial_{40}(R)=1,
-```
-so $`R`$ is a strict counterexample to WOW-284.*
-
-</div>
-
-<div class="proof">
-
-*Proof.* Every retained vertex has exactly one neighbor in $`\mathcal P`$: $`P_{i,j}`$, with $`i\ne0`$, is adjacent there only to $`Q_{0,j}`$, while $`Q_{k,\ell}`$, with $`k\ne0`$, is adjacent there only to $`P_{0,\ell}`$. Thus $`R`$ is 6-regular. It inherits the absence of triangles and 4-cycles from $`G`$, and each retained $`P`$-layer is a 5-cycle, so $`g(R)=5`$.
-
-Fix $`v\in V(R)`$. Girth five makes the distance-zero, distance-one, and distance-two layers from $`v`$ have respectively $`1`$, $`6`$, and $`6\cdot5=30`$ vertices. Three vertices remain. Each has no neighbor in $`L_0(v)\cup L_1(v)`$ and has at most two neighbors among the three remaining vertices; 6-regularity therefore gives it a neighbor in the distance-two layer. Hence all three lie at distance three from $`v`$. This proves connectedness and diameter three.
-
-It remains to compute the spectrum. Order the vertices of $`G`$ with those of $`R`$ first, and write its adjacency matrix in blocks as
-``` math
-A_G=\begin{pmatrix}B&C\\ C^{\mathsf T}&P\end{pmatrix},
-```
-where $`B=A(R)`$, $`P=A(G[\mathcal P])`$, and $`C`$ is $`40\times10`$. Every row of $`C`$ has sum one and every column has sum four. Moreover, direct inspection of the two 5-cycles and their matching shows that every nonadjacent pair of vertices in $`\mathcal P`$ has exactly one common neighbor in $`\mathcal P`$. Consequently, distinct vertices of $`\mathcal P`$ have no common retained neighbor: adjacent pairs have no common neighbor in $`G`$, while the unique common neighbor of a nonadjacent pair already lies in the induced Petersen graph. Therefore
-``` math
-\begin{equation}
-\label{eq:c-block}
- C\mathbf1_{10}=\mathbf1_{40},\qquad C^{\mathsf T}C=4I_{10}.
-\end{equation}
-```
-In particular, $`C`$ has rank ten.
-
-Equation <a href="#eq:general-a-square" data-reference-type="eqref" data-reference="eq:general-a-square">[eq:general-a-square]</a> with $`k=7`$ gives $`A_G^2=6I-A_G+J`$. Its top-right block is
-``` math
-BC+CP=-C+J_{40,10}.
-```
-Here $`J_{a,b}`$ denotes the $`a\times b`$ all-ones matrix. Since $`J_{40,10}=CJ_{10}`$ by <a href="#eq:c-block" data-reference-type="eqref" data-reference="eq:c-block">[eq:c-block]</a>,
-``` math
-\begin{equation}
-\label{eq:bc-intertwining}
- BC=C(J_{10}-I_{10}-P).
-\end{equation}
-```
-The Petersen adjacency spectrum, obtained from the $`k=3`$ case of Section <a href="#sec:moore" data-reference-type="ref" data-reference="sec:moore">1</a>, is $`\{3^{(1)},1^{(5)},(-2)^{(4)}\}`$. Because $`C`$ is injective, equation <a href="#eq:bc-intertwining" data-reference-type="eqref" data-reference="eq:bc-intertwining">[eq:bc-intertwining]</a> gives
-``` math
-\operatorname{Spec}\bigl(B|_{\operatorname{col}C}\bigr)
- =\{6^{(1)},(-2)^{(5)},1^{(4)}\}.
-```
-
-The top-left block of the same identity is
-``` math
-B^2+CC^{\mathsf T}=6I_{40}-B+J_{40}.
-```
-Since $`B`$ is symmetric, $`\ker C^{\mathsf T}=(\operatorname{col}C)^\perp`$ is $`B`$-invariant. If $`x\in\ker C^{\mathsf T}`$, then $`\mathbf1_{40}^{\mathsf T}x=(C\mathbf1_{10})^{\mathsf T}x=0`$, so $`(B^2+B-6I)x=0`$. Thus the remaining 30 adjacency eigenvalues are $`2`$ or $`-3`$. If their multiplicities are $`a,b`$, then $`a+b=30`$; the displayed ten-dimensional spectrum has trace zero, and $`\operatorname{tr}B=0`$, so $`2a-3b=0`$. Hence $`a=18`$, $`b=12`$, and
-``` math
-\begin{equation}
-\label{eq:forty-adjacency-spectrum}
- \operatorname{Spec}(B)=\{6^{(1)},2^{(18)},1^{(4)},(-2)^{(5)},(-3)^{(12)}\}.
-\end{equation}
-```
-
-Let $`A_i`$ be the distance-$`i`$ matrix of $`R`$. Girth five and 6-regularity give $`A_2=B^2-6I`$, while diameter three gives $`J=I+B+A_2+A_3`$. Consequently
-``` math
-\begin{equation}
-\label{eq:forty-distance-identity}
- D(R)=B+2A_2+3A_3=3J+3I-2B-B^2.
-\end{equation}
-```
-On $`\mathbf1_{40}`$, the eigenvalue is $`3\cdot40+3-2\cdot6-6^2=75`$. A nonprincipal adjacency eigenvalue $`\theta`$ maps to
-``` math
-3-2\theta-\theta^2=4-(\theta+1)^2.
-```
-Applying this to <a href="#eq:forty-adjacency-spectrum" data-reference-type="eqref" data-reference="eq:forty-adjacency-spectrum">[eq:forty-adjacency-spectrum]</a> gives the claimed distance spectrum. Finally, regularity gives $`\delta^*(R)=6`$, completing the proof. ◻
-
-</div>
-
-# Smaller induced counterexamples
-
-The 40-vertex graph contains strict counterexamples of orders 39 and 38. The accompanying programs verify the finite claims in this section using exact arithmetic; no theorem relies on floating-point eigenvalues.
-
-## Deleting the endpoints of an edge
-
-Delete the adjacent vertices
-``` math
-a=P_{1,0},\qquad b=P_{1,1}
-```
-from $`R`$, and call the resulting graph $`H`$. A graph6 string in this fixed labeling, together with complete adjacency lists and an edge list, is provided in `data/graphs/`.
-
-<div id="thm:thirty-eight" class="theorem">
-
-**Theorem 5**. *The graph $`H`$ is connected, has 38 vertices, 109 edges, girth five, diameter three, and degree multiset $`6^{(28)},5^{(10)}`$. Moreover,
-``` math
-\delta^*(H)=\frac{17}{3},
- \qquad
- \partial_{38}(H)=-3-\sqrt7.
-```
-Consequently
-``` math
-\delta^*(H)+\partial_{38}(H)=\frac83-\sqrt7>0,
-```
-so $`H`$ is a strict counterexample to WOW-284.*
-
-</div>
-
-<div class="proof">
-
-*Proof.* Induced deletion preserves simplicity and cannot create a triangle or a 4-cycle. A distinct $`P`$-layer remains a 5-cycle. Exact breadth-first search from every vertex gives connectedness and diameter three.
-
-Put
-``` math
-X=N_R(a)\setminus\{b\},\qquad
- Y=N_R(b)\setminus\{a\}.
-```
-The girth condition implies that $`X`$ and $`Y`$ are disjoint and that no vertex of $`X\cup Y`$ has a remaining neighbor in $`X\cup Y`$. These ten vertices therefore have degree five and all their remaining neighbors have degree six; every other vertex has degree six. The handshake lemma now gives
-``` math
-|E(H)|=\frac{28\cdot6+10\cdot5}{2}=109.
-```
-Each of the ten degree-five vertices has five degree-six neighbors and hence dual degree $`6`$. A degree-six vertex has at most one neighbor in $`X`$ and at most one in $`Y`$, since two in either set would create a 4-cycle. If it has $`t\in\{0,1,2\}`$ neighbors in $`X\cup Y`$, then
-``` math
-d^*(v)=\frac{5t+6(6-t)}6=6-\frac{t}{6}\ge\frac{17}{3}.
-```
-There are $`10\cdot5=50`$ incidences from $`X\cup Y`$ to the 28 degree-six vertices, so some degree-six vertex has $`t=2`$. The lower bound is therefore attained, and $`\delta^*(H)=17/3`$.
-
-The exact distance characteristic polynomial is displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. It contains $`(x^2+6x+2)^2`$, whose roots are $`-3\pm\sqrt7`$. For the square-free part of this polynomial, the exact Sturm sequence has variation counts
-``` math
-V(-\infty)=26,\qquad V(-28/5)=25.
-```
-Since $`P_{38}(-28/5)\ne0`$, Sturm’s theorem therefore shows that $`P_{38}`$ has exactly one distinct root in $`(-\infty,-28/5)`$. Moreover, $`7>(13/5)^2`$, so
-``` math
--3-\sqrt7<-3-\frac{13}{5}=-\frac{28}{5}.
-```
-Therefore this is the least distance eigenvalue. Independently, an exact rational $`LDL^{\mathsf T}`$ decomposition of $`3D(H)+17I`$ has 38 positive pivots. Finally $`8/3>\sqrt7`$, because $`64>63`$, proving strictness. ◻
-
-</div>
-
-## Orders 39 and 42
-
-For $`v\in V(R)`$, put $`H_v=R-v`$. Deleting $`v`$ leaves its six neighbors with degree five and the other 33 vertices with degree six. The six degree-five vertices are pairwise nonadjacent, and all five remaining neighbors of each have degree six; hence their dual degree is $`6`$. A degree-six vertex has at most one degree-five neighbor, since two would form a 4-cycle through $`v`$. There are $`6\cdot5=30`$ incidences between the degree-five and degree-six vertices. Therefore exactly 30 degree-six vertices have one degree-five neighbor, and
-``` math
-\delta^*(H_v)=\frac{5+5\cdot6}{6}=\frac{35}{6}.
-```
-
-For the explicit representative
-``` math
-H_{39}:=R-P_{1,0},
-```
-an exact rational $`LDL^{\mathsf T}`$ decomposition of $`6D(H_{39})+35I`$ has all 39 pivots strictly positive. Thus $`6D(H_{39})+35I\succ0`$, so $`H_{39}`$ is a strict counterexample. Proposition <a href="#prop:descendants" data-reference-type="ref" data-reference="prop:descendants">6</a> below verifies the corresponding assertion for every choice of $`v`$.
-
-For another regular example, let $`X_{42}`$ be the graph induced by the vertices at distance two from $`P_{0,0}`$ in the Hoffman–Singleton graph. The graph $`X_{42}`$ is 6-regular and has
-``` math
-\operatorname{Spec}(A(X_{42}))=\{6^{(1)},2^{(21)},(-1)^{(6)},(-3)^{(14)}\},
-```
-``` math
-\operatorname{Spec}(D(X_{42}))=\{81^{(1)},4^{(6)},0^{(14)},(-5)^{(21)}\}.
-```
-Hence $`\delta^*(X_{42})=6>5=-\partial_{42}(X_{42})`$. Section <a href="#sec:subconstituent" data-reference-type="ref" data-reference="sec:subconstituent">8</a> proves the general construction. The adjacency spectrum is also tabulated by van Dam and Haemers ([Dam and Haemers 2003](#ref-vanDamHaemers2003), Table 3).
-
-## Exact labelled descendant families
-
-<div id="prop:descendants" class="proposition">
-
-**Proposition 6**. *For every vertex $`v`$ of $`R`$, the graph $`R-v`$ is connected, has girth at least five, has $`\delta^*=35/6`$ and the same exact distance characteristic polynomial $`P_{39}`$ displayed in Appendix <a href="#app:polynomials" data-reference-type="ref" data-reference="app:polynomials">13</a>. Every one of these 40 labelled graphs is a strict counterexample.*
-
-*For every edge $`uv`$ of $`R`$, the graph $`R-\{u,v\}`$ is connected, has girth at least five, has $`\delta^*=17/3`$, the same exact distance characteristic polynomial $`P_{38}`$, and least distance eigenvalue $`-3-\sqrt7`$. Every one of these 120 labelled graphs is a strict counterexample.*
-
-</div>
-
-<div class="proof">
-
-*Proof.* The script `scripts/verify_descendant_families.py` enumerates all 40 vertices and all 120 edges. For every induced graph, breadth-first search from every vertex checks connectivity and reconstructs the integer distance matrix. Induced deletion cannot create a cycle of length below five. The script then computes every dual degree as a rational number and the characteristic polynomial $`\det(xI-D)`$ over $`\mathbb Z`$. Exact equality with $`P_{39}`$ or $`P_{38}`$ proves the common-polynomial assertions. The representative $`H_{39}`$ satisfies $`6D(H_{39})+35I\succ0`$, so every root of $`P_{39}`$ is greater than $`-35/6`$. Since every graph $`R-v`$ has this same characteristic polynomial, the same strict bound holds for all 40 labelled deletions. An exact Sturm count for $`P_{38}`$ identifies its least root as $`-3-\sqrt7`$. No graph-isomorphism or transitivity assumption is used. ◻
-
-</div>
-
-<div class="remark">
-
-*Remark 7*. A numerical screen of all $`\binom{40}{3}=9880`$ three-vertex deletions found no graph with $`\Phi>0`$; its best value was approximately $`-0.306979936667`$. This is exploratory evidence only, not an exact elimination of order 37 and not a minimality proof.
-
-</div>
-
-# A diameter-three spectral criterion
-
-<div id="thm:diam3" class="theorem">
-
-**Theorem 8**. *Let $`G`$ be a connected $`k`$-regular graph on $`n`$ vertices, of girth at least five and diameter three. Then
-``` math
-\begin{equation}
-\label{eq:diam3-polynomial}
- D=3J+(k-3)I-2A-A^2.
-\end{equation}
-```
-The principal distance eigenvalue is $`3n-k^2-k-3`$, and every nonprincipal adjacency eigenvalue $`\theta`$ gives the distance eigenvalue
-``` math
-\mu(\theta)=k-2-(\theta+1)^2.
-```
-Consequently $`G`$ is a strict counterexample to WOW-284 precisely when
-``` math
-\max_{\theta\ne k}|\theta+1|<\sqrt{2k-2}.
-```*
-
-</div>
-
-<div class="proof">
-
-*Proof.* The absence of triangles and 4-cycles means that two vertices at distance two have exactly one common neighbor. Hence the distance-two matrix is $`A_2=A^2-kI`$. Since the diameter is three, $`A_3=J-I-A-A_2`$. Substitution into $`D=A+2A_2+3A_3`$ proves <a href="#eq:diam3-polynomial" data-reference-type="eqref" data-reference="eq:diam3-polynomial">[eq:diam3-polynomial]</a>. The asserted eigenvalues follow by applying the identity to $`\mathbf 1`$ and to $`\mathbf 1^\perp`$. The matrix $`D`$ is nonnegative and irreducible (indeed, every off-diagonal entry is positive), and its row sums are constant by the displayed identity. Perron–Frobenius therefore makes the principal eigenvalue its largest eigenvalue, so the least distance eigenvalue occurs among the nonprincipal images. Finally regularity gives $`\delta^*=k`$, so strict violation is equivalent to $`k>\max_{\theta\ne k}((\theta+1)^2-k+2)`$, which is the displayed criterion. ◻
-
-</div>
-
-Thus, in diameter three, WOW-284 is governed by the spread of the nonprincipal adjacency spectrum about $`-1`$.
-
-<div class="corollary">
-
-**Corollary 9** (Bipartite obstruction). *A connected $`k`$-regular bipartite graph of diameter three and girth at least five is not a strict counterexample for $`k\ge3`$.*
-
-</div>
-
-<div class="proof">
-
-*Proof.* The nonprincipal adjacency eigenvalue $`-k`$ maps to
-``` math
-\mu(-k)=k-2-(k-1)^2.
-```
-Its negative is at least $`k`$ for $`k\ge3`$, with equality only at $`k=3`$. ◻
-
-</div>
-
-For comparison, negative controls follow directly from Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">8</a>. The Odd graph $`O_4=KG(7,3)`$ has adjacency spectrum
-``` math
-\{4^{(1)},2^{(14)},(-1)^{(14)},(-3)^{(6)}\},
-```
-so $`\delta^*=4`$ and $`\partial_n=-7`$. The Heawood graph has adjacency spectrum
-``` math
-\{3^{(1)},(\sqrt2)^{(6)},(-\sqrt2)^{(6)},(-3)^{(1)}\},
-```
-so $`\delta^*=3`$ and $`\partial_n=-2-2\sqrt2`$.
-
-# Moore second subconstituents
-
-<div id="thm:second-sub" class="theorem">
-
-**Theorem 10**. *Let $`M`$ be a degree-$`K`$ Moore graph of diameter two, where $`K\ge3`$, and fix a vertex $`v`$. Let $`X`$ be the graph induced by the vertices at distance two from $`v`$. Then
-``` math
-|V(X)|=K(K-1),\qquad X\text{ is }(K-1)\text{-regular},
-```
-$`X`$ has girth at least five and diameter three, and
-``` math
-\partial_{K(K-1)}(X)=-\frac{5+\sqrt{4K-3}}2.
-```
-Consequently
-``` math
-\delta^*(X)+\partial_{K(K-1)}(X)
- =K-1-\frac{5+\sqrt{4K-3}}2,
+\Phi(X)=K-1-\frac{5+\sqrt{4K-3}}2,
 ```
 which is positive exactly for integers $`K\ge6`$.*
 
@@ -557,245 +260,1018 @@ which is positive exactly for integers $`K\ge6`$.*
 
 <div class="proof">
 
-*Proof.* Since $`X`$ is an induced subgraph of the girth-five graph $`M`$, it contains no triangle or 4-cycle. Hence $`g(X)\ge5`$.
-
-Relative to $`\{v\}\sqcup N(v)\sqcup V(X)`$, write
+*Proof.* Relative to $`\{v\}\sqcup N(v)\sqcup\Gamma_2(v)`$, write the adjacency matrix with incidence block $`C`$ and induced block $`B`$. The Moore identity gives
 ``` math
-A(M)=
- \begin{pmatrix}
- 0&\mathbf 1^{\mathsf T}&0\\
- \mathbf 1&0&C\\
- 0&C^{\mathsf T}&B
- \end{pmatrix}.
+CC^{\mathsf T}=(K-1)I,
+ \qquad CB=J-C,
 ```
-All zero and all-one blocks in this proof have the dimensions forced by the displayed partition. Each vertex of $`X`$ has one neighbor in $`N(v)`$ and $`K-1`$ in $`X`$, so $`B`$ is $`(K-1)`$-regular. Distinct rows of $`C`$ have disjoint support and row sum $`K-1`$, hence $`CC^{\mathsf T}=(K-1)I_K`$. Therefore $`C^{\mathsf T}`$ is injective and
-``` math
-\mathbb R^{V(X)}
-  =\operatorname{im}C^{\mathsf T}\mathbin{\oplus}\ker C.
-```
-Moreover,
-``` math
-C^{\mathsf T}\mathbf 1_K=\mathbf 1_{V(X)}.
-```
-The middle-right block of the Moore identity gives $`CB=J-C`$. Transposing this identity shows that
-``` math
-BC^{\mathsf T}z=-C^{\mathsf T}z
-  \qquad (z\perp\mathbf 1_K).
-```
-Thus $`B`$ has eigenvalue $`-1`$ on the $`(K-1)`$-dimensional space $`C^{\mathsf T}(\mathbf 1_K^\perp)`$, while $`\mathbf 1_{V(X)}`$ has eigenvalue $`K-1`$.
-
-Now let $`x\in\ker C`$. Since $`C^{\mathsf T}\mathbf 1_K=\mathbf 1_{V(X)}`$,
-``` math
-\mathbf 1_{V(X)}^{\mathsf T}x
-  =\mathbf 1_K^{\mathsf T}Cx=0.
-```
-Furthermore,
-``` math
-CBx=(J-C)x=0,
-```
-so $`\ker C`$ is $`B`$-invariant. The bottom-right block of the Moore identity therefore restricts on $`\ker C`$ to
-``` math
-B^2+B-(K-1)I=0,
-```
-whose roots are
-``` math
-r=\frac{-1+\sqrt{4K-3}}2,
- \qquad
- s=\frac{-1-\sqrt{4K-3}}2.
-```
-The kernel has dimension $`K(K-2)>0`$, so the principal line, $`C^{\mathsf T}(\mathbf 1_K^\perp)`$, and $`\ker C`$ account for all
-``` math
-1+(K-1)+K(K-2)=K(K-1)
-```
-dimensions. If the multiplicities of $`r,s`$ there are $`m_r,m_s`$, then the trace of $`B`$ gives $`m_rr+m_ss=0`$, because the principal eigenvalue $`K-1`$ cancels the $`(K-1)`$ copies of $`-1`$. Since $`r>0>s`$, both multiplicities are positive.
-
-It remains to prove that $`X`$ has diameter three. Around any $`x\in X`$, girth at least five gives $`1`$, $`K-1`$, and $`(K-1)(K-2)`$ distinct vertices in the first three distance layers of $`X`$. The remaining $`K-2`$ vertices are exactly the other vertices of $`X`$ sharing the unique neighbor of $`x`$ in $`N(v)`$. They have no path of length at most two to $`x`$, since such a path would create a triangle or 4-cycle in $`M`$. Every neighbor of any such remaining vertex $`z`$ is nonadjacent to $`x`$, since an edge to $`x`$ would complete the 4-cycle through their shared neighbor in $`N(v)`$. If $`w\in N_X(z)`$, the unique ambient common neighbor of $`x`$ and $`w`$ cannot lie in $`N(v)`$: it would have to be the unique such neighbor of $`x`$, and would then form a triangle with $`w,z`$. It therefore lies in $`X`$, giving a path of length three from $`x`$ to $`z`$. Hence all remaining vertices are at distance three. This proves connectivity and diameter three.
-
-Apply Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">8</a> with $`k=K-1`$. The eigenvalue $`-1`$ maps to $`K-3`$, while $`r`$ and $`s`$ map respectively to
-``` math
--\frac{5+\sqrt{4K-3}}2
- \quad\text{and}\quad
- -\frac{5-\sqrt{4K-3}}2.
-```
-Thus the first of these is the least distance eigenvalue. Finally,
-``` math
-2\bigl(\delta^*(X)+\partial_{K(K-1)}(X)\bigr)
-  =2K-7-\sqrt{4K-3}.
-```
-This is nonpositive for $`K=3,4,5`$. For $`K\ge6`$, both sides of $`2K-7>\sqrt{4K-3}`$ are positive, and
-``` math
-(2K-7)^2-(4K-3)
-  =4(K^2-8K+13)>0.
-```
-Indeed, $`K^2-8K+13=1`$ at $`K=6`$ and is increasing for $`K\ge6`$. Hence the gap is positive exactly for integers $`K\ge6`$. ◻
-
-</div>
-
-For $`K=7`$, the two roots on $`\ker C`$ are $`2`$ and $`-3`$. Their multiplicities $`m_2,m_{-3}`$ satisfy
-``` math
-m_2+m_{-3}=35,\qquad 2m_2-3m_{-3}=0,
-```
-the second equation following from the trace after the principal eigenvalue $`6`$ cancels the six copies of $`-1`$. Hence
-``` math
-m_2=21,\qquad m_{-3}=14.
-```
-This gives the explicit 42-vertex graph above. A degree-57 Moore graph, if it exists, would give a 56-regular example on 3192 vertices. Its existence remains open ([Smith and Montemanni 2026](#ref-SmithMontemanni2026)); the theorem is therefore a parameterized construction, not an unconditional infinite family.
-
-# An equitable-deletion framework
-
-<div id="prop:equitable-delete" class="proposition">
-
-**Proposition 11**. *Let $`M`$ be a degree-$`K`$ Moore graph of diameter two. Partition its vertices as $`V(M)=U\sqcup S`$, write
-``` math
-A(M)=\begin{pmatrix}B&C\\C^{\mathsf T}&P\end{pmatrix},
-```
-and suppose $`M[S]`$ is $`r`$-regular while every vertex of $`U`$ has exactly $`t>0`$ neighbors in $`S`$. Then $`M[U]`$ is $`(K-t)`$-regular. If $`Py=\eta y`$ and $`y\perp\mathbf 1`$, then
-``` math
-BCy=-(1+\eta)Cy,
- \qquad
- \lVert Cy\rVert^2=(K-1-\eta-\eta^2)\lVert y\rVert^2.
-```
-Moreover, on $`\ker C^{\mathsf T}`$,
+and on $`\ker C`$,
 ``` math
 B^2+B-(K-1)I=0.
 ```
-Whenever $`M[U]`$ has diameter three, these adjacency data feed directly into Theorem <a href="#thm:diam3" data-reference-type="ref" data-reference="thm:diam3">8</a>.*
+Thus $`B`$ has principal eigenvalue $`K-1`$, eigenvalue $`-1`$ on $`C^{\mathsf T}(\mathbf 1^\perp)`$, and the two Moore roots $`(-1\pm\sqrt{4K-3})/2`$ on $`\ker C`$. It remains to identify the diameter of $`X`$. If the unique common neighbour in $`M`$ of two nonadjacent vertices $`x,y\in X`$ lies in $`X`$, their distance in $`X`$ is two. Otherwise it is their common parent in $`N(v)`$. Choose $`b\in N_X(x)`$. Then $`b\not\sim y`$, and the unique common neighbour $`c`$ of $`b,y`$ belongs to $`X`$: it cannot be $`v`$, and it cannot lie in $`N(v)`$, since $`b`$ and $`y`$ have different parents there. Thus $`x-b-c-y`$ is a path in $`X`$. Pairs with a common parent have no length-two path in $`X`$, so $`X`$ has diameter three and Theorem <a href="#thm:diameter-three-score" data-reference-type="ref" data-reference="thm:diameter-three-score">6</a> applies. Among the nonprincipal adjacency eigenvalues, $`(-1+\sqrt{4K-3})/2`$ maximizes $`|\theta+1|`$; substitution gives
+``` math
+\lambda_{\min}(D(X))=-\frac{5+\sqrt{4K-3}}2.
+```
+The threshold reduces to
+``` math
+(2K-7)^2-(4K-3)=4(K^2-8K+13)>0
+```
+for $`K\ge6`$. The finite $`K=7`$ instance is checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_wow284_38_40_42.py). ◻
+
+</div>
+
+# The regular score calculus
+
+<div id="thm:diameter-three-score" class="theorem">
+
+**Theorem 6** (Diameter-three score formula). *Let $`G`$ be connected, $`k`$-regular, of girth at least five and diameter three, with adjacency matrix $`A`$ and order $`n`$. Then
+``` math
+D=3J+(k-3)I-2A-A^2,
+```
+``` math
+D+kI=3J+(2k-2)I-(A+I)^2.
+```
+The principal distance eigenvalue is $`3n-k^2-k-3`$, and a nonprincipal adjacency eigenvalue $`\theta`$ gives the distance eigenvalue
+``` math
+\mu(\theta)=k-2-(\theta+1)^2.
+```
+Consequently
+``` math
+\boxed{
+ \Phi(G)=2k-2-\max_{\theta\ne k}(\theta+1)^2.
+ }
+```
+Thus $`G`$ is a strict counterexample exactly when
+``` math
+|\theta+1|<\sqrt{2k-2}
+ \qquad(\theta\ne k).
+```*
 
 </div>
 
 <div class="proof">
 
-*Proof.* Each vertex of $`U`$ has degree $`K`$ in $`M`$ and exactly $`t`$ neighbors in $`S`$. It therefore has $`K-t`$ neighbors in $`U`$, so $`M[U]`$ is $`(K-t)`$-regular. All zero and all-one blocks in this proof have the dimensions forced by the displayed partition.
-
-The upper-right and lower-right blocks of the Moore identity are
-``` math
-BC+CP=-C+J,
- \qquad
- C^{\mathsf T}C+P^2=(K-1)I-P+J.
-```
-If $`Py=\eta y`$ and $`y\perp\mathbf 1`$, then $`Jy=0`$, so the upper-right block gives
-``` math
-BCy=-(1+\eta)Cy.
-```
-Taking the inner product of the lower-right block with $`y`$ gives
-``` math
-\lVert Cy\rVert^2
-  =(K-1-\eta-\eta^2)\lVert y\rVert^2.
-```
-Finally, if $`x\in\ker C^{\mathsf T}`$, then $`C\mathbf 1=t\mathbf 1`$ and $`t>0`$ imply $`x\perp\mathbf 1`$. The upper-left block consequently gives
-``` math
-(B^2+B-(K-1)I)x=0.
-```
- ◻
+*Proof.* Girth at least five gives the distance-two matrix $`A_2=A^2-kI`$, and diameter three gives $`A_3=J-I-A-A_2`$. Substitute in $`D=A+2A_2+3A_3`$. On $`\mathbf 1^\perp`$, $`J`$ vanishes, and regularity gives $`\delta^*=k`$. The principal distance eigenvalue is positive and is the Perron root because every off-diagonal entry of $`D`$ is positive. The exact operator and score identities are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_regular_score_calculus.py). ◻
 
 </div>
 
-For the 40-vertex graph, $`U=V(R)`$, $`K=7`$, $`S`$ is the induced Petersen graph, $`r=3`$, and $`t=1`$. If, more generally, $`S\subsetneq V(M)`$ is itself a degree-$`r`$ Moore graph and every outside vertex has exactly one neighbor in $`S`$, cross-edge counting gives
+<div id="cor:bipartite" class="corollary">
+
+**Corollary 7** (Bipartite obstruction). *A connected $`k`$-regular bipartite graph of girth at least five and diameter three is not a strict counterexample for $`k\ge3`$.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* The nonprincipal eigenvalue $`-k`$ violates the open shifted window, with equality only when $`k=3`$. ◻
+
+</div>
+
+<div id="prop:higher-transfer" class="proposition">
+
+**Proposition 8** (Higher-diameter transfer). *Let $`G`$ be connected and $`k`$-regular, with diameter $`d`$ and girth at least $`2d-1`$. Define
 ``` math
-(r^2+1)(K-r)=K^2-r^2.
+F_0=1,
+ \quad F_1=x,
+ \quad F_2=x^2-k,
+ \quad F_i=xF_{i-1}-(k-1)F_{i-2}\quad(i\ge3).
 ```
-Because the outside set is nonempty, $`K>r`$, so cancellation yields $`K=r^2-r+1`$. The coordinate deletions displayed above realize the steps $`C_5\subset`$ Petersen $`\subset`$ Hoffman–Singleton, corresponding to $`(r,K)=(2,3)`$ and $`(3,7)`$, but do not yield an infinite chain.
-
-# Further exact and exploratory checks
-
-For $`i\in\mathbb F_5`$, put $`\mathcal L_i=\{P_{i,j},Q_{i,j}:j\in\mathbb F_5\}`$, and let $`R_m`$ be the graph obtained from $`G`$ by deleting $`\mathcal L_0,\ldots,\mathcal L_{m-1}`$ (with $`R_0=G`$). These balanced coordinate-layer deletions give the following exact representatives:
+Then $`A_i=F_i(A)`$ for $`0\le i\le d-1`$, and
 ``` math
-\begin{array}{c@{\qquad}c@{\qquad}c@{\qquad}c@{\qquad}c}
-\toprule
-m&|V|&\text{degree}&\partial_n&\delta^*+\partial_n\\
-\midrule
-0&50&7&-4&3\\
-1&40&6&-5&1\\
-2&30&5&-6&-1\\
-3&20&4&-7&-3\\
-4&10&3&-3&0\\
-\bottomrule
+D=dJ+q_d(A),
+ \qquad
+ q_d(x)=\sum_{i=0}^{d-1}(i-d)F_i(x).
+```
+In particular,
+``` math
+q_3(x)=k-3-2x-x^2,
+```
+``` math
+q_4(x)=-x^3-2x^2+(2k-4)x+2k-4.
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Up to length $`d-1`$, the girth condition makes nonbacktracking walks between two vertices unique exactly when their length is the graph distance. Hence the distance matrices are the nonbacktracking polynomials in $`A`$; summing $`D=\sum iA_i`$ and eliminating $`A_d`$ with $`J=\sum A_i`$ proves the formula. This lies within the established distance-polynomial framework ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022); [Fiol 2016](#ref-Fiol2016)). ◻
+
+</div>
+
+# Degree and diameter obstructions
+
+<div id="lem:diam-rayleigh" class="lemma">
+
+**Lemma 9**. *For every connected graph,
+``` math
+\lambda_{\min}(D(G))\le-\operatorname{diam}(G).
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* For a diametral pair $`u,v`$, the Rayleigh quotient of $`e_u-e_v`$ is $`-d_G(u,v)`$. ◻
+
+</div>
+
+<div id="thm:regular-degree-six" class="theorem">
+
+**Theorem 10**. *Every connected regular strict counterexample to WOW-284 has degree at least six.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* We use the LP ceiling proved independently in Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a>; that theorem does not depend on the present degree reduction. Let the degree be $`k`$. Lemma <a href="#lem:diam-rayleigh" data-reference-type="ref" data-reference="lem:diam-rayleigh">9</a> and strictness give $`\operatorname{diam}(G)<k`$. The cases $`k\le2`$ are immediate. For $`k=3`$, the girth lower bound and diameter at most two force the Petersen graph, which is an equality case of Theorem <a href="#thm:moore-threshold" data-reference-type="ref" data-reference="thm:moore-threshold">2</a>.
+
+For $`k=4`$, diameter two would require a degree-four Moore graph, whose adjacency multiplicities are nonintegral. In diameter three, the exact LP bound of Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a> gives $`n<19`$, whereas the radius-two ball has $`17`$ vertices and diameter three requires at least one more. Hence $`n=18`$. The distance-three matrix is then a perfect matching. Its $`-1`$-eigenspace $`W`$ is a nine-dimensional rational subspace of $`\mathbf 1^\perp`$, and
+``` math
+A_3=J+3I-A-A^2
+ \quad\Longrightarrow\quad
+ (A^2+A-4I)|_W=0.
+```
+The polynomial $`x^2+x-4`$ is irreducible over $`\mathbb Q`$, so a rational space on which it annihilates an operator has even dimension, a contradiction.
+
+For $`k=5`$, diameter two again fails the Moore multiplicity condition. A diametral geodesic in diameter four yields the principal submatrix $`D(P_5)`$, whose factor $`x^2+6x+4`$ supplies the eigenvalue $`-3-\sqrt5<-5`$; Cauchy interlacing excludes this case. In diameter three, Meringer’s lower bound and Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a> leave $`n\in\{30,31,32\}`$, and parity removes $`31`$. At $`n=32`$, the normalized distance-layer compression has nonprincipal factor
+``` math
+p_{5,6}(x)=4x^3+10x^2-16x-30,
+ \qquad p_{5,6}(11/6)=-29/27<0.
+```
+Its largest root therefore exceeds $`11/6>-1+\sqrt8`$, contradicting the open shifted window. At $`n=30`$, Meringer’s isomorph-free enumeration leaves exactly four $`(5,5)`$-cages ([Meringer 1999](#ref-Meringer1999)); each fixed record has an exact distance eigenvalue at most $`-5`$. The complete case split, the four fixed graph6 records, characteristic polynomials, and interlacing directions are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_04_regular_low_degree.py). ◻
+
+</div>
+
+<div id="thm:endpoint-diameter" class="theorem">
+
+**Theorem 11** (Endpoint-neighbourhood obstruction). *Let $`G`$ be any connected finite simple graph, and let $`u,v`$ be vertices at distance $`d\ge5`$. Put $`p=d(u)`$ and $`q=d(v)`$. Then
+``` math
+\boxed{
+ \lambda_{\min}(D(G))
+ \le p+q-2-\sqrt{(p-q)^2+pq(d-2)^2}.
+ }
+```
+If $`\delta`$ is the ordinary minimum degree, then
+``` math
+\boxed{
+ \lambda_{\min}(D(G))\le-\delta(d-4)-2.
+ }
+```
+Consequently every strict WOW-284 counterexample satisfies
+``` math
+\Delta>\delta(d-4)+2.
+```
+In particular, every regular strict counterexample has diameter at most four.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* The two endpoint neighbourhoods are disjoint. Give weight $`a>0`$ to $`N(u)`$, weight $`-b<0`$ to $`N(v)`$, and zero elsewhere. Within one neighbourhood distances are at most two; between the two neighbourhoods they are at least $`d-2`$. Since the cross products are negative, the Rayleigh quotient is at most that of
+``` math
+\begin{pmatrix}
+ 2(p-1)&-(d-2)\sqrt{pq}\\
+ -(d-2)\sqrt{pq}&2(q-1)
+ \end{pmatrix}.
+```
+Its least eigenvalue is the first displayed bound, and its least eigenvector can be chosen with both coordinates positive. Write $`p=\delta+\alpha`$, $`q=\delta+\beta`$, and $`t=d-2`$. The identity
+``` math
+(p-q)^2+pqt^2-(p+q+\delta(t-2))^2
+ =(t-2)\{\delta t(\alpha+\beta)+(t+2)\alpha\beta\}
+```
+is nonnegative and gives the second bound. Finally $`\delta^*(G)\le\Delta`$. The sign choice, radical comparison, and integer rounding are independently audited by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_10_endpoint_diameter.py). ◻
+
+</div>
+
+<div id="thm:diameter-four" class="theorem">
+
+**Theorem 12** (Diameter four). *Let $`G`$ be connected, $`k`$-regular, of girth at least five and diameter four. Then
+``` math
+\boxed{
+ \lambda_{\min}(D(G))\le-\frac{7+\sqrt{16k+1}}2.
+ }
+```
+Consequently no such graph of degree $`2\le k\le9`$ is a strict counterexample.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Choose $`u,v`$ at distance four and put $`U=N(u)`$, $`V=N(v)`$. For fixed $`a\in U`$, distinct vertices $`b,b'\in V`$ at distance two from $`a`$ cannot use the same common neighbour, or a $`4`$-cycle results. Thus at most $`k(k-1)`$ pairs in $`U\times V`$ have distance two, and
+``` math
+\sum_{a\in U,b\in V}d(a,b)\ge2k^2+k.
+```
+Assign weights $`\alpha,\beta,-\alpha,-\beta`$ to $`u,U,v,V`$, respectively. Counting unordered pairs and then doubling gives
+``` math
+\frac{x^{\mathsf T}D(G)x}{x^{\mathsf T}x}
+ \le
+ \frac{-4\alpha^2-4k\alpha\beta-3k\beta^2}
+ {\alpha^2+k\beta^2}.
+```
+After setting $`y_1=\alpha`$ and $`y_2=\sqrt{k}\,\beta`$, the right-hand side is the Rayleigh quotient of
+``` math
+\begin{pmatrix}-4&-2\sqrt{k}\\-2\sqrt{k}&-3\end{pmatrix},
+```
+whose least eigenvalue is the displayed value and has a positive-coordinate minimizer. The strict comparison with $`-k`$ holds for $`2\le k\le9`$. Every orientation factor, cross-distance sign, and endpoint comparison is independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_11_diameter_four.py). ◻
+
+</div>
+
+<div id="cor:trichotomy" class="corollary">
+
+**Corollary 13** (Regular trichotomy). *Every regular strict counterexample has one of the following forms:*
+
+1.  *diameter two, hence a Moore graph;*
+
+2.  *diameter three, with all nonprincipal adjacency eigenvalues in the open shifted WOW window;*
+
+3.  *diameter four, with degree at least ten.*
+
+*There are no regular strict counterexamples of diameter at least five.*
+
+</div>
+
+# Moment bounds and the exact LP ceiling
+
+Let $`G`$ satisfy the hypotheses of Theorem <a href="#thm:diameter-three-score" data-reference-type="ref" data-reference="thm:diameter-three-score">6</a>, and write its nonprincipal adjacency eigenvalues as $`\theta_i`$. Put $`y_i=\theta_i+1`$.
+
+<div id="prop:moment-bound" class="proposition">
+
+**Proposition 14** (Fourth-moment identity). *One has
+``` math
+\sum_{i=1}^{n-1}(2k-2-y_i^2)(y_i+1)^2
+ =(k+2)\bigl((k+2)(k^2+3)-6n\bigr).
+```
+Every strict counterexample therefore satisfies
+``` math
+\boxed{
+ n< B_k:=\frac{(k+2)(k^2+3)}6.
+ }
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Use
+``` math
+\operatorname{tr}A=\operatorname{tr}A^3=0,
+ \quad \operatorname{tr}A^2=nk,
+ \quad \operatorname{tr}A^4=nk(2k-1),
+```
+remove the principal eigenvalue, and expand both sides. In a strict counterexample, each factor $`2k-2-y_i^2`$ is positive. The sum cannot vanish: otherwise every nonprincipal adjacency eigenvalue would equal $`-2`$, and $`\operatorname{tr}A=0`$ would give $`k-2(n-1)=0`$, or $`n=(k+2)/2`$, incompatible with the elementary bound $`n\ge k+1`$ for a simple $`k`$-regular graph. The identity is checked symbolically by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_degree_six_gate.py) and independently within [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_02_two_sided_lp.py). ◻
+
+</div>
+
+The preceding bound is in fact optimal within the entire standard one-variable nonbacktracking LP hierarchy.
+
+<div class="definition">
+
+**Definition 15**. Let $`F_i=F_i^{(k)}`$ be the nonbacktracking polynomials from Proposition <a href="#prop:higher-transfer" data-reference-type="ref" data-reference="prop:higher-transfer">8</a>, and set
+``` math
+I_k=[-1-\sqrt{2k-2},-1+\sqrt{2k-2}].
+```
+A finite polynomial $`f=\sum_i f_iF_i`$ is *admissible* if
+``` math
+f_0>0,
+ \qquad f_i\ge0\quad(i\ge5),
+ \qquad f(x)\le0\quad(x\in I_k).
+```
+
+</div>
+
+For a $`k`$-regular graph of girth at least five whose nonprincipal spectrum lies in $`I_k`$, one has $`\operatorname{tr}F_i(A)=0`$ for $`1\le i\le4`$, while $`\operatorname{tr}F_i(A)\ge0`$ for $`i\ge5`$, since these traces count closed nonbacktracking walks. The coefficient conditions therefore give $`nf_0\le\operatorname{tr}f(A)`$. On the other hand, $`f(\theta)\le0`$ for every nonprincipal eigenvalue, so $`\operatorname{tr}f(A)\le f(k)`$. Thus
+``` math
+nf_0\le\operatorname{tr}f(A)\le f(k),
+ \qquad n\le\frac{f(k)}{f_0}.
+```
+
+<div id="thm:lp-ceiling" class="theorem">
+
+**Theorem 16** (Exact LP ceiling and rigidity). *For every integer $`k\ge4`$ and every admissible $`f`$,
+``` math
+\boxed{
+ \frac{f(k)}{f_0}\ge B_k=\frac{(k+2)(k^2+3)}6.
+ }
+```
+Equality holds if and only if $`f`$ is a positive scalar multiple of
+``` math
+\boxed{
+ f_*(x)=\frac{(x+2)^2(x^2+2x-(2k-3))}{6(k+2)}.
+ }
+```
+Thus increasing the polynomial degree cannot improve this one-variable LP bound. If the nonprincipal spectrum lies in the interior of $`I_k`$, then $`n<B_k`$.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* The primal expansion is
+``` math
+\begin{aligned}
+6(k+2)f_*(x)={}&6(k+2)F_0(x)+2(2k+7)F_1(x)\\
+&+(k+13)F_2(x)+6F_3(x)+F_4(x),
+\end{aligned}
+```
+so $`f_*`$ is admissible and $`f_*(k)=B_k`$.
+
+For the dual certificate, put $`\Delta=\sqrt{2k-2}`$, $`\xi_\pm=-1\pm\Delta`$, and $`\xi_0=-2`$. Define
+``` math
+\begin{align*}
+w_-&=\frac{k(k+2)(2k^2-6-3(k-1)\Delta)}{24(2k-3)},\\
+w_0&=\frac{k(k-1)(k^2+3)}{6(2k-3)},\\
+w_+&=\frac{k(k+2)(2k^2-6+3(k-1)\Delta)}{24(2k-3)}.
+\end{align*}
+```
+All weights are positive. For the only nontrivial one, this follows from
+``` math
+(2k^2-6)^2-18(k-1)^3
+ =2(k-3)(2k-3)(k^2+3)>0.
+```
+The measure $`\mu=w_-\delta_{\xi_-}+w_0\delta_{\xi_0}+w_+\delta_{\xi_+}`$ satisfies
+``` math
+\mu(1)=B_k-1,
+ \qquad \mu(F_i)=-F_i(k)\quad(1\le i\le4).
+```
+For $`i\ge5`$, the slack $`a_i=\mu(F_i)+F_i(k)`$ is strictly positive. For $`5\le i\le9`$, exact calculation gives, after removing the common positive factor $`k(k-1)(k+2)(k^2+3)/6`$, respectively,
+``` math
+2,\quad 5k-13,\quad 2(3k^2-17k+25),
+```
+``` math
+6k^3-47k^2+139k-150,
+ \quad
+ 2(3k^4-27k^3+106k^2-219k+194),
+```
+all positive for $`k\ge4`$. For $`i\ge10`$, put $`r=k-1\ge3`$. The support lies in $`[-2\sqrt r,2\sqrt r]`$, because $`1+\sqrt{2r}\le2\sqrt r`$, and the Chebyshev representation gives
+``` math
+\frac{|\mu(F_i)|}{F_i(k)}
+ \le \frac{2i+1}{3}\,3^{3-i/2}<1.
+```
+Since $`f\le0`$ on the support of $`\mu`$, weak duality gives
+``` math
+0\ge\int f\,d\mu\ge B_kf_0-f(k).
+```
+If equality holds, strict positivity of every high-degree slack forces $`f_i=0`$ for $`i\ge5`$. Equality on the positive dual support forces zeros at $`\xi_-,-2,\xi_+`$; the interior zero $`-2`$ has even multiplicity because $`f\le0`$ on $`I_k`$. Degree at most four then forces $`f`$ to be a scalar multiple of $`f_*`$, and $`f_0>0`$ makes the scalar positive. Equality in the graph bound would then force every nonprincipal adjacency eigenvalue to be $`-2`$, which contradicts the trace equation; hence the open-window bound is strict. Every symbolic identity, finite slack, tail bound, and equality-nullspace calculation is independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_02_two_sided_lp.py). ◻
+
+</div>
+
+# Edge-local positivity and the degree-six boundary
+
+Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a> gives $`n\le51`$ for a degree-six regular strict counterexample. The last order is eliminated by using local cycle data that the one-point LP trace bound does not see.
+
+<div id="prop:edge-cycle" class="proposition">
+
+**Proposition 17** (Edge-local cycle bounds). *Let $`G`$ be connected and $`k`$-regular, of girth at least five and diameter three, and suppose its nonprincipal adjacency spectrum lies in the closed shifted WOW window. For an edge $`uv`$, let $`\sigma_{uv}`$ be the number of $`5`$-cycles containing that edge. Then
+``` math
+2k-2\le\sigma_{uv}\le
+ \frac{2(k+2)^2(k^2+3)}n-10k-26.
+```
+If $`n=k^2+1+c`$, then also
+``` math
+\sigma_{uv}\ge(k-1)^2-c.
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Put
+``` math
+f_k(x)=(x+2)^2((x+1)^2-(2k-2)),
+ \quad C_k=f_k(k),
+```
+and
+``` math
+M=-f_k(A)+\frac{C_k}{n}J.
+```
+The spectral window gives $`M\succeq0`$. For an edge $`uv`$,
+``` math
+(A^3)_{uv}=\sum_{z\sim v}(A^2)_{uz}=k+(k-1)=2k-1.
+```
+Here $`z=u`$ contributes $`k`$, while every other neighbour of $`v`$ is at distance two from $`u`$ and has a unique length-two path from $`u`$. Moreover,
+``` math
+(A^4)_{uv}=\sum_z(A^2)_{uz}(A^2)_{zv}=\sigma_{uv}.
+```
+Indeed, the nonzero summands away from the diagonal are precisely the vertices at distance two from both $`u`$ and $`v`$. Their two unique length-two paths, together with $`uv`$, form a five-cycle, and each five-cycle through $`uv`$ yields one such vertex. Since $`C_k=(k+2)^2(k^2+3)`$, the diagonal and edge entries of $`M`$ are
+``` math
+a=\frac{C_k}{n}-6(k+2),
+ \qquad
+ b=\frac{C_k}{n}-(4k+14)-\sigma_{uv}.
+```
+The principal submatrix on $`\{u,v\}`$ is $`\bigl(\begin{smallmatrix}a&b\\b&a\end{smallmatrix}\bigr)`$, so $`a\ge0`$ and $`-a\le b\le a`$. The inequality $`b\le a`$ gives $`\sigma_{uv}\ge2k-2`$, while $`b\ge-a`$ gives the stated upper bound.
+
+For the final bound, every radius-two ball has size $`k^2+1`$. The set
+``` math
+\{u,v\}\cup(N(u)\setminus\{v\})\cup(N(v)\setminus\{u\})
+```
+contains $`2k`$ vertices and lies in $`B_2(u)\cap B_2(v)`$. Every further intersection vertex is at distance two from both endpoints and is therefore in the preceding five-cycle bijection. Hence
+``` math
+|B_2(u)\cap B_2(v)|=2k+\sigma_{uv}.
+```
+Inclusion–exclusion and $`n=k^2+1+c`$ now give $`\sigma_{uv}\ge(k-1)^2-c`$. The complete walk classification, sign directions, and radius-two bijection are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_01_edge_local.py). ◻
+
+</div>
+
+<div id="thm:degree-six-fifty" class="theorem">
+
+**Theorem 18**. *Every connected $`6`$-regular strict counterexample to WOW-284 has order at most $`50`$.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* A separate Rayleigh and trace argument shows that any degree-six strict counterexample has diameter three. For vertices at distance $`d\ge4`$, the vector with weights $`3,1,-3,-1`$ on the two endpoints and their respective neighbourhoods has Rayleigh quotient at most
+``` math
+\frac{204-81d}{15}\le-8,
+```
+contradicting $`\delta^*=6`$. Diameter two would force $`(x-6)(x^2+x-5)^{18}`$; its root sum is $`-12`$, contradicting $`\operatorname{tr}A=0`$. The LP ceiling gives $`n\le51`$.
+
+Assume $`n=51`$, so $`c=14`$. Proposition <a href="#prop:edge-cycle" data-reference-type="ref" data-reference="prop:edge-cycle">17</a> gives, for every edge,
+``` math
+11\le\sigma_{uv}\le\frac{202}{17}<12.
+```
+Hence $`\sigma_{uv}=11`$. The graph has $`153`$ edges, and counting incidences between edges and $`5`$-cycles gives
+``` math
+5N_5=153\cdot11=1683,
+```
+impossible modulo five. The full diameter reduction and incidence audit are contained in [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_01_edge_local.py). ◻
+
+</div>
+
+<div id="cor:low-degree-windows" class="corollary">
+
+**Corollary 19** (Low-degree order windows). *The current bounds imply:
+``` math
+\begin{align*}
+k=6&:\quad n\le50,\\
+k=7&:\quad n=50\text{ in diameter two, or }n\le76\text{ in diameter three},\\
+k=8&:\quad n\le110,\\
+k=9&:\quad n\le152.
+\end{align*}
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Theorem <a href="#thm:diameter-four" data-reference-type="ref" data-reference="thm:diameter-four">12</a> removes diameter four for these degrees. At $`k=7`$, the diameter-two case is the order-$`50`$ Hoffman–Singleton graph, whereas Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a> gives $`n<78`$ in diameter three; the handshake lemma makes $`n`$ even, so $`n\le76`$. At $`k=8`$ and $`k=9`$, the Moore multiplicities are nonintegral, so diameter two is impossible. The LP ceiling gives $`n\le111`$ for $`k=8`$ and $`n\le153`$ for $`k=9`$; parity improves the latter to $`152`$. Finally, at $`k=8,n=111`$, the edge-local bounds force every edge into exactly $`14`$ five-cycles, but
+``` math
+5N_5=14\cdot444=6216
+```
+is impossible. Exact integer arithmetic is checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_low_degree_windows.py). ◻
+
+</div>
+
+## Necessary structure at order fifty
+
+The remaining degree-six boundary is highly constrained, although not yet eliminated.
+
+<div id="thm:order50-feasibility" class="theorem">
+
+**Theorem 20**. *Let $`G`$ be a connected $`6`$-regular graph of order $`50`$ and girth at least five, and suppose $`\Phi(G)>0`$. Then $`G`$ has diameter three. Every edge lies in $`12`$ or $`13`$ five-cycles. Let $`H`$ be the spanning subgraph of edges of the second type, let $`m=|E(H)|`$, and let $`\tau(v)`$ be the number of five-cycles through $`v`$. Then
+``` math
+\tau(v)\in\{36,37,38\},
+ \qquad d_H(v)=2\tau(v)-72\in\{0,2,4\},
+```
+``` math
+m\equiv0\pmod5,
+ \qquad N_5=360+\frac m5.
+```
+For a two-edge path $`u-v-w`$, put
+``` math
+r_{uvw}=6\alpha_{uvw}+\beta_{uvw},
+```
+where $`\alpha`$ and $`\beta`$ count the five- and six-cycles containing the path. The allowed values are
+``` math
+\begin{array}{c|c}
+\text{types of the two incident edges}&r_{uvw}\\
+\hline
+\text{low--low}&30,31,32\\
+\text{mixed}&30,31,32\\
+\text{high--high}&30,31.
 \end{array}
 ```
-Thus this natural chain stops producing strict counterexamples after the 40-vertex member. The preceding analytic theorems cover the Moore and regular diameter-three mechanisms, Moore second subconstituents, and the equitable deletion framework. The exact computations check the listed finite examples, all singleton and edge-endpoint deletions of $`R`$, the balanced layer chain, $`O_4`$, and the Heawood graph.
-
-No unconditional infinite family is established. Fixed-degree, diameter-three graphs have bounded order by the Moore bound, so an infinite family within this framework would require unbounded degree. Covers, subdivisions, coronas, and general vertex replacements are not asserted to preserve the strict inequality; the present arguments establish no such preservation theorem.
-
-# Computational certificate
-
-The repository contains independent exact checks. For the 50-vertex graph, the original certificate does the following:
-
-1.  constructs the 175 unordered edges and checks all 50 degrees;
-
-2.  checks the common-neighbor count for every unordered vertex pair;
-
-3.  constructs all 2,500 distance entries by integer breadth-first search;
-
-4.  computes the distance characteristic polynomial symbolically; and
-
-5.  computes an exact rational $`L\Delta L^{\mathsf T}`$ decomposition of $`D+7I`$ and checks that all 50 pivots are positive.
-
-The resulting characteristic polynomial is
+Writing $`S_2=\sum_vd_H(v)^2`$, one has
 ``` math
-(t-91)(t-1)^{21}(t+4)^{28},
-```
-and all 50 rational pivots are positive. Set
-``` math
-M:=D+7I.
-```
-The exact decomposition is
-``` math
-M=L\Delta L^{\mathsf T},
-```
-where $`L`$ is unit lower triangular and $`\Delta`$ has strictly positive diagonal. Hence $`L`$ is invertible, and for every nonzero $`y`$,
-``` math
-y^{\mathsf T}My=(L^{\mathsf T}y)^{\mathsf T}
-  \Delta(L^{\mathsf T}y)>0.
-```
-Thus $`M=D+7I`$ is positive definite.
-
-A second script constructs $`R`$ by the stated deletion and independently checks its 40 degrees, all BFS distances, girth, the block identities <a href="#eq:c-block" data-reference-type="eqref" data-reference="eq:c-block">[eq:c-block]</a>–<a href="#eq:bc-intertwining" data-reference-type="eqref" data-reference="eq:bc-intertwining">[eq:bc-intertwining]</a>, and the characteristic polynomials
-``` math
-\det(tI-B)=(t-6)(t-2)^{18}(t-1)^4(t+2)^5(t+3)^{12},
+1950-m\le N_6
+ \le2200-\frac{5m}{6}-\frac{S_2}{12},
 ```
 ``` math
-\det(tI-D(R))=(t-75)(t-3)^5t^{16}(t+5)^{18}.
+\frac{43m^2-70200m+119632500}{58500}
+ \le N_6
+ \le\frac{4220000-2200m-7m^2}{2000}.
 ```
-
-The extended verifier reconstructs the 42-, 40-, 39-, and 38-vertex graphs from the field-coordinate rules and checks all structural, dual-degree, characteristic-polynomial, Sturm, and rational $`LDL^{\mathsf T}`$ assertions used above. A separate 38-vertex audit starts from the stored graph6 representation, reconstructs graph distances by integer breadth-first search through NetworkX ([Hagberg et al. 2008](#ref-HagbergSchultSwart2008)), and uses a handwritten `Fraction`-based decomposition. This audit uses a different graph representation and an independent $`LDL^{\mathsf T}`$ implementation; the underlying graph is the same.
-
-Finally, `scripts/verify_descendant_families.py` exhausts the 40 labelled single-vertex and 120 labelled edge-endpoint deletions. SymPy supplies exact integer characteristic polynomials $`\det(tI-D)`$ and Sturm counts of their square-free parts ([<span class="nocase">Meurer et al.</span> 2017](#ref-MeurerEtAl2017)). The recorded output is `supplement/extended_2026-07-23/logs/descendant_family_output.txt`; the enclosing `SHA256SUMS` records the expected SHA-256 digest of that output and every other archived certificate, permitting byte-for-byte integrity checks. The cross-platform command
-
-<div class="center">
-
-`python scripts/verify_extended.py`
+Exact enumeration of the resulting coarse degree profiles leaves $`266`$ possibilities.*
 
 </div>
 
-runs the exact certificates for the explicit non-50 constructions, the independent graph6 audit, the descendant-family verification, and the byte-for-byte graph-export checks. The balanced layer-deletion chain, the Odd graph, and the Heawood graph are checked by
+<div class="proof">
 
-<div class="center">
+*Proof.* The diameter reduction used in Theorem <a href="#thm:degree-six-fifty" data-reference-type="ref" data-reference="thm:degree-six-fifty">18</a> applies verbatim: diameter at least four gives a Rayleigh quotient at most $`-8`$, and diameter two gives the trace contradiction from $`(x-6)(x^2+x-5)^{18}`$. Hence the diameter is three. Around a fixed vertex the distance layers have sizes $`1,6,30,13`$. If $`\tau`$ is the number of five-cycles through the centre, the average row quotient is similar to the symmetric compression on normalized layer indicators. Its nonprincipal factor $`q_\tau`$ satisfies
+``` math
+195q_\tau(-1+\sqrt{10})
+ =(-215+56\sqrt{10})\tau+7350-1860\sqrt{10}.
+```
+The coefficient of $`\tau`$ is negative because $`56^2\cdot10<215^2`$, and at $`\tau=39`$ the right-hand side is $`9(-115+36\sqrt{10})<0`$. Also
+``` math
+195q_\tau(6)=1500(75-\tau)>0.
+```
+The last inequality is strict: the third layer is nonempty and connected to the second, while their edge count is $`150-2\tau`$. Thus $`\tau\ge39`$ would place a nonprincipal compression eigenvalue in $`(-1+\sqrt{10},6)`$, contradicting interlacing and the open WOW window. Conversely, $`150-2\tau\le13\cdot6`$, so $`\tau\ge36`$. Hence $`\tau\in\{36,37,38\}`$. Finally, $`\sum_{e\ni v}\sigma_e=2\tau(v)`$, so the high-edge degree is $`2\tau(v)-72`$; counting edge–five-cycle incidences gives $`5N_5=12\cdot150+m`$.
 
-`python scripts/explore_generalizations.py`
+For a two-path $`u-v-w`$, girth at least five gives $`(A^3)_{uw}=\alpha_{uvw}`$ and $`(A^4)_{uw}=16+\beta_{uvw}`$. The corresponding $`3\times3`$ principal minor of the centered positive-semidefinite matrix yields the displayed finite sets for $`r_{uvw}`$, except for an apparent equality value $`r=29`$. At equality, the Gram norm of $`e_u-e_w`$ vanishes, so this vector lies in the kernel of the centered matrix. On $`\mathbf 1^\perp`$, that matrix is $`-f_6(A)`$. The strict shifted window excludes the two endpoint zeros of $`f_6`$, leaving only its double zero at $`-2`$; hence the kernel there is exactly the adjacency $`-2`$-eigenspace. However, the $`u`$-coordinate of $`A(e_u-e_w)`$ is zero because $`u\not\sim w`$, whereas the $`u`$-coordinate of $`-2(e_u-e_w)`$ is $`-2`$. This excludes $`r=29`$. Summing the local inequalities gives the first pair of $`N_6`$ bounds; shifted moment and localizing matrices give the second. The complete symbolic determinants, Schur complements, kernel argument, and integer enumeration are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_06_order50_feasibility.py). The surviving $`266`$ profiles are exact pruning data, not an existence or nonexistence claim. ◻
 
 </div>
 
-which also performs the separately labelled floating-point three-vertex screen. No floating-point eigenvalue evidence is used for any theorem.
+# Distance spectra of punctured Moore graphs
 
-# Formal verification
+Let $`M`$ be a degree-$`k`$ Moore graph of diameter two and put $`\Delta=\sqrt{4k-3}`$.
 
-The explicit 50-vertex counterexample is fully formalized and verified in Lean 4.31 with Mathlib 4.31 ([Moura and Ullrich 2021](#ref-deMouraUllrich2021); [The mathlib Community 2020](#ref-Mathlib2020)). The development verifies the graph, 7-regularity, the exhaustive common-neighbor certificate, girth five, and the adjacency-square and distance-matrix identities. It supplies exact rational matrices $`S,S^{-1}`$, proves their two-sided inverse identities by denominator-cleared integer certificates, proves $`DS=S\operatorname{diag}(91,(-4)^{(28)},1^{(21)})`$, and checks the multiplicities. Thus the complete explicit 50-vertex proof, including its least distance eigenvalue, is kernel-checked. The scalar $`k\le3`$ threshold is formalized separately.
+<div id="thm:one-puncture" class="theorem">
 
-Lean 4.31 also kernel-checks finite spectral certificates for the explicit 38-, 39-, 40-, and 42-vertex constructions. For orders 38, 39, and 42, the public endpoints certify the exact minimum dual-degree data, positive definiteness of a shifted finite matrix, and the resulting strict inequality for every nonzero real eigenpair. For order 40, the endpoint certifies a two-sided invertible exact diagonalization, its diagonal-entry multiplicities, and that $`-5`$ is an attained minimum diagonal entry, together with dual degree six and gap one.
+**Theorem 21** (One deleted vertex). *For $`H=M-v`$,
+``` math
+|V(H)|=k^2,
+ \qquad \delta^*(H)=k-\frac1k,
+ \qquad \lambda_{\min}(D(H))=-2-\sqrt{k}.
+```
+The complete distance spectrum is
+``` math
+\begin{align*}
+\operatorname{Spec}D(H)={}&\{\rho_+,\rho_-\}
+ \cup\{(-2+\sqrt{k})^{(k-1)},(-2-\sqrt{k})^{(k-1)}\}\\
+&\cup\left\{\left(-\frac{\Delta+3}{2}\right)^{(m_+)},
+\left(\frac{\Delta-3}{2}\right)^{(m_-)}\right\},
+\end{align*}
+```
+where
+``` math
+\rho_\pm=k^2-2\pm\sqrt{k(k^3-2k^2+3k-1)},
+```
+``` math
+m_\pm=\frac{k(k-2)(\Delta\pm1)}{2\Delta}.
+```
+Thus
+``` math
+\Phi(H)=k-\frac1k-2-\sqrt{k},
+```
+which is positive exactly for integers $`k\ge5`$.*
 
-The scope of these non-50 results is deliberately finite and spectral: their public endpoints do not bundle every structural hypothesis, and the semantic finite matrices are not identified with Mathlib’s `SimpleGraph.dist` in a single theorem. They are therefore described here as kernel-checked finite spectral certificates, rather than as a full standard-library formalization of every graph-theoretic phrase in the manuscript. Section <a href="#sec:moore" data-reference-type="ref" data-reference="sec:moore">1</a>, the diameter-three criterion, and the Moore-subconstituent theorem remain conventional analytic proofs. The descendant-family assertions are conventional finite arguments supported by exact computation.
+</div>
 
-# Scope, provenance, and disclosures
+<div id="thm:edge-puncture" class="theorem">
 
-The note gives counterexamples of orders 38, 39, 40, 42, and 50. No claim is made that 38 is the minimum possible order among WOW-284 counterexamples, and no exhaustive search over all smaller graphs is part of this note. Calling the 40-vertex graph the $`(6,5)`$-cage refers to its classical minimum-order property among 6-regular girth-five graphs, not to minimum order for the WOW problem. The distance-spectral input for Moore graphs is credited to Howlader and Panigrahi; the classical 40-vertex cage and 42-vertex second subconstituent are separately credited above. The repository source ledger records the explicit WOW-284 connection and the limits of the targeted priority search.
+**Theorem 22** (Endpoints of an edge). *Let $`uv\in E(M)`$ and $`H=M-\{u,v\}`$. For $`k\ge3`$,
+``` math
+|V(H)|=k^2-1,
+ \qquad \delta^*(H)=k-\frac2k,
+ \qquad \lambda_{\min}(D(H))=-2-\sqrt{k}.
+```
+The complete distance spectrum is
+``` math
+\begin{align*}
+\operatorname{Spec}D(H)={}&\{\sigma_+,\sigma_-,k-4\}\\
+&\cup\{(-2+\sqrt{k})^{(2k-4)},(-2-\sqrt{k})^{(2k-4)}\}\\
+&\cup\left\{\left(-\frac{\Delta+3}{2}\right)^{(a_+)},
+\left(\frac{\Delta-3}{2}\right)^{(a_-)}\right\},
+\end{align*}
+```
+where
+``` math
+\sigma_\pm=k^2-3\pm\sqrt{k^4-2k^3+3k^2-8k+7},
+```
+``` math
+a_+=\frac{(k-2)(k+(k-2)\Delta)}{2\Delta},
+ \quad
+ a_-=\frac{(k-2)((k-2)\Delta-k)}{2\Delta}.
+```
+Thus
+``` math
+\Phi(H)=k-\frac2k-2-\sqrt{k},
+```
+which is positive exactly for integers $`k\ge5`$.*
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. Samuil Petkov is the sole named author and assumes full responsibility for the mathematics, citations, attribution, and conclusions.
+</div>
 
-The author received no funding for this work and declares no competing interests. The manuscript source, exact verification code, machine-readable certificates, and build instructions are available in the public repository [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284). This manuscript corresponds to GitHub release [`v2.1.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.1.0). Its contents are identified by the repository manifest and `SHA256SUMS`.
+<div class="proof">
 
-# Exact distance characteristic polynomials
+*Proof architecture for Theorems <a href="#thm:one-puncture" data-reference-type="ref" data-reference="thm:one-puncture">21</a> and <a href="#thm:edge-puncture" data-reference-type="ref" data-reference="thm:edge-puncture">22</a>.* For one deleted vertex, put $`A=N(v)`$, $`B=\Gamma_2(v)`$, let $`C`$ be the $`A`$-by-$`B`$ incidence matrix, and let $`B_0`$ be the adjacency matrix on $`B`$. Only pairs inside $`A`$ lose their unique length-two path. For distinct $`a,a'\in A`$, choose a neighbour $`b\in B`$ of $`a`$. The vertices $`b,a'`$ are nonadjacent, and their unique common neighbour $`c`$ lies in $`B`$: it is not $`v`$, since $`b\not\sim v`$, and it is not in $`A`$, since an edge inside $`A`$ would form a triangle through $`v`$. Hence $`a-b-c-a'`$ is a surviving path. Hence
+``` math
+D(H)=\begin{pmatrix}3(J-I)&2J-C\\2J-C^{\mathsf T}&2(J-I)-B_0\end{pmatrix}.
+```
+The normalized constant quotient is
+``` math
+Q_1=\begin{pmatrix}
+ 3(k-1)&(2k-1)\sqrt{k-1}\\
+ (2k-1)\sqrt{k-1}&2k^2-3k-1
+ \end{pmatrix},
+```
+whose eigenvalues are $`\rho_\pm`$. The identities $`CC^{\mathsf T}=(k-1)I`$, $`CB_0=J-C`$, and the bottom-right block of the Moore relation yield
+``` math
+\mathbb R^{V(H)}=W_{\mathrm{const}}\perp W_{\mathrm{inc}}\perp\ker C,
+ \qquad 2+2(k-1)+k(k-2)=k^2.
+```
+On each zero-sum incidence module the action matrix is $`\bigl(\begin{smallmatrix}-3&-(k-1)\\-1&-1\end{smallmatrix}\bigr)`$, giving $`-2\pm\sqrt{k}`$. On $`\ker C`$, $`B_0^2+B_0-(k-1)I=0`$, $`D=-2I-B_0`$, and the trace of $`B_0`$ is zero after removing the constant and incidence images; dimension and trace give $`m_\pm`$.
 
-For every labelled single-vertex deletion considered in Proposition <a href="#prop:descendants" data-reference-type="ref" data-reference="prop:descendants">6</a>,
+For an adjacent deleted pair, put $`A=N(u)\setminus\{v\}`$, $`B=N(v)\setminus\{u\}`$, and let $`C`$ be the residual cell. Only pairs inside $`A`$ or inside $`B`$ lose a length-two path. For distinct $`a,a'\in A`$, choose a residual neighbour $`c`$ of $`a`$. The vertices $`c,a'`$ are nonadjacent, and their unique common neighbour is also residual: it cannot be one of the deleted endpoints, cannot lie in $`A`$ by triangle-freeness, and cannot lie in $`B`$ because no edge joins $`A`$ to $`B`$. This gives a surviving length-three path; the argument for $`B`$ is symmetric. The antisymmetric constant line has eigenvalue $`k-4`$, and the normalized symmetric quotient is
+``` math
+Q_2=\begin{pmatrix}
+ 5k-8&\sqrt{(k-1)(2k-3)(4k-6)}\\
+ \sqrt{(k-1)(2k-3)(4k-6)}&2k^2-5k+2
+ \end{pmatrix},
+```
+with eigenvalues $`\sigma_\pm`$. Two zero-sum incidence modules and a residual kernel complete the decomposition, with
+``` math
+3+2(2k-4)+(k-2)^2=k^2-1.
+```
+The residual adjacency trace is $`k-2`$, giving $`a_\pm`$. The residual negative root is greater than $`-2-\sqrt{k}`$, and the same is true of the smaller constant-quotient roots because
+``` math
+\det(Q_1+(2+\sqrt{k})I)
+ =k(2k^2+2k^{3/2}-3k+2)>0,
+```
+``` math
+\det(Q_2+(2+\sqrt{k})I)
+ =(\sqrt{k}-1)(\sqrt{k}+1)
+ (2k^2+2k^{3/2}-3k+2\sqrt{k}+6)>0.
+```
+Exact quotient normalization, trace-to-multiplicity equations, replacement paths, and all least-root comparisons are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_05_small_moore_punctures.py). ◻
+
+</div>
+
+<div id="thm:nonadjacent-puncture" class="theorem">
+
+**Theorem 23** (Two nonadjacent deleted vertices). *Let $`u,v`$ be nonadjacent vertices of $`M`$, $`k\ge5`$, and put $`H=M-\{u,v\}`$. Define
+``` math
+\begin{align*}
+R_k(x)={}&x^4+(10-2k^2)x^3+(2k^3-17k^2-2k+36)x^2\\
+&+(12k^3-49k^2-4k+53)x\\
+&-2k^4+17k^3-38k^2+5k+20,
+\end{align*}
+```
+``` math
+M_- =\frac{k(k-2)+(k^2-4k+2)\Delta}{2\Delta},
+ \quad
+ M_+ =\frac{-k(k-2)+(k^2-4k+2)\Delta}{2\Delta}.
+```
+Then
+``` math
+\begin{align*}
+\chi_{D(H)}(x)={}&(x-k+3)R_k(x)
+ (x^2+4x-k+3)^{k-2}\\
+&\cdot(x^2+4x-k+5)^{k-2}
+ \left(x+\frac{\Delta+3}{2}\right)^{M_-}\\
+&\cdot\left(x-\frac{\Delta-3}{2}\right)^{M_+}.
+\end{align*}
+```
+Moreover,
+``` math
+\delta^*(H)=k-\frac2k,
+```
+and $`H`$ is a strict counterexample for every realizable integer $`k\ge6`$.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* The deleted vertices have a unique common neighbour $`w`$. With $`A=N(u)\setminus\{w\}`$, $`B=N(v)\setminus\{w\}`$, $`C=N(w)\setminus\{u,v\}`$, and residual cell $`Z`$, the surviving graph has an equitable five-cell geometry and a perfect matching between $`A`$ and $`B`$. Explicit length-three paths show that every pair whose unique length-two path was deleted has new distance exactly three. The five-cell distance quotient has characteristic polynomial $`(x-k+3)R_k(x)`$.
+
+Let $`R_A,R_B,R_C`$ be the incidence matrices from the three nonconstant cells to $`Z`$, and let $`T`$ be the adjacency matrix on $`Z`$. The Moore identity splits the remaining space into matched symmetric and antisymmetric modules, a common-neighbour module, and $`K=\ker R_A\cap\ker R_B\cap\ker R_C`$. The first three modules give the two displayed quadratic factors and $`k-3`$ copies of each Moore linear factor. On $`K`$,
+``` math
+T^2+T-(k-1)I=0,
+ \qquad D=-2I-T.
+```
+The constant direction of $`Z`$ has $`T`$-eigenvalue $`k-3`$, the symmetric, antisymmetric, and common-neighbour images have eigenvalues $`-2,0,-1`$ with dimensions $`k-2,k-2,k-3`$. Since $`T`$ has zero diagonal, its total trace is zero, and therefore $`\operatorname{tr}(T|_K)=2(k-2)`$. Dimension and trace now give the residual multiplicities; after adding the common-neighbour copies they are precisely $`M_-`$ and $`M_+`$. The full dimension count is
+``` math
+5+4(k-2)+2(k-3)+(k-2)(k-4)=k^2-1.
+```
+
+For strictness, the distance-increase matrix is the adjacency matrix of two copies of $`K_k`$ meeting in $`w`$, and hence has least eigenvalue
+``` math
+\lambda_{\min}(E_S)=\frac{k-2-\sqrt{k^2+4k-4}}2.
+```
+Since the parent Moore graph has score $`k-(3+\Delta)/2`$ and $`a-b=2/k`$, Proposition <a href="#prop:deletion-stability" data-reference-type="ref" data-reference="prop:deletion-stability">24</a> gives
+``` math
+\Phi(H)\ge
+ \frac{3k-5-\Delta-\sqrt{k^2+4k-4}}2-\frac2k.
+```
+For $`k\ge6`$, the sign-preserving squarings reduce positivity of this lower bound to $`P(k)>0`$, where
+``` math
+P(k)=4k^8-39k^7+95k^6+9k^5-173k^4-36k^3+116k^2+80k+16.
+```
+Writing $`k=m+6`$ gives
+``` math
+\begin{aligned}
+ P(m+6)={}&4m^8+153m^7+2489m^6+22329m^5\\
+ &+119437m^4+382236m^3+685268m^2\\
+ &+559616m+75952>0.
+\end{aligned}
+```
+The direct-sum decomposition, injectivity, orthogonality, all recomputed distances, and the polynomial sign are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_03_nonadjacent_puncture.py) and [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_research_extensions_exact.py). ◻
+
+</div>
+
+<div id="prop:deletion-stability" class="proposition">
+
+**Proposition 24** (Deletion stability). *Let $`G`$ be connected, $`S\subseteq V(G)`$, and suppose $`H=G-S`$ is connected. Put
+``` math
+D_0=D(G)[V(H)],
+ \qquad E_S=D(H)-D_0,
+```
+``` math
+a=\delta^*(G),
+ \quad b=\delta^*(H),
+ \quad \gamma=\Phi(G).
+```
+Then
+``` math
+\boxed{
+ \Phi(H)\ge\gamma-(a-b)+\lambda_{\min}(E_S).
+ }
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* One has
+``` math
+D(H)+bI=(D_0+aI)+E_S-(a-b)I.
+```
+Principal-submatrix interlacing gives $`\lambda_{\min}(D_0+aI)\ge\gamma`$, and Weyl’s inequality gives the result. For Moore punctures, $`E_S`$ is an explicit distance-increase graph; the exact specializations are checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_research_extensions_exact.py). ◻
+
+</div>
+
+# Small punctures and exact Hoffman–Singleton robustness
+
+<div id="thm:small-puncture" class="theorem">
+
+**Theorem 25** (Small-puncture normal form). *Let $`M`$ be a degree-$`k`$ Moore graph, let $`S\subseteq V(M)`$ have size $`s\le k-1`$, and put $`H=M-S`$. Then $`H`$ is connected, has diameter at most three, and
+``` math
+\boxed{\delta^*(H)=k-\frac{s}{k}.}
+```
+Let $`B`$ be the surviving-vertex by deleted-vertex incidence matrix. Then
+``` math
+\boxed{
+ D(H)=2(J-I)-A(H)+BB^{\mathsf T}
+ -\operatorname{diag}(BB^{\mathsf T}).
+ }
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Let $`x,y\in V(H)`$ be nonadjacent in $`M`$, and suppose their unique common neighbour $`z`$ lies in $`S`$. For every $`a\in N_M(x)\setminus\{z\}`$, the vertices $`a,y`$ are nonadjacent and have a unique common neighbour $`b_a`$. Thus
+``` math
+x-a-b_a-y
+```
+is a length-three path. These $`k-1`$ paths are internally vertex-disjoint: a shared vertex $`b_a=b_{a'}`$ would give a four-cycle, while $`b_a=a'`$ would give a triangle through $`x`$. Besides $`z`$, at most $`s-1\le k-2`$ vertices are deleted, so one path survives. Hence a destroyed length-two path becomes distance exactly three, which proves the matrix formula.
+
+For $`x\in V(H)`$, let $`t_x=|N_M(x)\cap S|`$. A deleted neighbour of $`x`$ is adjacent to no surviving neighbour of $`x`$, by triangle-freeness; each other deleted vertex has at most one common neighbour with $`x`$. Thus
+``` math
+\sum_{y\in N_H(x)}t_y\le s-t_x.
+```
+Consequently,
+``` math
+d_H^*(x)
+ \ge k-\frac{s-t_x}{k-t_x}
+ \ge k-\frac{s}{k},
+```
+where the last inequality follows from
+``` math
+\left(k-\frac{s-t}{k-t}\right)-\left(k-\frac{s}{k}\right)
+ =\frac{t(k-s)}{k(k-t)}\ge0.
+```
+The intersection bound
+``` math
+\left|\bigcap_{z\in S}\Gamma_2(z)\right|
+ \ge k^2+1-s(k+1)\ge2
+```
+provides a surviving vertex $`x`$ at distance two from every deleted vertex. For $`z\in S`$, let $`y_z`$ be the unique common neighbour of $`x,z`$. If $`y_z\in S`$, then the choice of $`x`$ would require $`d_M(x,y_z)=2`$, contradicting $`x\sim y_z`$. Thus all witnesses survive, each deleted vertex contributes exactly once to the neighbour-degree deficit, and equality is attained. The replacement paths, boundary case $`s=k-1`$, distance formula, and attainment step are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_12_small_puncture.py). ◻
+
+</div>
+
+<div id="thm:hs-radius" class="theorem">
+
+**Theorem 26** (Hoffman–Singleton robustness radius). *Let $`M`$ be the Hoffman–Singleton graph. Every induced graph $`M-S`$ with $`|S|\le5`$ is a strict counterexample to WOW-284. This is sharp in the universal sense: there exists a six-vertex set whose deletion is not strict. Hence the universal vertex-deletion robustness radius is exactly five.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">25</a> gives
+``` math
+\delta^*(M-S)=\frac{49-|S|}{7}.
+```
+Two explicitly stored permutations are verified edge-by-edge as automorphisms of the coordinate graph; the group they generate has order $`252000`$. Their orbits on deletion sets of sizes $`0,1,2,3,4,5`$ have counts
+``` math
+1,1,2,4,11,33.
+```
+For every one of the $`52`$ representatives, exact fraction arithmetic gives
+``` math
+7D(M-S)+(49-|S|)I\succ0.
+```
+Orbit-size sums equal $`\binom{50}{s}`$, so every labelled set is covered.
+
+For sharpness, delete
+``` math
+\{P_{2,4},P_{3,1},P_{3,4},Q_{2,1},Q_{3,4},Q_{4,4}\}.
+```
+The resulting graph has $`\delta^*=43/7`$, while an exact $`LDL^{\mathsf T}`$ decomposition of $`7D+43I`$ has exactly one negative and no zero pivot. Thus it is not strict. Generator action, orbit exhaustion, BFS distances, the small-puncture formula, and a handwritten rational $`LDL^{\mathsf T}`$ implementation are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_13_hs_robustness.py). ◻
+
+</div>
+
+<div class="remark">
+
+*Remark 27*. The theorem asserts that every deletion through size five succeeds and that at least one deletion of size six fails. It does not assert that every six-vertex deletion fails.
+
+</div>
+
+# Equality and obstructions to natural construction families
+
+<div id="thm:equality-boundary" class="theorem">
+
+**Theorem 28** (Equality boundary). *Let $`G`$ be connected, $`k`$-regular, of girth at least five and diameter three. Then
+``` math
+\Phi(G)=0
+ \quad\Longleftrightarrow\quad
+ \max_{\theta\ne k}|\theta+1|=\sqrt{2k-2}.
+```
+Equivalently, $`D+kI`$ is positive semidefinite and singular. If $`2k-2`$ is not a square, the two boundary adjacency eigenvalues occur with equal multiplicity, so the distance eigenvalue $`-k`$ has even multiplicity. If $`2k-2`$ is a square, then $`k=2r^2+1`$ for some integer $`r`$.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* This is immediate from Theorem <a href="#thm:diameter-three-score" data-reference-type="ref" data-reference="thm:diameter-three-score">6</a>. In the nonsquare case, the two boundary values are algebraic conjugates, so their multiplicities in the integral characteristic polynomial agree. In the square case, $`2k-2=s^2`$ forces $`s`$ even. The exact scalar audit is [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_equality_boundary.py). ◻
+
+</div>
+
+Jørgensen’s $`9`$-regular order-$`96`$ graph of girth five is an exact equality case:
+``` math
+\delta^*=9,
+ \qquad \lambda_{\min}(D)=-9,
+```
+with multiplicity eight. The construction is due to Jørgensen ([Jørgensen 2005](#ref-Jorgensen2005)); the three local graph representations, handwritten graph6 decoder, characteristic polynomials, root intervals, and provenance boundary are checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_09_jorgensen96.py).
+
+## A prime-field obstruction
+
+For an odd prime $`q\ge7`$ and $`1\le m\le q`$, define $`G(q,m)`$ on vertices $`P_{i,j},Q_{k,\ell}`$, with $`0\le i,k<m`$ and $`j,\ell\in\mathbb F_q`$, by
+``` math
+\begin{align*}
+P_{i,j}&\sim P_{i,j\pm1},\\
+Q_{k,\ell}&\sim Q_{k,\ell\pm2},\\
+P_{i,j}&\sim Q_{k,ik+j}.
+\end{align*}
+```
+This is a balanced specialization of known finite-field girth-five constructions ([Abreu et al. 2008](#ref-AbreuEtAl2008)). It is $`(m+2)`$-regular. A coordinate common-neighbour calculation shows that it has no triangle or $`4`$-cycle for $`q\ge7`$: for a cross pair, the possible same-side common neighbours require residues in the disjoint sets $`\{\pm1\}`$ and $`\{\pm2\}`$.
+
+<div id="thm:prime-field" class="theorem">
+
+**Theorem 29**. *If $`G(q,m)`$ has diameter three, then it is not a strict counterexample to WOW-284.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* The zero Fourier block has eigenvalues $`m+2`$, $`2-m`$, and $`2`$ with multiplicity $`2m-2`$; the shifted WOW window leaves only $`m\in\{4,5,6\}`$. Let $`\omega=e^{2\pi\mathrm i/q}`$. On the nonzero character $`t=1`$, the adjacency block has form
+``` math
+\begin{pmatrix}aI&M\\M^*&bI\end{pmatrix},
+ \qquad a=2\cos\frac{2\pi}{q},
+ \quad b=2\cos\frac{4\pi}{q},
+ \quad M_{ik}=\omega^{ik}.
+```
+If $`\sigma`$ is a singular value of $`M`$, the associated two-dimensional invariant subspace carries $`\bigl(\begin{smallmatrix}a&\sigma\\\sigma&b\end{smallmatrix}\bigr)`$. Since $`\|M\|_F^2=m^2`$, one singular value satisfies $`\sigma^2\ge m`$, and the block has a nonprincipal eigenvalue at least
+``` math
+\sqrt m+\frac{a+b}{2}
+ \ge \sqrt m+\cos(\pi/7)-\frac12.
+```
+Here the last inequality uses $`2\cos(2\pi/7)+2\cos(4\pi/7)=2\cos(\pi/7)-1`$. Moreover $`\cos(\pi/7)>\sqrt3/2`$, and the increasing function $`h(m)=\sqrt{2m+2}-\sqrt m`$ satisfies
+``` math
+h(m)\le h(6)=\sqrt{14}-\sqrt6
+ <\frac{27}{20}<\frac{\sqrt3+1}{2}.
+```
+Thus the displayed nonprincipal eigenvalue lies above $`-1+\sqrt{2m+2}`$ for $`m=4,5,6`$. The common-neighbour case split, Fourier reduction, radical comparisons, and exact $`q=7`$ controls are independently checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_08_prime_field.py). ◻
+
+</div>
+
+## Layer-respecting matching deletions
+
+For $`\pi\in S_5`$, delete the perfect matching
+``` math
+\mathcal M_\pi=\{P_{i,j}Q_{\pi(i),i\pi(i)+j}:i,j\in\mathbb F_5\}
+```
+from the Hoffman–Singleton graph.
+
+<div id="thm:matching-deletions" class="theorem">
+
+**Theorem 30**. *Each deletion produces a connected simple $`6`$-regular graph of order $`50`$, girth five, and diameter four. The $`120`$ labelled graphs form exactly two isomorphism classes. The $`20`$ affine permutations have
+``` math
+\lambda_{\min}(D)=-13,
+ \qquad \Phi=-7,
+```
+and the $`100`$ nonaffine permutations have
+``` math
+\lambda_{\min}(D)=-6-\sqrt{61},
+ \qquad \Phi=-\sqrt{61}.
+```
+Thus every member strictly satisfies the conjectured inequality.*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Every $`P_{i,j}`$ occurs once in $`\mathcal M_\pi`$; for a fixed $`Q_{k,\ell}`$, the unique incident matching edge is obtained from $`i=\pi^{-1}(k)`$ and $`j=\ell-ik`$. Thus $`\mathcal M_\pi`$ is a perfect matching, and its deletion leaves a simple $`6`$-regular graph. Deleting edges cannot create a short cycle, while the same-layer pentagons remain; exact breadth-first search gives connectedness and diameter four.
+
+Explicit type-preserving and type-swapping coordinate automorphisms generate orbits of sizes $`20`$ and $`100`$. The representatives have different adjacency characteristic polynomials, so the orbits are distinct isomorphism classes. Exact distance characteristic polynomials and Sturm separators give the stated least roots. All $`120`$ matchings, $`400`$ coordinate maps, $`48{,}000`$ matching images, orbit coverage, graph hypotheses, and root certificates are checked by [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_07_layer_matchings.py). ◻
+
+</div>
+
+# Exact computation and formal verification
+
+The analytic arguments above are primary. Exact computation is used in three roles: to certify explicitly labelled finite graphs, to exhaust precisely specified finite orbit families, and to check symbolic identities whose written derivations are also supplied. No theorem-level sign or eigenvalue ordering uses floating-point arithmetic.
+
+The principal independent audit entry points are:
+
+<div class="center">
+
+| Result | Exact verifier |
+|:---|:---|
+| Explicit orders $`38,39,40,42,50`$ | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_extended.py) |
+| Regular degree at least six | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_04_regular_low_degree.py) |
+| Endpoint diameter theorem | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_10_endpoint_diameter.py) |
+| Diameter-four theorem | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_11_diameter_four.py) |
+| LP ceiling and rigidity | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_02_two_sided_lp.py) |
+| Degree-six order bound | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_01_edge_local.py) |
+| Order-50 feasibility | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_06_order50_feasibility.py) |
+| One-vertex and edge punctures | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_05_small_moore_punctures.py) |
+| Nonadjacent puncture | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_03_nonadjacent_puncture.py) |
+| Small-puncture normal form | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_12_small_puncture.py) |
+| Hoffman–Singleton radius | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_13_hs_robustness.py) |
+| Equality graph | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_09_jorgensen96.py) |
+| Prime-field obstruction | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_08_prime_field.py) |
+| Matching deletion classes | [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/scripts/verify_proof_audit_07_layer_matchings.py) |
+
+</div>
+
+The explicit $`50`$-vertex counterexample is fully formalized in Lean 4.31 with Mathlib 4.31 ([Moura and Ullrich 2021](#ref-deMouraUllrich2021); [The mathlib Community 2020](#ref-Mathlib2020)). The development checks the coordinate graph, regularity, the exhaustive common-neighbour certificate, girth five, the adjacency-square and distance-matrix identities, and an exact rational diagonalization with multiplicities. Thus the $`50`$-vertex result is verified at graph level, including its least distance eigenvalue and strict WOW-284 gap.
+
+Lean also kernel-checks finite spectral certificates attached to the explicit constructions of orders $`38,39,40,42`$. For orders $`38,39,42`$, the endpoints certify the stated minimum dual-degree data, positive definiteness of the corresponding shifted finite distance matrix, and hence the strict bound for every nonzero real eigenpair. For order $`40`$, Lean certifies a two-sided invertible exact diagonalization, the diagonal-entry multiplicities, the attained least eigenvalue $`-5`$, dual degree six, and gap one. These non-$`50`$ endpoints are finite spectral certificates: they do not identify each semantic matrix with `SimpleGraph.dist` and bundle every structural hypothesis into one public theorem.
+
+Separately, Lean formalizes the analytic optimization statement in Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a>. For every integer $`k\ge4`$ and every admissible finitely supported expansion
+``` math
+f=\sum_i c_iF_i,
+  \qquad c_0>0,
+  \qquad c_i\ge0\quad(i\ge5),
+  \qquad f\vert_{I_k}\le0,
+```
+it proves
+``` math
+B_kc_0\le f(k),
+  \qquad B_k=\frac{(k+2)(k^2+3)}6.
+```
+The formal development defines the coefficient family of the displayed quartic $`f_*`$, proves that it is admissible and attains equality, and proves that every equality case is its unique positive scalar multiple, both as a polynomial and at coefficient level. The kernel-checked dependency chain includes the nonbacktracking recurrence, the exact primal expansion, positivity and moment identities for the three-point dual certificate, strict slacks in degrees $`5`$ through $`9`$, the Chebyshev tail for every degree at least $`10`$, finite-support weak duality, complementary slackness, and optimizer rigidity.
+
+This LP formalization is deliberately graph-independent. It does not formalize the trace interpretation of the $`F_i(A)`$, the girth-five vanishing and nonnegativity statements, the spectral trace decomposition, or the passage from the analytic LP inequality to graph-order bounds. Consequently the graph conclusions $`n<B_k`$, the degree-six reductions $`n\le51`$ and $`n\le50`$, and the edge-local cycle argument remain conventional analytic proofs, with exact executable audits where cited. The punctured-Moore spectra, the general deletion-stability inequality, the small-puncture normal form, and the Hoffman–Singleton deletion-radius theorem are likewise analytic results supported by exact Python audits; they are not part of the Lean claim.
+
+The release audit rejects `sorry`, `admit`, `native_decide`, `bv_decide`, unsafe declarations, and new axioms. Representative axiom reports contain only `propext`, `Classical.choice`, and `Quot.sound`.
+
+# Scope, literature boundary, and open questions
+
+Several ingredients belong to established theory and should not be conflated with the project-derived statements.
+
+- Moore graphs, the Hoffman–Singleton graph, and their intact adjacency and distance spectra are classical ([Hoffman and Singleton 1960](#ref-HoffmanSingleton1960); [Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022)).
+
+- Proposition <a href="#prop:radius-two" data-reference-type="ref" data-reference="prop:radius-two">1</a> is Backelin’s second-degree identity in normalized form ([Backelin 2015](#ref-Backelin2015)).
+
+- Proposition <a href="#prop:higher-transfer" data-reference-type="ref" data-reference="prop:higher-transfer">8</a> belongs to the established distance-polynomial framework ([Fiol 2016](#ref-Fiol2016)).
+
+- The one-variable nonbacktracking LP framework is due to Nozaki ([Nozaki 2015](#ref-Nozaki2015)); Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a> is the exact two-sided WOW specialization and optimizer theorem derived here.
+
+- The four $`(5,5)`$-cages used in Theorem <a href="#thm:regular-degree-six" data-reference-type="ref" data-reference="thm:regular-degree-six">10</a> come from Meringer’s published exhaustive generation ([Meringer 1999](#ref-Meringer1999)); the repository independently verifies the four fixed records but does not replace the enumeration.
+
+- Literature on vertex-deleted adjacency spectra and subconstituents is close in language but does not directly give the recomputed ordinary distance spectra in Section <a href="#sec:punctures" data-reference-type="ref" data-reference="sec:punctures">7</a> ([Dalfó et al. 2011](#ref-DalfoVanDamFiol2012); [Biggs 2010](#ref-Biggs2010)).
+
+Targeted searches, recorded in [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/research-notes/LITERATURE_AUDIT_EXTENSIONS.md) and [`#1`](https://github.com/SamPetkov/wow284/blob/v2.2.0/research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json), did not locate direct prior statements of the punctured-Moore distance spectra, the exact two-sided LP optimizer, the edge-local WOW cycle inequality, or the endpoint-neighbourhood bound. Search silence is not proof of novelty. Accordingly, we avoid unsupported priority language and make no minimum-order claim.
+
+The main open questions are:
+
+1.  Is there a counterexample of order below $`38`$, and what is the true minimum order?
+
+2.  Does a $`6`$-regular order-$`50`$ strict counterexample exist?
+
+3.  Can the one-point and three-vertex constraints of Theorem <a href="#thm:order50-feasibility" data-reference-type="ref" data-reference="thm:order50-feasibility">20</a> be completed by a multipoint semidefinite or canonical-generation argument?
+
+4.  Do regular diameter-four counterexamples exist for degree at least ten?
+
+5.  Is there an unconditional infinite family of strict counterexamples? Any infinite regular family must have unbounded degree, since Corollary <a href="#cor:trichotomy" data-reference-type="ref" data-reference="cor:trichotomy">13</a> and the Moore bound leave finitely many graphs at each fixed degree.
+
+6.  Which deleted sets in a general Moore graph preserve strictness, beyond the metric normal form of Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">25</a>?
+
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof exploration, and Lean formalization. No AI system is an author. The author assumes full responsibility for the mathematics, attribution, and conclusions. The source, exact certificates, and build instructions are available at [`github.com/SamPetkov/wow284`](https://github.com/SamPetkov/wow284) and correspond to release `v2.2.0`.
+
+# Characteristic polynomials for the smallest explicit descendants
+
+For every labelled singleton deletion of $`R`$,
 ``` math
 \begin{align*}
 P_{39}(x)={}&x^9(x+5)^{12}(x^2+6x+3)\\
@@ -803,7 +1279,7 @@ P_{39}(x)={}&x^9(x+5)^{12}(x^2+6x+3)\\
 &\cdot(x^4-78x^3+303x^2-70x-450).
 \end{align*}
 ```
-For every labelled edge-endpoint deletion considered there,
+For every labelled edge-endpoint deletion of $`R`$,
 ``` math
 \begin{align*}
 P_{38}(x)={}&x^4(x-2)(x+5)^8(x^2+6x+2)^2\\
@@ -811,11 +1287,18 @@ P_{38}(x)={}&x^4(x-2)(x+5)^8(x^2+6x+2)^2\\
 &\cdot(x^4+5x^3-7x^2-23x-6)\\
 &\cdot(x^5+9x^4+7x^3-77x^2-54x-4)\\
 &\cdot(x^9-67x^8-404x^7+1772x^6+7205x^5\\
-&\hspace{2.2em}-18489x^4-17018x^3+20288x^2+16824x+1680).
+&\hspace{3em}-18489x^4-17018x^3+20288x^2+16824x+1680).
 \end{align*}
 ```
+The fixed graph6, adjacency-list, edge-list, and distance-matrix records are in `data/graphs/`.
 
 <div id="refs" class="references csl-bib-body hanging-indent">
+
+<div id="ref-AbreuEtAl2008" class="csl-entry">
+
+Abreu, Marien, Martin Funk, Domenico Labbate, and Vito Napolitano. 2008. “A Family of Regular Graphs of Girth 5.” *Discrete Mathematics* 308 (10): 1810–15. <https://doi.org/10.1016/j.disc.2007.04.031>.
+
+</div>
 
 <div id="ref-AouchicheHansen2014" class="csl-entry">
 
@@ -823,9 +1306,27 @@ Aouchiche, Mustapha, and Pierre Hansen. 2014. “Distance Spectra of Graphs: A S
 
 </div>
 
-<div id="ref-vanDamHaemers2003" class="csl-entry">
+<div id="ref-Backelin2015" class="csl-entry">
 
-Dam, Edwin R. van, and Willem H. Haemers. 2003. “Which Graphs Are Determined by Their Spectrum?” *Linear Algebra and Its Applications* 373: 241–72. <https://doi.org/10.1016/S0024-3795(03)00483-X>.
+Backelin, Jörgen. 2015. *Sizes of the Extremal Girth 5 Graphs of Orders from 40 to 49*. <https://arxiv.org/abs/1511.08128>.
+
+</div>
+
+<div id="ref-Biggs2010" class="csl-entry">
+
+Biggs, Norman. 2010. *The Second Subconstituent of Some Strongly Regular Graphs*. <https://arxiv.org/abs/1003.0175>.
+
+</div>
+
+<div id="ref-CioabaEtAl2016" class="csl-entry">
+
+Cioabă, Sebastian M., Jack H. Koolen, Hiroshi Nozaki, and Jason R. Vermette. 2016. “Maximizing the Order of a Regular Graph of Given Valency and Second Eigenvalue.” *SIAM Journal on Discrete Mathematics* 30 (3): 1509–25. <https://doi.org/10.1137/15M1030935>.
+
+</div>
+
+<div id="ref-DalfoVanDamFiol2012" class="csl-entry">
+
+Dalfó, Cristina, Edwin R. van Dam, and Miquel Àngel Fiol. 2011. “On Perturbations of Almost Distance-Regular Graphs.” *Linear Algebra and Its Applications* 435 (10): 2626–38. <https://doi.org/10.1016/j.laa.2011.05.004>.
 
 </div>
 
@@ -835,15 +1336,15 @@ Fajtlowicz, Siemion. 1998. *Written on the Wall: Conjectures Derived on the Basi
 
 </div>
 
-<div id="ref-Hafner2003" class="csl-entry">
+<div id="ref-Fiol2016" class="csl-entry">
 
-Hafner, Paul R. 2003. “The Hoffman–Singleton Graph and Its Automorphisms.” *Journal of Algebraic Combinatorics* 18 (1): 7–12. <https://doi.org/10.1023/A:1025136524481>.
+Fiol, Miquel Àngel. 2016. “Quotient-Polynomial Graphs.” *Linear Algebra and Its Applications* 488: 363–76. <https://doi.org/10.1016/j.laa.2015.09.053>.
 
 </div>
 
-<div id="ref-HagbergSchultSwart2008" class="csl-entry">
+<div id="ref-Hafner2003" class="csl-entry">
 
-Hagberg, Aric A., Daniel A. Schult, and Pieter J. Swart. 2008. “Exploring Network Structure, Dynamics, and Function Using NetworkX.” *Proceedings of the 7th Python in Science Conference*, 11–15. <https://doi.org/10.25080/TCWV9851>.
+Hafner, Paul R. 2003. “The Hoffman–Singleton Graph and Its Automorphisms.” *Journal of Algebraic Combinatorics* 18 (1): 7–12. <https://doi.org/10.1023/A:1025136524481>.
 
 </div>
 
@@ -859,15 +1360,15 @@ Howlader, Aditi, and Pratima Panigrahi. 2022. “On the Distance Spectrum of Min
 
 </div>
 
-<div id="ref-KlinMuzychukZivAv2009" class="csl-entry">
+<div id="ref-Jorgensen2005" class="csl-entry">
 
-Klin, Mikhail, Mikhail Muzychuk, and Matan Ziv-Av. 2009. “Higmanian Rank-5 Association Schemes on 40 Points.” *Michigan Mathematical Journal* 58 (1): 255–84. <https://doi.org/10.1307/mmj/1242071692>.
+Jørgensen, Leif K. 2005. “Girth 5 Graphs from Relative Difference Sets.” *Discrete Mathematics* 293 (1–3): 177–84. <https://doi.org/10.1016/j.disc.2004.08.029>.
 
 </div>
 
-<div id="ref-MeurerEtAl2017" class="csl-entry">
+<div id="ref-Meringer1999" class="csl-entry">
 
-<span class="nocase">Meurer, Aaron et al.</span> 2017. “SymPy: Symbolic Computing in Python.” *PeerJ Computer Science* 3: e103. <https://doi.org/10.7717/peerj-cs.103>.
+Meringer, Markus. 1999. “Fast Generation of Regular Graphs and Construction of Cages.” *Journal of Graph Theory* 30 (2): 137–46. [https://doi.org/10.1002/(SICI)1097-0118(199902)30:2\<137::AID-JGT7\>3.0.CO;2-G](https://doi.org/10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G).
 
 </div>
 
@@ -877,15 +1378,15 @@ Moura, Leonardo de, and Sebastian Ullrich. 2021. “The Lean 4 Theorem Prover an
 
 </div>
 
-<div id="ref-OKeefeWong1979" class="csl-entry">
+<div id="ref-Nozaki2015" class="csl-entry">
 
-O’Keefe, M., and Pak-Ken Wong. 1979. “A Smallest Graph of Girth 5 and Valency 6.” *Journal of Combinatorial Theory, Series B* 26 (2): 145–49. <https://doi.org/10.1016/0095-8956(79)90052-2>.
+Nozaki, Hiroshi. 2015. “Linear Programming Bounds for Regular Graphs.” *Graphs and Combinatorics* 31 (6): 1973–84. <https://doi.org/10.1007/s00373-015-1613-7>.
 
 </div>
 
-<div id="ref-SmithMontemanni2026" class="csl-entry">
+<div id="ref-OKeefeWong1979" class="csl-entry">
 
-Smith, Derek H., and Roberto Montemanni. 2026. “The Moore Graph of Diameter 2 and Degree 57 via Cyclic Derangements.” *Axioms* 15 (5): 332. <https://doi.org/10.3390/axioms15050332>.
+O’Keefe, M., and Pak-Ken Wong. 1979. “A Smallest Graph of Girth 5 and Valency 6.” *Journal of Combinatorial Theory, Series B* 26 (2): 145–49. <https://doi.org/10.1016/0095-8956(79)90052-2>.
 
 </div>
 

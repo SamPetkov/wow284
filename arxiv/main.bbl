@@ -1,16 +1,9 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{18}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Aouchiche and Hansen(2014)]{AouchicheHansen2014}
-Mustapha Aouchiche and Pierre Hansen.
-\newblock Distance spectra of graphs: A survey.
-\newblock \emph{Linear Algebra and its Applications}, 458:\penalty0 301--386,
-  2014.
-\newblock \doi{10.1016/j.laa.2014.06.010}.
 
 \bibitem[Fajtlowicz(1998)]{Fajtlowicz1998}
 Siemion Fajtlowicz.
@@ -18,12 +11,12 @@ Siemion Fajtlowicz.
   {Galatea Gabriella Graffiti}.
 \newblock Technical report, University of Houston, 1998.
 
-\bibitem[Hoffman and Singleton(1960)]{HoffmanSingleton1960}
-Alan~J. Hoffman and Robert~R. Singleton.
-\newblock On {Moore} graphs with diameters 2 and 3.
-\newblock \emph{IBM Journal of Research and Development}, 4\penalty0
-  (5):\penalty0 497--504, 1960.
-\newblock \doi{10.1147/rd.45.0497}.
+\bibitem[Aouchiche and Hansen(2014)]{AouchicheHansen2014}
+Mustapha Aouchiche and Pierre Hansen.
+\newblock Distance spectra of graphs: A survey.
+\newblock \emph{Linear Algebra and its Applications}, 458:\penalty0 301--386,
+  2014.
+\newblock \doi{10.1016/j.laa.2014.06.010}.
 
 \bibitem[Howlader and Panigrahi(2022)]{HowladerPanigrahi2022}
 Aditi Howlader and Pratima Panigrahi.
@@ -33,12 +26,33 @@ Aditi Howlader and Pratima Panigrahi.
   2022.
 \newblock \doi{10.1016/j.laa.2021.11.014}.
 
-\bibitem[Smith and Montemanni(2026)]{SmithMontemanni2026}
-Derek~H. Smith and Roberto Montemanni.
-\newblock The {Moore} graph of diameter 2 and degree 57 via cyclic
-  derangements.
-\newblock \emph{Axioms}, 15\penalty0 (5):\penalty0 332, 2026.
-\newblock \doi{10.3390/axioms15050332}.
+\bibitem[Fiol(2016)]{Fiol2016}
+Miquel~{\`A}ngel Fiol.
+\newblock Quotient-polynomial graphs.
+\newblock \emph{Linear Algebra and its Applications}, 488:\penalty0 363--376,
+  2016.
+\newblock \doi{10.1016/j.laa.2015.09.053}.
+
+\bibitem[Nozaki(2015)]{Nozaki2015}
+Hiroshi Nozaki.
+\newblock Linear programming bounds for regular graphs.
+\newblock \emph{Graphs and Combinatorics}, 31\penalty0 (6):\penalty0
+  1973--1984, 2015.
+\newblock \doi{10.1007/s00373-015-1613-7}.
+
+\bibitem[Cioab{\u{a}} et~al.(2016)Cioab{\u{a}}, Koolen, Nozaki, and
+  Vermette]{CioabaEtAl2016}
+Sebastian~M. Cioab{\u{a}}, Jack~H. Koolen, Hiroshi Nozaki, and Jason~R.
+  Vermette.
+\newblock Maximizing the order of a regular graph of given valency and second
+  eigenvalue.
+\newblock \emph{SIAM Journal on Discrete Mathematics}, 30\penalty0
+  (3):\penalty0 1509--1525, 2016.
+\newblock \doi{10.1137/15M1030935}.
+
+\bibitem[Backelin(2015)]{Backelin2015}
+J{\"o}rgen Backelin.
+\newblock Sizes of the extremal girth 5 graphs of orders from 40 to 49, 2015.
 
 \bibitem[Hafner(2003)]{Hafner2003}
 Paul~R. Hafner.
@@ -61,33 +75,26 @@ Pak-Ken Wong.
   1979.
 \newblock \doi{10.1002/jgt.3190030413}.
 
-\bibitem[Klin et~al.(2009)Klin, Muzychuk, and Ziv-Av]{KlinMuzychukZivAv2009}
-Mikhail Klin, Mikhail Muzychuk, and Matan Ziv-Av.
-\newblock Higmanian rank-5 association schemes on 40 points.
-\newblock \emph{Michigan Mathematical Journal}, 58\penalty0 (1):\penalty0
-  255--284, 2009.
-\newblock \doi{10.1307/mmj/1242071692}.
+\bibitem[Meringer(1999)]{Meringer1999}
+Markus Meringer.
+\newblock Fast generation of regular graphs and construction of cages.
+\newblock \emph{Journal of Graph Theory}, 30\penalty0 (2):\penalty0 137--146,
+  1999.
+\newblock \doi{10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G}.
 
-\bibitem[van Dam and Haemers(2003)]{vanDamHaemers2003}
-Edwin~R. van Dam and Willem~H. Haemers.
-\newblock Which graphs are determined by their spectrum?
-\newblock \emph{Linear Algebra and its Applications}, 373:\penalty0 241--272,
-  2003.
-\newblock \doi{10.1016/S0024-3795(03)00483-X}.
+\bibitem[J{\o}rgensen(2005)]{Jorgensen2005}
+Leif~K. J{\o}rgensen.
+\newblock Girth 5 graphs from relative difference sets.
+\newblock \emph{Discrete Mathematics}, 293\penalty0 (1--3):\penalty0 177--184,
+  2005.
+\newblock \doi{10.1016/j.disc.2004.08.029}.
 
-\bibitem[Hagberg et~al.(2008)Hagberg, Schult, and
-  Swart]{HagbergSchultSwart2008}
-Aric~A. Hagberg, Daniel~A. Schult, and Pieter~J. Swart.
-\newblock Exploring network structure, dynamics, and function using {NetworkX}.
-\newblock In \emph{Proceedings of the 7th Python in Science Conference}, pages
-  11--15, 2008.
-\newblock \doi{10.25080/TCWV9851}.
-
-\bibitem[Meurer et~al.(2017)]{MeurerEtAl2017}
-Aaron Meurer et~al.
-\newblock {SymPy}: Symbolic computing in {Python}.
-\newblock \emph{PeerJ Computer Science}, 3:\penalty0 e103, 2017.
-\newblock \doi{10.7717/peerj-cs.103}.
+\bibitem[Abreu et~al.(2008)Abreu, Funk, Labbate, and Napolitano]{AbreuEtAl2008}
+Marien Abreu, Martin Funk, Domenico Labbate, and Vito Napolitano.
+\newblock A family of regular graphs of girth 5.
+\newblock \emph{Discrete Mathematics}, 308\penalty0 (10):\penalty0 1810--1815,
+  2008.
+\newblock \doi{10.1016/j.disc.2007.04.031}.
 
 \bibitem[de~Moura and Ullrich(2021)]{deMouraUllrich2021}
 Leonardo de~Moura and Sebastian Ullrich.
@@ -103,5 +110,24 @@ Leonardo de~Moura and Sebastian Ullrich.
   Conference on Certified Programs and Proofs}, pages 367--381. Association for
   Computing Machinery, 2020.
 \newblock \doi{10.1145/3372885.3373824}.
+
+\bibitem[Hoffman and Singleton(1960)]{HoffmanSingleton1960}
+Alan~J. Hoffman and Robert~R. Singleton.
+\newblock On {Moore} graphs with diameters 2 and 3.
+\newblock \emph{IBM Journal of Research and Development}, 4\penalty0
+  (5):\penalty0 497--504, 1960.
+\newblock \doi{10.1147/rd.45.0497}.
+
+\bibitem[Dalf{\'o} et~al.(2011)Dalf{\'o}, van Dam, and
+  Fiol]{DalfoVanDamFiol2012}
+Cristina Dalf{\'o}, Edwin~R. van Dam, and Miquel~{\`A}ngel Fiol.
+\newblock On perturbations of almost distance-regular graphs.
+\newblock \emph{Linear Algebra and its Applications}, 435\penalty0
+  (10):\penalty0 2626--2638, 2011.
+\newblock \doi{10.1016/j.laa.2011.05.004}.
+
+\bibitem[Biggs(2010)]{Biggs2010}
+Norman Biggs.
+\newblock The second subconstituent of some strongly regular graphs, 2010.
 
 \end{thebibliography}

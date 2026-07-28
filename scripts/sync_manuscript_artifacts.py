@@ -28,6 +28,13 @@ CANONICAL_MD = ROOT / "manuscript.md"
 ARXIV_DIR = ROOT / "arxiv"
 ARXIV_ZIP = ARXIV_DIR / "wow284_arxiv_source.zip"
 BUILD_REPORT = ROOT / "BUILD_VERIFICATION.txt"
+SUBMISSION_NOTES = ROOT / "SUBMISSION_NOTES.md"
+V22_BBL = ROOT / "v22" / "main.bbl"
+
+RELEASE_TITLE = (
+    "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
+)
+RELEASE_TAG = "v2.2.0"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -53,6 +60,51 @@ def run(command: list[str], *, cwd: Path, env: dict[str, str] | None = None) -> 
 
 def sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def pdf_page_count(path: Path) -> int:
+    """Read the actual PDF page count from Poppler's machine-readable output."""
+
+    result = subprocess.run(
+        ["pdfinfo", str(path)],
+        cwd=ROOT,
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+    match = re.search(r"^Pages:\s+(\d+)\s*$", result.stdout, flags=re.MULTILINE)
+    if match is None:
+        raise RuntimeError(f"pdfinfo did not report a page count for {path}")
+    return int(match.group(1))
+
+
+def replace_counted(text: str, pattern: str, replacement: str, *, label: str) -> str:
+    updated, count = re.subn(pattern, replacement, text)
+    if count != 1:
+        raise RuntimeError(f"{label}: expected one metadata marker, found {count}")
+    return updated
+
+
+def update_page_count_metadata(page_count: int) -> None:
+    """Synchronize release prose with the page count of the compiled PDF."""
+
+    submission = SUBMISSION_NOTES.read_text(encoding="utf-8")
+    submission = replace_counted(
+        submission,
+        r"\*\*Comments:\*\* \d+ pages\.",
+        f"**Comments:** {page_count} pages.",
+        label="submission page count",
+    )
+    SUBMISSION_NOTES.write_text(submission, encoding="utf-8", newline="\n")
+
+    report = BUILD_REPORT.read_text(encoding="utf-8")
+    report = replace_counted(
+        report,
+        r"PASS  PDF page count: \d+\.",
+        f"PASS  PDF page count: {page_count}.",
+        label="build-report page count",
+    )
+    BUILD_REPORT.write_text(report, encoding="utf-8", newline="\n")
 
 
 def arxiv_member_bytes(source: Path) -> bytes:
@@ -146,16 +198,19 @@ def generate_markdown() -> None:
         )
         body = body.replace("**Theorem A 1**.", "**Theorem A**.")
         for expected_path in (
-            "scripts/verify_descendant_families.py",
-            "supplement/extended_2026-07-23/logs/descendant_family_output.txt",
-            "SHA256SUMS",
+            "scripts/verify_extended.py",
+            "scripts/verify_proof_audit_02_two_sided_lp.py",
+            "scripts/verify_proof_audit_11_diameter_four.py",
+            "scripts/verify_proof_audit_12_small_puncture.py",
+            "scripts/verify_proof_audit_13_hs_robustness.py",
+            "data/graphs/",
         ):
             if expected_path not in body:
                 raise RuntimeError(
                     f"generated Markdown dropped required path: {expected_path}"
                 )
 
-    header = """# Exact Counterexamples and Spectral Mechanisms for WOW-284
+    header = """# Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284
 
 **Samuil Petkov**<br>
 Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
@@ -171,6 +226,9 @@ def copy_mirrors() -> None:
     ARXIV_DIR.mkdir(parents=True, exist_ok=True)
     for source, destination in ARXIV_MIRRORS.items():
         shutil.copy2(source, destination)
+    # The bootstrap's historical BBL is not authoritative. Refresh the
+    # staging copy only from the newly generated canonical bibliography.
+    shutil.copy2(CANONICAL_BBL, V22_BBL)
 
 
 def make_arxiv_archive() -> None:
@@ -204,35 +262,28 @@ def validate_arxiv_archive() -> None:
 def validate_release_text() -> None:
     text = CANONICAL_TEX.read_text(encoding="utf-8")
     required = [
-        r"\title[Exact counterexamples to WOW-284]",
+        r"\title[Counterexamples and obstructions for WOW-284]",
+        RELEASE_TITLE,
         r"\author{Samuil Petkov}",
+        r"\email{samuil.petkov@phys.ens.psl.eu}",
         r"\date{}",
         r"\usepackage[margin=1in]{geometry}",
         r"\keywords{distance spectrum, dual degree, Moore graph}",
         "pdfkeywords={distance spectrum, dual degree, Moore graph}",
-        "Howlader and Panigrahi",
-        "No claim is made",
+        rf"\newcommand{{\RepoTag}}{{{RELEASE_TAG}}}",
+        "WOW-284 asserts",
         "OpenAI ChatGPT-5.6 Sol Pro assisted",
-        "A graph6 string in this fixed",
-        r"V(-\infty)=26",
-        r"vertices at distance two from \(P_{0,0}\)",
-        r"\texttt{v2.1.0}",
-        "This manuscript corresponds to GitHub release",
-        r"\delta^*(H_v)",
-        r"\mathbb R^{V(X)}",
-        r"2K-7-\sqrt{4K-3}",
-        r"m_2+m_{-3}=35",
-        r"V(M)=U\sqcup S",
-        "permitting byte-for-byte integrity",
-        r"python scripts/explore\_generalizations.py",
-        "The explicit 50-vertex counterexample is fully formalized and verified",
-        "Lean 4.31 also kernel-checks finite spectral certificates",
-        "The scope of these non-50 results is deliberately finite and spectral",
-        r"\section{A 40-vertex induced counterexample}",
-        r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}",
-        r"\section{Smaller induced counterexamples}",
-        r"\partial_{38}(H)=-3-\sqrt7",
-        r"The scalar \(k\le3\) threshold",
+        r"\section{Moment bounds and the exact LP ceiling}",
+        r"\begin{theorem}[Exact LP ceiling and rigidity]",
+        "the exact one-variable LP optimum and coefficient-level optimizer rigidity",
+        "proves that it is admissible and attains equality",
+        "polynomial and at coefficient level",
+        "This LP formalization is deliberately graph-independent",
+        r"the trace interpretation of the \(F_i(A)\)",
+        r"\section{Distance spectra of punctured Moore graphs}",
+        r"\section{Small punctures and exact Hoffman--Singleton robustness}",
+        r"\clearpage",
+        r"correspond to release \texttt{v2.2.0}",
     ]
     missing = [item for item in required if item not in text]
     if missing:
@@ -253,7 +304,10 @@ def validate_release_text() -> None:
         "remains under verification",
         "formalization is in preparation",
         r"\texttt{v2.0.5-arxiv}",
+        r"\texttt{v2.1.0}",
+        "Exact Counterexamples and Spectral Mechanisms for WOW-284",
         "The earlier arXiv submission was withdrawn",
+        "they are not included in the Lean claim above",
     ]
     present = [item for item in forbidden if item in text]
     if present:
@@ -322,8 +376,30 @@ def check_manifest_and_hashes() -> None:
             "MANIFEST.txt is not synchronized"
             f"; missing entries={missing}; stale entries={stale}"
         )
-    for line in (ROOT / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
-        digest, relative = line.split("  ", 1)
+    expected_hash_paths = sorted(item for item in actual if item != "SHA256SUMS")
+    lines = (ROOT / "SHA256SUMS").read_text(encoding="utf-8").splitlines()
+    parsed: list[tuple[str, str]] = []
+    for line in lines:
+        match = re.fullmatch(r"([0-9a-f]{64})  ([^\r\n]+)", line)
+        if match is None:
+            raise RuntimeError(f"malformed SHA256SUMS line: {line!r}")
+        parsed.append((match.group(1), match.group(2)))
+    recorded_hash_paths = [relative for _, relative in parsed]
+    if recorded_hash_paths != expected_hash_paths:
+        missing = sorted(set(expected_hash_paths) - set(recorded_hash_paths))
+        stale = sorted(set(recorded_hash_paths) - set(expected_hash_paths))
+        duplicates = sorted(
+            relative
+            for relative in set(recorded_hash_paths)
+            if recorded_hash_paths.count(relative) != 1
+        )
+        raise RuntimeError(
+            "SHA256SUMS is not a complete one-entry-per-file ledger"
+            f"; missing entries={missing}; stale entries={stale}; duplicates={duplicates}"
+        )
+    for digest, relative in parsed:
+        if not (ROOT / relative).is_file():
+            raise RuntimeError(f"SHA256SUMS references a missing file: {relative}")
         if sha256(ROOT / relative) != digest:
             raise RuntimeError(f"SHA-256 mismatch: {relative}")
 
@@ -331,6 +407,7 @@ def check_manifest_and_hashes() -> None:
 def synchronize() -> None:
     validate_release_text()
     compile_manuscript()
+    update_page_count_metadata(pdf_page_count(CANONICAL_PDF))
     generate_markdown()
     copy_mirrors()
     make_arxiv_archive()
@@ -343,6 +420,15 @@ def check() -> None:
     for source, destination in ARXIV_MIRRORS.items():
         if source.read_bytes() != destination.read_bytes():
             raise RuntimeError(f"arXiv mirror is stale: {destination.relative_to(ROOT)}")
+    if CANONICAL_BBL.read_bytes() != V22_BBL.read_bytes():
+        raise RuntimeError("v22/main.bbl is not the regenerated canonical bibliography")
+    page_count = pdf_page_count(CANONICAL_PDF)
+    submission = SUBMISSION_NOTES.read_text(encoding="utf-8")
+    if f"**Comments:** {page_count} pages." not in submission:
+        raise RuntimeError("submission page count does not match main.pdf")
+    report = BUILD_REPORT.read_text(encoding="utf-8")
+    if f"PASS  PDF page count: {page_count}." not in report:
+        raise RuntimeError("build-report page count does not match main.pdf")
     validate_arxiv_archive()
     check_manifest_and_hashes()
 

@@ -8,14 +8,30 @@ import hashlib
 import json
 from pathlib import Path
 import re
+import subprocess
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
+RELEASE_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
+RELEASE_TAG = "v2.2.0"
 
 
 def require(condition: bool, message: str) -> None:
     if not condition:
         raise AssertionError(message)
+
+
+def pdf_page_count(path: Path) -> int:
+    result = subprocess.run(
+        ["pdfinfo", str(path)],
+        cwd=ROOT,
+        check=True,
+        text=True,
+        capture_output=True,
+    )
+    match = re.search(r"^Pages:\s+(\d+)\s*$", result.stdout, flags=re.MULTILINE)
+    require(match is not None, f"pdfinfo did not report a page count for {path}")
+    return int(match.group(1))
 
 
 def main() -> None:
@@ -30,6 +46,12 @@ def main() -> None:
         "LICENSE_SCOPE.md",
         "README.md",
         "REVIEW.md",
+        "PROVENANCE.md",
+        "BUILD_VERIFICATION.txt",
+        "MANIFEST.txt",
+        "SHA256SUMS",
+        "SUBMISSION_NOTES.md",
+        "RELEASE_NOTES_v2.2.0.md",
         "SOURCE_LEDGER.md",
         "results/verification.json",
         "results/verification_40.json",
@@ -50,6 +72,20 @@ def main() -> None:
         "data/graphs/G50.graph6",
         "supplement/extended_2026-07-23/SHA256SUMS",
         "archive/main_2026-07-19.tex",
+        "scripts/audit_v22_manuscript.py",
+        "scripts/verify_proof_audit_11_diameter_four.py",
+        "scripts/verify_proof_audit_12_small_puncture.py",
+        "scripts/verify_proof_audit_13_hs_robustness.py",
+        "lean/Wow284/LPDefinitions.lean",
+        "lean/Wow284/LPRecurrence.lean",
+        "lean/Wow284/LPPrimal.lean",
+        "lean/Wow284/LPDualFinite.lean",
+        "lean/Wow284/LPChebyshevTail.lean",
+        "lean/Wow284/LPWeakDuality.lean",
+        "lean/Wow284/LPRigidity.lean",
+        "lean/Wow284/LPCeiling.lean",
+        "lean/Wow284LPAudit.lean",
+        "scripts/validate_lp_formalization.py",
     ]
     missing = [relative for relative in expected if not (ROOT / relative).is_file()]
     require(not missing, f"missing release files: {missing}")
@@ -66,70 +102,100 @@ def main() -> None:
     )
     require(r"\date{}" in tex, "active manuscript date must be suppressed")
     require(r"\author{Samuil Petkov}" in tex, "author mismatch")
-    require(r"\title[Exact counterexamples to WOW-284]" in tex, "title mismatch")
-    require("Howlader and Panigrahi" in tex, "prior distance-spectrum attribution missing")
-    require("No claim is made" in tex, "scope limitation missing")
+    require(r"\email{samuil.petkov@phys.ens.psl.eu}" in tex, "email mismatch")
+    require(
+        r"\title[Counterexamples and obstructions for WOW-284]" in tex
+        and RELEASE_TITLE in tex,
+        "expanded v2.2 title mismatch",
+    )
+    require(r"\newcommand{\RepoTag}{v2.2.0}" in tex, "v2.2 release tag missing")
+    require("WOW-284 asserts" in tex, "conjecture verb is not the requested wording")
     require(
         "OpenAI ChatGPT-5.6 Sol Pro assisted" in tex,
         "requested AI disclosure missing",
     )
-    require("A graph6 string in this fixed" in tex, "fixed-label graph6 wording missing")
-    require("canonical graph6 string" not in tex, "unsupported graph6 canonicality claim")
-    require(r"V(-\infty)=26" in tex and r"V(-28/5)=25" in tex,
-            "exact order-38 Sturm variation certificate missing")
-    require(r"vertices at distance two from \(P_{0,0}\)" in tex,
-            "explicit order-42 base vertex missing")
-    require(r"\texttt{v2.1.0}" in tex, "current research release tag missing")
     require(
-        "This manuscript corresponds to GitHub release" in tex,
-        "submission-to-release correspondence statement missing",
+        r"correspond to release \texttt{v2.2.0}" in tex,
+        "manuscript-to-release correspondence statement missing",
     )
     require(
-        "v2.0.5-arxiv" not in tex
-        and "The earlier arXiv submission was withdrawn" not in tex,
+        all(
+            stale not in tex
+            for stale in (
+                "v2.0.5-arxiv",
+                "v2.1.0",
+                "The earlier arXiv submission was withdrawn",
+                "Exact Counterexamples and Spectral Mechanisms for WOW-284",
+            )
+        ),
         "submission source mentions superseded release history",
     )
-    require(r"\delta^*(H_v)" in tex, "order-39 graph quantifier is not explicit")
-    require(r"\mathbb R^{V(X)}" in tex, "Moore invariant-space decomposition missing")
-    require(r"2K-7-\sqrt{4K-3}" in tex, "Moore threshold calculation missing")
-    require(r"m_2+m_{-3}=35" in tex, "order-42 multiplicity calculation missing")
-    require(r"V(M)=U\sqcup S" in tex, "generic equitable-deletion notation not fixed")
-    require("permitting byte-for-byte integrity" in tex,
-            "checksum integrity wording missing")
-    require(r"python scripts/explore\_generalizations.py" in tex,
-            "generalization verifier command missing")
-    require("runs every extended exact certificate" not in tex,
-            "verify_extended.py scope is overstated")
-    require("authenticates it and every other archived" not in tex,
-            "unsigned checksum manifest is described as authentication")
-    require("The explicit 50-vertex counterexample is fully formalized and verified" in tex,
-            "completed explicit Lean verification status missing")
-    require("Lean 4.31 also kernel-checks finite spectral certificates" in tex,
-            "non-50 finite spectral certificate status missing")
-    require("The scope of these non-50 results is deliberately finite and spectral" in tex,
-            "non-50 formal claim boundary missing")
-    require(r"\section{A 40-vertex induced counterexample}" in tex,
-            "40-vertex counterexample section missing")
-    require(r"\Spec(D(R))=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}" in tex,
-            "40-vertex distance spectrum missing")
+    for marker, message in (
+        (
+            r"\section{Moment bounds and the exact LP ceiling}",
+            "expanded LP section missing",
+        ),
+        (
+            r"\begin{theorem}[Exact LP ceiling and rigidity]",
+            "exact LP theorem missing",
+        ),
+        (
+            "the exact one-variable LP optimum and coefficient-level optimizer rigidity",
+            "LP formalization claim missing from abstract",
+        ),
+        (
+            "proves that it is admissible and attains equality",
+            "formalized optimizer-attainment claim missing",
+        ),
+        (
+            "polynomial and at coefficient level",
+            "coefficient-level uniqueness claim missing",
+        ),
+        (
+            "This LP formalization is deliberately graph-independent",
+            "LP graph-independence boundary missing",
+        ),
+        (
+            r"the trace interpretation of the \(F_i(A)\)",
+            "graph trace bridge exclusion missing",
+        ),
+        (
+            r"\section{Distance spectra of punctured Moore graphs}",
+            "punctured-Moore section missing",
+        ),
+        (
+            r"\section{Small punctures and exact Hoffman--Singleton robustness}",
+            "deletion-robustness section missing",
+        ),
+    ):
+        require(marker in tex, message)
+    require(r"\clearpage" in tex, "references do not start on a new page")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
 
     submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
     require(
-        "**Current public research release:** `v2.1.0`" in submission_notes,
+        "**Current public research release:** `v2.2.0`" in submission_notes,
         "submission metadata does not identify the current research release",
     )
     require(
+        RELEASE_TITLE in submission_notes
+        and "WOW-284 asserts" in submission_notes
+        and "$38,39,40,42$" in submission_notes,
+        "submission title or TeX abstract is not synchronized",
+    )
+    require(
         "v2.0.5-arxiv" not in submission_notes
+        and "v2.1.0" not in submission_notes
         and "withdrawn" not in submission_notes.lower(),
         "submission metadata mentions superseded release history",
     )
-    require(
-        "**Comments:** 14 pages." in submission_notes,
-        "submission metadata page count is stale",
-    )
+    pages = pdf_page_count(ROOT / "main.pdf")
+    require(f"**Comments:** {pages} pages." in submission_notes,
+            "submission metadata page count does not match main.pdf")
 
     build_report = (ROOT / "BUILD_VERIFICATION.txt").read_text(encoding="utf-8")
+    require(f"PASS  PDF page count: {pages}." in build_report,
+            "build report page count does not match main.pdf")
     require(
         "The authoritative SHA-256 digests for main.pdf and\n"
         "      arxiv/wow284_arxiv_source.zip are recorded in SHA256SUMS."
@@ -169,6 +235,33 @@ def main() -> None:
             continue
         require(not forbidden_lean.search(path.read_text(encoding="utf-8")),
                 f"forbidden Lean token in {path}")
+    dispatcher = (ROOT / "lean" / "Wow284.lean").read_text(encoding="utf-8")
+    require("import Wow284.LPCeiling" in dispatcher,
+            "root Lean dispatcher does not import the LP closure")
+    lp_ceiling = (ROOT / "lean" / "Wow284" / "LPCeiling.lean").read_text(
+        encoding="utf-8"
+    )
+    require("theorem twoSidedLP_optimal_and_rigid" in lp_ceiling,
+            "frozen all-degree LP endpoint is missing")
+    lp_closure = "\n".join(
+        (ROOT / relative).read_text(encoding="utf-8")
+        for relative in (
+            "lean/Wow284/LPDefinitions.lean",
+            "lean/Wow284/LPPrimal.lean",
+            "lean/Wow284/LPRigidity.lean",
+            "lean/Wow284/LPCeiling.lean",
+        )
+    )
+    require(
+        "Coefficients" in lp_closure
+        and "Admissible" in lp_closure
+        and "extremal" in lp_closure
+        and "attain" in lp_closure.lower(),
+        "LP closure does not expose the coefficient witness and attainment layer",
+    )
+    lp_audit = (ROOT / "lean" / "Wow284LPAudit.lean").read_text(encoding="utf-8")
+    require("twoSidedLP_optimal_and_rigid" in lp_audit and "#print axioms" in lp_audit,
+            "LP public endpoint is absent from the axiom audit")
 
     bibliography = (ROOT / "references.bib").read_text(encoding="utf-8")
     for doi in [
@@ -222,6 +315,28 @@ def main() -> None:
             archive.namelist() == ["main.tex", "references.bib", "main.bbl"],
             "arXiv archive contains unexpected files",
         )
+        for name in ("main.tex", "references.bib", "main.bbl"):
+            canonical = (ROOT / name).read_text(encoding="utf-8")
+            payload = archive.read(name).decode("utf-8")
+            require(
+                payload == canonical.replace("\r\n", "\n").replace("\r", "\n"),
+                f"arXiv ZIP member differs from canonical source: {name}",
+            )
+    for name in ("main.tex", "references.bib", "main.bbl"):
+        canonical = (ROOT / name).read_bytes()
+        require((ROOT / "arxiv" / name).read_bytes() == canonical,
+                f"arXiv mirror is stale: {name}")
+        require((ROOT / "v22" / name).read_bytes() == canonical,
+                f"v22 staging file is stale: {name}")
+
+    cited_keys: set[str] = set()
+    for match in re.finditer(r"\\cite\w*(?:\[[^\]]*\]){0,2}\{([^}]*)\}", tex):
+        cited_keys.update(key.strip() for key in match.group(1).split(","))
+    bbl = (ROOT / "main.bbl").read_text(encoding="utf-8")
+    bbl_keys = set(re.findall(r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}", bbl))
+    require(bbl_keys == cited_keys,
+            f"BBL/citation key mismatch: missing={sorted(cited_keys - bbl_keys)}, "
+            f"stale={sorted(bbl_keys - cited_keys)}")
 
     supplement = ROOT / "supplement" / "extended_2026-07-23"
     for line in (supplement / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
@@ -247,6 +362,40 @@ def main() -> None:
             require(b"\r" not in raw, f"carriage-return control byte in prose source {path}")
         text = path.read_text(encoding="utf-8")
         require(not any(marker in text for marker in mojibake_markers), f"mojibake marker in {path}")
+
+    excluded = {".git", ".lake", ".venv", ".pytest_cache", "__pycache__", "tmp"}
+    inventory_result = subprocess.run(
+        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
+        cwd=ROOT,
+        check=True,
+        stdout=subprocess.PIPE,
+    )
+    release_files = sorted(
+        relative
+        for relative in inventory_result.stdout.decode("utf-8").split("\0")
+        if relative
+        and not any(part in excluded for part in Path(relative).parts)
+        and (ROOT / relative).is_file()
+        and relative not in {"MANIFEST.txt", "SHA256SUMS"}
+    )
+    expected_manifest = sorted([*release_files, "MANIFEST.txt", "SHA256SUMS"])
+    manifest = (ROOT / "MANIFEST.txt").read_text(encoding="utf-8").splitlines()
+    require(manifest == expected_manifest, "MANIFEST.txt is not the complete sorted inventory")
+    expected_hash_paths = sorted(item for item in expected_manifest if item != "SHA256SUMS")
+    checksum_lines = (ROOT / "SHA256SUMS").read_text(encoding="utf-8").splitlines()
+    parsed_checksums: list[tuple[str, str]] = []
+    for line in checksum_lines:
+        match = re.fullmatch(r"([0-9a-f]{64})  ([^\r\n]+)", line)
+        require(match is not None, f"malformed SHA256SUMS line: {line!r}")
+        parsed_checksums.append((match.group(1), match.group(2)))
+    require(
+        [relative for _, relative in parsed_checksums] == expected_hash_paths,
+        "SHA256SUMS is not a complete sorted one-entry-per-file ledger",
+    )
+    for digest, relative in parsed_checksums:
+        require((ROOT / relative).is_file(), f"checksum target missing: {relative}")
+        require(hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == digest,
+                f"checksum mismatch: {relative}")
 
     require((ROOT / "main.pdf").stat().st_size > 25_000, "compiled PDF is unexpectedly small")
     print("repository release validation: PASS")

@@ -444,7 +444,7 @@ def revise_tex(text: str) -> str:
 BIB_ENTRIES = r'''
 
 @misc{Backelin2015,
-  author        = {Backelin, J{"o}rgen},
+  author        = {Backelin, J{\"o}rgen},
   title         = {Sizes of the Extremal Girth 5 Graphs of Orders from 40 to 49},
   year          = {2015},
   eprint        = {1511.08128},
@@ -474,8 +474,7 @@ BIB_ENTRIES = r'''
 }
 
 @article{CioabaEtAl2016,
-  author  = {Cioab
-, Sebastian M. and Koolen, Jack H. and Nozaki, Hiroshi and Vermette, Jason R.},
+  author  = {Cioab{\u{a}}, Sebastian M. and Koolen, Jack H. and Nozaki, Hiroshi and Vermette, Jason R.},
   title   = {Maximizing the Order of a Regular Graph of Given Valency and Second Eigenvalue},
   journal = {SIAM Journal on Discrete Mathematics},
   volume  = {30},
@@ -530,7 +529,7 @@ BIB_ENTRIES = r'''
 
 
 def revise_bib(text: str) -> str:
-    for key in (
+    keys = (
         "Backelin2015",
         "Fiol2016",
         "Nozaki2015",
@@ -539,10 +538,20 @@ def revise_bib(text: str) -> str:
         "AbreuEtAl2008",
         "DalfoVanDamFiol2012",
         "Biggs2010",
-    ):
-        if re.search(r"@[A-Za-z]+\{" + re.escape(key) + r",", text):
-            raise AssertionError(f"bibliography already contains {key}")
-    return text.rstrip() + BIB_ENTRIES + "\n"
+    )
+    present = {
+        key
+        for key in keys
+        if re.search(r"@[A-Za-z]+\{" + re.escape(key) + r",", text)
+    }
+    if present:
+        if present != set(keys):
+            raise AssertionError(
+                "bibliography contains a partial v2.2 extension: "
+                + ", ".join(sorted(present))
+            )
+        return text.rstrip() + "\n"
+    return text.rstrip() + BIB_ENTRIES.rstrip() + "\n"
 
 
 def citation_keys(tex: str) -> set[str]:

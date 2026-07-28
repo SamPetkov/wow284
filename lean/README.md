@@ -7,6 +7,58 @@ certificates for orders 38, 39, 40, and 42.
 A claim-by-claim description of the non-50 developments is in
 [`NON50_CERTIFICATES.md`](NON50_CERTIFICATES.md).
 
+## Exact all-degree LP optimum
+
+The default `Wow284` library also imports the completed analytic
+formalization of the all-degree two-sided nonbacktracking linear program.
+For every natural number \(k\ge4\) and every admissible finitely supported
+coefficient family, Lean proves
+
+\[
+  B_k c_0\le f(k),
+  \qquad
+  B_k=\frac{(k+2)(k^2+3)}6,
+\]
+
+Lean also constructs the normalized finitely supported optimizer explicitly,
+proves its admissibility and objective value, and proves that equality holds
+exactly when the complete coefficient family is the positive scalar \(c_0\)
+times that optimizer. Thus the result is non-vacuous and rigid at both the
+coefficient and represented-polynomial levels. The dependency closure
+includes exact degree and linear independence of the nonbacktracking basis,
+the primal quartic certificate, positivity and exact moments of the
+three-point dual, strict slacks in degrees \(5\) through \(9\), the universal
+Chebyshev tail for every degree at least \(10\), finite-support weak duality,
+and equality rigidity.
+
+This is a completed formalization of the analytic one-variable, all-degree
+two-sided nonbacktracking LP optimum, attainment, and rigidity only. It does
+not formalize the separate graph trace/spectral bridge, nor any graph-order,
+deletion, puncture, or counterexample theorem derived from that bridge.
+
+The warnings-fatal theorem and trust checks are:
+
+```text
+cd lean
+lake build Wow284.LPCeiling --wfail
+lake env lean -DwarningAsError=true Wow284LPAudit.lean
+cd ..
+python scripts/validate_lp_formalization.py check
+```
+
+The frozen polynomial-level endpoint is
+`Wow284.LP.twoSidedLP_optimal_and_rigid`. The stronger non-vacuous endpoint,
+including the explicit optimizer and literal coefficient-family uniqueness,
+is
+`Wow284.LP.twoSidedLP_exact_optimum_and_coefficient_rigidity`.
+The release-static audit freezes the exact source of `LPDefinitions.lean`,
+both endpoint signatures, every public trust probe, and the production-module
+inventory. That source audit is necessary but not sufficient: warning-fatal
+Lean/Mathlib 4.31 replay and inspection of the printed axiom sets remain the
+kernel-level gates. The word “ceiling” here denotes the exact real-valued
+optimum \(B_k\), not
+`Nat.ceil`.
+
 ## Completed 50-vertex development
 
 The default `Wow284` library checks:
@@ -87,8 +139,9 @@ lake env lean -DwarningAsError=true Wow284Standalone.lean
 ```
 
 The standalone file includes the trust reports from
-`Wow284ExtensionAudit.lean` and `Wow284Generated3942Audit.lean`. It is a
-packaging of the formal scope described above; it does not enlarge that scope.
+`Wow284ExtensionAudit.lean`, `Wow284Generated3942Audit.lean`, and
+`Wow284LPAudit.lean`. It is a packaging of the formal scope described above;
+it does not enlarge that scope.
 
 ## Trust and source hygiene
 
@@ -108,6 +161,7 @@ native_decide
 bv_decide
 unsafe declarations
 new axiom declarations
+implemented_by
 ```
 
 The axiom-report files print the transitive assumptions used by representative

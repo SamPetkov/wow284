@@ -72,7 +72,7 @@
   pdftitle={Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284},
   pdfauthor={Samuil Petkov},
   pdfsubject={Counterexamples and structural spectral theory for the minimum-dual-degree conjecture WOW-284},
-  pdfkeywords={distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability},
+  pdfkeywords={distance spectrum, dual degree, Moore graph},
   pdfcreator={LaTeX with amsart},
   pdfproducer={pdfTeX},
   pdfdisplaydoctitle=true
@@ -83,15 +83,15 @@
 \author{Samuil Petkov}
 \address{Department of Physics, \'Ecole normale sup\'erieure,
 Universit\'e PSL, Paris, France}
-\email{samuil.petkov@ens.psl.eu}
+\email{samuil.petkov@phys.ens.psl.eu}
 \date{}
 \subjclass[2020]{Primary 05C50; Secondary 05C12, 05C35, 05E30}
-\keywords{distance spectrum, dual degree, Moore graph, spectral obstruction, deletion stability}
+\keywords{distance spectrum, dual degree, Moore graph}
 
 \begin{document}
 
 \begin{abstract}
-WOW-284 predicts that the minimum dual degree of every connected graph of
+WOW-284 asserts that the minimum dual degree of every connected graph of
 order at least three and girth at least five does not exceed the negative of
 its least distance eigenvalue.  We give exact counterexamples of orders
 \(38,39,40,42\), and \(50\), beginning with the Hoffman--Singleton graph, and
@@ -117,9 +117,12 @@ five vertices from the Hoffman--Singleton graph remains a strict
 counterexample, while one explicit six-vertex deletion does not.  Equality
 cases, finite-field obstructions, matching-deletion controls, and exact local
 constraints on a hypothetical degree-six order-50 example are also obtained.
-All theorem-level computations use exact arithmetic; independent Python
-certificates are cited inline, and the explicit finite counterexamples have
-Lean 4.31 kernel-checked certificates.
+All theorem-level computations use exact arithmetic, with independent Python
+certificates cited inline.  Lean 4.31 kernel-checks the complete graph-level
+proof for the 50-vertex counterexample, finite spectral certificates for the
+constructions of orders \(38,39,40,42\), and, as a separate analytic theorem,
+the exact one-variable LP optimum and coefficient-level optimizer rigidity for
+every integer \(k\ge4\).
 \end{abstract}
 
 \maketitle
@@ -1582,7 +1585,11 @@ ordering uses floating-point arithmetic.
 
 The principal independent audit entry points are:
 \begin{center}
-\begin{tabular}{p{0.39\textwidth}p{0.53\textwidth}}
+\begingroup
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{@{}p{0.30\textwidth}p{0.67\textwidth}@{}}
 \toprule
 Result&Exact verifier\\
 \midrule
@@ -1602,21 +1609,63 @@ Prime-field obstruction&\codefile{scripts/verify_proof_audit_08_prime_field.py}\
 Matching deletion classes&\codefile{scripts/verify_proof_audit_07_layer_matchings.py}\\
 \bottomrule
 \end{tabular}
+\endgroup
 \end{center}
 
-The explicit \(50\)-vertex counterexample is fully formalized in Lean 4.31 with
-Mathlib 4.31 \cite{deMouraUllrich2021,Mathlib2020}.  The development checks the
-coordinate graph, regularity, the complete common-neighbour certificate, girth,
-the adjacency-square and distance-matrix identities, and an exact rational
-diagonalization with multiplicities.  Lean also kernel-checks finite spectral
-certificates for the orders \(38,39,40,42\).  For orders \(38,39,42\), these
-are positive-definiteness certificates for the corresponding shifted distance
-matrices; the order-\(40\) endpoint contains a complete exact diagonalization.
-The non-\(50\) formal statements are deliberately described as finite spectral
-certificates rather than as a single Mathlib theorem bundling every
-graph-theoretic phrase.  The LP ceiling, optimizer rigidity, punctured-Moore
-spectra, and deletion-robustness theorems remain conventional analytic proofs
-with exact executable audits; they are not included in the Lean claim above.
+The explicit \(50\)-vertex counterexample is fully formalized in Lean 4.31
+with Mathlib 4.31 \cite{deMouraUllrich2021,Mathlib2020}.  The development
+checks the coordinate graph, regularity, the exhaustive common-neighbour
+certificate, girth five, the adjacency-square and distance-matrix identities,
+and an exact rational diagonalization with multiplicities.  Thus the
+\(50\)-vertex result is verified at graph level, including its least distance
+eigenvalue and strict WOW-284 gap.
+
+Lean also kernel-checks finite spectral certificates attached to the explicit
+constructions of orders \(38,39,40,42\).  For orders \(38,39,42\), the
+endpoints certify the stated minimum dual-degree data, positive definiteness of
+the corresponding shifted finite distance matrix, and hence the strict bound
+for every nonzero real eigenpair.  For order \(40\), Lean certifies a two-sided
+invertible exact diagonalization, the diagonal-entry multiplicities, the
+attained least eigenvalue \(-5\), dual degree six, and gap one.  These
+non-\(50\) endpoints are finite spectral certificates: they do not identify
+each semantic matrix with \texttt{SimpleGraph.dist} and bundle every
+structural hypothesis into one public theorem.
+
+Separately, Lean formalizes the analytic optimization statement in
+Theorem~\ref{thm:lp-ceiling}.  For every integer \(k\ge4\) and every admissible
+finitely supported expansion
+\[
+  f=\sum_i c_iF_i,
+  \qquad c_0>0,
+  \qquad c_i\ge0\quad(i\ge5),
+  \qquad f\vert_{I_k}\le0,
+\]
+it proves
+\[
+  B_kc_0\le f(k),
+  \qquad B_k=\frac{(k+2)(k^2+3)}6.
+\]
+The formal development defines the coefficient family of the displayed
+quartic \(f_*\), proves that it is admissible and attains equality, and proves
+that every equality case is its unique positive scalar multiple, both as a
+polynomial and at coefficient level.  The kernel-checked dependency chain
+includes the nonbacktracking recurrence, the exact primal expansion, positivity
+and moment identities for the three-point dual certificate, strict slacks in
+degrees \(5\) through \(9\), the Chebyshev tail for every degree at least
+\(10\), finite-support weak duality, complementary slackness, and optimizer
+rigidity.
+
+This LP formalization is deliberately graph-independent.  It does not
+formalize the trace interpretation of the \(F_i(A)\), the girth-five
+vanishing and nonnegativity statements, the spectral trace decomposition, or
+the passage from the analytic LP inequality to graph-order bounds.
+Consequently the graph conclusions \(n<B_k\), the degree-six reductions
+\(n\le51\) and \(n\le50\), and the edge-local cycle argument remain
+conventional analytic proofs, with exact executable audits where cited.  The
+punctured-Moore spectra, the general deletion-stability inequality, the
+small-puncture normal form, and the Hoffman--Singleton deletion-radius theorem
+are likewise analytic results supported by exact Python audits; they are not
+part of the Lean claim.
 
 The release audit rejects \texttt{sorry}, \texttt{admit},
 \texttt{native\_decide}, \texttt{bv\_decide}, unsafe declarations, and new
@@ -1653,9 +1702,8 @@ Targeted searches, recorded in
 \codefile{research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json}, did not locate
 direct prior statements of the punctured-Moore
 distance spectra, the exact two-sided LP optimizer, the edge-local WOW cycle
-inequality, or the endpoint-neighbourhood bound.  Search silence is not proof
-of novelty.  Accordingly, we use ``derive'' and ``prove'' rather than ``first''
-or ``previously unknown'', and make no minimum-order claim.
+inequality, or the endpoint-neighbourhood bound.  Search silence is not proof of novelty.  Accordingly, we avoid unsupported
+priority language and make no minimum-order claim.
 
 The main open questions are:
 \begin{enumerate}
@@ -1674,8 +1722,8 @@ at each fixed degree.
 the metric normal form of Theorem~\ref{thm:small-puncture}?
 \end{enumerate}
 
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, literature
-search, exact verification code, and Lean formalization.  No AI system is an
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
+exploration, and Lean formalization.  No AI system is an
 author.  The author assumes full responsibility for the mathematics,
 attribution, and conclusions.  The source, exact certificates, and build
 instructions are available at

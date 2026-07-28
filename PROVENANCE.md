@@ -1,8 +1,8 @@
 # Provenance and AI-assistance record
 
 **Author:** Samuil Petkov<br>
-**Repository revision:** 27 July 2026; active PDF date suppressed<br>
-**Audit and package preparation:** 21--27 July 2026
+**Repository revision:** 28 July 2026; active PDF date suppressed<br>
+**Audit and package preparation:** 21--28 July 2026
 
 ## Submitted material
 
@@ -34,12 +34,19 @@ transitive axiom reports contain only `propext`, `Classical.choice`, and
 `Quot.sound`. Static source scans and deterministic generator checks reject
 proof placeholders, unsafe declarations, and new axioms.
 
-The integrated repository also contains Proof Audits 01--10. Each records an
+The expanded v2.2 manuscript integrates Proof Audits 01--13. Each records an
 exact theorem statement, corrections or strengthening discovered during
-review, a claim boundary, and an independent exact verifier. These later
-research artifacts are indexed in `research-notes/PROOF_AUDIT_REGISTRY.md`;
-they are not presented as additional theorems of the focused fourteen-page
-manuscript unless they also appear in `main.tex`.
+review, a claim boundary, and an independent exact verifier. The registry at
+`research-notes/PROOF_AUDIT_REGISTRY.md` maps these audits to the theorems
+that appear in `main.tex`.
+
+The all-degree analytic LP optimum was formalized separately in Lean 4.31.
+The formal dependency chain covers the nonbacktracking recurrence, the
+explicit extremal coefficient family, admissibility and attainment, the
+three-point dual moments, every positive slack including the uniform
+Chebyshev tail, weak duality, complementary slackness, and uniqueness both as
+a polynomial and coefficientwise. The graph trace/spectral bridge and the
+punctured-Moore and deletion theorems remain analytic rather than Lean claims.
 
 ## AI assistance
 
@@ -56,10 +63,9 @@ priority or absence from unpublished communications. The repository therefore
 avoids a first-discovery claim and makes no minimality claim.
 
 The Lean 4.31 development is recorded separately from the analytic and exact
-Python proofs. The explicit 50-vertex certificate and scalar degree threshold
-are fully formalized. The non-50 public endpoints are kernel-checked finite
-spectral certificates: they do not bundle every graph-theoretic hypothesis or
-identify their semantic matrices with Mathlib's `SimpleGraph.dist` in one
-theorem. AxiomMath AXLE could not complete the expanded modular closure because
-its remote worker exhausted memory; the incomplete fallback was rejected and
-no AXLE claim is made for those endpoints.
+Python proofs. The explicit 50-vertex certificate is a complete graph-level
+formalization. The non-50 public endpoints are kernel-checked finite spectral
+certificates: they do not bundle every graph-theoretic hypothesis or identify
+their semantic matrices with Mathlib's `SimpleGraph.dist` in one theorem.
+The LP theorem is analytic and graph-independent; it does not formalize the
+trace interpretation, spectral trace decomposition, or graph-order bridge.

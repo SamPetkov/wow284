@@ -13,8 +13,9 @@ repository metadata.
 
 ## Recommended attribution
 
-> Samuil Petkov, *Exact Counterexamples and Spectral Mechanisms for WOW-284*,
-> revision dated 24 July 2026, <https://github.com/SamPetkov/wow284>, licensed
+> Samuil Petkov, *Counterexamples, Spectral Obstructions, and Deletion
+> Stability for WOW-284*, release v2.2.0, 28 July 2026,
+> <https://github.com/SamPetkov/wow284>, licensed
 > under CC BY 4.0. Changes were made.
 
 The earlier manuscript source dated 19 July 2026 is preserved at

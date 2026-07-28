@@ -14,7 +14,11 @@ from generate_lean39_42 import render as render_lean39_42
 ROOT = Path(__file__).resolve().parents[1]
 LEAN = ROOT / "lean"
 OUTPUT = LEAN / "Wow284Standalone.lean"
-ROOT_MODULES = ("Wow284ExtensionAudit", "Wow284Generated3942Audit")
+ROOT_MODULES = (
+    "Wow284ExtensionAudit",
+    "Wow284Generated3942Audit",
+    "Wow284LPAudit",
+)
 IMPORT_RE = re.compile(r"^import\s+([A-Za-z0-9_.]+)\s*$")
 
 
@@ -98,7 +102,8 @@ def render_standalone() -> tuple[str, int, int]:
             "",
             "Regenerate with `python scripts/generate_lean_standalone.py`.",
             "The file contains the committed 50-, 38-, and 40-vertex developments,",
-            "the generated 39- and 42-vertex developments, and the trust reports.",
+            "the generated 39- and 42-vertex developments, the analytic all-degree",
+            "LP optimum-and-rigidity development, and their trust reports.",
             "-/",
             "",
         ]

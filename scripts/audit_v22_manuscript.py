@@ -12,7 +12,7 @@ TEX_PATH = ROOT / "v22" / "main.tex"
 BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
-EXPECTED_EMAIL = "samuil.petkov@ens.psl.eu"
+EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
 EXPECTED_TAG = "v2.2.0"
 
 
@@ -54,6 +54,10 @@ def check_repository_paths(tex: str) -> list[str]:
                 raise AssertionError(f"private/internal path exposed in manuscript: {value}")
             checked.append(value)
     for value in re.findall(r"\\path\{([^}]+)\}", tex):
+        # The command definitions contain the literal macro argument
+        # ``\path{#1}``; only concrete manuscript paths are repository targets.
+        if value == "#1":
+            continue
         path = ROOT / value.rstrip("/")
         if not path.exists():
             raise AssertionError(f"missing path target: {value}")
@@ -74,9 +78,10 @@ def main() -> None:
         EXPECTED_TITLE,
         rf"\email{{{EXPECTED_EMAIL}}}",
         rf"\newcommand{{\RepoTag}}{{{EXPECTED_TAG}}}",
-        r"N(v) for its open neighbourhood",
+        r"\(N(v)\) for its open neighbourhood",
         r"If \(\delta\) is the ordinary minimum degree",
-        r"passage from an average row quotient to its symmetric compression",
+        r"average row quotient is similar to the",
+        r"symmetric compression on normalized layer indicators",
     ):
         if required not in tex:
             raise AssertionError(f"required manuscript marker missing: {required}")
@@ -138,9 +143,23 @@ def main() -> None:
         if label not in labels or verifier not in tex:
             raise AssertionError(f"theorem/verifier mapping missing: {label} -> {verifier}")
 
-    if "they are not included in the Lean claim above" not in tex:
-        raise AssertionError("Lean scope boundary missing")
-    if "only \texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}" not in tex:
+    lean_claim_markers = (
+        "the exact one-variable LP optimum and coefficient-level optimizer rigidity",
+        "proves that it is admissible and attains equality",
+        "both as a\npolynomial and at coefficient level",
+        "This LP formalization is deliberately graph-independent",
+        r"the trace interpretation of the \(F_i(A)\)",
+        "are likewise analytic results supported by exact Python audits; they are not",
+        "part of the Lean claim",
+    )
+    for marker in lean_claim_markers:
+        if marker not in tex:
+            raise AssertionError(f"Lean claim or scope marker missing: {marker}")
+    if (
+        "Representative axiom reports contain only" not in tex
+        or r"\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}"
+        not in tex
+    ):
         raise AssertionError("axiom-scope statement missing")
 
     report = {

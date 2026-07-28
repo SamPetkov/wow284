@@ -1,9 +1,9 @@
 # Mathematical and reproducibility review
 
-**Object reviewed:** *Exact Counterexamples and Spectral Mechanisms for WOW-284*<br>
+**Object reviewed:** *Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284*<br>
 **Author:** Samuil Petkov<br>
-**Repository revision:** 27 July 2026; active PDF date suppressed<br>
-**Review status:** Adversarial internal audit after conceptual revision; not external peer review
+**Repository revision:** 28 July 2026; active PDF date suppressed<br>
+**Review status:** Adversarial internal audit of the expanded v2.2 manuscript; not external peer review
 
 ## Outcome
 
@@ -54,9 +54,9 @@ broad spectral-graph-theory breakthrough. Suitability for a selective journal
 will depend on that journal's appetite for concise counterexample notes.
 
 The strongest remaining presentation risk is archival rather than
-mathematical: a mutable repository URL should be replaced or supplemented by
-a versioned release DOI before final journal submission. The explicit
-50-vertex counterexample has a complete Lean graph and spectral certificate.
+mathematical: the immutable v2.2.0 release must be created from the exact
+audited tree before final journal submission. The explicit 50-vertex
+counterexample has a complete Lean graph and spectral certificate.
 The constructions of orders 38, 39, 40, and 42 now have kernel-checked finite
 spectral certificates with public endpoints under Lean/Mathlib 4.31.
 
@@ -65,9 +65,11 @@ every structural hypothesis into one theorem or identify the semantic finite
 matrix with Mathlib's `SimpleGraph.dist`. For orders 38, 39, and 42 they prove
 exact dual-degree data, positive definiteness of a shifted matrix, and the
 strict eigenpair inequality; order 40 has a two-sided exact diagonalization,
-attained minimum diagonal entry `-5`, dual degree six, and gap one. The generic
-criteria and descendant-family results remain conventional proofs supported
-by exact computation.
+attained minimum diagonal entry `-5`, dual degree six, and gap one. The exact
+one-variable LP optimum, attainment, and coefficient-level optimizer rigidity
+are formalized separately in Lean 4.31. The graph trace/spectral bridge,
+punctured-Moore results, deletion theory, and descendant-family results remain
+conventional analytic proofs supported by exact computation.
 
 ## General Moore-graph audit
 
@@ -216,7 +218,8 @@ operations are exact.
 - The targeted novelty search cannot rule out unpublished or non-indexed prior
   observations.
 - No exhaustive search over all graphs below order 38 was attempted.
-- The complete explicit 50-vertex certificate and scalar threshold pass Lean
-  4.31 checking. Orders 38, 39, 40, and 42 have kernel-checked finite spectral
-  certificates; the generic derivations and descendant-family results remain
-  analytic and exact-computational.
+- The complete explicit 50-vertex certificate passes Lean 4.31 checking.
+  Orders 38, 39, 40, and 42 have kernel-checked finite spectral certificates,
+  and the separate analytic LP optimum and rigidity are formalized. The graph
+  bridge, puncture derivations, and descendant-family results remain analytic
+  and exact-computational.

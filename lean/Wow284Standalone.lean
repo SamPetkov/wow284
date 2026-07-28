@@ -7,7 +7,8 @@ Deterministically generated single-file WOW-284 formal development.
 
 Regenerate with `python scripts/generate_lean_standalone.py`.
 The file contains the committed 50-, 38-, and 40-vertex developments,
-the generated 39- and 42-vertex developments, and the trust reports.
+the generated 39- and 42-vertex developments, the analytic all-degree
+LP optimum-and-rigidity development, and their trust reports.
 -/
 
 /-! BEGIN FLATTENED MODULE: Wow284.Basic (lean/Wow284/Basic.lean) -/
@@ -3601,6 +3602,2075 @@ theorem distance_diagonal_counts :
 end Wow284
 end
 /-! END FLATTENED MODULE: Wow284.DiagonalizationData -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPDefinitions (lean/Wow284/LPDefinitions.lean) -/
+section
+open scoped BigOperators
+
+namespace Wow284.LP
+
+noncomputable section
+
+open Polynomial
+
+/-- The nonbacktracking polynomial sequence for degree `k`.
+
+The exceptional definition of `F₂` is the one appropriate to regular graphs:
+`F₂ = X² - k`.  From `F₃` onward the recurrence has parameter `k - 1`.
+-/
+def nbPoly (k : ℕ) : ℕ → ℝ[X]
+  | 0 => 1
+  | 1 => X
+  | 2 => X ^ 2 - C (k : ℝ)
+  | n + 3 => X * nbPoly k (n + 2) - C ((k - 1 : ℕ) : ℝ) * nbPoly k (n + 1)
+
+@[simp]
+theorem nbPoly_zero (k : ℕ) : nbPoly k 0 = 1 := rfl
+
+@[simp]
+theorem nbPoly_one (k : ℕ) : nbPoly k 1 = X := rfl
+
+@[simp]
+theorem nbPoly_two (k : ℕ) : nbPoly k 2 = X ^ 2 - C (k : ℝ) := rfl
+
+theorem nbPoly_add_three (k n : ℕ) :
+    nbPoly k (n + 3) =
+      X * nbPoly k (n + 2) - C ((k - 1 : ℕ) : ℝ) * nbPoly k (n + 1) := rfl
+
+/-- A finite coefficient family in the nonbacktracking basis. -/
+abbrev Coefficients := ℕ →₀ ℝ
+
+/-- The polynomial represented by a finite nonbacktracking-basis expansion. -/
+def polynomial (k : ℕ) (c : Coefficients) : ℝ[X] :=
+  c.sum fun i a => C a * nbPoly k i
+
+/-- The closed shifted WOW interval. -/
+def wowInterval (k : ℕ) : Set ℝ :=
+  Set.Icc (-1 - Real.sqrt (2 * (k : ℝ) - 2))
+    (-1 + Real.sqrt (2 * (k : ℝ) - 2))
+
+/-- The exact admissible cone used by the one-variable nonbacktracking LP. -/
+def Admissible (k : ℕ) (c : Coefficients) : Prop :=
+  0 < c 0 ∧
+    (∀ i, 5 ≤ i → 0 ≤ c i) ∧
+      ∀ x ∈ wowInterval k, (polynomial k c).eval x ≤ 0
+
+/-- The claimed optimum of the one-variable LP. -/
+def ceiling (k : ℕ) : ℝ :=
+  ((k : ℝ) + 2) * ((k : ℝ) ^ 2 + 3) / 6
+
+/-- The normalized extremal polynomial. -/
+def extremal (k : ℕ) : ℝ[X] :=
+  C (1 / (6 * ((k : ℝ) + 2))) *
+    (X + C 2) ^ 2 *
+      (X ^ 2 + C 2 * X - C (2 * (k : ℝ) - 3))
+
+/-- The square-root parameter in the dual certificate. -/
+def delta (k : ℕ) : ℝ := Real.sqrt (2 * (k : ℝ) - 2)
+
+/-- The lower endpoint of the shifted WOW interval. -/
+def xiMinus (k : ℕ) : ℝ := -1 - delta k
+
+/-- The interior support point of the three-point dual certificate. -/
+def xiZero : ℝ := -2
+
+/-- The upper endpoint of the shifted WOW interval. -/
+def xiPlus (k : ℕ) : ℝ := -1 + delta k
+
+/-- The weight at the lower endpoint of the dual certificate. -/
+def weightMinus (k : ℕ) : ℝ :=
+  (k : ℝ) * ((k : ℝ) + 2) *
+      (2 * (k : ℝ) ^ 2 - 6 - 3 * ((k : ℝ) - 1) * delta k) /
+    (24 * (2 * (k : ℝ) - 3))
+
+/-- The weight at the interior point of the dual certificate. -/
+def weightZero (k : ℕ) : ℝ :=
+  (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) ^ 2 + 3) /
+    (6 * (2 * (k : ℝ) - 3))
+
+/-- The weight at the upper endpoint of the dual certificate. -/
+def weightPlus (k : ℕ) : ℝ :=
+  (k : ℝ) * ((k : ℝ) + 2) *
+      (2 * (k : ℝ) ^ 2 - 6 + 3 * ((k : ℝ) - 1) * delta k) /
+    (24 * (2 * (k : ℝ) - 3))
+
+/-- The three-point dual functional, written as a finite sum rather than as
+a measure-theoretic integral. -/
+def dual (k : ℕ) (p : ℝ[X]) : ℝ :=
+  weightMinus k * p.eval (xiMinus k) +
+    weightZero k * p.eval xiZero +
+      weightPlus k * p.eval (xiPlus k)
+
+/-- The dual slack in nonbacktracking degree `i`. -/
+def slack (k i : ℕ) : ℝ :=
+  dual k (nbPoly k i) + (nbPoly k i).eval (k : ℝ)
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPDefinitions -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPRecurrence (lean/Wow284/LPRecurrence.lean) -/
+section
+namespace Wow284.LP
+
+noncomputable section
+
+open Polynomial
+
+/-- Evaluation of the nonbacktracking polynomial at the principal value. -/
+theorem nbPoly_eval_at_degree (k i : ℕ) (hk : 1 ≤ k) (hi : 1 ≤ i) :
+    (nbPoly k i).eval (k : ℝ) =
+      (k : ℝ) * (((k - 1 : ℕ) : ℝ) ^ (i - 1)) := by
+  induction i using Nat.strong_induction_on with
+  | h i ih =>
+      rcases i with (_ | _ | i)
+      · omega
+      · simp [nbPoly]
+      · rcases i with (_ | i)
+        · simp [nbPoly, Nat.cast_sub hk]
+          ring
+        · rw [nbPoly_add_three]
+          simp only [eval_sub, eval_mul, eval_X, eval_C]
+          rw [ih (i + 2) (by omega) (by omega), ih (i + 1) (by omega) (by omega)]
+          push_cast [Nat.cast_sub hk]
+          simp only [pow_succ]
+          ring
+
+/-- Every nonbacktracking polynomial is monic of its indexed degree. -/
+theorem nbPoly_isMonicOfDegree (k i : ℕ) :
+    (nbPoly k i).IsMonicOfDegree i := by
+  induction i using Nat.strong_induction_on with
+  | h i ih =>
+      rcases i with (_ | _ | _ | n)
+      · simp [nbPoly]
+      · simpa [nbPoly] using Polynomial.isMonicOfDegree_X ℝ
+      · have hmain :
+            (X ^ 2 : ℝ[X]).IsMonicOfDegree 2 :=
+          Polynomial.isMonicOfDegree_X_pow ℝ 2
+        have hlow : (C (k : ℝ)).natDegree < 2 := by
+          simp
+        simpa [nbPoly] using hmain.sub hlow
+      · have hmain :
+            (X * nbPoly k (n + 2)).IsMonicOfDegree (n + 3) := by
+          have :=
+            (Polynomial.isMonicOfDegree_X ℝ).mul
+              (ih (n + 2) (by omega))
+          simpa only [Nat.add_comm, Nat.add_left_comm, Nat.add_assoc] using this
+        have hlow :
+            (C (((k - 1 : ℕ) : ℝ)) * nbPoly k (n + 1)).natDegree <
+              n + 3 := by
+          calc
+            (C (((k - 1 : ℕ) : ℝ)) * nbPoly k (n + 1)).natDegree
+                ≤ (nbPoly k (n + 1)).natDegree :=
+              natDegree_C_mul_le _ _
+            _ = n + 1 := (ih (n + 1) (by omega)).natDegree_eq
+            _ < n + 3 := by omega
+        rw [nbPoly_add_three]
+        exact hmain.sub hlow
+
+/-- The nonbacktracking polynomials, indexed by their exact degrees, form a
+polynomial sequence. -/
+def nbSequence (k : ℕ) : Polynomial.Sequence ℝ where
+  elems' := nbPoly k
+  degree_eq' i :=
+    (degree_eq_iff_natDegree_eq (nbPoly_isMonicOfDegree k i).ne_zero).2
+      (nbPoly_isMonicOfDegree k i).natDegree_eq
+
+/-- The full nonbacktracking polynomial family is linearly independent. -/
+theorem nbPoly_linearIndependent (k : ℕ) :
+    LinearIndependent ℝ (nbPoly k) :=
+  (nbSequence k).linearIndependent
+
+/-- The finite nonbacktracking expansion is the standard finitely supported
+linear combination of the polynomial sequence. -/
+theorem polynomial_eq_linearCombination (k : ℕ) (c : Coefficients) :
+    polynomial k c = Finsupp.linearCombination ℝ (nbPoly k) c := by
+  simp [polynomial, Finsupp.linearCombination_apply,
+    Polynomial.smul_eq_C_mul]
+
+/-- Coefficients in the nonbacktracking basis are unique. -/
+theorem polynomial_injective (k : ℕ) :
+    Function.Injective (polynomial k) := by
+  intro c d h
+  apply nbPoly_linearIndependent k
+  simpa only [← polynomial_eq_linearCombination] using h
+
+/-- Scaling a finite coefficient family scales its represented polynomial. -/
+theorem polynomial_smul (k : ℕ) (a : ℝ) (c : Coefficients) :
+    polynomial k (a • c) = C a * polynomial k c := by
+  rw [polynomial_eq_linearCombination, map_smul,
+    ← polynomial_eq_linearCombination]
+  exact Polynomial.smul_eq_C_mul (p := polynomial k c) a
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPRecurrence -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPPrimal (lean/Wow284/LPPrimal.lean) -/
+section
+namespace Wow284.LP
+
+noncomputable section
+
+open Polynomial
+
+/-- The exact nonbacktracking-basis expansion of the unnormalized optimizer. -/
+theorem extremal_numerator_expansion (k : ℕ) (hk : 1 ≤ k) :
+    (X + C 2) ^ 2 * (X ^ 2 + C 2 * X - C (2 * (k : ℝ) - 3)) =
+      C (6 * ((k : ℝ) + 2)) * nbPoly k 0 +
+        C (2 * (2 * (k : ℝ) + 7)) * nbPoly k 1 +
+          C ((k : ℝ) + 13) * nbPoly k 2 +
+            C 6 * nbPoly k 3 + nbPoly k 4 := by
+  apply Polynomial.funext
+  intro x
+  simp [nbPoly, Nat.cast_sub hk]
+  ring
+
+/-- The optimizer takes the claimed objective value at the principal point. -/
+theorem extremal_eval_at_degree (k : ℕ) :
+    (extremal k).eval (k : ℝ) = ceiling k := by
+  simp [extremal, ceiling]
+  field_simp
+  ring
+
+/-- The explicit optimizer is nonpositive on the full shifted WOW interval. -/
+theorem extremal_nonpos_on_interval (k : ℕ) (hk : 1 ≤ k) (x : ℝ)
+    (hx : x ∈ wowInterval k) :
+    (extremal k).eval x ≤ 0 := by
+  have hrad : 0 ≤ 2 * (k : ℝ) - 2 := by
+    have hk_real : (1 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+    linarith
+  have hdelta : 0 ≤ delta k := by
+    exact Real.sqrt_nonneg _
+  have hdelta_sq : (delta k) ^ 2 = 2 * (k : ℝ) - 2 := by
+    simp [delta, Real.sq_sqrt hrad]
+  have hlower_raw : -1 - delta k ≤ x := by
+    simpa [wowInterval, delta] using hx.1
+  have hupper_raw : x ≤ -1 + delta k := by
+    simpa [wowInterval, delta] using hx.2
+  have hlower : -(delta k) ≤ x + 1 := by linarith
+  have hupper : x + 1 ≤ delta k := by linarith
+  have hleft : 0 ≤ delta k - (x + 1) := by linarith
+  have hright : 0 ≤ delta k + (x + 1) := by linarith
+  have hproduct : 0 ≤ (delta k - (x + 1)) * (delta k + (x + 1)) :=
+    mul_nonneg hleft hright
+  have hboundary : x ^ 2 + 2 * x - (2 * (k : ℝ) - 3) ≤ 0 := by
+    nlinarith
+  have hsquare : 0 ≤ (x + 2) ^ 2 := sq_nonneg _
+  have hnumerator :
+      (x + 2) ^ 2 * (x ^ 2 + 2 * x - (2 * (k : ℝ) - 3)) ≤ 0 :=
+    mul_nonpos_of_nonneg_of_nonpos hsquare hboundary
+  have hscale : 0 ≤ 1 / (6 * ((k : ℝ) + 2)) := by positivity
+  simpa [extremal, mul_assoc] using
+    mul_nonpos_of_nonneg_of_nonpos hscale hnumerator
+
+/-- The normalized finitely supported coefficient family representing the
+explicit extremal polynomial. -/
+def extremalCoefficients (k : ℕ) : Coefficients :=
+  Finsupp.single 0 1 +
+    Finsupp.single 1 ((2 * (k : ℝ) + 7) / (3 * ((k : ℝ) + 2))) +
+      Finsupp.single 2 (((k : ℝ) + 13) / (6 * ((k : ℝ) + 2))) +
+        Finsupp.single 3 (1 / ((k : ℝ) + 2)) +
+          Finsupp.single 4 (1 / (6 * ((k : ℝ) + 2)))
+
+@[simp]
+theorem extremalCoefficients_zero (k : ℕ) :
+    extremalCoefficients k 0 = 1 := by
+  simp [extremalCoefficients]
+
+@[simp]
+theorem extremalCoefficients_one (k : ℕ) :
+    extremalCoefficients k 1 =
+      (2 * (k : ℝ) + 7) / (3 * ((k : ℝ) + 2)) := by
+  simp [extremalCoefficients]
+
+@[simp]
+theorem extremalCoefficients_two (k : ℕ) :
+    extremalCoefficients k 2 =
+      ((k : ℝ) + 13) / (6 * ((k : ℝ) + 2)) := by
+  simp [extremalCoefficients]
+
+@[simp]
+theorem extremalCoefficients_three (k : ℕ) :
+    extremalCoefficients k 3 = 1 / ((k : ℝ) + 2) := by
+  simp [extremalCoefficients]
+
+@[simp]
+theorem extremalCoefficients_four (k : ℕ) :
+    extremalCoefficients k 4 = 1 / (6 * ((k : ℝ) + 2)) := by
+  simp [extremalCoefficients]
+
+theorem extremalCoefficients_eq_zero_of_five_le
+    (k i : ℕ) (hi : 5 ≤ i) :
+    extremalCoefficients k i = 0 := by
+  simp [extremalCoefficients, show i ≠ 0 by omega,
+    show i ≠ 1 by omega, show i ≠ 2 by omega, show i ≠ 3 by omega,
+    show i ≠ 4 by omega]
+
+/-- The explicit finite coefficient family represents the normalized
+extremal quartic exactly. -/
+theorem polynomial_extremalCoefficients
+    (k : ℕ) (hk : 1 ≤ k) :
+    polynomial k (extremalCoefficients k) = extremal k := by
+  classical
+  rw [polynomial]
+  unfold extremalCoefficients
+  repeat'
+    rw [Finsupp.sum_add_index' (by simp)
+      (by intros; simp [add_mul])]
+  repeat'
+    rw [Finsupp.sum_single_index (by simp)]
+  apply Polynomial.funext
+  intro x
+  simp [extremal, nbPoly, Nat.cast_sub hk]
+  field_simp
+  ring
+
+/-- The normalized explicit coefficient family is feasible for the exact
+two-sided nonbacktracking linear program. -/
+theorem extremalCoefficients_admissible
+    (k : ℕ) (hk : 1 ≤ k) :
+    Admissible k (extremalCoefficients k) := by
+  refine ⟨by simp, ?_, ?_⟩
+  · intro i hi
+    rw [extremalCoefficients_eq_zero_of_five_le k i hi]
+  · intro x hx
+    rw [polynomial_extremalCoefficients k hk]
+    exact extremal_nonpos_on_interval k hk x hx
+
+/-- The explicit normalized coefficient family attains the sharp objective
+value. -/
+theorem extremalCoefficients_attains
+    (k : ℕ) (hk : 1 ≤ k) :
+    (polynomial k (extremalCoefficients k)).eval (k : ℝ) =
+      ceiling k * extremalCoefficients k 0 := by
+  rw [polynomial_extremalCoefficients k hk, extremal_eval_at_degree]
+  simp
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPPrimal -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPDualFinite (lean/Wow284/LPDualFinite.lean) -/
+section
+namespace Wow284.LP
+
+noncomputable section
+
+open Polynomial
+
+/-- The defining square identity for the radical in the dual certificate. -/
+theorem delta_sq (k : ℕ) (hk : 4 ≤ k) :
+    delta k ^ 2 = 2 * (k : ℝ) - 2 := by
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  rw [delta, Real.sq_sqrt (by linarith)]
+
+private theorem delta_pow_four (k : ℕ) (hk : 4 ≤ k) :
+    delta k ^ 4 = (2 * (k : ℝ) - 2) ^ 2 := by
+  calc
+    delta k ^ 4 = (delta k ^ 2) ^ 2 := by ring
+    _ = (2 * (k : ℝ) - 2) ^ 2 := by rw [delta_sq k hk]
+
+private theorem delta_pow_six (k : ℕ) (hk : 4 ≤ k) :
+    delta k ^ 6 = (2 * (k : ℝ) - 2) ^ 3 := by
+  calc
+    delta k ^ 6 = (delta k ^ 2) ^ 3 := by ring
+    _ = (2 * (k : ℝ) - 2) ^ 3 := by rw [delta_sq k hk]
+
+private theorem delta_pow_eight (k : ℕ) (hk : 4 ≤ k) :
+    delta k ^ 8 = (2 * (k : ℝ) - 2) ^ 4 := by
+  calc
+    delta k ^ 8 = (delta k ^ 2) ^ 4 := by ring
+    _ = (2 * (k : ℝ) - 2) ^ 4 := by rw [delta_sq k hk]
+
+private theorem delta_pow_ten (k : ℕ) (hk : 4 ≤ k) :
+    delta k ^ 10 = (2 * (k : ℝ) - 2) ^ 5 := by
+  calc
+    delta k ^ 10 = (delta k ^ 2) ^ 5 := by ring
+    _ = (2 * (k : ℝ) - 2) ^ 5 := by rw [delta_sq k hk]
+
+/-- The interior dual weight is strictly positive throughout the theorem range. -/
+theorem weightZero_pos (k : ℕ) (hk : 4 ≤ k) :
+    0 < weightZero k := by
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hk0 : 0 < (k : ℝ) := by linarith
+  have hk1 : 0 < (k : ℝ) - 1 := by linarith
+  have hquad : 0 < (k : ℝ) ^ 2 + 3 := by positivity
+  have hdenTerm : 0 < 2 * (k : ℝ) - 3 := by linarith
+  have hden : 0 < 6 * (2 * (k : ℝ) - 3) :=
+    mul_pos (by norm_num) hdenTerm
+  rw [weightZero]
+  exact div_pos (mul_pos (mul_pos hk0 hk1) hquad) hden
+
+/-- The upper-endpoint dual weight is strictly positive throughout the theorem range. -/
+theorem weightPlus_pos (k : ℕ) (hk : 4 ≤ k) :
+    0 < weightPlus k := by
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hk0 : 0 < (k : ℝ) := by linarith
+  have hkp2 : 0 < (k : ℝ) + 2 := by linarith
+  have hkm1 : 0 ≤ (k : ℝ) - 1 := by linarith
+  have hdelta : 0 ≤ delta k := Real.sqrt_nonneg _
+  have hbase : 0 < 2 * (k : ℝ) ^ 2 - 6 := by nlinarith
+  have hterm : 0 ≤ 3 * ((k : ℝ) - 1) * delta k := by positivity
+  have hinner :
+      0 < 2 * (k : ℝ) ^ 2 - 6 + 3 * ((k : ℝ) - 1) * delta k :=
+    add_pos_of_pos_of_nonneg hbase hterm
+  have hdenTerm : 0 < 2 * (k : ℝ) - 3 := by linarith
+  have hden : 0 < 24 * (2 * (k : ℝ) - 3) :=
+    mul_pos (by norm_num) hdenTerm
+  rw [weightPlus]
+  exact div_pos (mul_pos (mul_pos hk0 hkp2) hinner) hden
+
+/-- The lower-endpoint dual weight is strictly positive throughout the theorem range. -/
+theorem weightMinus_pos (k : ℕ) (hk : 4 ≤ k) :
+    0 < weightMinus k := by
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hk0 : 0 < (k : ℝ) := by linarith
+  have hkp2 : 0 < (k : ℝ) + 2 := by linarith
+  have hkm1 : 0 ≤ (k : ℝ) - 1 := by linarith
+  have hdelta_nonneg : 0 ≤ delta k := Real.sqrt_nonneg _
+  have hdelta_sq : delta k ^ 2 = 2 * (k : ℝ) - 2 :=
+    delta_sq k hk
+  have hbase : 0 < 2 * (k : ℝ) ^ 2 - 6 := by nlinarith
+  have hterm : 0 ≤ 3 * ((k : ℝ) - 1) * delta k := by positivity
+  have hfactor :
+      0 <
+        2 * ((k : ℝ) - 3) * (2 * (k : ℝ) - 3) *
+          ((k : ℝ) ^ 2 + 3) := by
+    have hk3 : 0 < (k : ℝ) - 3 := by linarith
+    have h2k3 : 0 < 2 * (k : ℝ) - 3 := by linarith
+    have hkquad : 0 < (k : ℝ) ^ 2 + 3 := by positivity
+    exact mul_pos (mul_pos (mul_pos (by norm_num) hk3) h2k3) hkquad
+  have hid :
+      (2 * (k : ℝ) ^ 2 - 6) ^ 2 -
+          (3 * ((k : ℝ) - 1) * delta k) ^ 2 =
+        2 * ((k : ℝ) - 3) * (2 * (k : ℝ) - 3) *
+          ((k : ℝ) ^ 2 + 3) := by
+    rw [show
+      (3 * ((k : ℝ) - 1) * delta k) ^ 2 =
+        9 * ((k : ℝ) - 1) ^ 2 * delta k ^ 2 by ring,
+      hdelta_sq]
+    ring
+  have hsquare :
+      (3 * ((k : ℝ) - 1) * delta k) ^ 2 <
+        (2 * (k : ℝ) ^ 2 - 6) ^ 2 := by
+    nlinarith
+  have hinner :
+      0 < 2 * (k : ℝ) ^ 2 - 6 -
+        3 * ((k : ℝ) - 1) * delta k := by
+    nlinarith
+  have hdenTerm : 0 < 2 * (k : ℝ) - 3 := by linarith
+  have hden : 0 < 24 * (2 * (k : ℝ) - 3) :=
+    mul_pos (by norm_num) hdenTerm
+  rw [weightMinus]
+  exact div_pos (mul_pos (mul_pos hk0 hkp2) hinner) hden
+
+/-- Exact total mass of the three-point dual functional. -/
+theorem dual_mass (k : ℕ) (hk : 4 ≤ k) :
+    dual k (nbPoly k 0) =
+      (k : ℝ) * ((k : ℝ) ^ 2 + 2 * (k : ℝ) + 3) / 6 := by
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hden : 2 * (k : ℝ) - 3 ≠ 0 := by linarith
+  have hden6 : 6 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hden24 : 24 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  calc
+    dual k (nbPoly k 0) =
+        (k : ℝ) * (2 * (k : ℝ) ^ 3 + (k : ℝ) ^ 2 - 9) /
+          (6 * (2 * (k : ℝ) - 3)) := by
+      simp [dual, weightMinus, weightZero, weightPlus]
+      field_simp [hden, hden6, hden24]
+      ring
+    _ = (k : ℝ) * ((k : ℝ) ^ 2 + 2 * (k : ℝ) + 3) / 6 := by
+      apply (div_eq_iff (mul_ne_zero (by norm_num) hden)).2
+      ring
+
+/-- The dual mass is exactly one less than the sharp LP ceiling. -/
+theorem dual_mass_eq_ceiling_sub_one (k : ℕ) (hk : 4 ≤ k) :
+    dual k (nbPoly k 0) = ceiling k - 1 := by
+  rw [dual_mass k hk]
+  simp [ceiling]
+  ring
+
+/-- The degree-one dual moment cancels the principal evaluation. -/
+theorem dual_nbPoly_one (k : ℕ) (hk : 4 ≤ k) :
+    dual k (nbPoly k 1) = -(nbPoly k 1).eval (k : ℝ) := by
+  have hk1 : 1 ≤ k := by omega
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hden : 2 * (k : ℝ) - 3 ≠ 0 := by linarith
+  have hden' : (k : ℝ) * 2 - 3 ≠ 0 := by linarith
+  have hden6 : 6 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hden24 : 24 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hd2 := delta_sq k hk
+  simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+    nbPoly]
+  field_simp [hden, hden', hden6, hden24]
+  nlinarith
+
+/-- The degree-two dual moment cancels the principal evaluation. -/
+theorem dual_nbPoly_two (k : ℕ) (hk : 4 ≤ k) :
+    dual k (nbPoly k 2) = -(nbPoly k 2).eval (k : ℝ) := by
+  have hk1 : 1 ≤ k := by omega
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hden : 2 * (k : ℝ) - 3 ≠ 0 := by linarith
+  have hden' : (k : ℝ) * 2 - 3 ≠ 0 := by linarith
+  have hden6 : 6 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hden24 : 24 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hd2 := delta_sq k hk
+  simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+    nbPoly]
+  field_simp [hden, hden', hden6, hden24]
+  ring_nf
+  rw [hd2]
+  ring
+
+/-- The degree-three dual moment cancels the principal evaluation. -/
+theorem dual_nbPoly_three (k : ℕ) (hk : 4 ≤ k) :
+    dual k (nbPoly k 3) = -(nbPoly k 3).eval (k : ℝ) := by
+  have hk1 : 1 ≤ k := by omega
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hden : 2 * (k : ℝ) - 3 ≠ 0 := by linarith
+  have hden' : (k : ℝ) * 2 - 3 ≠ 0 := by linarith
+  have hden6 : 6 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hden24 : 24 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hd2 := delta_sq k hk
+  have hd4 := delta_pow_four k hk
+  simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+    nbPoly, Nat.cast_sub hk1]
+  field_simp [hden, hden', hden6, hden24]
+  ring_nf
+  rw [hd4, hd2]
+  ring
+
+/-- The degree-four dual moment cancels the principal evaluation. -/
+theorem dual_nbPoly_four (k : ℕ) (hk : 4 ≤ k) :
+    dual k (nbPoly k 4) = -(nbPoly k 4).eval (k : ℝ) := by
+  have hk1 : 1 ≤ k := by omega
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hden : 2 * (k : ℝ) - 3 ≠ 0 := by linarith
+  have hden' : (k : ℝ) * 2 - 3 ≠ 0 := by linarith
+  have hden6 : 6 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hden24 : 24 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hd2 := delta_sq k hk
+  have hd4 := delta_pow_four k hk
+  simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+    nbPoly, Nat.cast_sub hk1]
+  field_simp [hden, hden', hden6, hden24]
+  ring_nf
+  rw [hd4, hd2]
+  ring
+
+/-- Simultaneous statement of the four exact cancelling dual moments. -/
+theorem dual_nbPoly_eq_neg_eval_of_one_le_of_le_four
+    (k i : ℕ) (hk : 4 ≤ k) (hi1 : 1 ≤ i) (hi4 : i ≤ 4) :
+    dual k (nbPoly k i) = -(nbPoly k i).eval (k : ℝ) := by
+  interval_cases i <;>
+    simp_all only [dual_nbPoly_one, dual_nbPoly_two, dual_nbPoly_three,
+      dual_nbPoly_four]
+
+/-- Exact degree-five dual slack. -/
+theorem slack_five_formula (k : ℕ) (hk : 4 ≤ k) :
+    slack k 5 =
+      (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+        ((k : ℝ) ^ 2 + 3) / 3 := by
+  have hk1 : 1 ≤ k := by omega
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hden : 2 * (k : ℝ) - 3 ≠ 0 := by linarith
+  have hden' : (k : ℝ) * 2 - 3 ≠ 0 := by linarith
+  have hden6 : 6 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hden24 : 24 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hd2 := delta_sq k hk
+  have hd4 := delta_pow_four k hk
+  have hd6 := delta_pow_six k hk
+  rw [slack]
+  simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+    nbPoly, Nat.cast_sub hk1]
+  field_simp [hden, hden', hden6, hden24]
+  ring_nf
+  rw [hd6, hd4, hd2]
+  ring
+
+/-- Exact dual slacks in degrees six through nine. -/
+theorem slack_six_to_nine_formulas (k : ℕ) (hk : 4 ≤ k) :
+    slack k 6 =
+        (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+          (5 * (k : ℝ) - 13) * ((k : ℝ) ^ 2 + 3) / 6 ∧
+      slack k 7 =
+        (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+          ((k : ℝ) ^ 2 + 3) *
+            (3 * (k : ℝ) ^ 2 - 17 * (k : ℝ) + 25) / 3 ∧
+      slack k 8 =
+        (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+          ((k : ℝ) ^ 2 + 3) *
+            (6 * (k : ℝ) ^ 3 - 47 * (k : ℝ) ^ 2 +
+              139 * (k : ℝ) - 150) / 6 ∧
+      slack k 9 =
+        (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+          ((k : ℝ) ^ 2 + 3) *
+            (3 * (k : ℝ) ^ 4 - 27 * (k : ℝ) ^ 3 +
+              106 * (k : ℝ) ^ 2 - 219 * (k : ℝ) + 194) / 3 := by
+  have hk1 : 1 ≤ k := by omega
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hden : 2 * (k : ℝ) - 3 ≠ 0 := by linarith
+  have hden' : (k : ℝ) * 2 - 3 ≠ 0 := by linarith
+  have hden6 : 6 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hden24 : 24 * (2 * (k : ℝ) - 3) ≠ 0 :=
+    mul_ne_zero (by norm_num) hden
+  have hd2 := delta_sq k hk
+  have hd4 := delta_pow_four k hk
+  have hd6 := delta_pow_six k hk
+  have hd8 := delta_pow_eight k hk
+  have hd10 := delta_pow_ten k hk
+  constructor
+  · rw [slack]
+    simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+      nbPoly, Nat.cast_sub hk1]
+    field_simp [hden, hden', hden6, hden24]
+    ring_nf
+    rw [hd6, hd4, hd2]
+    ring
+  constructor
+  · rw [slack]
+    simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+      nbPoly, Nat.cast_sub hk1]
+    field_simp [hden, hden', hden6, hden24]
+    ring_nf
+    rw [hd8, hd6, hd4, hd2]
+    ring
+  constructor
+  · rw [slack]
+    simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+      nbPoly, Nat.cast_sub hk1]
+    field_simp [hden, hden', hden6, hden24]
+    ring_nf
+    rw [hd8, hd6, hd4, hd2]
+    ring
+  · rw [slack]
+    simp [dual, weightMinus, weightZero, weightPlus, xiMinus, xiZero, xiPlus,
+      nbPoly, Nat.cast_sub hk1]
+    field_simp [hden, hden', hden6, hden24]
+    ring_nf
+    rw [hd10, hd8, hd6, hd4, hd2]
+    ring
+
+/-- Exact degree-six dual slack. -/
+theorem slack_six_formula (k : ℕ) (hk : 4 ≤ k) :
+    slack k 6 =
+      (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+        (5 * (k : ℝ) - 13) * ((k : ℝ) ^ 2 + 3) / 6 :=
+  (slack_six_to_nine_formulas k hk).1
+
+/-- Exact degree-seven dual slack. -/
+theorem slack_seven_formula (k : ℕ) (hk : 4 ≤ k) :
+    slack k 7 =
+      (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+        ((k : ℝ) ^ 2 + 3) *
+          (3 * (k : ℝ) ^ 2 - 17 * (k : ℝ) + 25) / 3 :=
+  (slack_six_to_nine_formulas k hk).2.1
+
+/-- Exact degree-eight dual slack. -/
+theorem slack_eight_formula (k : ℕ) (hk : 4 ≤ k) :
+    slack k 8 =
+      (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+        ((k : ℝ) ^ 2 + 3) *
+          (6 * (k : ℝ) ^ 3 - 47 * (k : ℝ) ^ 2 +
+            139 * (k : ℝ) - 150) / 6 :=
+  (slack_six_to_nine_formulas k hk).2.2.1
+
+/-- Exact degree-nine dual slack. -/
+theorem slack_nine_formula (k : ℕ) (hk : 4 ≤ k) :
+    slack k 9 =
+      (k : ℝ) * ((k : ℝ) - 1) * ((k : ℝ) + 2) *
+        ((k : ℝ) ^ 2 + 3) *
+          (3 * (k : ℝ) ^ 4 - 27 * (k : ℝ) ^ 3 +
+            106 * (k : ℝ) ^ 2 - 219 * (k : ℝ) + 194) / 3 :=
+  (slack_six_to_nine_formulas k hk).2.2.2
+
+/-- All five finite dual slacks are strictly positive. -/
+theorem finite_slacks_positive (k : ℕ) (hk : 4 ≤ k) :
+    0 < slack k 5 ∧ 0 < slack k 6 ∧ 0 < slack k 7 ∧
+      0 < slack k 8 ∧ 0 < slack k 9 := by
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hm : 0 ≤ (k : ℝ) - 4 := by linarith
+  have hkpos : 0 < (k : ℝ) := by linarith
+  have hk1pos : 0 < (k : ℝ) - 1 := by linarith
+  have hk2pos : 0 < (k : ℝ) + 2 := by linarith
+  have hsqpos : 0 < (k : ℝ) ^ 2 + 3 := by
+    nlinarith [sq_nonneg (k : ℝ)]
+  have h6 : 0 < 5 * (k : ℝ) - 13 := by linarith
+  have h7 :
+      0 < 3 * (k : ℝ) ^ 2 - 17 * (k : ℝ) + 25 := by
+    rw [show
+      3 * (k : ℝ) ^ 2 - 17 * (k : ℝ) + 25 =
+        3 * ((k : ℝ) - 4) ^ 2 + 7 * ((k : ℝ) - 4) + 5 by ring]
+    positivity
+  have h8 :
+      0 < 6 * (k : ℝ) ^ 3 - 47 * (k : ℝ) ^ 2 +
+        139 * (k : ℝ) - 150 := by
+    rw [show
+      6 * (k : ℝ) ^ 3 - 47 * (k : ℝ) ^ 2 + 139 * (k : ℝ) - 150 =
+        6 * ((k : ℝ) - 4) ^ 3 + 25 * ((k : ℝ) - 4) ^ 2 +
+          51 * ((k : ℝ) - 4) + 38 by ring]
+    positivity
+  have h9 :
+      0 < 3 * (k : ℝ) ^ 4 - 27 * (k : ℝ) ^ 3 +
+        106 * (k : ℝ) ^ 2 - 219 * (k : ℝ) + 194 := by
+    rw [show
+      3 * (k : ℝ) ^ 4 - 27 * (k : ℝ) ^ 3 +
+          106 * (k : ℝ) ^ 2 - 219 * (k : ℝ) + 194 =
+        3 * ((k : ℝ) - 4) ^ 4 + 21 * ((k : ℝ) - 4) ^ 3 +
+          70 * ((k : ℝ) - 4) ^ 2 + 101 * ((k : ℝ) - 4) + 54 by ring]
+    positivity
+  constructor
+  · rw [slack_five_formula k hk]
+    positivity
+  constructor
+  · rw [slack_six_formula k hk]
+    positivity
+  constructor
+  · rw [slack_seven_formula k hk]
+    positivity
+  constructor
+  · rw [slack_eight_formula k hk]
+    positivity
+  · rw [slack_nine_formula k hk]
+    positivity
+
+/-- Strict positivity for every finite-slack degree `5 ≤ i ≤ 9`. -/
+theorem slack_pos_of_five_le_of_le_nine
+    (k i : ℕ) (hk : 4 ≤ k) (hi5 : 5 ≤ i) (hi9 : i ≤ 9) :
+    0 < slack k i := by
+  have hs := finite_slacks_positive k hk
+  interval_cases i <;> simp_all
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPDualFinite -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPChebyshevTail (lean/Wow284/LPChebyshevTail.lean) -/
+section
+namespace Wow284.LP
+
+noncomputable section
+
+open Polynomial
+
+/-- The interval on which the scaled Chebyshev representation is used. -/
+def chebyshevInterval (k : ℕ) : Set ℝ :=
+  Set.Icc
+    (-2 * Real.sqrt (((k - 1 : ℕ) : ℝ)))
+    (2 * Real.sqrt (((k - 1 : ℕ) : ℝ)))
+
+/-- The elementary radical inequality behind inclusion of the WOW window in
+the scaled Chebyshev interval. -/
+theorem support_radius_inequality (k : ℕ) (hk : 4 ≤ k) :
+    1 + Real.sqrt (2 * (((k - 1 : ℕ) : ℝ))) ≤
+      2 * Real.sqrt (((k - 1 : ℕ) : ℝ)) := by
+  have hk1 : 1 ≤ k := by omega
+  have hrNat : 3 ≤ k - 1 := by omega
+  have hr : (3 : ℝ) ≤ ((k - 1 : ℕ) : ℝ) := by exact_mod_cast hrNat
+  have hr0 : 0 ≤ ((k - 1 : ℕ) : ℝ) := by positivity
+  have h2r0 : 0 ≤ 2 * ((k - 1 : ℕ) : ℝ) := by positivity
+  have hsqr :
+      (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ 2 = ((k - 1 : ℕ) : ℝ) :=
+    Real.sq_sqrt hr0
+  have hsq2r :
+      (Real.sqrt (2 * (((k - 1 : ℕ) : ℝ)))) ^ 2 =
+        2 * ((k - 1 : ℕ) : ℝ) :=
+    Real.sq_sqrt h2r0
+  have hmargin :
+      8 * ((k - 1 : ℕ) : ℝ) ≤
+        (2 * ((k - 1 : ℕ) : ℝ) - 1) ^ 2 := by
+    nlinarith
+  have htwo :
+      2 * Real.sqrt (2 * (((k - 1 : ℕ) : ℝ))) ≤
+        2 * ((k - 1 : ℕ) : ℝ) - 1 := by
+    apply (sq_le_sq₀ (by positivity) (by nlinarith)).mp
+    nlinarith
+  apply (sq_le_sq₀ (by positivity) (by positivity)).mp
+  nlinarith
+
+/-- The complete WOW interval lies in the interval where the scaled
+Chebyshev formula is valid. -/
+theorem wowInterval_subset_chebyshevInterval (k : ℕ) (hk : 4 ≤ k) :
+    wowInterval k ⊆ chebyshevInterval k := by
+  intro x hx
+  rcases hx with ⟨hxlo, hxhi⟩
+  have hk1 : 1 ≤ k := by omega
+  have hcast :
+      2 * (k : ℝ) - 2 = 2 * (((k - 1 : ℕ) : ℝ)) := by
+    rw [Nat.cast_sub hk1]
+    ring
+  have hrad := support_radius_inequality k hk
+  have hsqrt : 0 ≤ Real.sqrt (2 * (((k - 1 : ℕ) : ℝ))) :=
+    Real.sqrt_nonneg _
+  change
+    -2 * Real.sqrt (((k - 1 : ℕ) : ℝ)) ≤ x ∧
+      x ≤ 2 * Real.sqrt (((k - 1 : ℕ) : ℝ))
+  change
+    -1 - Real.sqrt (2 * (k : ℝ) - 2) ≤ x at hxlo
+  change
+    x ≤ -1 + Real.sqrt (2 * (k : ℝ) - 2) at hxhi
+  rw [hcast] at hxlo hxhi
+  constructor <;> linarith
+
+/-- A direct induction form of the elementary estimate
+`|sin (m θ)| ≤ m |sin θ|`. -/
+theorem abs_sin_nat_mul_le (m : ℕ) (θ : ℝ) :
+    |Real.sin ((m : ℝ) * θ)| ≤ (m : ℝ) * |Real.sin θ| := by
+  induction m with
+  | zero => simp
+  | succ m ih =>
+      rw [Nat.cast_succ, add_mul, one_mul, Real.sin_add]
+      calc
+        |Real.sin ((m : ℝ) * θ) * Real.cos θ +
+            Real.cos ((m : ℝ) * θ) * Real.sin θ| ≤
+            |Real.sin ((m : ℝ) * θ) * Real.cos θ| +
+              |Real.cos ((m : ℝ) * θ) * Real.sin θ| := abs_add_le _ _
+        _ =
+            |Real.sin ((m : ℝ) * θ)| * |Real.cos θ| +
+              |Real.cos ((m : ℝ) * θ)| * |Real.sin θ| := by
+                simp only [abs_mul]
+        _ ≤
+            |Real.sin ((m : ℝ) * θ)| +
+              |Real.sin θ| := by
+                apply add_le_add
+                · simpa using
+                    mul_le_mul_of_nonneg_left
+                      (Real.abs_cos_le_one θ)
+                      (abs_nonneg (Real.sin ((m : ℝ) * θ)))
+                · simpa using
+                    mul_le_mul_of_nonneg_right
+                      (Real.abs_cos_le_one ((m : ℝ) * θ))
+                      (abs_nonneg (Real.sin θ))
+        _ ≤ ((m : ℝ) + 1) * |Real.sin θ| := by
+              nlinarith [abs_nonneg (Real.sin θ)]
+
+/-- The sharp elementary uniform bound for Chebyshev polynomials of the
+second kind on `[-1,1]`. -/
+theorem abs_chebyshevU_eval_le (n : ℕ) {z : ℝ} (hz : |z| ≤ 1) :
+    |(Polynomial.Chebyshev.U ℝ (n : ℤ)).eval z| ≤ (n : ℝ) + 1 := by
+  have hzlo : -1 ≤ z := (abs_le.mp hz).1
+  have hzhi : z ≤ 1 := (abs_le.mp hz).2
+  by_cases hz1 : z = 1
+  · subst z
+    simp [Polynomial.Chebyshev.U_eval_one,
+      abs_of_nonneg (show 0 ≤ (n : ℝ) + 1 by positivity)]
+  by_cases hzm1 : z = -1
+  · subst z
+    simp [abs_mul,
+      abs_of_nonneg (show 0 ≤ (n : ℝ) + 1 by positivity)]
+  have hzlo' : -1 < z := lt_of_le_of_ne hzlo (Ne.symm hzm1)
+  have hzhi' : z < 1 := lt_of_le_of_ne hzhi hz1
+  have hprod : 0 < (z + 1) * (1 - z) :=
+    mul_pos (by linarith) (by linarith)
+  have hsinpos : 0 < Real.sin (Real.arccos z) := by
+    rw [Real.sin_arccos]
+    apply Real.sqrt_pos.2
+    nlinarith
+  have hU :=
+    Polynomial.Chebyshev.U_real_cos
+      (θ := Real.arccos z) (n := (n : ℤ))
+  rw [Real.cos_arccos hzlo hzhi] at hU
+  have hmul :
+      |(Polynomial.Chebyshev.U ℝ (n : ℤ)).eval z| *
+          |Real.sin (Real.arccos z)| ≤
+        ((n : ℝ) + 1) * |Real.sin (Real.arccos z)| := by
+    rw [← abs_mul, hU]
+    simpa only [Int.cast_add, Int.cast_natCast, Int.cast_one,
+      Nat.cast_add, Nat.cast_one] using
+      abs_sin_nat_mul_le (n + 1) (Real.arccos z)
+  exact le_of_mul_le_mul_right hmul (abs_pos.mpr hsinpos.ne')
+
+/-- Evaluation form of the standard scaled Chebyshev representation of the
+nonbacktracking polynomials.  The statement is valid from degree one; in
+degree one the `U_{-1}` term vanishes. -/
+theorem nbPoly_eval_scaled_chebyshev
+    (k i : ℕ) (hk : 1 ≤ k) (hi : 1 ≤ i) (z : ℝ) :
+    (nbPoly k i).eval
+        (2 * Real.sqrt (((k - 1 : ℕ) : ℝ)) * z) =
+      (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ i *
+          (Polynomial.Chebyshev.U ℝ (i : ℤ)).eval z -
+        (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ (i - 2) *
+          (Polynomial.Chebyshev.U ℝ ((i : ℤ) - 2)).eval z := by
+  let s : ℝ := Real.sqrt (((k - 1 : ℕ) : ℝ))
+  change
+    (nbPoly k i).eval (2 * s * z) =
+      s ^ i * (Polynomial.Chebyshev.U ℝ (i : ℤ)).eval z -
+        s ^ (i - 2) *
+          (Polynomial.Chebyshev.U ℝ ((i : ℤ) - 2)).eval z
+  have hr0 : 0 ≤ ((k - 1 : ℕ) : ℝ) := by positivity
+  have hsquare : s ^ 2 = ((k - 1 : ℕ) : ℝ) := by
+    exact Real.sq_sqrt hr0
+  induction i using Nat.strong_induction_on with
+  | h i ih =>
+      rcases i with (_ | _ | i)
+      · omega
+      · simp [nbPoly, Polynomial.Chebyshev.U_one]
+        ring
+      · rcases i with (_ | i)
+        · simp [nbPoly, Polynomial.Chebyshev.U_two]
+          ring_nf
+          rw [hsquare, Nat.cast_sub hk]
+          ring
+        · rw [nbPoly_add_three]
+          simp only [eval_sub, eval_mul, eval_X, eval_C]
+          rw [ih (i + 2) (by omega) (by omega),
+            ih (i + 1) (by omega) (by omega)]
+          rw [← hsquare]
+          rcases i with (_ | i)
+          · have hUthree :=
+              congrArg (fun p : ℝ[X] => p.eval z)
+                (Polynomial.Chebyshev.U_add_two ℝ (1 : ℤ))
+            norm_num [Polynomial.Chebyshev.U_one,
+              Polynomial.Chebyshev.U_two] at hUthree
+            norm_num [Polynomial.Chebyshev.U_one,
+              Polynomial.Chebyshev.U_two]
+            rw [hUthree]
+            ring
+          · have hUhigh :=
+              congrArg (fun p : ℝ[X] => p.eval z)
+                (Polynomial.Chebyshev.U_add_two ℝ ((i + 2 : ℕ) : ℤ))
+            have hUlow :=
+              congrArg (fun p : ℝ[X] => p.eval z)
+                (Polynomial.Chebyshev.U_add_two ℝ (i : ℤ))
+            simp only [eval_sub, eval_mul, eval_ofNat, eval_X] at hUhigh hUlow
+            push_cast at hUhigh hUlow ⊢
+            simp only [pow_succ]
+            linear_combination
+              (norm := ring_nf)
+              -s ^ (i + 4) * hUhigh + s ^ (i + 2) * hUlow
+
+/-- The scaled Chebyshev representation plus the sharp `U` bound gives the
+uniform pointwise estimate used in the tail certificate. -/
+theorem abs_nbPoly_eval_le_scaled
+    (k i : ℕ) (hk : 4 ≤ k) (hi : 2 ≤ i) {t : ℝ}
+    (ht : t ∈ chebyshevInterval k) :
+    |(nbPoly k i).eval t| ≤
+      (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ i * ((i : ℝ) + 1) +
+        (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ (i - 2) *
+          (((i - 2 : ℕ) : ℝ) + 1) := by
+  let s : ℝ := Real.sqrt (((k - 1 : ℕ) : ℝ))
+  have hk1 : 1 ≤ k := by omega
+  have hrNat : 3 ≤ k - 1 := by omega
+  have hr : (0 : ℝ) < ((k - 1 : ℕ) : ℝ) := by
+    exact_mod_cast (show 0 < k - 1 by omega)
+  have hspos : 0 < s := by
+    exact Real.sqrt_pos.2 hr
+  have ht' : -2 * s ≤ t ∧ t ≤ 2 * s := ht
+  have habst : |t| ≤ 2 * s := by
+    apply (abs_le).2
+    constructor <;> linarith [ht'.1, ht'.2]
+  let z : ℝ := t / (2 * s)
+  have hden : 0 < 2 * s := by positivity
+  have hz : |z| ≤ 1 := by
+    change |t / (2 * s)| ≤ 1
+    rw [abs_div, abs_of_pos hden]
+    exact (div_le_one hden).2 habst
+  have hscale : 2 * s * z = t := by
+    dsimp [z]
+    field_simp
+  have hrepr :=
+    nbPoly_eval_scaled_chebyshev k i hk1 (by omega) z
+  change
+    (nbPoly k i).eval (2 * s * z) =
+      s ^ i * (Polynomial.Chebyshev.U ℝ (i : ℤ)).eval z -
+        s ^ (i - 2) *
+          (Polynomial.Chebyshev.U ℝ ((i : ℤ) - 2)).eval z at hrepr
+  rw [hscale] at hrepr
+  have hUi := abs_chebyshevU_eval_le i hz
+  have hUlow := abs_chebyshevU_eval_le (i - 2) hz
+  have hindex : ((i - 2 : ℕ) : ℤ) = (i : ℤ) - 2 := by omega
+  rw [hindex] at hUlow
+  rw [hrepr]
+  calc
+    |s ^ i * (Polynomial.Chebyshev.U ℝ (i : ℤ)).eval z -
+        s ^ (i - 2) *
+          (Polynomial.Chebyshev.U ℝ ((i : ℤ) - 2)).eval z| ≤
+        |s ^ i * (Polynomial.Chebyshev.U ℝ (i : ℤ)).eval z| +
+          |s ^ (i - 2) *
+            (Polynomial.Chebyshev.U ℝ ((i : ℤ) - 2)).eval z| := by
+              simpa only [sub_eq_add_neg, abs_neg] using
+                abs_add_le
+                  (s ^ i * (Polynomial.Chebyshev.U ℝ (i : ℤ)).eval z)
+                  (-(s ^ (i - 2) *
+                    (Polynomial.Chebyshev.U ℝ ((i : ℤ) - 2)).eval z))
+    _ =
+        s ^ i * |(Polynomial.Chebyshev.U ℝ (i : ℤ)).eval z| +
+          s ^ (i - 2) *
+            |(Polynomial.Chebyshev.U ℝ ((i : ℤ) - 2)).eval z| := by
+              rw [abs_mul, abs_mul, abs_of_nonneg (pow_nonneg hspos.le _),
+                abs_of_nonneg (pow_nonneg hspos.le _)]
+    _ ≤
+        s ^ i * ((i : ℝ) + 1) +
+          s ^ (i - 2) * (((i - 2 : ℕ) : ℝ) + 1) := by
+            exact add_le_add
+              (mul_le_mul_of_nonneg_left hUi (pow_nonneg hspos.le _))
+              (mul_le_mul_of_nonneg_left hUlow (pow_nonneg hspos.le _))
+
+/-- The previous estimate in the conventional `i-1` form. -/
+theorem abs_nbPoly_eval_le
+    (k i : ℕ) (hk : 4 ≤ k) (hi : 2 ≤ i) {t : ℝ}
+    (ht : t ∈ chebyshevInterval k) :
+    |(nbPoly k i).eval t| ≤
+      (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ i * ((i : ℝ) + 1) +
+        (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ (i - 2) * ((i : ℝ) - 1) := by
+  have h := abs_nbPoly_eval_le_scaled k i hk hi ht
+  convert h using 1
+  rw [Nat.cast_sub hi]
+  ring
+
+/-- The elementary exponential-versus-linear inequality that closes the
+all-degree tail.  It is stated for an abstract scale `s`; the application has
+`s = sqrt (k-1)`. -/
+theorem tail_power_dominates
+    (s : ℝ) (hs : 0 ≤ s) (hsquare : 3 ≤ s ^ 2)
+    (i : ℕ) (hi : 10 ≤ i) :
+    2 * (i : ℝ) + 1 < 3 * s ^ (i - 6) := by
+  have hspos : 0 < s := by
+    nlinarith [sq_nonneg s]
+  have hs_three_halves : (3 : ℝ) / 2 ≤ s := by
+    apply (sq_le_sq₀ (by norm_num) hs).mp
+    nlinarith
+  induction i, hi using Nat.le_induction with
+  | base =>
+      norm_num
+      have hsfour : (9 : ℝ) ≤ s ^ 4 := by
+        nlinarith [sq_nonneg (s ^ 2 - 3)]
+      nlinarith
+  | succ i hi ih =>
+      rw [show i + 1 - 6 = (i - 6) + 1 by omega, pow_succ]
+      push_cast
+      have hlinear :
+          2 * ((i : ℝ) + 1) + 1 <
+            s * (2 * (i : ℝ) + 1) := by
+        have hmul :
+            (3 / 2 : ℝ) * (2 * (i : ℝ) + 1) ≤
+              s * (2 * (i : ℝ) + 1) :=
+          mul_le_mul_of_nonneg_right hs_three_halves (by positivity)
+        have hiR : (10 : ℝ) ≤ (i : ℝ) := by exact_mod_cast hi
+        nlinarith
+      calc
+        2 * ((i : ℝ) + 1) + 1 <
+            s * (2 * (i : ℝ) + 1) := hlinear
+        _ < s * (3 * s ^ (i - 6)) :=
+          mul_lt_mul_of_pos_left ih hspos
+        _ = 3 * (s ^ (i - 6) * s) := by ring
+
+/-- The denominator-free ratio estimate in the form used by the dual
+certificate. -/
+theorem tail_ratio_numerator_lt
+    (k i : ℕ) (hk : 4 ≤ k) (hi : 10 ≤ i) :
+    ((((k - 1 : ℕ) : ℝ)) ^ 2 +
+          4 * (((k - 1 : ℕ) : ℝ)) + 6) *
+        (((i : ℝ) + 1) * (((k - 1 : ℕ) : ℝ)) + (i : ℝ) - 1) <
+      6 * (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ i := by
+  let r : ℝ := ((k - 1 : ℕ) : ℝ)
+  let s : ℝ := Real.sqrt r
+  change
+    (r ^ 2 + 4 * r + 6) *
+        (((i : ℝ) + 1) * r + (i : ℝ) - 1) <
+      6 * s ^ i
+  have hrNat : 3 ≤ k - 1 := by omega
+  have hr : (3 : ℝ) ≤ r := by
+    change (3 : ℝ) ≤ ((k - 1 : ℕ) : ℝ)
+    exact_mod_cast hrNat
+  have hr0 : 0 ≤ r := by linarith
+  have hs : 0 ≤ s := Real.sqrt_nonneg _
+  have hsquare : s ^ 2 = r := Real.sq_sqrt hr0
+  have hA : r ^ 2 + 4 * r + 6 ≤ 3 * r ^ 2 := by
+    nlinarith [sq_nonneg (r - 3)]
+  have hBnonneg :
+      0 ≤ ((i : ℝ) + 1) * r + (i : ℝ) - 1 := by
+    have hiR : (10 : ℝ) ≤ (i : ℝ) := by exact_mod_cast hi
+    have hmul0 : 0 ≤ ((i : ℝ) + 1) * r :=
+      mul_nonneg (by linarith) hr0
+    linarith
+  have hprod :
+      0 ≤ ((i : ℝ) - 1) * (r - 3) := by
+    have hiR : (10 : ℝ) ≤ (i : ℝ) := by exact_mod_cast hi
+    exact mul_nonneg (by linarith) (by linarith)
+  have hB :
+      3 * (((i : ℝ) + 1) * r + (i : ℝ) - 1) ≤
+        (4 * (i : ℝ) + 2) * r := by
+    nlinarith
+  have hfirst :
+      (r ^ 2 + 4 * r + 6) *
+          (((i : ℝ) + 1) * r + (i : ℝ) - 1) ≤
+        3 * r ^ 2 *
+          (((i : ℝ) + 1) * r + (i : ℝ) - 1) :=
+    mul_le_mul_of_nonneg_right hA hBnonneg
+  have hsecond :
+      3 * r ^ 2 *
+          (((i : ℝ) + 1) * r + (i : ℝ) - 1) ≤
+        (4 * (i : ℝ) + 2) * r ^ 3 := by
+    have :=
+      mul_le_mul_of_nonneg_left hB (sq_nonneg r)
+    nlinarith
+  have htail :=
+    tail_power_dominates s hs (by nlinarith [hsquare]) i hi
+  have hmul :
+      2 * (2 * (i : ℝ) + 1) * r ^ 3 <
+        6 * r ^ 3 * s ^ (i - 6) := by
+    have hr3pos : 0 < 2 * r ^ 3 := by positivity
+    have := mul_lt_mul_of_pos_right htail hr3pos
+    nlinarith
+  have hpow :
+      6 * r ^ 3 * s ^ (i - 6) = 6 * s ^ i := by
+    rw [← hsquare]
+    calc
+      6 * (s ^ 2) ^ 3 * s ^ (i - 6) =
+          6 * s ^ 6 * s ^ (i - 6) := by ring
+      _ = 6 * (s ^ 6 * s ^ (i - 6)) := by ring
+      _ = 6 * s ^ (6 + (i - 6)) := by rw [pow_add]
+      _ = 6 * s ^ i := by
+        congr 2
+        omega
+  calc
+    (r ^ 2 + 4 * r + 6) *
+        (((i : ℝ) + 1) * r + (i : ℝ) - 1) ≤
+        3 * r ^ 2 *
+          (((i : ℝ) + 1) * r + (i : ℝ) - 1) := hfirst
+    _ ≤ (4 * (i : ℝ) + 2) * r ^ 3 := hsecond
+    _ = 2 * (2 * (i : ℝ) + 1) * r ^ 3 := by ring
+    _ < 6 * r ^ 3 * s ^ (i - 6) := hmul
+    _ = 6 * s ^ i := hpow
+
+/-- The total dual mass times the uniform pointwise bound is strictly
+smaller than the principal nonbacktracking evaluation.  This is the
+dual-independent numerical core of the all-degree tail argument. -/
+theorem dual_mass_point_bound_lt_principal
+    (k i : ℕ) (hk : 4 ≤ k) (hi : 10 ≤ i) :
+    ((k : ℝ) * ((k : ℝ) ^ 2 + 2 * (k : ℝ) + 3) / 6) *
+        ((Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ i * ((i : ℝ) + 1) +
+          (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ (i - 2) * ((i : ℝ) - 1)) <
+      (k : ℝ) * (((k - 1 : ℕ) : ℝ) ^ (i - 1)) := by
+  let r : ℝ := ((k - 1 : ℕ) : ℝ)
+  let s : ℝ := Real.sqrt r
+  change
+    ((k : ℝ) * ((k : ℝ) ^ 2 + 2 * (k : ℝ) + 3) / 6) *
+        (s ^ i * ((i : ℝ) + 1) + s ^ (i - 2) * ((i : ℝ) - 1)) <
+      (k : ℝ) * r ^ (i - 1)
+  have hk1 : 1 ≤ k := by omega
+  have hk_cast : (k : ℝ) = r + 1 := by
+    dsimp [r]
+    rw [Nat.cast_sub hk1]
+    ring
+  have hrNat : 3 ≤ k - 1 := by omega
+  have hr : (3 : ℝ) ≤ r := by
+    change (3 : ℝ) ≤ ((k - 1 : ℕ) : ℝ)
+    exact_mod_cast hrNat
+  have hr0 : 0 ≤ r := by linarith
+  have hs : 0 ≤ s := Real.sqrt_nonneg _
+  have hspos : 0 < s := Real.sqrt_pos.2 (by linarith)
+  have hsquare : s ^ 2 = r := Real.sq_sqrt hr0
+  have hratio := tail_ratio_numerator_lt k i hk hi
+  change
+    (r ^ 2 + 4 * r + 6) *
+        (((i : ℝ) + 1) * r + (i : ℝ) - 1) <
+      6 * s ^ i at hratio
+  have hbound :
+      s ^ i * ((i : ℝ) + 1) + s ^ (i - 2) * ((i : ℝ) - 1) =
+        s ^ (i - 2) *
+          (((i : ℝ) + 1) * r + (i : ℝ) - 1) := by
+    have hs_i : s ^ i = s ^ (i - 2) * s ^ 2 := by
+      calc
+        s ^ i = s ^ ((i - 2) + 2) := by
+          congr 1
+          omega
+        _ = s ^ (i - 2) * s ^ 2 := by rw [pow_add]
+    rw [hs_i, hsquare]
+    ring
+  have hpower :
+      s ^ (i - 2) * s ^ i = r ^ (i - 1) := by
+    calc
+      s ^ (i - 2) * s ^ i = s ^ ((i - 2) + i) := by
+        rw [pow_add]
+      _ = s ^ (2 * (i - 1)) := by
+        congr 1
+        omega
+      _ = (s ^ 2) ^ (i - 1) := by rw [pow_mul]
+      _ = r ^ (i - 1) := by rw [hsquare]
+  have hfactor :
+      0 < (r + 1) * s ^ (i - 2) / 6 := by
+    positivity
+  rw [hk_cast, hbound]
+  calc
+    ((r + 1) * ((r + 1) ^ 2 + 2 * (r + 1) + 3) / 6) *
+        (s ^ (i - 2) *
+          (((i : ℝ) + 1) * r + (i : ℝ) - 1)) =
+        ((r + 1) * s ^ (i - 2) / 6) *
+          ((r ^ 2 + 4 * r + 6) *
+            (((i : ℝ) + 1) * r + (i : ℝ) - 1)) := by ring
+    _ <
+        ((r + 1) * s ^ (i - 2) / 6) * (6 * s ^ i) :=
+      mul_lt_mul_of_pos_left hratio hfactor
+    _ = (r + 1) * r ^ (i - 1) := by
+      rw [← hpower]
+      ring
+
+/-- Every tail dual slack is strictly positive.  The proof uses only the
+positive three-point weights, their exact total mass, the uniform Chebyshev
+bound, and the strict numerical comparison above. -/
+theorem slack_pos_of_ten_le
+    (k i : ℕ) (hk : 4 ≤ k) (hi : 10 ≤ i) :
+    0 < slack k i := by
+  let B : ℝ :=
+    (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ i * ((i : ℝ) + 1) +
+      (Real.sqrt (((k - 1 : ℕ) : ℝ))) ^ (i - 2) * ((i : ℝ) - 1)
+  have hdelta : 1 ≤ delta k := by
+    have hdelta0 : 0 ≤ delta k := Real.sqrt_nonneg _
+    apply (sq_le_sq₀ (by norm_num) hdelta0).mp
+    rw [delta_sq k hk]
+    have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+    nlinarith
+  have hminus_wow : xiMinus k ∈ wowInterval k := by
+    change
+      -1 - delta k ≤ xiMinus k ∧
+        xiMinus k ≤ -1 + delta k
+    rw [xiMinus]
+    constructor
+    · rfl
+    · linarith
+  have hzero_wow : xiZero ∈ wowInterval k := by
+    change -1 - delta k ≤ -2 ∧ -2 ≤ -1 + delta k
+    constructor <;> linarith
+  have hplus_wow : xiPlus k ∈ wowInterval k := by
+    change
+      -1 - delta k ≤ xiPlus k ∧
+        xiPlus k ≤ -1 + delta k
+    rw [xiPlus]
+    constructor
+    · linarith
+    · rfl
+  have hsubset := wowInterval_subset_chebyshevInterval k hk
+  have hminus :
+      |(nbPoly k i).eval (xiMinus k)| ≤ B := by
+    exact abs_nbPoly_eval_le k i hk (by omega) (hsubset hminus_wow)
+  have hzero :
+      |(nbPoly k i).eval xiZero| ≤ B := by
+    exact abs_nbPoly_eval_le k i hk (by omega) (hsubset hzero_wow)
+  have hplus :
+      |(nbPoly k i).eval (xiPlus k)| ≤ B := by
+    exact abs_nbPoly_eval_le k i hk (by omega) (hsubset hplus_wow)
+  have hwminus := weightMinus_pos k hk
+  have hwzero := weightZero_pos k hk
+  have hwplus := weightPlus_pos k hk
+  have habs :
+      |dual k (nbPoly k i)| ≤
+        (weightMinus k + weightZero k + weightPlus k) * B := by
+    rw [dual]
+    calc
+      |weightMinus k * (nbPoly k i).eval (xiMinus k) +
+          weightZero k * (nbPoly k i).eval xiZero +
+          weightPlus k * (nbPoly k i).eval (xiPlus k)| ≤
+          |weightMinus k * (nbPoly k i).eval (xiMinus k) +
+            weightZero k * (nbPoly k i).eval xiZero| +
+            |weightPlus k * (nbPoly k i).eval (xiPlus k)| :=
+        abs_add_le _ _
+      _ ≤
+          (|weightMinus k * (nbPoly k i).eval (xiMinus k)| +
+            |weightZero k * (nbPoly k i).eval xiZero|) +
+            |weightPlus k * (nbPoly k i).eval (xiPlus k)| := by
+        have hadd :=
+          abs_add_le
+            (weightMinus k * (nbPoly k i).eval (xiMinus k))
+            (weightZero k * (nbPoly k i).eval xiZero)
+        linarith
+      _ =
+          weightMinus k * |(nbPoly k i).eval (xiMinus k)| +
+            weightZero k * |(nbPoly k i).eval xiZero| +
+              weightPlus k * |(nbPoly k i).eval (xiPlus k)| := by
+        simp only [abs_mul, abs_of_pos hwminus, abs_of_pos hwzero,
+          abs_of_pos hwplus]
+      _ ≤
+          weightMinus k * B + weightZero k * B + weightPlus k * B := by
+        gcongr
+      _ = (weightMinus k + weightZero k + weightPlus k) * B := by
+        ring
+  have hmass :
+      weightMinus k + weightZero k + weightPlus k =
+        (k : ℝ) * ((k : ℝ) ^ 2 + 2 * (k : ℝ) + 3) / 6 := by
+    simpa [dual] using dual_mass k hk
+  have hstrict :
+      (weightMinus k + weightZero k + weightPlus k) * B <
+        (k : ℝ) * (((k - 1 : ℕ) : ℝ) ^ (i - 1)) := by
+    rw [hmass]
+    exact dual_mass_point_bound_lt_principal k i hk hi
+  have heval :
+      (nbPoly k i).eval (k : ℝ) =
+        (k : ℝ) * (((k - 1 : ℕ) : ℝ) ^ (i - 1)) :=
+    nbPoly_eval_at_degree k i (by omega) (by omega)
+  rw [slack, heval]
+  have hdual_lower :
+      -|dual k (nbPoly k i)| ≤ dual k (nbPoly k i) :=
+    neg_abs_le _
+  linarith
+
+/-- Strict positivity of every dual slack in the admissible coefficient
+range, combining the exact finite calculation with the Chebyshev tail. -/
+theorem all_slacks_positive
+    (k i : ℕ) (hk : 4 ≤ k) (hi : 5 ≤ i) :
+    0 < slack k i := by
+  by_cases hi9 : i ≤ 9
+  · exact slack_pos_of_five_le_of_le_nine k i hk hi hi9
+  · exact slack_pos_of_ten_le k i hk (by omega)
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPChebyshevTail -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPWeakDuality (lean/Wow284/LPWeakDuality.lean) -/
+section
+namespace Wow284.LP
+
+noncomputable section
+
+open Polynomial
+
+/-- Evaluation of a finite nonbacktracking-basis expansion is the
+corresponding finite scalar sum. -/
+theorem polynomial_eval_eq_sum (k : ℕ) (c : Coefficients) (x : ℝ) :
+    (polynomial k c).eval x =
+      c.sum fun i a => a * (nbPoly k i).eval x := by
+  classical
+  change Polynomial.evalRingHom x
+      (Finset.sum c.support fun i => C (c i) * nbPoly k i) =
+    Finset.sum c.support fun i => c i * (nbPoly k i).eval x
+  rw [map_sum]
+  apply Finset.sum_congr rfl
+  intro i hi
+  simp
+
+@[simp]
+private theorem dual_zero (k : ℕ) :
+    dual k (0 : ℝ[X]) = 0 := by
+  simp [dual]
+
+private theorem dual_add (k : ℕ) (p q : ℝ[X]) :
+    dual k (p + q) = dual k p + dual k q := by
+  simp [dual]
+  ring
+
+private theorem dual_C_mul (k : ℕ) (a : ℝ) (p : ℝ[X]) :
+    dual k (C a * p) = a * dual k p := by
+  simp [dual]
+  ring
+
+/-- The three-point dual functional commutes with the finite
+nonbacktracking-basis expansion. -/
+theorem dual_polynomial_eq_sum (k : ℕ) (c : Coefficients) :
+    dual k (polynomial k c) =
+      c.sum fun i a => a * dual k (nbPoly k i) := by
+  classical
+  change
+    dual k (Finset.sum c.support fun i => C (c i) * nbPoly k i) =
+      Finset.sum c.support fun i => c i * dual k (nbPoly k i)
+  induction c.support using Finset.induction with
+  | empty => simp
+  | @insert i s hi ih =>
+      rw [Finset.sum_insert hi, Finset.sum_insert hi, dual_add,
+        dual_C_mul, ih]
+
+/-- Adding the dual value and the principal evaluation turns each basis term
+into its dual slack. -/
+theorem dual_add_eval_eq_slack_sum (k : ℕ) (c : Coefficients) :
+    dual k (polynomial k c) + (polynomial k c).eval (k : ℝ) =
+      c.sum fun i a => a * slack k i := by
+  classical
+  rw [dual_polynomial_eq_sum, polynomial_eval_eq_sum]
+  change
+    (Finset.sum c.support fun i => c i * dual k (nbPoly k i)) +
+        Finset.sum c.support (fun i => c i * (nbPoly k i).eval (k : ℝ)) =
+      Finset.sum c.support fun i => c i * slack k i
+  rw [← Finset.sum_add_distrib]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [slack]
+  ring
+
+/-- The lower dual support point belongs to the closed WOW interval. -/
+theorem xiMinus_mem_wowInterval (k : ℕ) :
+    xiMinus k ∈ wowInterval k := by
+  have hdelta : 0 ≤ delta k := Real.sqrt_nonneg _
+  constructor
+  · rfl
+  · simp only [xiMinus, delta] at *
+    linarith
+
+/-- The upper dual support point belongs to the closed WOW interval. -/
+theorem xiPlus_mem_wowInterval (k : ℕ) :
+    xiPlus k ∈ wowInterval k := by
+  have hdelta : 0 ≤ delta k := Real.sqrt_nonneg _
+  constructor
+  · simp only [xiPlus, delta] at *
+    linarith
+  · rfl
+
+/-- For `k ≥ 4`, the middle dual support point `-2` belongs to the WOW
+interval. -/
+theorem xiZero_mem_wowInterval (k : ℕ) (hk : 4 ≤ k) :
+    xiZero ∈ wowInterval k := by
+  have hdelta : 0 ≤ delta k := Real.sqrt_nonneg _
+  have hdelta_sq : delta k ^ 2 = 2 * (k : ℝ) - 2 :=
+    delta_sq k hk
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hdelta_one : 1 ≤ delta k := by nlinarith
+  constructor <;>
+    simp only [xiZero, delta] at * <;>
+      linarith
+
+/-- A polynomial which is nonpositive on the WOW interval has nonpositive
+value under the positive three-point dual functional. -/
+theorem dual_nonpos_of_nonpos_on_interval
+    (k : ℕ) (hk : 4 ≤ k) (p : ℝ[X])
+    (hp : ∀ x ∈ wowInterval k, p.eval x ≤ 0) :
+    dual k p ≤ 0 := by
+  have hm :=
+    mul_nonpos_of_nonneg_of_nonpos
+      (weightMinus_pos k hk).le
+      (hp (xiMinus k) (xiMinus_mem_wowInterval k))
+  have h0 :=
+    mul_nonpos_of_nonneg_of_nonpos
+      (weightZero_pos k hk).le
+      (hp xiZero (xiZero_mem_wowInterval k hk))
+  have hp' :=
+    mul_nonpos_of_nonneg_of_nonpos
+      (weightPlus_pos k hk).le
+      (hp (xiPlus k) (xiPlus_mem_wowInterval k))
+  rw [dual]
+  linarith
+
+/-- Admissibility makes the dual functional of the represented polynomial
+nonpositive. -/
+theorem dual_polynomial_nonpos
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c) :
+    dual k (polynomial k c) ≤ 0 :=
+  dual_nonpos_of_nonpos_on_interval k hk (polynomial k c) hc.2.2
+
+/-- The degree-zero slack is exactly the LP ceiling. -/
+theorem slack_zero_eq_ceiling (k : ℕ) (hk : 4 ≤ k) :
+    slack k 0 = ceiling k := by
+  rw [slack, dual_mass_eq_ceiling_sub_one k hk]
+  simp
+
+/-- The four unconstrained low-degree coefficients have zero dual slack. -/
+theorem slack_eq_zero_of_one_le_of_le_four
+    (k i : ℕ) (hk : 4 ≤ k) (hi1 : 1 ≤ i) (hi4 : i ≤ 4) :
+    slack k i = 0 := by
+  rw [slack, dual_nbPoly_eq_neg_eval_of_one_le_of_le_four k i hk hi1 hi4]
+  ring
+
+/-- The elementary finite-sum core of weak duality.  The exact mass/moment
+and all-degree strict-slack theorems are supplied separately by the finite
+dual and Chebyshev-tail modules. -/
+private theorem ceiling_mul_le_slack_sum_of_certificates
+    (k : ℕ) (c : Coefficients)
+    (hc0 : 0 < c 0)
+    (hcoeff : ∀ i, 5 ≤ i → 0 ≤ c i)
+    (hmass : slack k 0 = ceiling k)
+    (hmoment : ∀ i, 1 ≤ i → i ≤ 4 → slack k i = 0)
+    (hslack : ∀ i, 5 ≤ i → 0 < slack k i) :
+    ceiling k * c 0 ≤ c.sum fun i a => a * slack k i := by
+  classical
+  have hzero_mem : 0 ∈ c.support := by
+    simpa [Finsupp.mem_support_iff] using ne_of_gt hc0
+  calc
+    ceiling k * c 0 =
+        ∑ i ∈ c.support, if i = 0 then c i * slack k i else 0 := by
+          simp [hzero_mem, hmass, mul_comm]
+    _ ≤ ∑ i ∈ c.support, c i * slack k i := by
+          apply Finset.sum_le_sum
+          intro i hi
+          by_cases hi0 : i = 0
+          · subst i
+            simp
+          · simp only [hi0, ↓reduceIte]
+            by_cases hi4 : i ≤ 4
+            · have hi1 : 1 ≤ i := Nat.one_le_iff_ne_zero.mpr hi0
+              rw [hmoment i hi1 hi4]
+              simp
+            · have hi5 : 5 ≤ i := by omega
+              exact mul_nonneg (hcoeff i hi5) (le_of_lt (hslack i hi5))
+    _ = c.sum fun i a => a * slack k i := rfl
+
+/-- Weak duality once the separately established mass, moment, and strict
+slack certificates are supplied.  This theorem is private so the exported
+objective theorem cannot acquire certificate hypotheses. -/
+private theorem objective_lower_bound_of_certificates
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c)
+    (hmass : slack k 0 = ceiling k)
+    (hmoment : ∀ i, 1 ≤ i → i ≤ 4 → slack k i = 0)
+    (hslack : ∀ i, 5 ≤ i → 0 < slack k i) :
+    ceiling k * c 0 ≤ (polynomial k c).eval (k : ℝ) := by
+  have hsum :=
+    ceiling_mul_le_slack_sum_of_certificates
+      k c hc.1 hc.2.1 hmass hmoment hslack
+  rw [← dual_add_eval_eq_slack_sum] at hsum
+  have hdual := dual_polynomial_nonpos k hk c hc
+  linarith
+
+/-- The exact finite-support slack inequality used by weak duality.  Unlike
+the internal engine, this exported theorem discharges every mass, moment,
+and all-degree slack obligation from the exact certificate modules. -/
+theorem ceiling_mul_le_slack_sum
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c) :
+    ceiling k * c 0 ≤ c.sum fun i a => a * slack k i :=
+  ceiling_mul_le_slack_sum_of_certificates
+    k c hc.1 hc.2.1
+      (slack_zero_eq_ceiling k hk)
+      (slack_eq_zero_of_one_le_of_le_four k · hk)
+      (all_slacks_positive k · hk)
+
+/-- The sharp objective lower bound for every admissible finite
+nonbacktracking-basis expansion. -/
+theorem twoSidedLP_objective_ge
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c) :
+    ceiling k * c 0 ≤ (polynomial k c).eval (k : ℝ) :=
+  objective_lower_bound_of_certificates
+    k hk c hc
+      (slack_zero_eq_ceiling k hk)
+      (slack_eq_zero_of_one_le_of_le_four k · hk)
+      (all_slacks_positive k · hk)
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPWeakDuality -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPRigidity (lean/Wow284/LPRigidity.lean) -/
+section
+namespace Wow284.LP
+
+noncomputable section
+
+open scoped Topology
+
+open Polynomial
+open Filter
+
+/-- The three support points of the exact dual certificate are strictly
+ordered.  In particular, the middle point `-2` lies in the interior of the
+WOW interval. -/
+theorem xiMinus_lt_xiZero_lt_xiPlus (k : ℕ) (hk : 4 ≤ k) :
+    xiMinus k < xiZero ∧ xiZero < xiPlus k := by
+  have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+  have hdelta_nonneg : 0 ≤ delta k := Real.sqrt_nonneg _
+  have hdelta_sq : delta k ^ 2 = 2 * (k : ℝ) - 2 := delta_sq k hk
+  have hdelta_one : 1 < delta k := by nlinarith
+  constructor <;> simp [xiMinus, xiZero, xiPlus] <;> linarith
+
+/-- Vanishing of the three-point dual functional, together with
+nonpositivity at its support and positivity of its weights, forces
+pointwise vanishing at every support point. -/
+theorem support_roots_of_dual_eq_zero
+    (k : ℕ) (hk : 4 ≤ k) (p : ℝ[X])
+    (hminus : p.eval (xiMinus k) ≤ 0)
+    (hzero : p.eval xiZero ≤ 0)
+    (hplus : p.eval (xiPlus k) ≤ 0)
+    (hdual : dual k p = 0) :
+    p.eval (xiMinus k) = 0 ∧
+      p.eval xiZero = 0 ∧
+        p.eval (xiPlus k) = 0 := by
+  have hwminus := weightMinus_pos k hk
+  have hwzero := weightZero_pos k hk
+  have hwplus := weightPlus_pos k hk
+  have htminus :
+      weightMinus k * p.eval (xiMinus k) ≤ 0 :=
+    mul_nonpos_of_nonneg_of_nonpos hwminus.le hminus
+  have htzero :
+      weightZero k * p.eval xiZero ≤ 0 :=
+    mul_nonpos_of_nonneg_of_nonpos hwzero.le hzero
+  have htplus :
+      weightPlus k * p.eval (xiPlus k) ≤ 0 :=
+    mul_nonpos_of_nonneg_of_nonpos hwplus.le hplus
+  have hsum :
+      weightMinus k * p.eval (xiMinus k) +
+          weightZero k * p.eval xiZero +
+            weightPlus k * p.eval (xiPlus k) = 0 := by
+    simpa [dual] using hdual
+  have hzminus :
+      weightMinus k * p.eval (xiMinus k) = 0 := by
+    linarith
+  have hzzero :
+      weightZero k * p.eval xiZero = 0 := by
+    linarith
+  have hzplus :
+      weightPlus k * p.eval (xiPlus k) = 0 := by
+    linarith
+  constructor
+  · exact (mul_eq_zero.mp hzminus).resolve_left (ne_of_gt hwminus)
+  constructor
+  · exact (mul_eq_zero.mp hzzero).resolve_left (ne_of_gt hwzero)
+  · exact (mul_eq_zero.mp hzplus).resolve_left (ne_of_gt hwplus)
+
+/-- A polynomial which is nonpositive on the WOW interval and vanishes at
+its interior support point has zero derivative there. -/
+theorem derivative_eval_xiZero_eq_zero_of_nonpos
+    (k : ℕ) (hk : 4 ≤ k) (p : ℝ[X])
+    (hp : ∀ x ∈ wowInterval k, p.eval x ≤ 0)
+    (hzero : p.eval xiZero = 0) :
+    p.derivative.eval xiZero = 0 := by
+  have horder := xiMinus_lt_xiZero_lt_xiPlus k hk
+  have hnhds : wowInterval k ∈ 𝓝 xiZero := by
+    simpa [wowInterval, xiMinus, xiPlus, delta] using
+      (Icc_mem_nhds horder.1 horder.2)
+  have hmaxOn : IsMaxOn (fun x : ℝ => p.eval x) (wowInterval k) xiZero := by
+    intro x hx
+    change p.eval x ≤ p.eval xiZero
+    rw [hzero]
+    exact hp x hx
+  have hlocal : IsLocalMax (fun x : ℝ => p.eval x) xiZero :=
+    hmaxOn.localize.isLocalMax hnhds
+  exact hlocal.hasDerivAt_eq_zero (p.hasDerivAt xiZero)
+
+/-- The monic quartic with the three dual support roots, with the middle
+root repeated. -/
+def rootQuartic (k : ℕ) : ℝ[X] :=
+  (X - C (xiMinus k)) * (X - C xiZero) ^ 2 * (X - C (xiPlus k))
+
+theorem rootQuartic_monic (k : ℕ) : (rootQuartic k).Monic := by
+  exact
+    ((monic_X_sub_C (xiMinus k)).mul
+      ((monic_X_sub_C xiZero).pow 2)).mul
+        (monic_X_sub_C (xiPlus k))
+
+theorem rootQuartic_natDegree (k : ℕ) :
+    (rootQuartic k).natDegree = 4 := by
+  have hm := monic_X_sub_C (xiMinus k)
+  have hz := monic_X_sub_C xiZero
+  have hp := monic_X_sub_C (xiPlus k)
+  rw [rootQuartic, (hm.mul (hz.pow 2)).natDegree_mul hp,
+    hm.natDegree_mul (hz.pow 2), hz.natDegree_pow]
+  simp
+
+/-- The root-factor quartic is exactly the scaled explicit optimizer. -/
+theorem rootQuartic_eq_scaled_extremal (k : ℕ) (hk : 4 ≤ k) :
+    rootQuartic k =
+      C (6 * ((k : ℝ) + 2)) * extremal k := by
+  have hdelta_sq : delta k ^ 2 = 2 * (k : ℝ) - 2 := delta_sq k hk
+  have hden : 6 * ((k : ℝ) + 2) ≠ 0 := by positivity
+  apply Polynomial.funext
+  intro x
+  simp [rootQuartic, extremal, xiMinus, xiZero, xiPlus]
+  field_simp [hden]
+  nlinarith
+
+/-- Four roots counted with multiplicity and a quartic degree bound identify
+the polynomial up to its leading coefficient. -/
+theorem eq_leadingCoeff_mul_rootQuartic
+    (k : ℕ) (hk : 4 ≤ k) (p : ℝ[X])
+    (hdeg : p.natDegree ≤ 4)
+    (hminus : p.eval (xiMinus k) = 0)
+    (hzero : p.eval xiZero = 0)
+    (hplus : p.eval (xiPlus k) = 0)
+    (hderiv : p.derivative.eval xiZero = 0) :
+    p = C p.leadingCoeff * rootQuartic k := by
+  by_cases hpzero : p = 0
+  · simp [hpzero]
+  · have horder := xiMinus_lt_xiZero_lt_xiPlus k hk
+    have hdvdMinus : X - C (xiMinus k) ∣ p :=
+      (dvd_iff_isRoot).2 hminus
+    have hdvdPlus : X - C (xiPlus k) ∣ p :=
+      (dvd_iff_isRoot).2 hplus
+    have hmult :
+        1 < p.rootMultiplicity xiZero :=
+      (one_lt_rootMultiplicity_iff_isRoot hpzero).2 ⟨hzero, hderiv⟩
+    have hdvdZero : (X - C xiZero) ^ 2 ∣ p :=
+      (le_rootMultiplicity_iff hpzero).1 (by omega)
+    have hcopMinusZero :
+        IsCoprime (X - C (xiMinus k)) (X - C xiZero) :=
+      isCoprime_X_sub_C_of_isUnit_sub
+        (sub_ne_zero_of_ne (ne_of_lt horder.1)).isUnit
+    have hcopMinusPlus :
+        IsCoprime (X - C (xiMinus k)) (X - C (xiPlus k)) :=
+      isCoprime_X_sub_C_of_isUnit_sub
+        (sub_ne_zero_of_ne (ne_of_lt (horder.1.trans horder.2))).isUnit
+    have hcopZeroPlus :
+        IsCoprime (X - C xiZero) (X - C (xiPlus k)) :=
+      isCoprime_X_sub_C_of_isUnit_sub
+        (sub_ne_zero_of_ne (ne_of_lt horder.2)).isUnit
+    have hdvdMinusZero :
+        (X - C (xiMinus k)) * (X - C xiZero) ^ 2 ∣ p :=
+      hcopMinusZero.pow_right.mul_dvd hdvdMinus hdvdZero
+    have hcopProductPlus :
+        IsCoprime
+          ((X - C (xiMinus k)) * (X - C xiZero) ^ 2)
+          (X - C (xiPlus k)) :=
+      hcopMinusPlus.mul_left hcopZeroPlus.pow_left
+    have hdvd : rootQuartic k ∣ p := by
+      exact hcopProductPlus.mul_dvd hdvdMinusZero hdvdPlus
+    apply eq_leadingCoeff_mul_of_monic_of_dvd_of_natDegree_le
+      (rootQuartic_monic k) hdvd
+    simpa [rootQuartic_natDegree k] using hdeg
+
+/-- The nonbacktracking polynomial in degree `i` has degree at most `i`. -/
+theorem nbPoly_natDegree_le (k i : ℕ) :
+    (nbPoly k i).natDegree ≤ i := by
+  induction i using Nat.strong_induction_on with
+  | h i ih =>
+      rcases i with (_ | _ | _ | n)
+      · simp [nbPoly]
+      · simp [nbPoly]
+      · apply (natDegree_sub_le _ _).trans
+        simp
+      · rw [nbPoly_add_three]
+        apply (natDegree_sub_le _ _).trans
+        apply max_le
+        · calc
+            (X * nbPoly k (n + 2)).natDegree
+                ≤ X.natDegree + (nbPoly k (n + 2)).natDegree :=
+              natDegree_mul_le
+            _ ≤ 1 + (n + 2) := by
+              exact Nat.add_le_add (by simp) (ih (n + 2) (by omega))
+            _ = n + 3 := by omega
+        · calc
+            (C (((k - 1 : ℕ) : ℝ)) * nbPoly k (n + 1)).natDegree
+                ≤ (nbPoly k (n + 1)).natDegree :=
+              natDegree_C_mul_le _ _
+            _ ≤ n + 1 := ih (n + 1) (by omega)
+            _ ≤ n + 3 := by omega
+
+/-- If every coefficient in nonbacktracking degree at least five vanishes,
+then the represented polynomial has degree at most four. -/
+theorem polynomial_natDegree_le_four_of_high_coeff_zero
+    (k : ℕ) (c : Coefficients)
+    (hhigh : ∀ i, 5 ≤ i → c i = 0) :
+    (polynomial k c).natDegree ≤ 4 := by
+  classical
+  rw [polynomial]
+  apply natDegree_sum_le_of_forall_le
+  intro i hi
+  have hci : c i ≠ 0 := Finsupp.mem_support_iff.mp hi
+  have hi4 : i ≤ 4 := by
+    by_contra hnot
+    have hi5 : 5 ≤ i := by omega
+    exact hci (hhigh i hi5)
+  exact (natDegree_C_mul_le _ _).trans
+    ((nbPoly_natDegree_le k i).trans hi4)
+
+/-- Equality in the nonnegative slack sum forces every coefficient in
+degree at least five to vanish. -/
+theorem high_coeff_eq_zero_of_slack_sum_eq
+    (k : ℕ) (c : Coefficients)
+    (hc0 : 0 < c 0)
+    (hcoeff : ∀ i, 5 ≤ i → 0 ≤ c i)
+    (hmass : slack k 0 = ceiling k)
+    (hmoment : ∀ i, 1 ≤ i → i ≤ 4 → slack k i = 0)
+    (hslack : ∀ i, 5 ≤ i → 0 < slack k i)
+    (hsum :
+      c.sum (fun i a => a * slack k i) = ceiling k * c 0) :
+    ∀ i, 5 ≤ i → c i = 0 := by
+  classical
+  intro i hi5
+  by_contra hci
+  have hzero_mem : 0 ∈ c.support := by
+    simpa [Finsupp.mem_support_iff] using ne_of_gt hc0
+  have hi_mem : i ∈ c.support := by
+    simpa [Finsupp.mem_support_iff] using hci
+  have hi0 : i ≠ 0 := by omega
+  have hcomparison :
+      (∑ j ∈ c.support,
+          if j = 0 then c j * slack k j
+          else if j = i then c j * slack k j
+          else 0) ≤
+        ∑ j ∈ c.support, c j * slack k j := by
+    apply Finset.sum_le_sum
+    intro j hj
+    by_cases hj0 : j = 0
+    · simp [hj0]
+    by_cases hji : j = i
+    · simp [hji]
+    simp only [hj0, hji, ↓reduceIte]
+    by_cases hj4 : j ≤ 4
+    · have hj1 : 1 ≤ j := Nat.one_le_iff_ne_zero.mpr hj0
+      rw [hmoment j hj1 hj4]
+      simp
+    · have hj5 : 5 ≤ j := by omega
+      exact mul_nonneg (hcoeff j hj5) (le_of_lt (hslack j hj5))
+  have hleft :
+      (∑ j ∈ c.support,
+          if j = 0 then c j * slack k j
+          else if j = i then c j * slack k j
+          else 0) =
+        ceiling k * c 0 + c i * slack k i := by
+    calc
+      (∑ j ∈ c.support,
+          if j = 0 then c j * slack k j
+          else if j = i then c j * slack k j
+          else 0) =
+          (∑ j ∈ c.support,
+            if j = 0 then c j * slack k j else 0) +
+            ∑ j ∈ c.support,
+              if j = i then c j * slack k j else 0 := by
+                rw [← Finset.sum_add_distrib]
+                apply Finset.sum_congr rfl
+                intro j hj
+                by_cases hj0 : j = 0
+                · subst j
+                  simp [Ne.symm hi0]
+                · simp [hj0]
+      _ = ceiling k * c 0 + c i * slack k i := by
+            rw [Finset.sum_ite_eq', if_pos hzero_mem,
+              Finset.sum_ite_eq', if_pos hi_mem]
+            rw [hmass]
+            ring
+  rw [hleft] at hcomparison
+  change
+    ceiling k * c 0 + c i * slack k i ≤
+      c.sum (fun j a => a * slack k j) at hcomparison
+  rw [hsum] at hcomparison
+  have hci_nonneg := hcoeff i hi5
+  have hslack_pos := hslack i hi5
+  have hci_pos : 0 < c i :=
+    lt_of_le_of_ne hci_nonneg (Ne.symm hci)
+  have hproduct_pos : 0 < c i * slack k i :=
+    mul_pos hci_pos hslack_pos
+  linarith
+
+/-- Rigidity after the two equality quantities furnished by weak duality
+have been identified: equality of the slack sum and vanishing of the dual
+functional.  This theorem contains the complete complementary-slackness,
+interior-double-root, and quartic-factorization argument. -/
+theorem polynomial_eq_extremal_of_certificate_equalities
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c)
+    (hmass : slack k 0 = ceiling k)
+    (hmoment : ∀ i, 1 ≤ i → i ≤ 4 → slack k i = 0)
+    (hslack : ∀ i, 5 ≤ i → 0 < slack k i)
+    (hsum :
+      c.sum (fun i a => a * slack k i) = ceiling k * c 0)
+    (hdual : dual k (polynomial k c) = 0)
+    (hobjective :
+      (polynomial k c).eval (k : ℝ) = ceiling k * c 0) :
+    polynomial k c = C (c 0) * extremal k := by
+  have hhigh :=
+    high_coeff_eq_zero_of_slack_sum_eq k c hc.1 hc.2.1
+      hmass hmoment hslack hsum
+  have hdeg :=
+    polynomial_natDegree_le_four_of_high_coeff_zero k c hhigh
+  have horder := xiMinus_lt_xiZero_lt_xiPlus k hk
+  have hminus_mem : xiMinus k ∈ wowInterval k := by
+    simpa [wowInterval, xiMinus, xiPlus, delta] using
+      (show xiMinus k ∈ Set.Icc (xiMinus k) (xiPlus k) from
+        ⟨le_rfl, horder.1.le.trans horder.2.le⟩)
+  have hzero_mem : xiZero ∈ wowInterval k := by
+    simpa [wowInterval, xiMinus, xiPlus, delta] using
+      (show xiZero ∈ Set.Icc (xiMinus k) (xiPlus k) from
+        ⟨horder.1.le, horder.2.le⟩)
+  have hplus_mem : xiPlus k ∈ wowInterval k := by
+    simpa [wowInterval, xiMinus, xiPlus, delta] using
+      (show xiPlus k ∈ Set.Icc (xiMinus k) (xiPlus k) from
+        ⟨horder.1.le.trans horder.2.le, le_rfl⟩)
+  obtain ⟨hminus, hzero, hplus⟩ :=
+    support_roots_of_dual_eq_zero k hk (polynomial k c)
+      (hc.2.2 _ hminus_mem) (hc.2.2 _ hzero_mem)
+      (hc.2.2 _ hplus_mem) hdual
+  have hderiv :=
+    derivative_eval_xiZero_eq_zero_of_nonpos
+      k hk (polynomial k c) hc.2.2 hzero
+  have hfactor :=
+    eq_leadingCoeff_mul_rootQuartic
+      k hk (polynomial k c) hdeg hminus hzero hplus hderiv
+  let scale : ℝ :=
+    (polynomial k c).leadingCoeff * (6 * ((k : ℝ) + 2))
+  have hscalar :
+      polynomial k c = C scale * extremal k := by
+    rw [hfactor, rootQuartic_eq_scaled_extremal k hk]
+    simp [scale, mul_assoc]
+  have heval :
+      (polynomial k c).eval (k : ℝ) = scale * ceiling k := by
+    rw [hscalar]
+    simp [extremal_eval_at_degree]
+  have hceiling : 0 < ceiling k := by
+    have hkR : (4 : ℝ) ≤ (k : ℝ) := by exact_mod_cast hk
+    have hkp2 : 0 < (k : ℝ) + 2 := by linarith
+    have hkquad : 0 < (k : ℝ) ^ 2 + 3 := by positivity
+    exact div_pos (mul_pos hkp2 hkquad) (by norm_num)
+  have hscale : scale = c 0 := by
+    rw [heval] at hobjective
+    nlinarith
+  simpa [hscale] using hscalar
+
+/-- Equality in the sharp objective bound forces the unique normalized
+quartic optimizer.  All certificate hypotheses are discharged by the exact
+finite and all-degree tail theorems. -/
+theorem polynomial_eq_extremal_of_objective_eq
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c)
+    (hobjective :
+      (polynomial k c).eval (k : ℝ) = ceiling k * c 0) :
+    polynomial k c = C (c 0) * extremal k := by
+  have hsum_lower :=
+    ceiling_mul_le_slack_sum k hk c hc
+  have hdual_nonpos :=
+    dual_polynomial_nonpos k hk c hc
+  have hidentity :=
+    dual_add_eval_eq_slack_sum k c
+  have hsum_upper :
+      c.sum (fun i a => a * slack k i) ≤ ceiling k * c 0 := by
+    rw [← hidentity, hobjective]
+    linarith
+  have hsum :
+      c.sum (fun i a => a * slack k i) = ceiling k * c 0 :=
+    le_antisymm hsum_upper hsum_lower
+  have hdual : dual k (polynomial k c) = 0 := by
+    rw [hobjective, hsum] at hidentity
+    linarith
+  exact
+    polynomial_eq_extremal_of_certificate_equalities
+      k hk c hc
+      (slack_zero_eq_ceiling k hk)
+      (slack_eq_zero_of_one_le_of_le_four k · hk)
+      (all_slacks_positive k · hk)
+      hsum hdual hobjective
+
+/-- The explicit normalized optimizer attains equality in the objective. -/
+theorem objective_eq_of_polynomial_eq_extremal
+    (k : ℕ) (c : Coefficients)
+    (hpoly : polynomial k c = C (c 0) * extremal k) :
+    (polynomial k c).eval (k : ℝ) = ceiling k * c 0 := by
+  rw [hpoly]
+  simp [extremal_eval_at_degree, mul_comm]
+
+/-- Equality in the sharp bound is equivalent to being the explicit
+normalized extremal polynomial. -/
+theorem twoSidedLP_equality_iff
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c) :
+    ((polynomial k c).eval (k : ℝ) = ceiling k * c 0 ↔
+      polynomial k c = Polynomial.C (c 0) * extremal k) := by
+  constructor
+  · exact polynomial_eq_extremal_of_objective_eq k hk c hc
+  · exact objective_eq_of_polynomial_eq_extremal k c
+
+/-- Equality in the sharp objective determines the complete finitely
+supported coefficient family, not only the represented polynomial. -/
+theorem coefficients_eq_smul_extremalCoefficients_of_objective_eq
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c)
+    (hobjective :
+      (polynomial k c).eval (k : ℝ) = ceiling k * c 0) :
+    c = c 0 • extremalCoefficients k := by
+  apply polynomial_injective k
+  rw [polynomial_smul,
+    polynomial_extremalCoefficients k (by omega)]
+  exact polynomial_eq_extremal_of_objective_eq k hk c hc hobjective
+
+/-- The coefficient-level form of equality rigidity. -/
+theorem twoSidedLP_coefficient_equality_iff
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c) :
+    ((polynomial k c).eval (k : ℝ) = ceiling k * c 0 ↔
+      c = c 0 • extremalCoefficients k) := by
+  constructor
+  · exact
+      coefficients_eq_smul_extremalCoefficients_of_objective_eq
+        k hk c hc
+  · intro hcoeff
+    apply objective_eq_of_polynomial_eq_extremal
+    calc
+      polynomial k c =
+          polynomial k (c 0 • extremalCoefficients k) :=
+        congrArg (polynomial k) hcoeff
+      _ = C (c 0) * extremal k := by
+        rw [polynomial_smul,
+          polynomial_extremalCoefficients k (by omega)]
+
+/-- Manuscript-shaped rigidity: every equality case is a positive scalar
+multiple of the unique normalized finite coefficient family. -/
+theorem twoSidedLP_positive_ray_equality_iff
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c) :
+    ((polynomial k c).eval (k : ℝ) = ceiling k * c 0 ↔
+      ∃ a : ℝ, 0 < a ∧ c = a • extremalCoefficients k) := by
+  constructor
+  · intro hobjective
+    exact
+      ⟨c 0, hc.1,
+        coefficients_eq_smul_extremalCoefficients_of_objective_eq
+          k hk c hc hobjective⟩
+  · rintro ⟨a, ha, rfl⟩
+    rw [polynomial_smul,
+      polynomial_extremalCoefficients k (by omega)]
+    simp [extremal_eval_at_degree, mul_comm]
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPRigidity -/
+
+/-! BEGIN FLATTENED MODULE: Wow284.LPCeiling (lean/Wow284/LPCeiling.lean) -/
+section
+namespace Wow284.LP
+
+noncomputable section
+
+/-- Exact optimum and equality rigidity for the all-degree two-sided
+nonbacktracking linear program. -/
+theorem twoSidedLP_optimal_and_rigid
+    (k : ℕ) (hk : 4 ≤ k) (c : Coefficients)
+    (hc : Admissible k c) :
+    ceiling k * c 0 ≤ (polynomial k c).eval (k : ℝ) ∧
+      ((polynomial k c).eval (k : ℝ) = ceiling k * c 0 ↔
+        polynomial k c = Polynomial.C (c 0) * extremal k) :=
+  ⟨twoSidedLP_objective_ge k hk c hc, twoSidedLP_equality_iff k hk c hc⟩
+
+/-- Non-vacuous exact optimality and coefficient-level rigidity.  The first
+three conjuncts exhibit a normalized admissible optimizer.  The final
+conjunct gives the sharp universal lower bound and identifies every equality
+case with the corresponding positive scaling of that finite coefficient
+family. -/
+theorem twoSidedLP_exact_optimum_and_coefficient_rigidity
+    (k : ℕ) (hk : 4 ≤ k) :
+    Admissible k (extremalCoefficients k) ∧
+      extremalCoefficients k 0 = 1 ∧
+        (polynomial k (extremalCoefficients k)).eval (k : ℝ) = ceiling k ∧
+          ∀ c : Coefficients, Admissible k c →
+            ceiling k * c 0 ≤ (polynomial k c).eval (k : ℝ) ∧
+              ((polynomial k c).eval (k : ℝ) = ceiling k * c 0 ↔
+                c = c 0 • extremalCoefficients k) := by
+  refine
+    ⟨extremalCoefficients_admissible k (by omega), by simp, ?_, ?_⟩
+  · simpa using extremalCoefficients_attains k (by omega)
+  · intro c hc
+    exact
+      ⟨twoSidedLP_objective_ge k hk c hc,
+        twoSidedLP_coefficient_equality_iff k hk c hc⟩
+
+end
+
+end Wow284.LP
+end
+/-! END FLATTENED MODULE: Wow284.LPCeiling -/
 
 /-! BEGIN FLATTENED MODULE: Wow284.MooreThreshold (lean/Wow284/MooreThreshold.lean) -/
 section
@@ -21416,3 +23486,25 @@ section
 #print axioms Wow284.Induced42.counterexample_endpoint
 end
 /-! END FLATTENED MODULE: Wow284Generated3942Audit -/
+
+/-! BEGIN FLATTENED MODULE: Wow284LPAudit (lean/Wow284LPAudit.lean) -/
+section
+/-!
+Trust report for the exact all-degree two-sided nonbacktracking LP theorem.
+
+Compiling this file prints the transitive axioms used by the strict-slack,
+explicit optimizer, objective, polynomial and coefficient rigidity, and
+combined public endpoints.
+-/
+
+#print axioms Wow284.LP.all_slacks_positive
+#print axioms Wow284.LP.extremalCoefficients_admissible
+#print axioms Wow284.LP.extremalCoefficients_attains
+#print axioms Wow284.LP.twoSidedLP_objective_ge
+#print axioms Wow284.LP.twoSidedLP_equality_iff
+#print axioms Wow284.LP.twoSidedLP_coefficient_equality_iff
+#print axioms Wow284.LP.twoSidedLP_positive_ray_equality_iff
+#print axioms Wow284.LP.twoSidedLP_optimal_and_rigid
+#print axioms Wow284.LP.twoSidedLP_exact_optimum_and_coefficient_rigidity
+end
+/-! END FLATTENED MODULE: Wow284LPAudit -/
