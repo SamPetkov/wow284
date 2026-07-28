@@ -4,13 +4,17 @@ on:
   push:
     paths:
       - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
+      - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
+      - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
     paths:
       - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
+      - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
+      - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
@@ -44,15 +48,19 @@ jobs:
           fi
       - name: Install exact dependencies
         run: python -m pip install -r requirements.txt
-      - name: Run the independent exact audit
+      - name: Run the optimal-slack Gram audit
         run: python scripts/verify_optimal_slack_gram_unification.py
+      - name: Run the integral-collapse audit
+        run: python scripts/verify_integral_optimal_slack_collapse.py
       - name: Check source hygiene
         run: |
           python - <<'PY'
           from pathlib import Path
           for name in (
               "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
+              "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
               "scripts/verify_optimal_slack_gram_unification.py",
+              "scripts/verify_integral_optimal_slack_collapse.py",
               "scripts/clean_optimal_slack_note.py",
           ):
               data = Path(name).read_bytes()
