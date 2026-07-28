@@ -132,7 +132,7 @@ put
  r_{uw}=6\alpha_{uw}+\beta_{uw},
 \]
 
-where \(\alpha\) and \(eta\) count the five- and six-cycles through the
+where \(\alpha\) and \(\beta\) count the five- and six-cycles through the
 resulting two-path. Since \(F_2(u,w)=1\), \(F_3(u,w)=\alpha_{uw}\), and
 \(F_4(u,w)=\beta_{uw}\),
 
