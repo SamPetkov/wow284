@@ -3,8 +3,8 @@
 
 The script checks the project-derived algebra, the order-50 signed-root
 reduction, the neighbourhood inequality, and the arithmetic in the improved
-low-degree windows.  Its only external input is the classical classification
-of connected regular graphs with least eigenvalue at least -2 and more than 28
+low-degree windows. Its only external input is the classical classification of
+connected regular graphs with least eigenvalue at least -2 and more than 28
 vertices; every subsequent line-graph and cocktail-party exclusion is checked
 here exactly.
 """
@@ -66,10 +66,13 @@ def symbolic_audit() -> dict[str, str]:
     edge_entry = sigma + 6 * (2 * K - 1) + (20 - 8 * K)
     if sp.expand(edge_entry - (4 * K + 14 + sigma)) != 0:
         raise AssertionError("wrong edge entry")
+
+    # At distance two, F_2=1, F_3=alpha and F_4=beta. Equivalently,
+    # A^4_{uw}=3k-2+beta, not 4k-8+beta except at k=6.
     distance_two_entry = (
-        (4 * K - 8 + beta) + 6 * alpha + (15 - 2 * K)
+        (3 * K - 2 + beta) + 6 * alpha + (15 - 2 * K)
     )
-    if sp.expand(distance_two_entry - (2 * K + 7 + 6 * alpha + beta)) != 0:
+    if sp.expand(distance_two_entry - (K + 13 + 6 * alpha + beta)) != 0:
         raise AssertionError("wrong distance-two entry")
     if sp.expand((gamma + 6) - (6 + gamma)) != 0:
         raise AssertionError("wrong distance-three entry")
@@ -79,6 +82,7 @@ def symbolic_audit() -> dict[str, str]:
         "principal_value": str(principal),
         "trace_defect": str(trace),
         "nonprincipal_slack": str(slack),
+        "distance_two_constant": str(K + 13),
     }
 
 
@@ -167,13 +171,13 @@ def near_ceiling_audit() -> dict[str, object]:
         raise AssertionError("wrong k=7 diagonal")
     intervals = (
         integer_interval(k, n, 4 * k + 14),
-        integer_interval(k, n, 2 * k + 7),
+        integer_interval(k, n, k + 13),
         integer_interval(k, n, 6),
     )
-    if intervals != ([12, 13, 14], [33, 34, 35], [48, 49, 50]):
+    if intervals != ([12, 13, 14], [34, 35, 36], [48, 49, 50]):
         raise AssertionError("wrong k=7 intervals")
     values: set[int] = set()
-    for base, candidates in zip((4 * k + 14, 2 * k + 7, 6), intervals, strict=True):
+    for base, candidates in zip((4 * k + 14, k + 13, 6), intervals, strict=True):
         values.update(scaled_value(k, n, base, value, 19) for value in candidates[1:])
     if values != {8, -11}:
         raise AssertionError("wrong k=7 two-distance values")
@@ -195,14 +199,14 @@ def near_ceiling_audit() -> dict[str, object]:
         raise AssertionError("wrong k=8,n=110 diagonal")
     intervals = (
         integer_interval(k, n, 4 * k + 14),
-        integer_interval(k, n, 2 * k + 7),
+        integer_interval(k, n, k + 13),
         integer_interval(k, n, 6),
     )
-    if intervals != ([14, 15], [37, 38], [54, 55]):
+    if intervals != ([14, 15], [39, 40], [54, 55]):
         raise AssertionError("wrong k=8,n=110 intervals")
     remaining = {
         scaled_value(k, n, base, candidates[-1], 11)
-        for base, candidates in zip((4 * k + 14, 2 * k + 7, 6), intervals, strict=True)
+        for base, candidates in zip((4 * k + 14, k + 13, 6), intervals, strict=True)
     }
     if remaining != {-1} or 10 + 109 * (-1) == 0:
         raise AssertionError("k=8,n=110 row-sum contradiction failed")
@@ -214,13 +218,13 @@ def near_ceiling_audit() -> dict[str, object]:
         raise AssertionError("wrong k=8,n=109 diagonal")
     intervals = (
         integer_interval(k, n, 4 * k + 14),
-        integer_interval(k, n, 2 * k + 7),
+        integer_interval(k, n, k + 13),
         integer_interval(k, n, 6),
     )
-    if intervals != ([14, 15, 16], [37, 38, 39], [54, 55, 56]):
+    if intervals != ([14, 15, 16], [39, 40, 41], [54, 55, 56]):
         raise AssertionError("wrong k=8,n=109 intervals")
     values = set()
-    for base, candidates in zip((4 * k + 14, 2 * k + 7, 6), intervals, strict=True):
+    for base, candidates in zip((4 * k + 14, k + 13, 6), intervals, strict=True):
         values.update(scaled_value(k, n, base, value, 109) for value in candidates[1:])
     if values != {51, -58}:
         raise AssertionError("wrong k=8,n=109 two-distance values")
@@ -242,14 +246,14 @@ def near_ceiling_audit() -> dict[str, object]:
         raise AssertionError("wrong k=9,n=152 diagonal")
     intervals = (
         integer_interval(k, n, 4 * k + 14),
-        integer_interval(k, n, 2 * k + 7),
+        integer_interval(k, n, k + 13),
         integer_interval(k, n, 6),
     )
-    if intervals != ([16, 17], [41, 42], [60, 61]):
+    if intervals != ([16, 17], [44, 45], [60, 61]):
         raise AssertionError("wrong k=9,n=152 intervals")
     remaining = {
         scaled_value(k, n, base, candidates[-1], 38)
-        for base, candidates in zip((4 * k + 14, 2 * k + 7, 6), intervals, strict=True)
+        for base, candidates in zip((4 * k + 14, k + 13, 6), intervals, strict=True)
     }
     if remaining != {-5} or 33 + 151 * (-5) == 0:
         raise AssertionError("k=9,n=152 row-sum contradiction failed")
@@ -265,7 +269,7 @@ def order50_audit() -> dict[str, object]:
         raise AssertionError("wrong order-50 constants")
 
     raw_edge = integer_interval(k, n, 4 * k + 14)
-    dist2 = integer_interval(k, n, 2 * k + 7)
+    dist2 = integer_interval(k, n, k + 13)
     dist3 = integer_interval(k, n, 6)
     if raw_edge != [10, 11, 12, 13]:
         raise AssertionError("wrong raw edge interval")
@@ -280,7 +284,6 @@ def order50_audit() -> dict[str, object]:
     dist3_t = [44 - value for value in dist3]
     if edge_t != [0, -1] or dist2_t != [2, 1, 0, -1] or dist3_t != [2, 1, 0, -1]:
         raise AssertionError("wrong signed-root conversion")
-    # The value 2 is the forbidden equal-Gram-vector endpoint.
     if set(edge_t + dist2_t[1:] + dist3_t[1:]) != {-1, 0, 1}:
         raise AssertionError("signed entries are not {-1,0,1}")
 
