@@ -1,0 +1,70 @@
+name: Final arXiv audit export
+
+on:
+  pull_request:
+    paths:
+      - "main.tex"
+      - "references.bib"
+      - "main.bbl"
+      - "main.pdf"
+      - "arxiv/**"
+      - "CITATION.cff"
+      - "BUILD_VERIFICATION.txt"
+      - ".github/workflows/final-arxiv-audit-export.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  export-and-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install TeX and PDF inspection tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-bibtex-extra poppler-utils
+      - name: Compile canonical manuscript from source
+        run: |
+          build_dir="$(mktemp -d)"
+          cp main.tex references.bib "$build_dir"/
+          cd "$build_dir"
+          latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
+          ! grep -E "undefined citations|undefined references|There were undefined|Overfull \\hbox|Underfull \\hbox|Missing character" main.log
+          cp main.pdf "$GITHUB_WORKSPACE/final-audit-main.pdf"
+          cp main.log "$GITHUB_WORKSPACE/final-audit-main.log"
+      - name: Verify arXiv source archive in isolation
+        run: |
+          arxiv_dir="$(mktemp -d)"
+          unzip -q arxiv/wow284_arxiv_source.zip -d "$arxiv_dir"
+          cd "$arxiv_dir"
+          latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
+          ! grep -E "undefined citations|undefined references|There were undefined|Overfull \\hbox|Underfull \\hbox|Missing character" main.log
+          cmp main.pdf "$GITHUB_WORKSPACE/final-audit-main.pdf"
+      - name: Record PDF preflight data
+        run: |
+          pdfinfo final-audit-main.pdf > final-audit-pdfinfo.txt
+          pdffonts final-audit-main.pdf > final-audit-pdffonts.txt
+          pdftotext -layout final-audit-main.pdf final-audit-text.txt
+          test "$(pdfinfo final-audit-main.pdf | awk '/^Pages:/ {print $2}')" = "19"
+          grep -F "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284" final-audit-text.txt
+          grep -F "samuil.petkov@phys.ens.psl.eu" final-audit-text.txt
+      - name: Upload exact submission audit bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: wow284-final-arxiv-audit-bundle
+          path: |
+            main.tex
+            references.bib
+            main.bbl
+            main.pdf
+            final-audit-main.pdf
+            final-audit-main.log
+            final-audit-pdfinfo.txt
+            final-audit-pdffonts.txt
+            final-audit-text.txt
+            arxiv/wow284_arxiv_source.zip
+            CITATION.cff
+            BUILD_VERIFICATION.txt
+          if-no-files-found: error
