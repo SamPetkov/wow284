@@ -24,11 +24,7 @@ def replace_once(text: str, old: str, new: str, label: str) -> str:
 def revise_tex(path: Path) -> None:
     text = path.read_text(encoding="utf-8")
     replacements = [
-        (
-            r"\newcommand{\RepoTag}{v2.2.1}",
-            r"\newcommand{\RepoTag}{v2.2.2}",
-            "release tag",
-        ),
+        (r"\newcommand{\RepoTag}{v2.2.1}", r"\newcommand{\RepoTag}{v2.2.2}", "release tag"),
         (
             "Our contribution is the specialization to\n"
             "the two-sided WOW window, the exact method ceiling, the edge-local cycle\n"
@@ -100,11 +96,7 @@ def revise_tex(path: Path) -> None:
             "\\(11/6>-1+\\sqrt8\\), contradicting the\n",
             "degree-five compression explanation",
         ),
-        (
-            r"\sum_{a\in U,b\in V}d(a,b)\ge2k^2+k.",
-            r"\sum_{a\in U,b\in V}d_G(a,b)\ge2k^2+k.",
-            "distance notation",
-        ),
+        (r"\sum_{a\in U,b\in V}d(a,b)\ge2k^2+k.", r"\sum_{a\in U,b\in V}d_G(a,b)\ge2k^2+k.", "distance notation"),
         (
             "Thus increasing the polynomial degree cannot improve this one-variable LP\n"
             "bound.  If the nonprincipal spectrum lies in the interior of \\(I_k\\), then\n"
@@ -115,16 +107,8 @@ def revise_tex(path: Path) -> None:
             "\\(n<B_k\\).",
             "LP graph consequence",
         ),
-        (
-            r"order-\(50\) Hoffman--Singleton graph",
-            r"order \(50\) Hoffman--Singleton graph",
-            "order typography",
-        ),
-        (
-            "Hence \\(a-b-c-a'\\) is a surviving path.  Hence\n",
-            "Hence \\(a-b-c-a'\\) is a surviving path, and therefore\n",
-            "duplicated Hence",
-        ),
+        (r"order-\(50\) Hoffman--Singleton graph", r"order \(50\) Hoffman--Singleton graph", "order typography"),
+        ("Hence \\(a-b-c-a'\\) is a surviving path.  Hence\n", "Hence \\(a-b-c-a'\\) is a surviving path, and therefore\n", "duplicated Hence"),
         (
             "The residual adjacency trace is \\(k-2\\), giving \\(a_\\pm\\).  The residual\n"
             "negative root is greater than \\(-2-\\sqrt{k}\\), and the same is true of the\n"
@@ -146,21 +130,13 @@ def revise_tex(path: Path) -> None:
             r"\mathcal M_\pi=\bigl\{\{P_{i,j},Q_{\pi(i),i\pi(i)+j}\}:i,j\in\F\bigr\}",
             "matching as unordered edges",
         ),
-        (
-            "Representative axiom reports contain only\n",
-            "The public endpoint axiom reports contain only\n",
-            "axiom wording",
-        ),
+        ("Representative axiom reports contain only\n", "The public endpoint axiom reports contain only\n", "axiom wording"),
         (
             r"\section{Characteristic polynomials for the smallest explicit descendants}",
             r"\section{Characteristic polynomials for the order-39 and order-38 descendants}",
             "appendix title",
         ),
-        (
-            r"and correspond to release \texttt{v2.2.1}.",
-            r"and correspond to release \texttt{v2.2.2}.",
-            "release prose",
-        ),
+        (r"and correspond to release \texttt{v2.2.1}.", r"and correspond to release \texttt{v2.2.2}.", "release prose"),
     ]
     for old, new, label in replacements:
         text = replace_once(text, old, new, f"{path}: {label}")
@@ -217,9 +193,15 @@ No theorem statement or numerical certificate is weakened by these corrections.
 
 
 def main() -> None:
+    marker_old = r"\newcommand{\RepoTag}{v2.2.1}"
+    marker_new = r"\newcommand{\RepoTag}{v2.2.2}"
+    canonical = (ROOT / "main.tex").read_text(encoding="utf-8")
+    if marker_new in canonical and marker_old not in canonical:
+        print("final arXiv line-review corrections: already applied")
+        return
+
     revise_tex(ROOT / "main.tex")
     revise_tex(ROOT / "v22" / "main.tex")
-
     for relative in (
         "CITATION.cff",
         "README.md",
@@ -232,7 +214,6 @@ def main() -> None:
         "scripts/audit_v22_manuscript.py",
     ):
         bump_current_text(ROOT / relative)
-
     update_source_ledger()
     write_release_notes()
     print("final arXiv line-review corrections: PASS")
