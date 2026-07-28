@@ -11,6 +11,7 @@ on:
       - "CITATION.cff"
       - "BUILD_VERIFICATION.txt"
       - "scripts/apply_final_arxiv_line_review.py"
+      - "scripts/run_final_arxiv_line_review.py"
       - ".github/workflows/final-arxiv-audit-export.yml"
   workflow_dispatch:
 
@@ -27,14 +28,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Capture pre-application repository snapshot
-        run: |
-          tar --exclude=.git --exclude=wow284-pre-application-snapshot.tar.gz \
-            -czf wow284-pre-application-snapshot.tar.gz .
       - name: Apply final line-review corrections
         run: |
           set -o pipefail
-          python scripts/apply_final_arxiv_line_review.py 2>&1 | tee final-line-review-apply.log
+          python scripts/run_final_arxiv_line_review.py 2>&1 | tee final-line-review-apply.log
       - name: Install exact, TeX, and document dependencies
         run: |
           python -m pip install -r requirements.txt -r requirements-dev.txt
@@ -91,11 +88,10 @@ jobs:
           grep -F "Title:           Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284" final-audit-pdfinfo.txt
           grep -F "samuil.petkov@phys.ens.psl.eu" final-audit-text.txt
           test "$(pdffonts final-audit-main.pdf | awk 'NR>2 && $4 != "yes" {count++} END {print count+0}')" = "0"
-      - name: Capture post-application repository snapshot
+      - name: Capture final repository snapshot
         run: |
-          tar --exclude=.git --exclude=wow284-post-application-snapshot.tar.gz \
-            --exclude=wow284-pre-application-snapshot.tar.gz \
-            -czf wow284-post-application-snapshot.tar.gz .
+          tar --exclude=.git --exclude=wow284-final-audit-snapshot.tar.gz \
+            -czf wow284-final-audit-snapshot.tar.gz . || test $? = 1
       - name: Upload exact submission audit bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -118,6 +114,5 @@ jobs:
             arxiv/wow284_arxiv_source.zip
             CITATION.cff
             BUILD_VERIFICATION.txt
-            wow284-pre-application-snapshot.tar.gz
-            wow284-post-application-snapshot.tar.gz
+            wow284-final-audit-snapshot.tar.gz
           if-no-files-found: warn
