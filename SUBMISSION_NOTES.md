@@ -12,7 +12,7 @@
 
 **MSC class:** `05C50; 05C12; 05C35; 05E30`
 
-**Comments:** 20 pages. Corresponds to GitHub release `v2.2.2`.
+**Comments:** 21 pages. Corresponds to GitHub release `v2.2.2`.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
@@ -35,13 +35,15 @@
 > Consequently every regular strict counterexample has degree at least six and
 > diameter at most four, while diameter four forces degree at least ten. We
 > solve the associated one-variable nonbacktracking linear program exactly,
-> including optimizer rigidity; an edge-local form excludes degree-six order
-> $51$, so degree-six counterexamples have order at most $50$. We also
+> including optimizer rigidity; an edge-local cycle-divisibility sieve
+> excludes degree-six order $51$, so degree-six counterexamples have order at
+> most $50$. We also
 > determine the distance spectra of one- and two-vertex punctures of Moore
-> graphs and prove deletion stability: every deletion of at most five vertices
-> from the Hoffman--Singleton graph remains a strict counterexample, whereas an
-> explicit six-vertex deletion does not. All theorem-level computations use
-> exact arithmetic. Lean 4.31 kernel-checks the full $50$-vertex proof, finite
+> graphs and establish a uniform deletion-stability bound: every deletion of
+> at most five vertices from the Hoffman--Singleton graph remains a strict
+> counterexample, whereas an explicit six-vertex deletion does not. All
+> theorem-level computations use exact arithmetic. Lean 4.31 kernel-checks the
+> full $50$-vertex proof, finite
 > spectral certificates at orders $38,39,40,42$, and the analytic LP optimum
 > and rigidity for every integer $k\ge4$.
 

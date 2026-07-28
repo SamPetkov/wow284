@@ -12,9 +12,12 @@ PASS  Explicit counterexamples of orders 38, 39, 40, 42, and 50.
 PASS  Regular diameter-three score identity and Moore-graph threshold.
 PASS  Regular degree and diameter obstructions, including the degree-six
       order-50 ceiling and the diameter-four degree lower bound.
+PASS  General edge-cycle divisibility sieve, including the degree-six
+      order-51 and degree-eight order-111 exclusions.
 PASS  Exact all-degree one-variable nonbacktracking LP optimum and rigidity.
 PASS  One- and two-vertex punctured-Moore spectra, deletion stability,
-      small-puncture normal form, and Hoffman--Singleton deletion radius.
+      small-puncture normal form, uniform deletion bound, and sharp
+      Hoffman--Singleton deletion radius.
 PASS  Every theorem-level computational certificate cited in main.tex uses
       exact arithmetic. The separately labelled three-vertex screen remains
       exploratory and is not used as a theorem.
@@ -78,7 +81,7 @@ MANUSCRIPT AND PDF
 PASS  Clean multi-pass LaTeX/BibTeX build with no unresolved citations or
       references, no overfull/underfull boxes, and no missing glyphs.
 PASS  PDF metadata carries the expanded v2.2 title and Samuil Petkov as author.
-PASS  PDF page count: 20.
+PASS  PDF page count: 21.
 PASS  A4 paper with the explicit one-inch geometry setting.
 PASS  References begin on a fresh page.
 PASS  Canonical root TeX/Bib, arXiv mirrors, Markdown reading copy, PDF, BBL,

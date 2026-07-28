@@ -50,7 +50,7 @@ punctured-Moore and deletion theorems remain analytic rather than Lean claims.
 
 ## AI assistance
 
-OpenAI's ChatGPT assisted with adversarial proof checking, proof
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
 exploration, and Lean formalization. No AI system is named as an author.
 Samuil Petkov accepts full responsibility for all mathematical,
 bibliographic, legal, and submission claims.
@@ -58,9 +58,10 @@ bibliographic, legal, and submission claims.
 ## Limits
 
 The exact scripts and audit documents are reproducibility aids, not external
-peer review. The source search is targeted and cannot establish absolute
-priority or absence from unpublished communications. The repository therefore
-avoids a first-discovery claim and makes no minimality claim.
+peer review. The manuscript's single priority statement is expressly
+qualified by ``to the author's knowledge'' and is anchored to the preserved
+source dated 19 July 2026; it does not assert knowledge of unpublished
+communications. No minimum-order or classification claim is made.
 
 The Lean 4.31 development is recorded separately from the analytic and exact
 Python proofs. The explicit 50-vertex certificate is a complete graph-level

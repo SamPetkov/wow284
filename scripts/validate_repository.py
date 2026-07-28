@@ -111,8 +111,17 @@ def main() -> None:
     require(r"\newcommand{\RepoTag}{v2.2.2}" in tex, "v2.2 release tag missing")
     require("WOW-284 asserts" in tex, "conjecture verb is not the requested wording")
     require(
-        "OpenAI's ChatGPT assisted" in tex,
+        "OpenAI ChatGPT-5.6 Sol Pro assisted" in tex,
         "requested AI disclosure missing",
+    )
+    require(
+        tex.count("first proof that WOW-284 is false") == 1,
+        "qualified priority statement must appear exactly once",
+    )
+    require(
+        r"\label{cor:edge-cycle-sieve}" in tex
+        and r"\label{cor:uniform-deletion}" in tex,
+        "v2.2.2 structural corollaries are missing",
     )
     require(
         r"correspond to release \texttt{v2.2.2}" in tex,

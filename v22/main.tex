@@ -104,13 +104,15 @@ diameter three, we prove
 Consequently every regular strict counterexample has degree at least six and
 diameter at most four, while diameter four forces degree at least ten.  We
 solve the associated one-variable nonbacktracking linear program exactly,
-including optimizer rigidity; an edge-local form excludes degree-six order
-\(51\), so degree-six counterexamples have order at most \(50\).  We also
+including optimizer rigidity; an edge-local cycle-divisibility sieve excludes
+degree-six order \(51\), so degree-six counterexamples have order at most
+\(50\).  We also
 determine the distance spectra of one- and two-vertex punctures of Moore
-graphs and prove deletion stability: every deletion of at most five vertices
-from the Hoffman--Singleton graph remains a strict counterexample, whereas an
-explicit six-vertex deletion does not.  All theorem-level computations use
-exact arithmetic.  Lean 4.31 kernel-checks the full \(50\)-vertex proof,
+graphs and establish a uniform deletion-stability bound: every deletion of at
+most five vertices from the Hoffman--Singleton graph remains a strict
+counterexample, whereas an explicit six-vertex deletion does not.  All
+theorem-level computations use exact arithmetic.  Lean 4.31 kernel-checks the
+full \(50\)-vertex proof,
 finite spectral certificates at orders \(38,39,40,42\), and the analytic LP
 optimum and rigidity for every integer \(k\ge4\).
 \end{abstract}
@@ -194,7 +196,8 @@ has exact ceiling
 with a unique optimizer up to positive scaling; see
 Theorem~\ref{thm:lp-ceiling}.
 \item The LP ceiling gives \(n\le51\) at degree six.  An edge-local
-positive-semidefinite certificate then rules out \(n=51\) by the congruence
+positive-semidefinite certificate yields a general cycle-divisibility sieve
+and rules out \(n=51\) by the congruence
 \[
  5N_5=153\cdot11=1683,
 \]
@@ -207,17 +210,28 @@ remains a strict counterexample, and this universal radius is sharp; see
 Theorem~\ref{thm:hs-radius}.
 \end{itemize}
 
+The proofs form two complementary hierarchies.  In the obstruction direction,
+the distance-polynomial identity converts WOW-284 into a shifted adjacency
+window; scalar trace moments give the one-point LP ceiling;
+\(2\times2\) principal minors localize that certificate to edge--cycle
+counts; and \(3\times3\) minors impose the two-path constraints at order
+fifty.  In the stability direction, deleting vertices from a Moore graph
+produces an explicit Gram-type correction to the distance matrix.
+Invariant-subspace decompositions then give exact puncture spectra, while
+orbitwise positive-definiteness certificates determine the sharp
+Hoffman--Singleton deletion radius.
+
 The distance-polynomial viewpoint is established in the theory of minimal
 cages, distance-polynomial graphs, and spectral excess
 \cite{HowladerPanigrahi2022,Fiol2016}.  Nonbacktracking linear-programming
 bounds are due to Nozaki and related spectral-Moore work
 \cite{Nozaki2015,CioabaEtAl2016}.  Our contribution is the specialization to
 the two-sided WOW window, the exact method ceiling, the edge-local cycle
-certificate, and the deletion theory developed below.  The paper gives a
-self-contained refutation and a Lean formalization of its principal finite
-and optimization certificates.  We make no priority claim, and we do not
-claim that order \(38\) is minimum or that the constructions classify all
-counterexamples.
+certificate, and the deletion theory developed below.  Completed in its
+original counterexample form on 19 July 2026, this work is, to the author's
+knowledge, the first proof that WOW-284 is false and the first Lean
+formalization of such a refutation.  We do not claim that order \(38\) is
+minimum or that the constructions classify all counterexamples.
 The literature boundaries are returned to in Section~\ref{sec:scope}.
 
 The analytic arguments are proved in the text.  Precisely specified finite
@@ -598,10 +612,22 @@ A diametral geodesic in diameter four yields the principal submatrix
 \(D(P_5)\), whose factor \(x^2+6x+4\) supplies the eigenvalue
 \(-3-\sqrt5<-5\); Cauchy interlacing excludes this case.  In diameter
 three, Meringer's lower bound and Theorem~\ref{thm:lp-ceiling} leave
-\(n\in\{30,31,32\}\), and parity removes \(31\).  At \(n=32\), the
-normalized distance-layer compression is monotone in the average internal
-degree of the distance-two layer.  At the smallest feasible value, its
-nonprincipal factor is
+\(n\in\{30,31,32\}\), and parity removes \(31\).  At \(n=32\), write
+\(a\) for the average internal degree of the distance-two layer.
+This layer has \(20\) vertices, each with one neighbour in the first layer,
+so the number of edges from the second to the six-vertex third layer is
+\(20(4-a)\le6\cdot5\); hence \(a\ge5/2\).  In the symmetric normalized layer
+compression, the derivative of the only \(a\)-dependent block is
+\[
+ \begin{pmatrix}1&-\sqrt r\\-\sqrt r&r\end{pmatrix}
+ =
+ \begin{pmatrix}1\\-\sqrt r\end{pmatrix}
+ \begin{pmatrix}1&-\sqrt r\end{pmatrix}\succeq0,
+ \qquad r=\frac{5\cdot4}{6}.
+\]
+Thus every ordered compression eigenvalue is nondecreasing in \(a\).
+At the smallest feasible value \(a=5/2\), the relevant nonprincipal
+factor is
 \[
  p_{5,6}(x)=4x^3+10x^2-16x-30,
  \qquad p_{5,6}(11/6)=-29/27<0.
@@ -949,6 +975,43 @@ directions, and radius-two bijection are independently checked by
 \codefile{scripts/verify_proof_audit_01_edge_local.py}.
 \end{proof}
 
+\begin{corollary}[Edge--cycle divisibility sieve]
+\label{cor:edge-cycle-sieve}
+Under the hypotheses of Proposition~\ref{prop:edge-cycle}, put
+\[
+ L_{k,n}=\max\{2k-2,\;2k^2-2k+2-n\},
+ \qquad
+ U_{k,n}=\frac{2(k+2)^2(k^2+3)}{n}-10k-26.
+\]
+Necessarily
+\[
+ \boxed{\lceil L_{k,n}\rceil\le\lfloor U_{k,n}\rfloor.}
+\]
+If both sides equal an integer \(s\), then every edge of \(G\) lies in
+exactly \(s\) five-cycles and
+\[
+ \boxed{5\mid \frac{skn}{2}.}
+\]
+\end{corollary}
+
+\begin{proof}
+Writing \(n=k^2+1+c\), the two lower bounds in
+Proposition~\ref{prop:edge-cycle} combine to
+\[
+ \sigma_{uv}\ge
+ \max\{2k-2,(k-1)^2-c\}=L_{k,n},
+\]
+while its upper bound is \(U_{k,n}\).  Since \(\sigma_{uv}\) is an integer,
+the first conclusion follows.  If the two integer bounds coincide at \(s\),
+then \(\sigma_{uv}=s\) for every edge.  Counting edge--five-cycle incidences
+gives
+\[
+ 5N_5=\sum_{uv\in E(G)}\sigma_{uv}
+ =s|E(G)|=\frac{skn}{2},
+\]
+which proves the divisibility condition.
+\end{proof}
+
 \begin{theorem}\label{thm:degree-six-fifty}
 Every connected \(6\)-regular strict counterexample to WOW-284 has order at
 most \(50\).
@@ -967,13 +1030,8 @@ Moore bound, hence order \(37\) and adjacency characteristic polynomial
 \((x-6)(x^2+x-5)^{18}\); its root sum is \(-12\), contradicting
 \(\tr A=0\).  The LP ceiling gives \(n\le51\).
 
-Assume \(n=51\), so \(c=14\).  Proposition~\ref{prop:edge-cycle} gives, for
-every edge,
-\[
- 11\le\sigma_{uv}\le\frac{202}{17}<12.
-\]
-Hence \(\sigma_{uv}=11\).  The graph has \(153\) edges, and counting incidences
-between edges and \(5\)-cycles gives
+Assume \(n=51\).  Corollary~\ref{cor:edge-cycle-sieve} has
+\(\lceil L_{6,51}\rceil=\lfloor U_{6,51}\rfloor=11\), and hence requires
 \[
  5N_5=153\cdot11=1683,
 \]
@@ -999,8 +1057,8 @@ the handshake lemma makes \(n\) even, so \(n\le76\).  At \(k=8\) and
 \(k=9\), the Moore multiplicities are nonintegral, so diameter two is
 impossible.  The LP ceiling gives \(n\le111\) for \(k=8\) and
 \(n\le153\) for \(k=9\); parity improves the latter to \(152\).  Finally,
-at \(k=8,n=111\), the edge-local bounds force every edge into exactly
-\(14\) five-cycles, but
+at \(k=8,n=111\), Corollary~\ref{cor:edge-cycle-sieve} has
+\(\lceil L_{8,111}\rceil=\lfloor U_{8,111}\rfloor=14\), but it would require
 \[
  5N_5=14\cdot444=6216
 \]
@@ -1439,6 +1497,48 @@ step are independently checked by
 \codefile{scripts/verify_proof_audit_12_small_puncture.py}.
 \end{proof}
 
+\begin{corollary}[Uniform deletion stability]
+\label{cor:uniform-deletion}
+Under the hypotheses of Theorem~\ref{thm:small-puncture}, put
+\[
+ t_x=|N_M(x)\cap S|,
+ \qquad
+ \tau(S)=\max_{x\in V(M-S)}t_x.
+\]
+Then
+\[
+ \boxed{
+ \Phi(M-S)\ge
+ k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}-\tau(S).
+ }
+\]
+In particular, the deletion is a strict counterexample whenever the
+right-hand side is positive.  Since \(\tau(S)\le s\), every deletion of
+\(s\) vertices is strict whenever
+\[
+ \boxed{
+ s\left(1+\frac1k\right)
+ <k-\frac{3+\sqrt{4k-3}}2.
+ }
+\]
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:small-puncture}, the distance-increase matrix is
+\[
+ E_S=BB^{\mathsf T}-\operatorname{diag}(t_x).
+\]
+Since \(BB^{\mathsf T}\succeq0\) and
+\(\operatorname{diag}(t_x)\preceq\tau(S)I\), one has
+\(\lambda_{\min}(E_S)\ge-\tau(S)\).  The parent Moore graph has score
+\[
+ \Phi(M)=k-\frac{3+\sqrt{4k-3}}2,
+\]
+and Theorem~\ref{thm:small-puncture} shows that deletion lowers the minimum
+dual degree by \(s/k\).  Proposition~\ref{prop:deletion-stability} now gives
+the first bound.  The second follows from \(\tau(S)\le s\).
+\end{proof}
+
 \begin{theorem}[Hoffman--Singleton robustness radius]\label{thm:hs-radius}
 Let \(M\) be the Hoffman--Singleton graph.  Every induced graph \(M-S\) with
 \(|S|\le5\) is a strict counterexample to WOW-284.  This is sharp in the
@@ -1451,9 +1551,11 @@ Theorem~\ref{thm:small-puncture} gives
 \[
  \delta^*(M-S)=\frac{49-|S|}{7}.
 \]
-Two explicitly stored permutations are verified edge-by-edge as automorphisms
-of the coordinate graph; the group they generate has order \(252000\).  Their
-orbits on deletion sets of sizes \(0,1,2,3,4,5\) have counts
+Corollary~\ref{cor:uniform-deletion} already proves strictness uniformly for
+\(|S|\le2\).  To obtain the sharp universal radius, two explicitly stored
+permutations are verified edge-by-edge as automorphisms of the coordinate
+graph; the group they generate has order \(252000\).  Their orbits on
+deletion sets of sizes \(0,1,2,3,4,5\) have counts
 \[
  1,1,2,4,11,33.
 \]
@@ -1732,8 +1834,8 @@ at each fixed degree.
 the metric normal form of Theorem~\ref{thm:small-puncture}?
 \end{enumerate}
 
-OpenAI's ChatGPT assisted with adversarial proof checking, proof exploration,
-and Lean formalization.  No AI system is an
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
+exploration, and Lean formalization.  No AI system is an
 author.  The author assumes full responsibility for the mathematics,
 attribution, and conclusions.  The source, exact certificates, and build
 instructions are available at

@@ -1,5 +1,4 @@
 .gitattributes
-.github/workflows/final-arxiv-audit-export.yml
 .github/workflows/literature-audit-validation.yml
 .github/workflows/materialize-v22.yml
 .github/workflows/proof-audit-10.yml
@@ -346,9 +345,6 @@ scripts/.v22-bootstrap/main.03
 scripts/.v22-bootstrap/main.04
 scripts/.v22-bootstrap/main.05
 scripts/.v22-bootstrap/main.06
-scripts/align_final_arxiv_validators.py
-scripts/apply_final_arxiv_line_review.py
-scripts/apply_final_arxiv_line_review_last.py
 scripts/audit_no_float_proof_paths.py
 scripts/audit_v22_manuscript.py
 scripts/build_lp_online_bundle.py
@@ -375,7 +371,6 @@ scripts/materialize_v22_bootstrap.py
 scripts/revise_v22_manuscript.py
 scripts/revise_v22_second_pass.py
 scripts/revise_v22_third_pass.py
-scripts/run_final_arxiv_line_review.py
 scripts/static_lean_audit.py
 scripts/sync_manuscript_artifacts.py
 scripts/validate_lp_formalization.py

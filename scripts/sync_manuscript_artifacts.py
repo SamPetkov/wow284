@@ -29,7 +29,7 @@ ARXIV_DIR = ROOT / "arxiv"
 ARXIV_ZIP = ARXIV_DIR / "wow284_arxiv_source.zip"
 BUILD_REPORT = ROOT / "BUILD_VERIFICATION.txt"
 SUBMISSION_NOTES = ROOT / "SUBMISSION_NOTES.md"
-V22_BBL = ROOT / "v22" / "main.bbl"
+V22_DIR = ROOT / "v22"
 
 RELEASE_TITLE = (
     "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
@@ -226,9 +226,9 @@ def copy_mirrors() -> None:
     ARXIV_DIR.mkdir(parents=True, exist_ok=True)
     for source, destination in ARXIV_MIRRORS.items():
         shutil.copy2(source, destination)
-    # The bootstrap's historical BBL is not authoritative. Refresh the
-    # staging copy only from the newly generated canonical bibliography.
-    shutil.copy2(CANONICAL_BBL, V22_BBL)
+    V22_DIR.mkdir(parents=True, exist_ok=True)
+    for source in (CANONICAL_TEX, CANONICAL_BIB, CANONICAL_BBL):
+        shutil.copy2(source, V22_DIR / source.name)
 
 
 def make_arxiv_archive() -> None:
@@ -272,7 +272,7 @@ def validate_release_text() -> None:
         "pdfkeywords={distance spectrum, dual degree, Moore graph}",
         rf"\newcommand{{\RepoTag}}{{{RELEASE_TAG}}}",
         "WOW-284 asserts",
-        "OpenAI's ChatGPT assisted",
+        "OpenAI ChatGPT-5.6 Sol Pro assisted",
         r"\section{Moment bounds and the exact LP ceiling}",
         r"\begin{theorem}[Exact LP ceiling and rigidity]",
         "the analytic LP\noptimum and rigidity for every integer \\(k\\ge4\\)",
@@ -282,12 +282,17 @@ def validate_release_text() -> None:
         r"the trace interpretation of the \(F_i(A)\)",
         r"\section{Distance spectra of punctured Moore graphs}",
         r"\section{Small punctures and exact Hoffman--Singleton robustness}",
+        r"\label{cor:edge-cycle-sieve}",
+        r"\label{cor:uniform-deletion}",
+        "first proof that WOW-284 is false",
         r"\clearpage",
         r"correspond to release \texttt{v2.2.2}",
     ]
     missing = [item for item in required if item not in text]
     if missing:
         raise RuntimeError(f"canonical TeX is missing required release wording: {missing}")
+    if text.count("first proof that WOW-284 is false") != 1:
+        raise RuntimeError("the qualified priority statement must appear exactly once")
     forbidden = [
         r"\today",
         "first counterexample",
@@ -420,8 +425,10 @@ def check() -> None:
     for source, destination in ARXIV_MIRRORS.items():
         if source.read_bytes() != destination.read_bytes():
             raise RuntimeError(f"arXiv mirror is stale: {destination.relative_to(ROOT)}")
-    if CANONICAL_BBL.read_bytes() != V22_BBL.read_bytes():
-        raise RuntimeError("v22/main.bbl is not the regenerated canonical bibliography")
+    for source in (CANONICAL_TEX, CANONICAL_BIB, CANONICAL_BBL):
+        destination = V22_DIR / source.name
+        if source.read_bytes() != destination.read_bytes():
+            raise RuntimeError(f"v22/{source.name} is not synchronized")
     page_count = pdf_page_count(CANONICAL_PDF)
     submission = SUBMISSION_NOTES.read_text(encoding="utf-8")
     if f"**Comments:** {page_count} pages." not in submission:
