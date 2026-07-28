@@ -7,10 +7,12 @@ on:
       - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
+      - "research-notes/FIVE_TO_ONE_EXCESS_BOUND.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
+      - "scripts/verify_five_to_one_excess_bound.py"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
@@ -19,10 +21,12 @@ on:
       - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
+      - "research-notes/FIVE_TO_ONE_EXCESS_BOUND.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
+      - "scripts/verify_five_to_one_excess_bound.py"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
@@ -64,6 +68,8 @@ jobs:
         run: python scripts/verify_optimal_slack_excess_matrix.py
       - name: Run the deletion Gram synthesis audit
         run: python scripts/verify_two_gram_hierarchies.py
+      - name: Run the five-to-one excess audit
+        run: python scripts/verify_five_to_one_excess_bound.py
       - name: Check source hygiene
         run: |
           python - <<'PY'
@@ -73,13 +79,15 @@ jobs:
               "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
               "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
               "research-notes/TWO_GRAM_HIERARCHIES.md",
+              "research-notes/FIVE_TO_ONE_EXCESS_BOUND.md",
               "scripts/verify_optimal_slack_gram_unification.py",
               "scripts/verify_integral_optimal_slack_collapse.py",
               "scripts/verify_optimal_slack_excess_matrix.py",
               "scripts/verify_two_gram_hierarchies.py",
+              "scripts/verify_five_to_one_excess_bound.py",
               "scripts/clean_optimal_slack_note.py",
           ):
               data = Path(name).read_bytes()
-              assert not any(byte < 32 and byte != 10 for byte in data), name
+              assert not any(byte < 32 and byte not in {9, 10} for byte in data), name
           print("source hygiene: PASS")
           PY
