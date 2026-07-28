@@ -2,7 +2,7 @@
 """Apply the final line-by-line arXiv corrections and prepare release v2.2.2.
 
 This is fail-closed: each mathematical/prose replacement must occur exactly
-once in both canonical TeX copies.  Release metadata is then advanced from
+once in both canonical TeX copies. Release metadata is then advanced from
 v2.2.1 to v2.2.2 without rewriting the historical v2.2.1 release notes.
 """
 from __future__ import annotations
@@ -115,8 +115,16 @@ def revise_tex(path: Path) -> None:
             "\\(n<B_k\\).",
             "LP graph consequence",
         ),
-        (r"order-\(50\) Hoffman--Singleton graph", r"order \(50\) Hoffman--Singleton graph", "order typography"),
-        ("Hence \\(a-b-c-a'\\) is a surviving path.  Hence\n", "Hence \\(a-b-c-a'\\) is a surviving path, and therefore\n", "duplicated Hence"),
+        (
+            r"order-\(50\) Hoffman--Singleton graph",
+            r"order \(50\) Hoffman--Singleton graph",
+            "order typography",
+        ),
+        (
+            "Hence \\(a-b-c-a'\\) is a surviving path.  Hence\n",
+            "Hence \\(a-b-c-a'\\) is a surviving path, and therefore\n",
+            "duplicated Hence",
+        ),
         (
             "The residual adjacency trace is \\(k-2\\), giving \\(a_\\pm\\).  The residual\n"
             "negative root is greater than \\(-2-\\sqrt{k}\\), and the same is true of the\n"
@@ -138,13 +146,21 @@ def revise_tex(path: Path) -> None:
             r"\mathcal M_\pi=\bigl\{\{P_{i,j},Q_{\pi(i),i\pi(i)+j}\}:i,j\in\F\bigr\}",
             "matching as unordered edges",
         ),
-        ("Representative axiom reports contain only\n", "The public endpoint axiom reports contain only\n", "axiom wording"),
+        (
+            "Representative axiom reports contain only\n",
+            "The public endpoint axiom reports contain only\n",
+            "axiom wording",
+        ),
         (
             r"\section{Characteristic polynomials for the smallest explicit descendants}",
             r"\section{Characteristic polynomials for the order-39 and order-38 descendants}",
             "appendix title",
         ),
-        (r"and correspond to release \texttt{v2.2.1}.", r"and correspond to release \texttt{v2.2.2}.", "release prose"),
+        (
+            r"and correspond to release \texttt{v2.2.1}.",
+            r"and correspond to release \texttt{v2.2.2}.",
+            "release prose",
+        ),
     ]
     for old, new, label in replacements:
         text = replace_once(text, old, new, f"{path}: {label}")
@@ -173,8 +189,8 @@ def update_source_ledger() -> None:
         "theorems. “Punctured Moore graph” is package terminology and must be defined\n"
         "when used.",
         "The one-variable LP optimum and optimizer rigidity are formalized in Lean as a\n"
-        "graph-independent analytic theorem.  The generic punctured-Moore spectra and\n"
-        "graph-to-spectrum bridges remain conventional analytic proofs.  “Punctured\n"
+        "graph-independent analytic theorem. The generic punctured-Moore spectra and\n"
+        "graph-to-spectrum bridges remain conventional analytic proofs. “Punctured\n"
         "Moore graph” is package terminology and is defined when used.",
         "formalization status",
     )
@@ -185,18 +201,19 @@ def write_release_notes() -> None:
     path = ROOT / "RELEASE_NOTES_v2.2.2.md"
     if path.exists():
         return
-    path.write_text(
-        """# WOW-284 v2.2.2\n\n"
-        "Final arXiv line-by-line review of the expanded manuscript.\n\n"
-        "- Removes the unsupported priority claim while retaining the dated public record in repository provenance.\n"
-        "- Makes the second-subconstituent direct sum, higher-diameter summation indices, low-degree reductions, and quotient positive-definiteness arguments explicit.\n"
-        "- Repairs the empty-deletion boundary case, matching-edge notation, duplicated prose, and ambiguous appendix title.\n"
-        "- Rebuilds the manuscript in an arXiv-like TeX Live environment; the source-generated PDF has 20 pages.\n"
-        "- Regenerates the canonical PDF, Markdown reading copy, arXiv source archive, metadata, manifest, and SHA-256 ledger.\n\n"
-        "No theorem statement or numerical certificate is weakened by these corrections.\n",
-        encoding="utf-8",
-        newline="\n",
-    )
+    notes = """# WOW-284 v2.2.2
+
+Final arXiv line-by-line review of the expanded manuscript.
+
+- Removes priority language that a targeted source search cannot establish conclusively.
+- Makes the second-subconstituent direct sum, higher-diameter summation indices, low-degree reductions, and quotient positive-definiteness arguments explicit.
+- Repairs the empty-deletion boundary case, matching-edge notation, duplicated prose, and ambiguous appendix title.
+- Rebuilds the manuscript in an arXiv-like TeX Live environment; the source-generated PDF has 20 pages.
+- Regenerates the canonical PDF, Markdown reading copy, arXiv source archive, metadata, manifest, and SHA-256 ledger.
+
+No theorem statement or numerical certificate is weakened by these corrections.
+"""
+    path.write_text(notes, encoding="utf-8", newline="\n")
 
 
 def main() -> None:
