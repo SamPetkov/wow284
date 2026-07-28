@@ -52,10 +52,14 @@ jobs:
         run: |
           pdfinfo final-audit-main.pdf > final-audit-pdfinfo.txt
           pdffonts final-audit-main.pdf > final-audit-pdffonts.txt
-          test "$(pdfinfo final-audit-main.pdf | awk '/^Pages:/ {print $2}')" = "19"
-          grep -F "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284" final-audit-text.txt
+          test "$(pdfinfo final-audit-main.pdf | awk '/^Pages:/ {print $2}')" = "20"
+          grep -F "Title:           Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284" final-audit-pdfinfo.txt
           grep -F "samuil.petkov@phys.ens.psl.eu" final-audit-text.txt
           test "$(pdffonts final-audit-main.pdf | awk 'NR>2 && $4 != "yes" {count++} END {print count+0}')" = "0"
+      - name: Capture repository snapshot for line review
+        run: |
+          tar --exclude=.git --exclude=wow284-final-audit-snapshot.tar.gz \
+            -czf wow284-final-audit-snapshot.tar.gz .
       - name: Upload exact submission audit bundle
         if: always()
         uses: actions/upload-artifact@v4
@@ -76,4 +80,5 @@ jobs:
             arxiv/wow284_arxiv_source.zip
             CITATION.cff
             BUILD_VERIFICATION.txt
+            wow284-final-audit-snapshot.tar.gz
           if-no-files-found: warn
