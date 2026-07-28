@@ -4,7 +4,7 @@
 **Scope:** connected `k`-regular girth-five graphs of diameter three whose
 nonprincipal adjacency spectrum lies in the open shifted WOW interval.
 
-## 1. General theorem
+## 1. Integer off-diagonal squeeze
 
 Retain the notation
 
@@ -55,13 +55,80 @@ it would put `e_u-e_v` in the adjacency `-2` eigenspace, contradicting the
  \qquad(u\ne v).
 \]
 
-In particular,
+## 2. The one-level case is impossible
+
+Set
+
+\[
+ Q_{k,n}=\left\lfloor\frac{2C_k}{n}-h_k\right\rfloor.
+\]
+
+Suppose first that `Q_{k,n}=h_k+1`. Then every off-diagonal entry of `g_k(A)`
+equals `h_k+1`, while its diagonal equals `h_k`. Hence
+
+\[
+ \boxed{
+ g_k(A)=(h_k+1)J-I.
+ }
+\]
+
+On `mathbf1` this forces `C_k+1=(h_k+1)n`. More importantly, on
+`mathbf1^perp` it gives
+
+\[
+ (g_k(A)+I)|_{\mathbf1^\perp}=0.
+\]
+
+The polynomial
+
+\[
+ p_k(x)=g_k(x)+1
+\]
+
+is irreducible over the rationals for every integer `k`. Indeed, after the
+translation `y=x+2`,
+
+\[
+ p_k(y-2)=y^4-2y^3+(3-2k)y^2+1.
+\]
+
+Its only possible rational roots are `1` and `-1`, but their values are
+`3-2k` and `7-2k`, neither zero for integral `k`. If it factored into two monic
+integer quadratics, their constant terms would be both `1` or both `-1`. In the
+first case the coefficients of `y^3` and `y` would be equal; in the second they
+would be negatives. They cannot be `-2` and `0`.
+
+Thus the rational space `mathbf1^perp` is a module over the degree-four field
+`Q[x]/(p_k)`. Write its dimension as `4m`. The characteristic polynomial of
+`A|_{mathbf1^perp}` is then `p_k^m`. Since the sum of the four roots of `p_k` is
+`-6`, the trace equation gives
+
+\[
+ 0=\operatorname{tr}A=k-6m.
+\]
+
+Therefore `m=k/6` and
+
+\[
+ n-1=4m=\frac{2k}{3},
+\]
+
+contradicting the elementary bound `n>=k+1` for a simple `k`-regular graph.
+Hence the one-level case never occurs.
+
+A strict candidate must therefore have
+
+\[
+ Q_{k,n}\ge h_k+2.
+\]
+
+Equivalently,
 
 \[
  \boxed{
  n\le
  \left\lfloor
- \frac{2(k+2)^2(k^2+3)}{12(k+2)+1}
+ \frac{(k+2)^2(k^2+3)}{6(k+2)+1}
  \right\rfloor.
  }
 \]
@@ -75,45 +142,24 @@ Writing
 the unrounded bound is
 
 \[
- \frac{2C_k}{2h_k+1}
- =B_k-\frac{B_k}{2h_k+1}.
+ \frac{C_k}{h_k+1}
+ =B_k-\frac{B_k}{h_k+1}.
 \]
 
 Thus integrality improves the exact one-variable LP ceiling by an asymptotic
-amount `k^2/72`, before any local cycle or graph-classification input is used.
-
-## 2. One-level collapse
-
-Set
+amount `k^2/36`, before any local cycle or graph-classification input is used.
+In particular it gives immediately
 
 \[
- Q_{k,n}=\left\lfloor\frac{2C_k}{n}-h_k\right\rfloor.
+ (k,n)=(5,32),(6,51),(8,110),(9,152)
 \]
 
-If `Q_{k,n}=h_k+1`, every off-diagonal entry of `g_k(A)` equals `h_k+1`.
-The zero row sum of `M` then forces
+as impossible. If `Q_{k,n}\le h_k`, no integer off-diagonal entry is available
+at all; this excludes `(k,n)=(8,111)` directly.
 
-\[
- \boxed{
- C_k+1=(h_k+1)n.
- }
-\]
-
-Hence every order in this one-level range is excluded unless this exact
-divisibility identity holds.
-
-This immediately excludes:
-
-\[
- (k,n)=(5,32),\quad(6,51),\quad(8,110),\quad(9,152).
-\]
-
-The degree-six order-51 exclusion therefore has a second proof that is shorter
-than the edge-five-cycle incidence contradiction. The latter remains useful as
-the local combinatorial manifestation of the same slack matrix.
-
-If `Q_{k,n}\le h_k`, no integer off-diagonal entry is available at all. This
-excludes `(k,n)=(8,111)` directly.
+The degree-six order-51 result therefore has a short global proof. The
+edge-five-cycle contradiction remains useful as the local combinatorial
+manifestation of the same optimal slack matrix.
 
 ## 3. Two-level collapse
 
@@ -130,11 +176,19 @@ graph joining pairs of the first type. Since
  a=\frac{C_k}{n}-h_k,
 \]
 
-one has the exact identity
+one has the exact identities
 
 \[
  \boxed{
- M=2I+(a-2)J+A(X).
+ M=2I+(a-2)J+A(X)
+ }
+\]
+
+and
+
+\[
+ \boxed{
+ A(X)=(h_k+2)J-2I-g_k(A).
  }
 \]
 
@@ -160,12 +214,19 @@ so
  }
 \]
 
+Moreover `A` and `A(X)` commute and are simultaneously diagonalizable. In the
+strict shifted window,
+
+\[
+ E_{-2}(A(X))=E_{-2}(A).
+\]
+
 This is the general source of the auxiliary relation graphs used in the
 near-ceiling degree-seven and degree-eight exclusions.
 
 When `n>28` and `X` is connected, the classical least-eigenvalue-minus-two
 classification reduces `X` to a line graph or a cocktail-party graph. The
-remaining possibilities can then be tested arithmetically:
+remaining possibilities can be tested arithmetically:
 
 - a cocktail-party graph has degree `n-2`;
 - if `X=L(Y)` and `Y` is regular of degree `r`, then
@@ -175,25 +236,40 @@ remaining possibilities can then be tested arithmetically:
 
 ## 4. Consequences currently used
 
+For `k=5`, the universal integral bound gives `n<=31`; parity gives `n<=30`.
+For `k=6`, it gives `n<=50` directly.
+
 For `k=7,n=76`, the relation graph is 42-regular on 76 vertices. It is neither
 cocktail-party nor a possible regular or semiregular line graph. Hence the
 largest diameter-three order at degree seven is at most 74.
 
 For `k=8,n=109`, the relation graph is 56-regular on 109 vertices and the same
 classification-and-divisibility argument excludes it. Together with the
-zero-level exclusion at 111 and the one-level exclusion at 110, this gives
-order at most 108.
+global integral bound, this gives order at most 108.
 
-The one-level collapse at `k=9,n=152`, followed by parity, gives order at most
-150.
+For `k=9`, the universal bound gives `n<=151`; parity gives `n<=150`.
+
+Thus
+
+\[
+ \boxed{
+ \begin{array}{rcl}
+ k=5&:&n\le30,\\
+ k=6&:&n\le50,\\
+ k=7&:&n=50\text{ in diameter two, or }n\le74\text{ in diameter three},\\
+ k=8&:&n\le108,\\
+ k=9&:&n\le150.
+ \end{array}
+ }
+\]
 
 ## 5. Literature boundary
 
-The integral slack-collapse theorem, the order improvement, and the auxiliary
-relation graph are project-derived. The only external theorem in the final
-classification step is the classical result that a connected regular graph
-with more than 28 vertices and least eigenvalue at least `-2` is a line graph or
-a cocktail-party graph. See Cvetkovic, Rowlinson and Simic, *Spectral
+The integral slack-collapse theorem, irreducibility argument, order improvement,
+and auxiliary relation graph are project-derived. The only external theorem in
+the final classification step is the classical result that a connected regular
+graph with more than 28 vertices and least eigenvalue at least `-2` is a line
+graph or a cocktail-party graph. See Cvetkovic, Rowlinson and Simic, *Spectral
 Generalizations of Line Graphs*, Cambridge University Press, 2004, Theorem
 3.12.2; the same statement is recalled in the introduction of Koolen--Yu--Liang--
 Choi--Markowsky, *European Journal of Combinatorics* 126 (2025), Article
