@@ -110,11 +110,10 @@ girth already gives the counterexample. This note isolates the sharp `k > 3`
 criterion, records the WOW-284 connection, and supplies an independent,
 self-contained coordinate proof.
 
-The targeted source search documented in [`SOURCE_LEDGER.md`](SOURCE_LEDGER.md)
-did not locate an earlier source explicitly connecting the Hoffman-Singleton
-graph to WOW-284. That search is not a proof of priority. The manuscript makes
-no claim that the observation is first, that any displayed distance spectrum
-is new, or that 38 is the smallest counterexample order.
+The source search and literature boundary are documented in
+[`SOURCE_LEDGER.md`](SOURCE_LEDGER.md). Classical graph spectra are credited to
+their original sources. No minimum counterexample order or classification of
+all counterexamples is claimed.
 
 Primary links:
 
@@ -282,7 +281,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 This manuscript and source package correspond to GitHub release
-[`v2.2.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.0).
+[`v2.2.1`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.1).
 Their contents are identified by `MANIFEST.txt` and `SHA256SUMS`.
 
 Suggested arXiv primary category: `math.CO`. See

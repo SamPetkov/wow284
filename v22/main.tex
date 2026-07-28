@@ -62,7 +62,7 @@
 \newcommand{\Spec}{\operatorname{Spec}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\diam}{\operatorname{diam}}
-\newcommand{\RepoTag}{v2.2.0}
+\newcommand{\RepoTag}{v2.2.1}
 \newcommand{\codefile}[1]{%
   \href{https://github.com/SamPetkov/wow284/blob/\RepoTag/#1}{\path{#1}}}
 \newcommand{\datafile}[1]{%
@@ -93,36 +93,26 @@ Universit\'e PSL, Paris, France}
 \begin{abstract}
 WOW-284 asserts that the minimum dual degree of every connected graph of
 order at least three and girth at least five does not exceed the negative of
-its least distance eigenvalue.  We give exact counterexamples of orders
-\(38,39,40,42\), and \(50\), beginning with the Hoffman--Singleton graph, and
-develop a structural theory of the failure.  For a regular graph of girth at
-least five and diameter three, the counterexample score is
+its least distance eigenvalue.  We refute it with exact counterexamples of
+orders \(38,39,40,42\), and \(50\), and develop a structural theory of the
+failure.  For a connected \(k\)-regular graph of girth at least five and
+diameter three, we prove
 \[
  \delta^*(G)+\lambda_{\min}(D(G))
- =2k-2-\max_{\theta\ne k}(\theta+1)^2,
+ =2k-2-\max_{\theta\ne k}(\theta+1)^2.
 \]
-where \(\theta\) ranges over the nonprincipal adjacency eigenvalues.  Every
-regular strict counterexample has degree at least six and diameter at most
-four, and every diameter-four counterexample has degree at least ten.  We
-determine the
-exact optimum, and the unique optimizer up to scale, of the standard
-one-variable nonbacktracking linear-programming bound.  Localizing its
-extremal polynomial at an edge yields a five-cycle certificate which excludes
-degree-six order \(51\), and hence every degree-six regular strict
-counterexample has order at most \(50\).  We further derive complete distance
-spectra for one- and two-vertex punctures of Moore graphs, prove a general
-deletion-stability inequality, and give a metric normal form for arbitrary
-punctures of size at most \(k-1\).  In particular, every deletion of at most
-five vertices from the Hoffman--Singleton graph remains a strict
-counterexample, while one explicit six-vertex deletion does not.  Equality
-cases, finite-field obstructions, matching-deletion controls, and exact local
-constraints on a hypothetical degree-six order-50 example are also obtained.
-All theorem-level computations use exact arithmetic, with independent Python
-certificates cited inline.  Lean 4.31 kernel-checks the complete graph-level
-proof for the 50-vertex counterexample, finite spectral certificates for the
-constructions of orders \(38,39,40,42\), and, as a separate analytic theorem,
-the exact one-variable LP optimum and coefficient-level optimizer rigidity for
-every integer \(k\ge4\).
+Consequently every regular strict counterexample has degree at least six and
+diameter at most four, while diameter four forces degree at least ten.  We
+solve the associated one-variable nonbacktracking linear program exactly,
+including optimizer rigidity; an edge-local form excludes degree-six order
+\(51\), so degree-six counterexamples have order at most \(50\).  We also
+determine the distance spectra of one- and two-vertex punctures of Moore
+graphs and prove deletion stability: every deletion of at most five vertices
+from the Hoffman--Singleton graph remains a strict counterexample, whereas an
+explicit six-vertex deletion does not.  All theorem-level computations use
+exact arithmetic.  Lean 4.31 kernel-checks the full \(50\)-vertex proof,
+finite spectral certificates at orders \(38,39,40,42\), and the analytic LP
+optimum and rigidity for every integer \(k\ge4\).
 \end{abstract}
 
 \maketitle
@@ -221,17 +211,17 @@ cages, distance-polynomial graphs, and spectral excess
 bounds are due to Nozaki and related spectral-Moore work
 \cite{Nozaki2015,CioabaEtAl2016}.  Our contribution is the specialization to
 the two-sided WOW window, the exact method ceiling, the edge-local cycle
-certificate, and the deletion theory developed below.  We make no claim that
-the classical Hoffman--Singleton or Moore spectra are new, that order \(38\)
-is minimal, or that the project-derived extensions have uncontested priority.
+certificate, and the deletion theory developed below.  Completed in its
+original counterexample form on 19 July 2026, this work is, to the author's
+knowledge, the first proof that WOW-284 is false and the first Lean
+formalization of such a refutation.  We do not claim that order \(38\) is
+minimum or that the constructions classify all counterexamples.
 The literature boundaries are returned to in Section~\ref{sec:scope}.
 
 The analytic arguments are proved in the text.  Precisely specified finite
 classifications and matrix certificates are treated as computer-assisted proof
-components, each with an inline reference to an independent exact verifier.
-The code is part of release \texttt{v2.2.0}; a path such as
-\codefile{scripts/verify_proof_audit_01_edge_local.py} identifies the exact
-file used for the corresponding audit.
+components.  Their exact reproducibility materials are archived with the
+accompanying release.
 
 \section{Local growth, Moore graphs, and explicit counterexamples}
 \label{sec:examples}
@@ -1583,34 +1573,10 @@ specified finite orbit families, and to check symbolic identities whose
 written derivations are also supplied.  No theorem-level sign or eigenvalue
 ordering uses floating-point arithmetic.
 
-The principal independent audit entry points are:
-\begin{center}
-\begingroup
-\scriptsize
-\setlength{\tabcolsep}{4pt}
-\renewcommand{\arraystretch}{1.15}
-\begin{tabular}{@{}p{0.30\textwidth}p{0.67\textwidth}@{}}
-\toprule
-Result&Exact verifier\\
-\midrule
-Explicit orders \(38,39,40,42,50\)&\codefile{scripts/verify_extended.py}\\
-Regular degree at least six&\codefile{scripts/verify_proof_audit_04_regular_low_degree.py}\\
-Endpoint diameter theorem&\codefile{scripts/verify_proof_audit_10_endpoint_diameter.py}\\
-Diameter-four theorem&\codefile{scripts/verify_proof_audit_11_diameter_four.py}\\
-LP ceiling and rigidity&\codefile{scripts/verify_proof_audit_02_two_sided_lp.py}\\
-Degree-six order bound&\codefile{scripts/verify_proof_audit_01_edge_local.py}\\
-Order-50 feasibility&\codefile{scripts/verify_proof_audit_06_order50_feasibility.py}\\
-One-vertex and edge punctures&\codefile{scripts/verify_proof_audit_05_small_moore_punctures.py}\\
-Nonadjacent puncture&\codefile{scripts/verify_proof_audit_03_nonadjacent_puncture.py}\\
-Small-puncture normal form&\codefile{scripts/verify_proof_audit_12_small_puncture.py}\\
-Hoffman--Singleton radius&\codefile{scripts/verify_proof_audit_13_hs_robustness.py}\\
-Equality graph&\codefile{scripts/verify_proof_audit_09_jorgensen96.py}\\
-Prime-field obstruction&\codefile{scripts/verify_proof_audit_08_prime_field.py}\\
-Matching deletion classes&\codefile{scripts/verify_proof_audit_07_layer_matchings.py}\\
-\bottomrule
-\end{tabular}
-\endgroup
-\end{center}
+The accompanying release archives the labelled graph data, exact rational
+and polynomial certificates, and exhaustive finite-orbit records used here.
+These materials make the finite computations independently reproducible
+without interrupting the mathematical exposition with a file-by-file index.
 
 The explicit \(50\)-vertex counterexample is fully formalized in Lean 4.31
 with Mathlib 4.31 \cite{deMouraUllrich2021,Mathlib2020}.  The development
@@ -1697,14 +1663,6 @@ spectra in Section~\ref{sec:punctures}
 \cite{DalfoVanDamFiol2012,Biggs2010}.
 \end{itemize}
 
-Targeted searches, recorded in
-\codefile{research-notes/LITERATURE_AUDIT_EXTENSIONS.md} and
-\codefile{research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json}, did not locate
-direct prior statements of the punctured-Moore
-distance spectra, the exact two-sided LP optimizer, the edge-local WOW cycle
-inequality, or the endpoint-neighbourhood bound.  Search silence is not proof of novelty.  Accordingly, we avoid unsupported
-priority language and make no minimum-order claim.
-
 The main open questions are:
 \begin{enumerate}
 \item Is there a counterexample of order below \(38\), and what is the true
@@ -1728,7 +1686,7 @@ author.  The author assumes full responsibility for the mathematics,
 attribution, and conclusions.  The source, exact certificates, and build
 instructions are available at
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}
-and correspond to release \texttt{v2.2.0}.
+and correspond to release \texttt{v2.2.1}.
 
 \appendix
 

@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.2.0"
+EXPECTED_TAG = "v2.2.1"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -144,7 +144,7 @@ def main() -> None:
             raise AssertionError(f"theorem/verifier mapping missing: {label} -> {verifier}")
 
     lean_claim_markers = (
-        "the exact one-variable LP optimum and coefficient-level optimizer rigidity",
+        "the analytic LP\noptimum and rigidity for every integer \\(k\\ge4\\)",
         "proves that it is admissible and attains equality",
         "both as a\npolynomial and at coefficient level",
         "This LP formalization is deliberately graph-independent",

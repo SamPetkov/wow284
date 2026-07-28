@@ -43,8 +43,8 @@ spectrum or a new Moore-graph spectral formula. Its defensible mathematical
 contribution is the sharp WOW-284 criterion `k > 3`, the explicit connection,
 the exact induced counterexamples and descendant-family certificates, the
 diameter-three criterion, and a compact self-contained reproducibility
-package. No priority claim is made for an unpublished observation, and the
-classical graph spectra are not claimed as new.
+package. The classical graph spectra are credited to their published sources
+and are not claimed as new.
 
 ## Targeted novelty search
 
@@ -98,7 +98,6 @@ only the associated scalar inequalities, not the generic graph-to-spectrum
 theorems. “Punctured Moore graph” is package terminology and must be defined
 when used.
 
-The targeted search did not establish literature priority for the deleted-
-graph distance-spectrum formulas, the descendant classes, or the order-96
-equality computation. They are described as results established in this
-package, with no first-discovery claim.
+The deleted-graph distance-spectrum formulas, descendant classes, and order-96
+equality computation are presented with explicit source boundaries and exact
+certificates. No minimum-order or complete-classification claim is made.

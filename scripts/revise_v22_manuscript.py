@@ -52,15 +52,13 @@ def revise_tex(text: str) -> str:
             "computer-assisted-scope",
             "Every computer-assisted theorem is accompanied by a conventional proof and an\n"
             "inline reference to an independent exact verifier.  The code is part of the\n"
-            "public release \\texttt{v2.2.0}; a path such as\n"
+            "public release \\texttt{v2.2.1}; a path such as\n"
             "\\codefile{scripts/verify_proof_audit_01_edge_local.py} links to the exact file\n"
             "used for the corresponding audit.",
             "The analytic arguments are proved in the text.  Precisely specified finite\n"
             "classifications and matrix certificates are treated as computer-assisted proof\n"
-            "components, each with an inline reference to an independent exact verifier.\n"
-            "The code is part of release \\texttt{v2.2.0}; a path such as\n"
-            "\\codefile{scripts/verify_proof_audit_01_edge_local.py} identifies the exact\n"
-            "file used for the corresponding audit.",
+            "components.  Their exact reproducibility materials are archived with the\n"
+            "accompanying release.",
         ),
         (
             "h39-table-note",

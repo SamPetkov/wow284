@@ -34,7 +34,7 @@ V22_BBL = ROOT / "v22" / "main.bbl"
 RELEASE_TITLE = (
     "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 )
-RELEASE_TAG = "v2.2.0"
+RELEASE_TAG = "v2.2.1"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -275,7 +275,7 @@ def validate_release_text() -> None:
         "OpenAI ChatGPT-5.6 Sol Pro assisted",
         r"\section{Moment bounds and the exact LP ceiling}",
         r"\begin{theorem}[Exact LP ceiling and rigidity]",
-        "the exact one-variable LP optimum and coefficient-level optimizer rigidity",
+        "the analytic LP\noptimum and rigidity for every integer \\(k\\ge4\\)",
         "proves that it is admissible and attains equality",
         "polynomial and at coefficient level",
         "This LP formalization is deliberately graph-independent",
@@ -283,7 +283,7 @@ def validate_release_text() -> None:
         r"\section{Distance spectra of punctured Moore graphs}",
         r"\section{Small punctures and exact Hoffman--Singleton robustness}",
         r"\clearpage",
-        r"correspond to release \texttt{v2.2.0}",
+        r"correspond to release \texttt{v2.2.1}",
     ]
     missing = [item for item in required if item not in text]
     if missing:

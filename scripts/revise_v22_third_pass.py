@@ -34,6 +34,69 @@ def main() -> None:
             r"\keywords{distance spectrum, dual degree, Moore graph}",
         ),
         (
+            "remove-internal-literature-audit-links",
+            "Targeted searches, recorded in\n"
+            "\\codefile{research-notes/LITERATURE_AUDIT_EXTENSIONS.md} and\n"
+            "\\codefile{research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json}, did not locate\n"
+            "direct prior statements of the punctured-Moore\n"
+            "distance spectra, the exact two-sided LP optimizer, the edge-local WOW cycle\n"
+            "inequality, or the endpoint-neighbourhood bound.  Search silence is not proof of novelty.  Accordingly, we avoid unsupported\n"
+            "priority language and make no minimum-order claim.",
+            "",
+        ),
+        (
+            "single-priority-statement",
+            "\\cite{Nozaki2015,CioabaEtAl2016}.  Our contribution is the specialization to\n"
+            "the two-sided WOW window, the exact method ceiling, the edge-local cycle\n"
+            "certificate, and the deletion theory developed below.  We make no claim that\n"
+            "the classical Hoffman--Singleton or Moore spectra are new, that order \\(38\\)\n"
+            "is minimal, or that the project-derived extensions have uncontested priority.\n"
+            "The literature boundaries are returned to in Section~\\ref{sec:scope}.",
+            "\\cite{Nozaki2015,CioabaEtAl2016}.  Our contribution is the specialization to\n"
+            "the two-sided WOW window, the exact method ceiling, the edge-local cycle\n"
+            "certificate, and the deletion theory developed below.  Completed in its\n"
+            "original counterexample form on 19 July 2026, this work is, to the author's\n"
+            "knowledge, the first proof that WOW-284 is false and the first Lean\n"
+            "formalization of such a refutation.  We do not claim that order \\(38\\) is\n"
+            "minimum or that the constructions classify all counterexamples.\n"
+            "The literature boundaries are returned to in Section~\\ref{sec:scope}.",
+        ),
+        (
+            "replace-verifier-file-table",
+            "The principal independent audit entry points are:\n"
+            "\\begin{center}\n"
+            "\\begingroup\n"
+            "\\scriptsize\n"
+            "\\setlength{\\tabcolsep}{4pt}\n"
+            "\\renewcommand{\\arraystretch}{1.15}\n"
+            "\\begin{tabular}{@{}p{0.30\\textwidth}p{0.67\\textwidth}@{}}\n"
+            "\\toprule\n"
+            "Result&Exact verifier\\\\\n"
+            "\\midrule\n"
+            "Explicit orders \\(38,39,40,42,50\\)&\\codefile{scripts/verify_extended.py}\\\\\n"
+            "Regular degree at least six&\\codefile{scripts/verify_proof_audit_04_regular_low_degree.py}\\\\\n"
+            "Endpoint diameter theorem&\\codefile{scripts/verify_proof_audit_10_endpoint_diameter.py}\\\\\n"
+            "Diameter-four theorem&\\codefile{scripts/verify_proof_audit_11_diameter_four.py}\\\\\n"
+            "LP ceiling and rigidity&\\codefile{scripts/verify_proof_audit_02_two_sided_lp.py}\\\\\n"
+            "Degree-six order bound&\\codefile{scripts/verify_proof_audit_01_edge_local.py}\\\\\n"
+            "Order-50 feasibility&\\codefile{scripts/verify_proof_audit_06_order50_feasibility.py}\\\\\n"
+            "One-vertex and edge punctures&\\codefile{scripts/verify_proof_audit_05_small_moore_punctures.py}\\\\\n"
+            "Nonadjacent puncture&\\codefile{scripts/verify_proof_audit_03_nonadjacent_puncture.py}\\\\\n"
+            "Small-puncture normal form&\\codefile{scripts/verify_proof_audit_12_small_puncture.py}\\\\\n"
+            "Hoffman--Singleton radius&\\codefile{scripts/verify_proof_audit_13_hs_robustness.py}\\\\\n"
+            "Equality graph&\\codefile{scripts/verify_proof_audit_09_jorgensen96.py}\\\\\n"
+            "Prime-field obstruction&\\codefile{scripts/verify_proof_audit_08_prime_field.py}\\\\\n"
+            "Matching deletion classes&\\codefile{scripts/verify_proof_audit_07_layer_matchings.py}\\\\\n"
+            "\\bottomrule\n"
+            "\\end{tabular}\n"
+            "\\endgroup\n"
+            "\\end{center}",
+            "The accompanying release archives the labelled graph data, exact rational\n"
+            "and polynomial certificates, and exhaustive finite-orbit records used here.\n"
+            "These materials make the finite computations independently reproducible\n"
+            "without interrupting the mathematical exposition with a file-by-file index.",
+        ),
+        (
             "abstract-formal-verification-scope",
             "All theorem-level computations use exact arithmetic; independent Python\n"
             "certificates are cited inline, and the explicit finite counterexamples have\n"
@@ -262,6 +325,34 @@ def main() -> None:
 
     for label, old, new in replacements:
         text = replace_once(text, old, new, label)
+
+    abstract_start = text.index("\\begin{abstract}")
+    abstract_end = text.index("\\end{abstract}", abstract_start) + len("\\end{abstract}")
+    concise_abstract = r"""\begin{abstract}
+WOW-284 asserts that the minimum dual degree of every connected graph of
+order at least three and girth at least five does not exceed the negative of
+its least distance eigenvalue.  We refute it with exact counterexamples of
+orders \(38,39,40,42\), and \(50\), and develop a structural theory of the
+failure.  For a connected \(k\)-regular graph of girth at least five and
+diameter three, we prove
+\[
+ \delta^*(G)+\lambda_{\min}(D(G))
+ =2k-2-\max_{\theta\ne k}(\theta+1)^2.
+\]
+Consequently every regular strict counterexample has degree at least six and
+diameter at most four, while diameter four forces degree at least ten.  We
+solve the associated one-variable nonbacktracking linear program exactly,
+including optimizer rigidity; an edge-local form excludes degree-six order
+\(51\), so degree-six counterexamples have order at most \(50\).  We also
+determine the distance spectra of one- and two-vertex punctures of Moore
+graphs and prove deletion stability: every deletion of at most five vertices
+from the Hoffman--Singleton graph remains a strict counterexample, whereas an
+explicit six-vertex deletion does not.  All theorem-level computations use
+exact arithmetic.  Lean 4.31 kernel-checks the full \(50\)-vertex proof,
+finite spectral certificates at orders \(38,39,40,42\), and the analytic LP
+optimum and rigidity for every integer \(k\ge4\).
+\end{abstract}"""
+    text = text[:abstract_start] + concise_abstract + text[abstract_end:]
 
     if any(ord(char) < 32 and char not in "\t\n" for char in text):
         raise AssertionError("control byte introduced in third pass")
