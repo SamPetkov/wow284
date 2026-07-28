@@ -7,6 +7,10 @@ pdf:
 
 verify:
 	python scripts/verify_exact.py --output results/verification.json
+	python scripts/verify_optimal_slack_gram_unification.py
+	python scripts/verify_integral_optimal_slack_collapse.py
+	python scripts/verify_optimal_slack_excess_matrix.py
+	python scripts/verify_two_gram_hierarchies.py
 
 data:
 	python scripts/export_graph_data.py --output-dir results
@@ -20,6 +24,10 @@ sync:
 check:
 	python -m pytest -q
 	python scripts/verify_exact.py --quiet
+	python scripts/verify_optimal_slack_gram_unification.py
+	python scripts/verify_integral_optimal_slack_collapse.py
+	python scripts/verify_optimal_slack_excess_matrix.py
+	python scripts/verify_two_gram_hierarchies.py
 	python scripts/sync_manuscript_artifacts.py --check
 	python scripts/validate_repository.py
 

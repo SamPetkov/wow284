@@ -31,6 +31,7 @@ verification route have all been checked.
 | 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
 | 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `queued` |
 | 13 | Hoffman--Singleton deletion robustness radius five | generator provenance, orbit exhaustion, exact LDL signs, explicit six-deletion sharpness | `queued` |
+| 14 | Integral optimal-slack and two Gram hierarchies | PSD kernel, irreducibility, integer rounding, least-eigenvalue classification, line-root arithmetic | `pass_after_correction` |
 
 ## Audit 01 outcome
 
@@ -272,6 +273,32 @@ radical identity, rounding implication, regular specialization, Moore bound,
 and exact finite-graph controls. The result is an obstruction rather than a
 classification; in particular, it does not settle the remaining
 diameter-four regular case.
+
+## Audit 14 outcome
+
+The optimal-slack hierarchy is sound after correcting two generic
+off-diagonal formulas inherited from a degree-six specialization. For
+distance-two pairs the constant term is \(k+13\), and for distance-three
+pairs the parameter is
+\[
+ 6(A^3)_{uz}+(A^4)_{uz};
+\]
+no uniqueness of a length-three geodesic is assumed.
+
+The audit verifies the positive-semidefinite slack, its exact trace defect,
+the strict kernel description, and the nonnegative integral excess matrix.
+The one-level collapse is impossible because \(g_k(x)+1\) is irreducible over
+\(\mathbb Q\); rational canonical form would otherwise force
+\(n-1=2k/3\), contradicting \(n\ge k+1\). This yields the strengthened
+universal order bound.
+
+At the simple-excess level, the complementary relation graph has least
+eigenvalue at least \(-2\). The degree-seven and degree-eight exclusions use
+the external Cameron--Goethals--Seidel--Shult classification; the subsequent
+regular and semiregular line-root divisibility arguments are exact. The
+original draft's book theorem number was corrected to the original 1976
+source and a later journal statement. A hidden control byte and a
+self-mutating workflow step were also removed before promotion.
 
 ## Required structure of every audit
 

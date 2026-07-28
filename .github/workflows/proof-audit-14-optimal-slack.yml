@@ -1,0 +1,70 @@
+name: Proof Audit 14 optimal-slack Gram hierarchy
+
+on:
+  push:
+    paths:
+      - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
+      - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
+      - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
+      - "research-notes/TWO_GRAM_HIERARCHIES.md"
+      - "scripts/verify_optimal_slack_gram_unification.py"
+      - "scripts/verify_integral_optimal_slack_collapse.py"
+      - "scripts/verify_optimal_slack_excess_matrix.py"
+      - "scripts/verify_two_gram_hierarchies.py"
+      - ".github/workflows/proof-audit-14-optimal-slack.yml"
+  pull_request:
+    paths:
+      - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
+      - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
+      - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
+      - "research-notes/TWO_GRAM_HIERARCHIES.md"
+      - "scripts/verify_optimal_slack_gram_unification.py"
+      - "scripts/verify_integral_optimal_slack_collapse.py"
+      - "scripts/verify_optimal_slack_excess_matrix.py"
+      - "scripts/verify_two_gram_hierarchies.py"
+      - ".github/workflows/proof-audit-14-optimal-slack.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install exact dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Run the optimal-slack Gram audit
+        run: python scripts/verify_optimal_slack_gram_unification.py
+      - name: Run the integral-collapse audit
+        run: python scripts/verify_integral_optimal_slack_collapse.py
+      - name: Run the excess-matrix audit
+        run: python scripts/verify_optimal_slack_excess_matrix.py
+      - name: Run the deletion Gram synthesis audit
+        run: python scripts/verify_two_gram_hierarchies.py
+      - name: Check source hygiene
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          for name in (
+              "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
+              "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
+              "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
+              "research-notes/TWO_GRAM_HIERARCHIES.md",
+              "scripts/verify_optimal_slack_gram_unification.py",
+              "scripts/verify_integral_optimal_slack_collapse.py",
+              "scripts/verify_optimal_slack_excess_matrix.py",
+              "scripts/verify_two_gram_hierarchies.py",
+          ):
+              data = Path(name).read_bytes()
+              assert not any(byte < 32 and byte != 10 for byte in data), name
+          print("source hygiene: PASS")
+          PY

@@ -1,6 +1,6 @@
 # arXiv metadata
 
-**Release:** This manuscript corresponds to GitHub release `v2.2.5`.
+**Release:** This manuscript corresponds to GitHub release `v2.3.0`.
 
 **Title:** Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284
 
@@ -12,11 +12,11 @@
 
 **MSC class:** `05C50; 05C12; 05C35; 05E30`
 
-**Comments:** 20 pages. Corresponds to GitHub release `v2.2.5`.
+**Comments:** 23 pages. Corresponds to GitHub release `v2.3.0`.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-**Current public research release:** `v2.2.5`
+**Current public research release:** `v2.3.0`
 
 **Current package:** Identified by `MANIFEST.txt` and `SHA256SUMS`.
 
@@ -35,13 +35,17 @@
 > Consequently every regular strict counterexample has degree at least six and
 > diameter at most four, while diameter four forces degree at least ten. We
 > solve the associated one-variable nonbacktracking linear program exactly,
-> including optimizer rigidity; an edge-local cycle-divisibility sieve
-> excludes degree-six order $51$, so degree-six counterexamples have order at
-> most $50$. We also
-> determine the distance spectra of one- and two-vertex punctures of Moore
-> graphs and establish a uniform deletion-stability bound: every deletion of
-> at most five vertices from the Hoffman--Singleton graph remains a strict
-> counterexample, whereas an explicit six-vertex deletion does not. All
+> including optimizer rigidity. The optimizer yields a positive-semidefinite
+> slack matrix whose integral excess gives the stronger universal bound
+> $n\le\left\lfloor
+> (k+2)^2(k^2+3)/(6(k+2)+1)
+> \right\rfloor$; its principal minors recover local cycle constraints and
+> imply sharper low-degree windows. In particular, degree-six counterexamples
+> have order at most $50$. We also determine the distance spectra of one- and
+> two-vertex punctures of Moore graphs and establish a uniform
+> deletion-stability bound: every deletion of at most five vertices from the
+> Hoffman--Singleton graph remains a strict counterexample, whereas an
+> explicit six-vertex deletion does not. All
 > theorem-level computations use exact arithmetic. Lean 4.31 kernel-checks the
 > full $50$-vertex proof, finite
 > spectral certificates at orders $38,39,40,42$, and the analytic LP optimum

@@ -2,8 +2,8 @@
 
 **Object reviewed:** *Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284*<br>
 **Author:** Samuil Petkov<br>
-**Repository revision:** 28 July 2026; active PDF date suppressed<br>
-**Review status:** Adversarial internal audit of the expanded v2.2 manuscript; not external peer review
+**Repository revision:** 29 July 2026; active PDF date suppressed<br>
+**Review status:** Adversarial internal audit of the expanded v2.3 manuscript; not external peer review
 
 ## Outcome
 
@@ -54,7 +54,7 @@ broad spectral-graph-theory breakthrough. Suitability for a selective journal
 will depend on that journal's appetite for concise counterexample notes.
 
 The strongest remaining presentation risk is archival rather than
-mathematical: the immutable v2.2.5 release must be created from the exact
+mathematical: the immutable v2.3.0 release must be created from the exact
 audited tree before final journal submission. The explicit 50-vertex
 counterexample has a complete Lean graph and spectral certificate.
 The constructions of orders 38, 39, 40, and 42 now have kernel-checked finite
@@ -70,6 +70,16 @@ one-variable LP optimum, attainment, and coefficient-level optimizer rigidity
 are formalized separately in Lean 4.31. The graph trace/spectral bridge,
 punctured-Moore results, deletion theory, and descendant-family results remain
 conventional analytic proofs supported by exact computation.
+
+The v2.3 extension was reviewed separately. Its optimal-slack matrix is
+positive semidefinite by the strict shifted spectral window; the
+irreducibility argument excludes vanishing integral excess for every integral
+degree; and the resulting universal order bound is exact at the stated
+rounding. The degree-seven and degree-eight refinements use the classical
+Cameron--Goethals--Seidel--Shult classification of connected regular graphs
+with least eigenvalue at least `-2`; all line-graph-root arithmetic after that
+external theorem is checked exactly. These extensions remain analytic and are
+not included in the Lean LP claim.
 
 ## General Moore-graph audit
 

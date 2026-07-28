@@ -34,7 +34,7 @@ V22_DIR = ROOT / "v22"
 RELEASE_TITLE = (
     "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 )
-RELEASE_TAG = "v2.2.5"
+RELEASE_TAG = "v2.3.0"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -275,6 +275,8 @@ def validate_release_text() -> None:
         "OpenAI ChatGPT-5.6 Sol Pro assisted",
         r"\section{Moment bounds and the exact LP ceiling}",
         r"\begin{theorem}[Exact LP ceiling and rigidity]",
+        r"\begin{theorem}[Integral optimal-slack bound]",
+        r"\label{thm:integral-slack}",
         "the analytic LP\noptimum and rigidity for every integer \\(k\\ge4\\)",
         "proves that it is admissible and attains equality",
         "polynomial and at coefficient level",
@@ -286,7 +288,7 @@ def validate_release_text() -> None:
         r"\label{cor:uniform-deletion}",
         "first proof that WOW-284 is false",
         r"\clearpage",
-        r"correspond to release \texttt{v2.2.5}",
+        r"correspond to release \texttt{v2.3.0}",
     ]
     missing = [item for item in required if item not in text]
     if missing:

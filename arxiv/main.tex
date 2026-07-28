@@ -63,7 +63,7 @@
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\diam}{\operatorname{diam}}
 \newcommand{\resultbox}[1]{\boxed{#1}}
-\newcommand{\RepoTag}{v2.2.5}
+\newcommand{\RepoTag}{v2.3.0}
 \newcommand{\codefile}[1]{%
   \href{https://github.com/SamPetkov/wow284/blob/\RepoTag/#1}{\path{#1}}}
 \newcommand{\datafile}[1]{%
@@ -105,13 +105,20 @@ diameter three, we prove
 Consequently every regular strict counterexample has degree at least six and
 diameter at most four, while diameter four forces degree at least ten.  We
 solve the associated one-variable nonbacktracking linear program exactly,
-including optimizer rigidity; an edge-local cycle-divisibility sieve excludes
-degree-six order \(51\), so degree-six counterexamples have order at most
-\(50\).  We also
-determine the distance spectra of one- and two-vertex punctures of Moore
-graphs and establish a uniform deletion-stability bound: every deletion of at
-most five vertices from the Hoffman--Singleton graph remains a strict
-counterexample, whereas an explicit six-vertex deletion does not.  All
+including optimizer rigidity.  The optimizer yields a positive-semidefinite
+slack matrix whose integral excess gives the stronger universal bound
+\[
+ n\le\left\lfloor
+ \frac{(k+2)^2(k^2+3)}{6(k+2)+1}
+ \right\rfloor;
+\]
+its principal minors recover local cycle constraints and imply sharper
+low-degree windows.  In particular, degree-six counterexamples have order at
+most \(50\).  We also determine the distance spectra of one- and two-vertex
+punctures of Moore graphs and establish a uniform deletion-stability bound:
+every deletion of at most five vertices from the Hoffman--Singleton graph
+remains a strict counterexample, whereas an explicit six-vertex deletion does
+not.  All
 theorem-level computations use exact arithmetic.  Lean 4.31 kernel-checks the
 full \(50\)-vertex proof,
 finite spectral certificates at orders \(38,39,40,42\), and the analytic LP
@@ -196,13 +203,21 @@ has exact ceiling
 \]
 with a unique optimizer up to positive scaling; see
 Theorem~\ref{thm:lp-ceiling}.
-\item The LP ceiling gives \(n\le51\) at degree six.  An edge-local
-positive-semidefinite certificate yields a general cycle-divisibility sieve
-and rules out \(n=51\) by the congruence
+\item The optimizer defines one positive-semidefinite slack matrix.  Its trace
+is the LP defect, while integrality gives
+\[
+ n\le\left\lfloor
+ \frac{(k+2)^2(k^2+3)}{6(k+2)+1}
+ \right\rfloor;
+\]
+see Theorem~\ref{thm:integral-slack}.  Its \(2\times2\) minors yield a general
+cycle-divisibility sieve and the local order-\(51\) contradiction
 \[
  5N_5=153\cdot11=1683,
 \]
-so \(n\le50\); see Theorem~\ref{thm:degree-six-fifty}.
+while the next integral level gives the sharper degree-\(7,8,9\) order
+windows \(74,108,150\); see
+Corollary~\ref{cor:low-degree-windows}.
 \item One-vertex, adjacent-pair, and nonadjacent-pair deletions of Moore graphs
 admit exact invariant-subspace decompositions for their recomputed distance
 matrices; see Section~\ref{sec:punctures}.
@@ -213,11 +228,13 @@ Theorem~\ref{thm:hs-radius}.
 
 The proofs form two complementary hierarchies.  In the obstruction direction,
 the distance-polynomial identity converts WOW-284 into a shifted adjacency
-window; scalar trace moments give the one-point LP ceiling;
-\(2\times2\) principal minors localize that certificate to edge--cycle
-counts; and \(3\times3\) minors impose the two-path constraints at order
-fifty.  In the stability direction, deleting vertices from a Moore graph
-produces an explicit Gram-type correction to the distance matrix.
+window; scalar trace moments give the one-point LP ceiling; integrality of the
+optimal slack matrix strengthens the order bound; \(2\times2\) principal
+minors localize that certificate to edge--cycle counts; and \(3\times3\)
+minors impose the two-path constraints at order fifty.  In the stability
+direction, deleting vertices from a Moore graph produces an incidence-Gram
+correction to the distance matrix and a configuration-sensitive perturbation
+bound.
 Invariant-subspace decompositions then give exact puncture spectra, while
 orbitwise positive-definiteness certificates determine the sharp
 Hoffman--Singleton deletion radius.
@@ -227,12 +244,13 @@ cages, distance-polynomial graphs, and spectral excess
 \cite{HowladerPanigrahi2022,Fiol2016}.  Nonbacktracking linear-programming
 bounds are due to Nozaki and related spectral-Moore work
 \cite{Nozaki2015,CioabaEtAl2016}.  Our contribution is the specialization to
-the two-sided WOW window, the exact method ceiling, the edge-local cycle
-certificate, and the deletion theory developed below.  Completed in its
-original counterexample form on 19 July 2026, this work is, to the author's
-knowledge, the first proof that WOW-284 is false and the first Lean
-formalization of such a refutation.  We do not claim that order \(38\) is
-minimum or that the constructions classify all counterexamples.
+the two-sided WOW window, the exact method ceiling, the integral
+optimal-slack hierarchy, the edge-local cycle certificate, and the deletion
+theory developed below.  Completed in its original counterexample form on
+19 July 2026, this work is, to the author's knowledge, the first proof that WOW-284 is false
+and the first Lean formalization of such a refutation.  We
+do not claim that order \(38\) is minimum or that the constructions classify
+all counterexamples.
 The literature boundaries are returned to in Section~\ref{sec:scope}.
 
 The analytic arguments are proved in the text.  Precisely specified finite
@@ -930,11 +948,123 @@ equality-nullspace calculation is independently checked by
 \codefile{scripts/verify_proof_audit_02_two_sided_lp.py}.
 \end{proof}
 
-\section{Edge-local positivity and the degree-six boundary}\label{sec:degree-six}
+\begin{theorem}[Integral optimal-slack bound]\label{thm:integral-slack}
+Let \(G\) be connected and \(k\)-regular, of girth at least five and diameter
+three, and suppose
+\[
+ \lvert\theta+1\rvert<\sqrt{2k-2}
+ \qquad(\theta\ne k)
+\]
+for every adjacency eigenvalue \(\theta\).  Define
+\[
+ g_k(x)=(x+2)^2\bigl((x+1)^2-(2k-2)\bigr),\quad
+ C_k=(k+2)^2(k^2+3),\quad h_k=6(k+2),
+\]
+\[
+ \mathcal S_k=-g_k(A)+\frac{C_k}{n}J.
+\]
+Then
+\[
+ \mathcal S_k\succeq0,\qquad
+ \mathcal S_k\one=0,\qquad
+ \tr\mathcal S_k=h_k(B_k-n).
+\]
+Moreover,
+\[
+ \mathcal E_k=g_k(A)-(h_k+1)J+I
+\]
+is a nonzero, symmetric, entrywise nonnegative integral matrix with zero
+diagonal and constant row sum
+\[
+ \varepsilon_{k,n}=C_k-(h_k+1)n+1.
+\]
+On \(\one^\perp\), one has \(\mathcal S_k=I-\mathcal E_k\).  In particular,
+\[
+ \resultbox{
+ n\le
+ \left\lfloor
+ \frac{(k+2)^2(k^2+3)}{6(k+2)+1}
+ \right\rfloor.
+ }
+\]
+\end{theorem}
 
-Theorem~\ref{thm:lp-ceiling} gives \(n\le51\) for a degree-six regular strict
-counterexample.  The last order is eliminated by using local cycle data that
-the one-point LP trace bound does not see.
+\begin{proof}
+The polynomial \(g_k=6(k+2)f_*\) is the optimal LP polynomial from
+Theorem~\ref{thm:lp-ceiling}.  Thus \(\mathcal S_k\) vanishes on
+\(\langle\one\rangle\), while on a nonprincipal \(\theta\)-eigenspace its
+eigenvalue is
+\[
+ \bigl(2k-2-(\theta+1)^2\bigr)(\theta+2)^2\ge0.
+\]
+The nonbacktracking expansion of \(g_k\) has constant coefficient \(h_k\).
+Girth at least five gives
+\((F_i(A))_{uu}=0\) for every \(u\) and \(1\le i\le4\), and hence
+\[
+ \tr\mathcal S_k=C_k-h_kn=h_k(B_k-n),
+ \qquad (g_k(A))_{uu}=h_k.
+\]
+
+Put \(z_{uv}=(g_k(A))_{uv}\in\mathbb Z\) for \(u\ne v\), and set
+\(a=C_k/n-h_k=(\mathcal S_k)_{uu}\).  The \(2\times2\) principal minor on
+\(\{u,v\}\) gives
+\[
+ \left|\frac{C_k}{n}-z_{uv}\right|\le a.
+\]
+Equality on the upper side would give
+\((e_u-e_v)^{\mathsf T}\mathcal S_k(e_u-e_v)=0\), hence
+\(e_u-e_v\in\ker\mathcal S_k\).  The strict spectral window gives
+\[
+ \ker\mathcal S_k=\langle\one\rangle\oplus E_{-2}(A).
+\]
+Since \(e_u-e_v\perp\one\), it would be a \((-2)\)-eigenvector of \(A\).
+Yet the \(u\)-coordinate of \(A(e_u-e_v)\) is \(-1\) if \(u\sim v\) and
+\(0\) otherwise, never \(-2\).  Therefore
+\[
+ z_{uv}\ge h_k+1.
+\]
+It follows directly that \(\mathcal E_k\) has the stated entrywise properties,
+and \(g_k(A)\one=C_k\one\) gives its row sum.  The identity on
+\(\one^\perp\) follows by eliminating \(J\).
+
+It remains to prove \(\mathcal E_k\ne0\).  Otherwise
+\[
+ g_k(A)=(h_k+1)J-I,
+\]
+so \(p_k(A)=0\) on \(\one^\perp\), where \(p_k(x)=g_k(x)+1\).  After
+\(y=x+2\),
+\[
+ p_k(y-2)=y^4-2y^3+(3-2k)y^2+1.
+\]
+This polynomial is irreducible over \(\mathbb Q\).  Its only possible rational
+roots are \(\pm1\), whose values are \(3-2k\) and \(7-2k\).  A factorization
+into monic integer quadratics would have constant terms both \(1\) or both
+\(-1\); these alternatives force the cubic and linear coefficients to be,
+respectively, equal or opposite, whereas they are \(-2\) and \(0\).
+
+Rational canonical form now gives
+\[
+ \chi_{A|_{\one^\perp}}(x)=p_k(x)^m,\qquad n-1=4m.
+\]
+The four roots of \(p_k\) sum to \(-6\), so \(\tr A=0\) gives
+\[
+ 0=k-6m.
+\]
+Hence \(n-1=4m=2k/3\), contradicting \(n\ge k+1\).  Thus
+\(\mathcal E_k\ne0\).  Its constant row sum is consequently a positive
+integer, so \(\varepsilon_{k,n}\ge1\), which is equivalent to the displayed
+order bound.  The symbolic expansion, irreducibility alternatives, and finite
+specializations have also been checked by independent exact audits.
+\end{proof}
+
+\section{Optimal-slack integrality and local positivity}
+\label{sec:degree-six}
+
+The trace of \(\mathcal S_k\) is the one-variable LP defect.  Its
+\(2\times2\) principal minors give integral local restrictions, and larger
+principal minors form a canonical semidefinite hierarchy.  We retain the
+edge-local argument below because it exposes the cycle-count obstruction
+hidden by the stronger global order bound.
 
 \begin{proposition}[Edge-local cycle bounds]\label{prop:edge-cycle}
 Let \(G\) be connected and \(k\)-regular, of girth at least five and diameter
@@ -1003,8 +1133,8 @@ the preceding five-cycle bijection.  Hence
 \]
 Inclusion--exclusion and \(n=k^2+1+c\) now give
 \(\sigma_{uv}\ge(k-1)^2-c\).  The complete walk classification, sign
-directions, and radius-two bijection are independently checked by
-\codefile{scripts/verify_proof_audit_01_edge_local.py}.
+directions, and radius-two bijection have also been checked independently and
+exactly.
 \end{proof}
 
 \begin{corollary}[Edge--cycle divisibility sieve]
@@ -1060,45 +1190,87 @@ neighbourhoods has Rayleigh quotient at most
 contradicting \(\delta^*=6\).  Diameter two would force equality in the
 Moore bound, hence order \(37\) and adjacency characteristic polynomial
 \((x-6)(x^2+x-5)^{18}\); its root sum is \(-12\), contradicting
-\(\tr A=0\).  The LP ceiling gives \(n\le51\).
+\(\tr A=0\).  Thus the diameter is three, and
+Theorem~\ref{thm:integral-slack} gives
+\[
+ n\le\left\lfloor\frac{8^2\cdot39}{49}\right\rfloor=50.
+\]
 
-Assume \(n=51\).  Corollary~\ref{cor:edge-cycle-sieve} has
+For an independent local explanation of the excluded boundary, assume
+\(n=51\).  Corollary~\ref{cor:edge-cycle-sieve} has
 \(\lceil L_{6,51}\rceil=\lfloor U_{6,51}\rfloor=11\), and hence requires
 \[
  5N_5=153\cdot11=1683,
  \qquad 5\nmid 1683,
 \]
-which is impossible.  The full diameter reduction and incidence audit are
-contained in \codefile{scripts/verify_proof_audit_01_edge_local.py}.
+which is impossible.  An independent exact audit verifies the full diameter
+reduction and incidence calculation.
 \end{proof}
 
 \begin{corollary}[Low-degree order windows]\label{cor:low-degree-windows}
-The current bounds imply:
+Every regular strict counterexample in the indicated degrees satisfies
 \begin{align*}
+k=5&:\quad n\le30,\\
 k=6&:\quad n\le50,\\
-k=7&:\quad n=50\text{ in diameter two, or }n\le76\text{ in diameter three},\\
-k=8&:\quad n\le110,\\
-k=9&:\quad n\le152.
+k=7&:\quad n=50\text{ in diameter two, or }n\le74\text{ in diameter three},\\
+k=8&:\quad n\le108,\\
+k=9&:\quad n\le150.
 \end{align*}
 \end{corollary}
 
 \begin{proof}
-Theorem~\ref{thm:diameter-four} removes diameter four for these degrees.  At
-\(k=7\), the diameter-two case is the order \(50\) Hoffman--Singleton graph,
-whereas Theorem~\ref{thm:lp-ceiling} gives \(n<78\) in diameter three;
-\(7n=2|E(G)|\) implies \(n\equiv0\pmod2\), so \(n\le76\).  At \(k=8\) and
-\(k=9\), the Moore multiplicities are nonintegral, so diameter two is
-impossible.  The LP ceiling gives \(n\le111\) for \(k=8\) and
-\(n\le153\) for \(k=9\); since \(9n=2|E(G)|\), the latter improves to
-\(n\le152\).  Finally,
-at \(k=8,n=111\), Corollary~\ref{cor:edge-cycle-sieve} has
-\(\lceil L_{8,111}\rceil=\lfloor U_{8,111}\rfloor=14\), but it would require
+Theorem~\ref{thm:diameter-four} removes diameter four.  The integral bound
+gives, for \(k=5,6,7,8,9\), respectively,
 \[
- 5N_5=14\cdot444=6216,
- \qquad 5\nmid 6216,
+ n\le31,\ 50,\ 76,\ 109,\ 151.
 \]
-which is impossible.  Exact integer arithmetic is checked by
-\codefile{scripts/verify_low_degree_windows.py}.
+The equations \(5n=2|E(G)|\) and \(9n=2|E(G)|\) improve the first and last
+bounds to \(30\) and \(150\).  The diameter-two alternatives are determined
+by the Moore multiplicities: only the degree-seven, order-\(50\)
+Hoffman--Singleton case survives.
+
+It remains to exclude \((k,n)=(7,76)\) and \((8,109)\) in diameter three.
+In either case the upper half of the \(2\times2\) estimate in the proof of
+Theorem~\ref{thm:integral-slack} gives
+\[
+ h_k+1\le(g_k(A))_{uv}\le h_k+2
+ \qquad(u\ne v).
+\]
+Indeed, the respective upper endpoints are
+\[
+ \frac{2C_7}{76}-h_7=\frac{1080}{19}<57,
+ \qquad
+ \frac{2C_8}{109}-h_8=\frac{6860}{109}<63.
+\]
+Hence \(\mathcal E_k\) is the adjacency matrix of a regular graph \(Y\).
+For its complement \(X\),
+\[
+ A(X)=(h_k+2)J-2I-g_k(A),\qquad
+ \lambda_{\min}(A(X))\ge-2.
+\]
+The parameters of \(X\) are
+\[
+ (|V(X)|,d_X)=(76,42)\quad\text{or}\quad(109,56).
+\]
+In both cases \(d_X>(|V(X)|-2)/2\), so \(X\) is connected.  The
+Cameron--Goethals--Seidel--Shult classification
+\cite{CameronEtAl1976,KoolenEtAl2025} now implies that \(X\) is a line graph
+or a cocktail-party graph.  Its degree is not \(|V(X)|-2\), so the latter is
+impossible.
+
+Write \(X=L(Z)\).  Since \(X\) is regular and connected, the degree sum across
+every edge of \(Z\) is constant; hence \(Z\) is regular or semiregular
+bipartite.  For \((76,42)\), a regular root would have degree \(22\), but
+\[
+ |V(Z)|=\frac{2\cdot76}{22}=\frac{76}{11}\notin\mathbb Z.
+\]
+A semiregular bipartite root would require two divisors of \(76\) summing to
+\(44\), and no such pair exists.  For \((109,56)\), a regular root would
+have degree \(29\), but \(29\nmid218\); a semiregular root would require two
+divisors of the prime \(109\) summing to \(58\), again impossible.  Therefore
+\(n\ne76,109\).  Since \(7n\) is even, the degree-seven diameter-three bound
+improves to \(74\).  All arithmetic after the cited classification theorem has
+also been checked exactly.
 \end{proof}
 
 \subsection{Necessary structure at order fifty}
@@ -1185,19 +1357,46 @@ minor of the centered positive-semidefinite matrix yields the displayed finite
 sets for \(r_{uvw}\), except for an apparent equality value \(r=29\).
 At equality, the Gram norm of \(e_u-e_w\) vanishes, so this vector lies in
 the kernel of the centered matrix.  On \(\one^\perp\), that matrix is
-\(-f_6(A)\).  The strict shifted window excludes the two endpoint zeros of
-\(f_6\), leaving only its double zero at \(-2\); hence the kernel there is
+\(-g_6(A)\).  The strict shifted window excludes the two endpoint zeros of
+\(g_6\), leaving only its double zero at \(-2\); hence the kernel there is
 exactly the adjacency \(-2\)-eigenspace.  However, the \(u\)-coordinate of
 \(A(e_u-e_w)\) is zero because \(u\not\sim w\), whereas the
 \(u\)-coordinate of \(-2(e_u-e_w)\) is \(-2\).  This excludes
 \(r=29\).  Summing the local inequalities gives the first pair of
 \(N_6\) bounds; shifted moment and localizing matrices give the second.
 The complete symbolic determinants, Schur complements, kernel argument, and
-integer enumeration are independently checked by
-\codefile{scripts/verify_proof_audit_06_order50_feasibility.py}.  The surviving
-\(266\) profiles are exact pruning data, not an existence or nonexistence
-claim.
+integer enumeration have also been checked independently and exactly.  The
+surviving \(266\) profiles are exact pruning data, not an existence or
+nonexistence claim.
 \end{proof}
+
+\begin{remark}[Signed-root Gram formulation]\label{rem:signed-root}
+Under the hypotheses of Theorem~\ref{thm:order50-feasibility}, put
+\[
+ T=50J-g_6(A)-2I.
+\]
+Then
+\[
+ T\one=2\one,\qquad T+2I\succeq0,
+ \qquad 25\mathcal S_6=25(T+2I)-2J.
+\]
+For vertices \(u,z\) at distance three, put
+\[
+ q_{uz}=6(A^3)_{uz}+(A^4)_{uz}.
+\]
+The \(2\times2\) estimate gives \(q_{uz}\in\{48,49,50,51\}\), and the kernel
+argument in Theorem~\ref{thm:integral-slack} excludes \(48\).  Together with
+the edge and two-path intervals in Theorem~\ref{thm:order50-feasibility}, this
+gives
+\[
+ T_{uv}\in\{-1,0,1\}\qquad(u\ne v),\qquad T_{uu}=0.
+\]
+Consequently \(T+2I\) is the Gram matrix of \(50\) vectors of norm
+\(\sqrt2\) with pairwise inner products in \(\{-1,0,1\}\) and constant signed
+row sum \(2\).  Thus the unresolved degree-six boundary is equivalently a
+root-type integral Gram problem constrained by the graph's distance classes
+and local cycle data.
+\end{remark}
 
 \section{Distance spectra of punctured Moore graphs}\label{sec:punctures}
 
@@ -1556,6 +1755,17 @@ right-hand side is positive.  Since \(\tau(S)\le s\), every deletion of
  <k-\frac{3+\sqrt{4k-3}}2.
  }
 \]
+Equivalently, every deletion of at most
+\[
+ r_k=\min\left\{
+ k-1,\
+ \left\lceil
+ \frac{k}{k+1}\left(k-\frac{3+\sqrt{4k-3}}2\right)
+ \right\rceil-1
+ \right\}
+\]
+vertices is strict.  In particular, \(r_7=2\); for a hypothetical
+degree-\(57\) Moore graph, \(r_{57}=47\).
 \end{corollary}
 
 \begin{proof}
@@ -1571,7 +1781,8 @@ Since \(BB^{\mathsf T}\succeq0\) and
 \]
 and Theorem~\ref{thm:small-puncture} shows that deletion lowers the minimum
 dual degree by \(s/k\).  Proposition~\ref{prop:deletion-stability} now gives
-the first bound.  The second follows from \(\tau(S)\le s\).
+the first bound.  The second follows from \(\tau(S)\le s\), and solving its
+strict scalar inequality for the largest integral \(s\) gives \(r_k\).
 \end{proof}
 
 \begin{theorem}[Hoffman--Singleton robustness radius]\label{thm:hs-radius}
@@ -1815,12 +2026,13 @@ formalize the trace interpretation of the \(F_i(A)\), the girth-five
 vanishing and nonnegativity statements, the spectral trace decomposition, or
 the passage from the analytic LP inequality to graph-order bounds.
 Consequently the graph conclusions \(n<B_k\), the degree-six reductions
-\(n\le51\) and \(n\le50\), and the edge-local cycle argument remain
-conventional analytic proofs, with exact executable audits where cited.  The
-punctured-Moore spectra, the general deletion-stability inequality, the
-small-puncture normal form, and the Hoffman--Singleton deletion-radius theorem
-are likewise analytic results supported by exact Python audits; they are not
-part of the Lean claim.
+\(n\le51\) and \(n\le50\), the integral optimal-slack theorem, the sharper
+low-degree windows, and the local Gram hierarchy remain conventional analytic
+proofs, with exact executable audits where cited.  The punctured-Moore
+spectra, the general deletion-stability inequality, the small-puncture normal
+form, the uniform Gram bound, and the Hoffman--Singleton deletion-radius
+theorem are likewise analytic results supported by exact Python audits; they
+are not part of the Lean claim.
 
 \medskip
 \noindent
@@ -1859,7 +2071,7 @@ exploration, and Lean formalization.  The author assumes full responsibility
 for the mathematics, attribution, and conclusions.  The source, exact
 certificates, and build instructions are available at
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}
-and correspond to release \texttt{v2.2.5}.
+and correspond to release \texttt{v2.3.0}.
 
 \clearpage
 \begingroup

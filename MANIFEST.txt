@@ -5,6 +5,7 @@
 .github/workflows/proof-audit-11.yml
 .github/workflows/proof-audit-12.yml
 .github/workflows/proof-audit-13.yml
+.github/workflows/proof-audit-14-optimal-slack.yml
 .github/workflows/regular-score-calculus.yml
 .github/workflows/research-extensions.yml
 .github/workflows/verify.yml
@@ -24,6 +25,7 @@ RELEASE_NOTES_v2.2.2.md
 RELEASE_NOTES_v2.2.3.md
 RELEASE_NOTES_v2.2.4.md
 RELEASE_NOTES_v2.2.5.md
+RELEASE_NOTES_v2.3.0.md
 REVIEW.md
 SHA256SUMS
 SOURCE_LEDGER.md
@@ -293,6 +295,7 @@ research-notes/EDGE_WALK_MICROLEMMA.md
 research-notes/EQUALITY_BOUNDARY.md
 research-notes/EXTENSION_EXPLORATION_QUEUE.md
 research-notes/FLOAT_PROOF_PATH_AUDIT.md
+research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md
 research-notes/JORGENSEN96_PROVENANCE.md
 research-notes/LAYER_MATCHING_DELETIONS.md
 research-notes/LITERATURE_AUDIT_EDGE_LOCAL_ORDER50.md
@@ -304,6 +307,8 @@ research-notes/NEXT_DIRECTION_SOURCE_MATRIX.json
 research-notes/NEXT_RESEARCH_PRIORITIES.md
 research-notes/NONADJACENT_DIRECT_SUM_AUDIT.md
 research-notes/NONADJACENT_PUNCTURED_MOORE.md
+research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md
+research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md
 research-notes/ORDER50_LOCAL_FEASIBILITY.md
 research-notes/ORDER50_R29_REFINEMENT.md
 research-notes/ORIGINAL_STATEMENT.md
@@ -327,6 +332,7 @@ research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md
 research-notes/REGULAR_SCORE_CALCULUS.md
 research-notes/SPECTRAL_MOORE_COMPARISON.md
 research-notes/STANDARD_DEFINITIONS_AND_TERMINOLOGY.md
+research-notes/TWO_GRAM_HIERARCHIES.md
 research-notes/TWO_SIDED_LP_CEILING.md
 research-notes/UNBOUNDED_DEGREE_NECESSITY.md
 research-notes/V2_COMPLETE_MATHEMATICAL_SYNTHESIS.md
@@ -391,6 +397,7 @@ scripts/verify_edge_local_order50.py
 scripts/verify_equality_boundary.py
 scripts/verify_exact.py
 scripts/verify_extended.py
+scripts/verify_integral_optimal_slack_collapse.py
 scripts/verify_jorgensen96_provenance.py
 scripts/verify_jorgensen_96.py
 scripts/verify_layer_matching_deletions.py
@@ -398,6 +405,8 @@ scripts/verify_low_degree_windows.py
 scripts/verify_new_generalizations.py
 scripts/verify_nonadjacent_direct_sum.py
 scripts/verify_nonadjacent_punctured_moore.py
+scripts/verify_optimal_slack_excess_matrix.py
+scripts/verify_optimal_slack_gram_unification.py
 scripts/verify_order50_local_feasibility.py
 scripts/verify_order50_r29_exclusion.py
 scripts/verify_prime_field_obstruction.py
@@ -420,6 +429,7 @@ scripts/verify_regular_score_calculus.py
 scripts/verify_research_extensions.py
 scripts/verify_research_extensions_exact.py
 scripts/verify_spectral_moore_comparison.py
+scripts/verify_two_gram_hierarchies.py
 scripts/verify_two_sided_lp_ceiling.py
 scripts/verify_wow284_38_40_42.py
 src/__init__.py

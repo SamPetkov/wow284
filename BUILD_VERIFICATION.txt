@@ -1,7 +1,7 @@
-WOW-284 v2.2.5 RELEASE VERIFICATION
+WOW-284 v2.3.0 RELEASE VERIFICATION
 ==================================
 
-Repository revision: 28 July 2026; active PDF date suppressed
+Repository revision: 29 July 2026; active PDF date suppressed
 Author: Samuil Petkov
 Manuscript: Counterexamples, Spectral Obstructions, and Deletion Stability
             for WOW-284
@@ -13,8 +13,11 @@ PASS  Regular diameter-three score identity and Moore-graph threshold.
 PASS  Regular degree and diameter obstructions, including the degree-six
       order-50 ceiling and the diameter-four degree lower bound.
 PASS  General edge-cycle divisibility sieve, including the degree-six
-      order-51 and degree-eight order-111 exclusions.
+      order-51 local exclusion.
 PASS  Exact all-degree one-variable nonbacktracking LP optimum and rigidity.
+PASS  Integral optimal-slack excess theorem, universal strengthened order
+      bound, least-eigenvalue-minus-two relation graphs, and sharpened
+      degree-seven through degree-nine windows.
 PASS  One- and two-vertex punctured-Moore spectra, deletion stability,
       small-puncture normal form, uniform deletion bound, and sharp
       Hoffman--Singleton deletion radius.
@@ -72,6 +75,10 @@ PASS  scripts/verify_proof_audit_10_endpoint_diameter.py.
 PASS  scripts/verify_proof_audit_11_diameter_four.py.
 PASS  scripts/verify_proof_audit_12_small_puncture.py.
 PASS  scripts/verify_proof_audit_13_hs_robustness.py.
+PASS  scripts/verify_optimal_slack_gram_unification.py.
+PASS  scripts/verify_integral_optimal_slack_collapse.py.
+PASS  scripts/verify_optimal_slack_excess_matrix.py.
+PASS  scripts/verify_two_gram_hierarchies.py.
 PASS  scripts/sync_manuscript_artifacts.py --check.
 PASS  scripts/validate_repository.py, subject to the exact-tree Lean gate
       above before publication.
@@ -80,8 +87,8 @@ MANUSCRIPT AND PDF
 ------------------
 PASS  Clean multi-pass LaTeX/BibTeX build with no unresolved citations or
       references, no overfull/underfull boxes, and no missing glyphs.
-PASS  PDF metadata carries the expanded v2.2 title and Samuil Petkov as author.
-PASS  PDF page count: 20.
+PASS  PDF metadata carries the expanded v2.3 title and Samuil Petkov as author.
+PASS  PDF page count: 23.
 PASS  A4 paper with the explicit one-inch geometry setting.
 PASS  References begin on a fresh page.
 PASS  Canonical root TeX/Bib, arXiv mirrors, Markdown reading copy, PDF, BBL,

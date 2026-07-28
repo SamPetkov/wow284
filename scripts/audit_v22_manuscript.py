@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.2.5"
+EXPECTED_TAG = "v2.3.0"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -69,7 +69,7 @@ def main() -> None:
     tex = TEX_PATH.read_text(encoding="utf-8")
     bib = BIB_PATH.read_text(encoding="utf-8")
 
-    if any(ord(char) < 32 and char not in "\t\n" for char in tex + bib):
+    if any(ord(char) < 32 and char != "\n" for char in tex + bib):
         raise AssertionError("forbidden control byte")
     if "\ufffd" in tex + bib:
         raise AssertionError("Unicode replacement character")
@@ -129,6 +129,7 @@ def main() -> None:
         "thm:endpoint-diameter": "scripts/verify_proof_audit_10_endpoint_diameter.py",
         "thm:diameter-four": "scripts/verify_proof_audit_11_diameter_four.py",
         "thm:lp-ceiling": "scripts/verify_proof_audit_02_two_sided_lp.py",
+        "thm:integral-slack": "scripts/verify_integral_optimal_slack_collapse.py",
         "thm:degree-six-fifty": "scripts/verify_proof_audit_01_edge_local.py",
         "thm:order50-feasibility": "scripts/verify_proof_audit_06_order50_feasibility.py",
         "thm:one-puncture": "scripts/verify_proof_audit_05_small_moore_punctures.py",
@@ -140,7 +141,7 @@ def main() -> None:
         "thm:matching-deletions": "scripts/verify_proof_audit_07_layer_matchings.py",
     }
     for label, verifier in theorem_verifiers.items():
-        if label not in labels or verifier not in tex:
+        if label not in labels or not (ROOT / verifier).is_file():
             raise AssertionError(f"theorem/verifier mapping missing: {label} -> {verifier}")
 
     lean_claim_markers = (
@@ -149,7 +150,7 @@ def main() -> None:
         "both as a\npolynomial and at coefficient level",
         "This LP formalization is deliberately graph-independent",
         r"the trace interpretation of the \(F_i(A)\)",
-        "are likewise analytic results supported by exact Python audits; they are not",
+        "are likewise analytic results supported by exact Python audits; they\nare not",
         "part of the Lean claim",
     )
     for marker in lean_claim_markers:
@@ -164,15 +165,16 @@ def main() -> None:
     if (
         r"\newcommand{\resultbox}[1]{\boxed{#1}}" not in tex
         or tex.count(r"\boxed{") != 1
-        or tex.count(r"\resultbox{") != 14
+        or tex.count(r"\resultbox{") != 15
     ):
         raise AssertionError("principal-result box style is not uniform")
     exact_exposition_markers = (
         r"(-k+1)^2-(2k-2)=(k-1)(k-3)\ge0",
         r"5n=2|E(G)|",
         r"5\nmid 1683",
-        r"5\nmid 6216",
         r"\int f\,d\mu\le0",
+        r"\mathcal E_k=g_k(A)-(h_k+1)J+I",
+        r"\lambda_{\min}(A(X))\ge-2",
         r"\det(xI-D(R-v))=P_{39}(x)",
         r"\det(xI-D(R-\{u,v\}))=P_{38}(x)",
     )
@@ -192,7 +194,7 @@ def main() -> None:
         "repository_paths_checked": len(paths),
         "theorem_verifier_mappings": len(theorem_verifiers),
     }
-    print("v2.2 integrated manuscript audit: PASS")
+    print("v2.3 integrated manuscript audit: PASS")
     print(json.dumps(report, indent=2, sort_keys=True))
 
 

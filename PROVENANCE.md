@@ -1,8 +1,8 @@
 # Provenance and AI-assistance record
 
 **Author:** Samuil Petkov<br>
-**Repository revision:** 28 July 2026; active PDF date suppressed<br>
-**Audit and package preparation:** 21--28 July 2026
+**Repository revision:** 29 July 2026; active PDF date suppressed<br>
+**Audit and package preparation:** 21--29 July 2026
 
 ## Submitted material
 
@@ -34,11 +34,18 @@ transitive axiom reports contain only `propext`, `Classical.choice`, and
 `Quot.sound`. Static source scans and deterministic generator checks reject
 proof placeholders, unsafe declarations, and new axioms.
 
-The expanded v2.2 manuscript integrates Proof Audits 01--13. Each records an
+The expanded v2.3 manuscript integrates Proof Audits 01--14. Each records an
 exact theorem statement, corrections or strengthening discovered during
 review, a claim boundary, and an independent exact verifier. The registry at
 `research-notes/PROOF_AUDIT_REGISTRY.md` maps these audits to the theorems
 that appear in `main.tex`.
+
+Proof Audit 14 introduces the integral optimal-slack and excess-matrix
+hierarchy. Its polynomial identities, rounding, low-degree arithmetic, and
+deletion-radius consequences were rerun exactly. Its only external theorem
+input, the classification of connected regular graphs with least eigenvalue
+at least `-2` beyond order 28, was checked against the original
+Cameron--Goethals--Seidel--Shult source and a later journal statement.
 
 The all-degree analytic LP optimum was formalized separately in Lean 4.31.
 The formal dependency chain covers the nonbacktracking recurrence, the

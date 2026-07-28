@@ -3,8 +3,8 @@
 **Author:** Samuil Petkov<br>
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
-**Repository revision:** 28 July 2026 (`2026-07-28`); PDF date suppressed<br>
-**Repository status:** v2.2 expanded manuscript and reproducibility package
+**Repository revision:** 29 July 2026 (`2026-07-29`); PDF date suppressed<br>
+**Repository status:** v2.3 expanded manuscript and reproducibility package
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
@@ -18,10 +18,11 @@ Survey*. For every degree-`k` Moore graph of diameter two,
 Consequently WOW-284 holds for `k = 2`, is an equality for `k = 3`, and
 fails for every realizable degree `k > 3`.
 
-The expanded v2.2 manuscript goes beyond the explicit counterexamples. It
+The expanded v2.3 manuscript goes beyond the explicit counterexamples. It
 proves the regular diameter-three score identity, degree and diameter
 obstructions, the exact optimum and rigidity of the all-degree one-variable
-nonbacktracking LP bound, the degree-six order-50 ceiling, complete spectra
+nonbacktracking LP bound, the integral optimal-slack excess theorem, sharper
+low-degree order windows, the degree-six order-50 ceiling, complete spectra
 for one- and two-vertex punctures of Moore graphs, a deletion-stability
 inequality, and a metric normal form for all punctures of size at most
 `k - 1`. In particular, every deletion of at most five vertices from the
@@ -278,7 +279,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 This manuscript and source package correspond to GitHub release
-[`v2.2.5`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.5).
+[`v2.3.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.3.0).
 Their contents are identified by `MANIFEST.txt` and `SHA256SUMS`.
 
 Suggested arXiv primary category: `math.CO`. See

@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{21}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -95,6 +95,21 @@ Markus Meringer.
 \newblock \emph{Journal of Graph Theory}, 30\penalty0 (2):\penalty0 137--146,
   1999.
 \newblock \doi{10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G}.
+
+\bibitem[Cameron et~al.(1976)Cameron, Goethals, Seidel, and
+  Shult]{CameronEtAl1976}
+Peter~J. Cameron, Jean-Marie Goethals, Johan~J. Seidel, and Ernest~E. Shult.
+\newblock Line graphs, root systems, and elliptic geometry.
+\newblock \emph{Journal of Algebra}, 43\penalty0 (1):\penalty0 305--327, 1976.
+\newblock \doi{10.1016/0021-8693(76)90162-9}.
+
+\bibitem[Koolen et~al.(2025)Koolen, Yu, Liang, Choi, and
+  Markowsky]{KoolenEtAl2025}
+Jack~H. Koolen, Kefan Yu, Xiaoye Liang, Harrison Choi, and Greg Markowsky.
+\newblock Non-geometric distance-regular graphs of diameter at least 3 with
+  smallest eigenvalue at least -3.
+\newblock \emph{European Journal of Combinatorics}, 126:\penalty0 104118, 2025.
+\newblock \doi{10.1016/j.ejc.2024.104118}.
 
 \bibitem[J{\o}rgensen(2005)]{Jorgensen2005}
 Leif~K. J{\o}rgensen.
