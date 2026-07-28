@@ -54,7 +54,7 @@ broad spectral-graph-theory breakthrough. Suitability for a selective journal
 will depend on that journal's appetite for concise counterexample notes.
 
 The strongest remaining presentation risk is archival rather than
-mathematical: the immutable v2.2.1 release must be created from the exact
+mathematical: the immutable v2.2.2 release must be created from the exact
 audited tree before final journal submission. The explicit 50-vertex
 counterexample has a complete Lean graph and spectral certificate.
 The constructions of orders 38, 39, 40, and 42 now have kernel-checked finite

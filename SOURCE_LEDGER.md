@@ -18,7 +18,7 @@
 | Exhaustion of the `(5,5)`-cages | Markus Meringer, *Journal of Graph Theory* 30 (1999), 137--146, DOI `10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G` | External exhaustive input that the minimum order is 30 and exactly four nonisomorphic `(5,5)`-cages exist. The repository independently reconstructs and checks the four committed records but does not re-run the isomorph-free exhaustion. |
 | Petersen deletion realization | Klin, Muzychuk, and Ziv-Av, *Michigan Mathematical Journal* 58 (2009), Section 3.6, DOI `10.1307/mmj/1242071692` | Published structural context for obtaining the 40-vertex graph from Hoffman-Singleton. |
 | Hoffman-Singleton second subconstituent | van Dam and Haemers, *Linear Algebra and its Applications* 373 (2003), Table 3, DOI `10.1016/S0024-3795(03)00483-X` | Published identification and adjacency spectrum of the classical 42-vertex graph. |
-| Jørgensen order-96 `(9,5)` graph | Leif K. Jørgensen, *Discrete Mathematics* 293 (2005), 177-184, DOI `10.1016/j.disc.2004.08.029`; author-hosted adjacency list at `https://people.math.aau.dk/~leif/research/girth5/96.html` | The published source supports the relative-difference-set construction, order 96, degree 9, and girth five. The stored 96-line adjacency list matches the author-hosted list after whitespace normalization. Diameter, transmission, distance polynomial, least distance eigenvalue `-9`, WOW equality, and deletion screens are repository computations, not claims attributed to the paper. This research-only control is not currently part of the manuscript. |
+| Jørgensen order-96 `(9,5)` graph | Leif K. Jørgensen, *Discrete Mathematics* 293 (2005), 177-184, DOI `10.1016/j.disc.2004.08.029`; author-hosted adjacency list at `https://people.math.aau.dk/~leif/research/girth5/96.html` | The published source supports the relative-difference-set construction, order 96, degree 9, and girth five. The stored 96-line adjacency list matches the author-hosted list after whitespace normalization. Diameter, transmission, distance polynomial, least distance eigenvalue `-9`, WOW equality, and deletion screens are repository computations, not claims attributed to the paper. The equality computation is included in the manuscript with this source boundary made explicit. |
 | Symbolic software | Meurer et al., *PeerJ Computer Science* 3 (2017), e103, DOI `10.7717/peerj-cs.103` | Citation for SymPy, used for exact characteristic polynomials, Sturm counts, and rational certificates. |
 | Graph software | Hagberg, Schult, and Swart, *Proceedings of SciPy 2008*, DOI `10.25080/TCWV9851` | Citation for NetworkX, used in the graph6-based integer-BFS audit and standard-family controls. |
 | Lean 4 | Leonardo de Moura and Sebastian Ullrich, CADE 28 (2021), DOI `10.1007/978-3-030-79876-5_37` | System reference for the verified explicit-counterexample formalization. |
@@ -93,10 +93,10 @@ The manuscript follows the permitted language.
 The Moore second-subconstituent theorem is stated only for `K >= 3`; the
 formula does not extend to `K = 2`, where the second subconstituent of `C5` is
 `K2`. Punctured-Moore statements are conditional formulas or construction
-schemas, not an unconditional infinite family. The Lean files presently prove
-only the associated scalar inequalities, not the generic graph-to-spectrum
-theorems. “Punctured Moore graph” is package terminology and must be defined
-when used.
+schemas, not an unconditional infinite family. The one-variable LP optimum and optimizer rigidity are formalized in Lean as a
+graph-independent analytic theorem. The generic punctured-Moore spectra and
+graph-to-spectrum bridges remain conventional analytic proofs. “Punctured
+Moore graph” is package terminology and is defined when used.
 
 The deleted-graph distance-spectrum formulas, descendant classes, and order-96
 equality computation are presented with explicit source boundaries and exact

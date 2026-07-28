@@ -281,7 +281,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 This manuscript and source package correspond to GitHub release
-[`v2.2.1`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.1).
+[`v2.2.2`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.2).
 Their contents are identified by `MANIFEST.txt` and `SHA256SUMS`.
 
 Suggested arXiv primary category: `math.CO`. See

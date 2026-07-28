@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.2.1"
+EXPECTED_TAG = "v2.2.2"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -156,7 +156,7 @@ def main() -> None:
         if marker not in tex:
             raise AssertionError(f"Lean claim or scope marker missing: {marker}")
     if (
-        "Representative axiom reports contain only" not in tex
+        "The public endpoint axiom reports contain only" not in tex
         or r"\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}"
         not in tex
     ):

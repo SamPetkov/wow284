@@ -13,7 +13,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
-RELEASE_TAG = "v2.2.1"
+RELEASE_TAG = "v2.2.2"
 
 
 def require(condition: bool, message: str) -> None:
@@ -51,7 +51,7 @@ def main() -> None:
         "MANIFEST.txt",
         "SHA256SUMS",
         "SUBMISSION_NOTES.md",
-        "RELEASE_NOTES_v2.2.1.md",
+        "RELEASE_NOTES_v2.2.2.md",
         "SOURCE_LEDGER.md",
         "results/verification.json",
         "results/verification_40.json",
@@ -108,14 +108,14 @@ def main() -> None:
         and RELEASE_TITLE in tex,
         "expanded v2.2 title mismatch",
     )
-    require(r"\newcommand{\RepoTag}{v2.2.1}" in tex, "v2.2 release tag missing")
+    require(r"\newcommand{\RepoTag}{v2.2.2}" in tex, "v2.2 release tag missing")
     require("WOW-284 asserts" in tex, "conjecture verb is not the requested wording")
     require(
-        "OpenAI ChatGPT-5.6 Sol Pro assisted" in tex,
+        "OpenAI's ChatGPT assisted" in tex,
         "requested AI disclosure missing",
     )
     require(
-        r"correspond to release \texttt{v2.2.1}" in tex,
+        r"correspond to release \texttt{v2.2.2}" in tex,
         "manuscript-to-release correspondence statement missing",
     )
     require(
@@ -174,7 +174,7 @@ def main() -> None:
 
     submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
     require(
-        "**Current public research release:** `v2.2.1`" in submission_notes,
+        "**Current public research release:** `v2.2.2`" in submission_notes,
         "submission metadata does not identify the current research release",
     )
     require(

@@ -1,4 +1,4 @@
-WOW-284 v2.2.1 RELEASE VERIFICATION
+WOW-284 v2.2.2 RELEASE VERIFICATION
 ==================================
 
 Repository revision: 28 July 2026; active PDF date suppressed
@@ -78,7 +78,7 @@ MANUSCRIPT AND PDF
 PASS  Clean multi-pass LaTeX/BibTeX build with no unresolved citations or
       references, no overfull/underfull boxes, and no missing glyphs.
 PASS  PDF metadata carries the expanded v2.2 title and Samuil Petkov as author.
-PASS  PDF page count: 19.
+PASS  PDF page count: 20.
 PASS  A4 paper with the explicit one-inch geometry setting.
 PASS  References begin on a fresh page.
 PASS  Canonical root TeX/Bib, arXiv mirrors, Markdown reading copy, PDF, BBL,
