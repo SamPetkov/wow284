@@ -80,6 +80,6 @@ jobs:
               "scripts/clean_optimal_slack_note.py",
           ):
               data = Path(name).read_bytes()
-              assert not any(byte < 32 and byte not in {9, 10} for byte in data), name
+              assert not any(byte < 32 and byte != 10 for byte in data), name
           print("source hygiene: PASS")
           PY
