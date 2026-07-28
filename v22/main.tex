@@ -62,7 +62,7 @@
 \newcommand{\Spec}{\operatorname{Spec}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\diam}{\operatorname{diam}}
-\newcommand{\RepoTag}{v2.2.2}
+\newcommand{\RepoTag}{v2.2.3}
 \newcommand{\codefile}[1]{%
   \href{https://github.com/SamPetkov/wow284/blob/\RepoTag/#1}{\path{#1}}}
 \newcommand{\datafile}[1]{%
@@ -1787,51 +1787,34 @@ small-puncture normal form, and the Hoffman--Singleton deletion-radius theorem
 are likewise analytic results supported by exact Python audits; they are not
 part of the Lean claim.
 
-The release audit rejects \texttt{sorry}, \texttt{admit},
-\texttt{native\_decide}, \texttt{bv\_decide}, unsafe declarations, and new
-axioms.  The public endpoint axiom reports contain only
-\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}.
+\medskip
+\noindent
+The public Lean development is sorry-free and kernel-checked by Lean 4.31
+within the scope stated above.
 
-\section{Scope, literature boundary, and open questions}\label{sec:scope}
+\section{Scope and open directions}\label{sec:scope}
 
-Several ingredients belong to established theory and should not be conflated
-with the project-derived statements.
+Classical inputs are cited where they first enter the argument.  The contribution
+of this paper is the combined mechanism developed above: the shifted spectral
+score, the exact LP ceiling and its local semidefinite refinements, the puncture
+spectra, and the deletion-stability theory.  The natural next questions concern
+how far these mechanisms extend.
 
-\begin{itemize}
-\item Moore graphs, the Hoffman--Singleton graph, and their intact adjacency and
-distance spectra are classical \cite{HoffmanSingleton1960,HowladerPanigrahi2022}.
-\item Proposition~\ref{prop:radius-two} is Backelin's second-degree identity in
-normalized form \cite{Backelin2015}.
-\item Proposition~\ref{prop:higher-transfer} belongs to the established
-distance-polynomial framework \cite{Fiol2016}.
-\item The one-variable nonbacktracking LP framework is due to Nozaki
-\cite{Nozaki2015}; Theorem~\ref{thm:lp-ceiling} is the exact two-sided WOW
-specialization and optimizer theorem derived here.
-\item The four \((5,5)\)-cages used in Theorem~\ref{thm:regular-degree-six}
-come from Meringer's published exhaustive generation \cite{Meringer1999}; the
-repository independently verifies the four fixed records but does not replace
-the enumeration.
-\item Literature on vertex-deleted adjacency spectra and subconstituents is
-close in language but does not directly give the recomputed ordinary distance
-spectra in Section~\ref{sec:punctures}
-\cite{DalfoVanDamFiol2012,Biggs2010}.
-\end{itemize}
-
-The main open questions are:
 \begin{enumerate}
-\item Is there a counterexample of order below \(38\), and what is the true
-minimum order?
-\item Does a \(6\)-regular order-\(50\) strict counterexample exist?
-\item Can the one-point and three-vertex constraints of
-Theorem~\ref{thm:order50-feasibility} be completed by a multipoint semidefinite
-or canonical-generation argument?
-\item Do regular diameter-four counterexamples exist for degree at least ten?
-\item Is there an unconditional infinite family of strict counterexamples?
-Any infinite regular family must have unbounded degree, since
-Corollary~\ref{cor:trichotomy} and the Moore bound leave finitely many graphs
-at each fixed degree.
-\item Which deleted sets in a general Moore graph preserve strictness, beyond
-the metric normal form of Theorem~\ref{thm:small-puncture}?
+\item What are the minimum order and possible degree sequences of strict
+counterexamples, and can the extremal examples be classified?
+\item Can a systematic multipoint semidefinite or higher-moment hierarchy
+extend the exact one-point LP and local-minor bounds, in particular at the
+degree-six order-\(50\) boundary?
+\item What replaces the diameter-three score calculus for irregular graphs and
+for regular graphs of diameter four, and does either setting produce new
+counterexamples?
+\item Does an unconditional infinite family of strict counterexamples exist,
+and which graph operations preserve strictness?  Any infinite regular family
+must have unbounded degree.
+\item Can the puncture and metric-damage theory be extended from Moore graphs
+to broader distance-regular or distance-polynomial families, with sharp
+robustness thresholds?
 \end{enumerate}
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
@@ -1840,7 +1823,7 @@ author.  The author assumes full responsibility for the mathematics,
 attribution, and conclusions.  The source, exact certificates, and build
 instructions are available at
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}
-and correspond to release \texttt{v2.2.2}.
+and correspond to release \texttt{v2.2.3}.
 
 \appendix
 

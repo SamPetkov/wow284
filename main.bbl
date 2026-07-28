@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -138,24 +138,5 @@ Leonardo de~Moura and Sebastian Ullrich.
   Conference on Certified Programs and Proofs}, pages 367--381. Association for
   Computing Machinery, 2020.
 \newblock \doi{10.1145/3372885.3373824}.
-
-\bibitem[Hoffman and Singleton(1960)]{HoffmanSingleton1960}
-Alan~J. Hoffman and Robert~R. Singleton.
-\newblock On {Moore} graphs with diameters 2 and 3.
-\newblock \emph{IBM Journal of Research and Development}, 4\penalty0
-  (5):\penalty0 497--504, 1960.
-\newblock \doi{10.1147/rd.45.0497}.
-
-\bibitem[Dalf{\'o} et~al.(2011)Dalf{\'o}, van Dam, and
-  Fiol]{DalfoVanDamFiol2012}
-Cristina Dalf{\'o}, Edwin~R. van Dam, and Miquel~{\`A}ngel Fiol.
-\newblock On perturbations of almost distance-regular graphs.
-\newblock \emph{Linear Algebra and its Applications}, 435\penalty0
-  (10):\penalty0 2626--2638, 2011.
-\newblock \doi{10.1016/j.laa.2011.05.004}.
-
-\bibitem[Biggs(2010)]{Biggs2010}
-Norman Biggs.
-\newblock The second subconstituent of some strongly regular graphs, 2010.
 
 \end{thebibliography}

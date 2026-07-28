@@ -204,13 +204,10 @@ punctured-Moore and deletion-stability theorems are likewise analytic results
 with exact Python audits, not part of the Lean claim.
 
 The spectral computation is sharded into bounded integer certificates and
-then assembled into a rational two-sided inverse and diagonalization. The
-release audit rejects `sorry`, `admit`, `native_decide`, `bv_decide`, unsafe
-declarations, and new axioms. Representative axiom audits report only the
-standard dependencies `propext`, `Classical.choice`, and `Quot.sound`.
-The release gate requires warning-fatal Lean/Mathlib 4.31 compilation of the
-exact public tree, a forbidden-token scan, and axiom reports limited to
-`propext`, `Classical.choice`, and `Quot.sound`.
+then assembled into a rational two-sided inverse and diagonalization. Within
+the documented formal scope, the public Lean development is sorry-free and
+kernel-checked by Lean/Mathlib 4.31. Full audit details remain available in
+the Lean documentation and release-verification report.
 
 ## Audited research extensions
 
@@ -281,7 +278,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 This manuscript and source package correspond to GitHub release
-[`v2.2.2`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.2).
+[`v2.2.3`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.3).
 Their contents are identified by `MANIFEST.txt` and `SHA256SUMS`.
 
 Suggested arXiv primary category: `math.CO`. See

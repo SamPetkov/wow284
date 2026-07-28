@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.2.2"
+EXPECTED_TAG = "v2.2.3"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -156,11 +156,11 @@ def main() -> None:
         if marker not in tex:
             raise AssertionError(f"Lean claim or scope marker missing: {marker}")
     if (
-        "The public endpoint axiom reports contain only" not in tex
-        or r"\texttt{propext}, \texttt{Classical.choice}, and \texttt{Quot.sound}"
+        "The public Lean development is sorry-free and kernel-checked by Lean 4.31"
         not in tex
+        or "within the scope stated above." not in tex
     ):
-        raise AssertionError("axiom-scope statement missing")
+        raise AssertionError("Lean verification statement missing")
 
     report = {
         "labels": len(labels),
