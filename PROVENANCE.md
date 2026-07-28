@@ -51,9 +51,8 @@ punctured-Moore and deletion theorems remain analytic rather than Lean claims.
 ## AI assistance
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
-exploration, and Lean formalization. No AI system is named as an author.
-Samuil Petkov accepts full responsibility for all mathematical,
-bibliographic, legal, and submission claims.
+exploration, and Lean formalization. Samuil Petkov accepts full responsibility
+for all mathematical, bibliographic, legal, and submission claims.
 
 ## Limits
 

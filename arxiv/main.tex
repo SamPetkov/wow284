@@ -62,7 +62,8 @@
 \newcommand{\Spec}{\operatorname{Spec}}
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\diam}{\operatorname{diam}}
-\newcommand{\RepoTag}{v2.2.4}
+\newcommand{\resultbox}[1]{\boxed{#1}}
+\newcommand{\RepoTag}{v2.2.5}
 \newcommand{\codefile}[1]{%
   \href{https://github.com/SamPetkov/wow284/blob/\RepoTag/#1}{\path{#1}}}
 \newcommand{\datafile}[1]{%
@@ -417,9 +418,26 @@ factor \(x^2+6x+2\), together with an exact Sturm isolation, gives the least
 root \(-3-\sqrt7\).  For \(H_{39}\), the exact matrix
 \(6D+35I\) is positive definite.  All graph, girth, distance, dual-degree,
 Sturm, and rational \(LDL^{\mathsf T}\) certificates are checked by
-\codefile{scripts/verify_extended.py}; the labelled deletion families are
-exhausted by \codefile{scripts/verify_descendant_families.py}.  No transitivity
-or numerical root ordering is used.
+\codefile{scripts/verify_extended.py}.  More explicitly, for every
+\(v\in V(R)\),
+\begin{align*}
+\det(xI-D(R-v))=P_{39}(x):={}&x^9(x+5)^{12}(x^2+6x+3)\\
+&\cdot(x^3+3x^2-15x-7)^2(x^3+3x^2-15x-3)^2\\
+&\cdot(x^4-78x^3+303x^2-70x-450),
+\end{align*}
+whereas for every \(uv\in E(R)\),
+\begin{align*}
+\det(xI-D(R-\{u,v\}))=P_{38}(x):={}&x^4(x-2)(x+5)^8(x^2+6x+2)^2\\
+&\cdot(x^3+3x^2-15x-3)\\
+&\cdot(x^4+5x^3-7x^2-23x-6)\\
+&\cdot(x^5+9x^4+7x^3-77x^2-54x-4)\\
+&\cdot(x^9-67x^8-404x^7+1772x^6+7205x^5\\
+&\hspace{3em}-18489x^4-17018x^3+20288x^2+16824x+1680).
+\end{align*}
+The labelled deletion families are exhausted by
+\codefile{scripts/verify_descendant_families.py}.  No transitivity or
+numerical root ordering is used.  Fixed graph6, adjacency-list, edge-list, and
+distance-matrix records are provided in \path{data/graphs/}.
 \end{proof}
 
 \begin{theorem}[Moore second subconstituents]\label{thm:second-subconstituent}
@@ -498,7 +516,7 @@ adjacency eigenvalue \(\theta\) gives the distance eigenvalue
 \]
 Consequently
 \[
- \boxed{
+ \resultbox{
  \Phi(G)=2k-2-\max_{\theta\ne k}(\theta+1)^2.
  }
 \]
@@ -525,8 +543,12 @@ three is not a strict counterexample for \(k\ge3\).
 \end{corollary}
 
 \begin{proof}
-The nonprincipal eigenvalue \(-k\) violates the open shifted window, with
-equality only when \(k=3\).
+The nonprincipal eigenvalue \(-k\) satisfies
+\[
+ (-k+1)^2-(2k-2)=(k-1)(k-3)\ge0
+ \qquad(k\ge3).
+\]
+Thus the required strict inequality fails, with equality exactly at \(k=3\).
 \end{proof}
 
 \begin{proposition}[Higher-diameter transfer]\label{prop:higher-transfer}
@@ -587,10 +609,11 @@ We use the LP ceiling proved independently in
 Theorem~\ref{thm:lp-ceiling}; that theorem does not depend on the present
 degree reduction.  Let the degree be \(k\).
 Lemma~\ref{lem:diam-rayleigh} and strictness give \(\diam(G)<k\).
-The cases \(k\le2\) are immediate.  For \(k=3\), the radius-two lower
-bound and diameter at most two force equality in the Moore bound.  Hence the
-graph is a degree-three Moore graph, and Theorem~\ref{thm:moore-threshold}
-gives equality rather than strict violation.
+If \(k\le2\), then \(|V(G)|\ge3\) and connectedness give
+\(\diam(G)\ge2\ge k\), a contradiction.  For \(k=3\), the radius-two lower
+bound and \(\diam(G)\le2\) force equality in the Moore bound.  Hence \(G\) is
+a degree-three Moore graph, and Theorem~\ref{thm:moore-threshold} gives
+\(\Phi(G)=0\), not \(\Phi(G)>0\).
 
 For \(k=4\), diameter two would require a degree-four Moore graph, whose
 adjacency multiplicities are nonintegral.  In diameter three, the exact LP
@@ -612,7 +635,8 @@ A diametral geodesic in diameter four yields the principal submatrix
 \(D(P_5)\), whose factor \(x^2+6x+4\) supplies the eigenvalue
 \(-3-\sqrt5<-5\); Cauchy interlacing excludes this case.  In diameter
 three, Meringer's lower bound and Theorem~\ref{thm:lp-ceiling} leave
-\(n\in\{30,31,32\}\), and parity removes \(31\).  At \(n=32\), write
+\(n\in\{30,31,32\}\).  Since \(5n=2|E(G)|\), one has
+\(n\equiv0\pmod2\), so \(n\in\{30,32\}\).  At \(n=32\), write
 \(a\) for the average internal degree of the distance-two layer.
 This layer has \(20\) vertices, each with one neighbour in the first layer,
 so the number of edges from the second to the six-vertex third layer is
@@ -633,8 +657,8 @@ factor is
  \qquad p_{5,6}(11/6)=-29/27<0.
 \]
 Because the leading coefficient is positive, its largest root exceeds
-\(11/6>-1+\sqrt8\), contradicting the
-open shifted window.  At \(n=30\), Meringer's isomorph-free enumeration
+\(11/6>-1+\sqrt8\), contradicting the necessary bound
+\(\theta<-1+\sqrt8\).  At \(n=30\), Meringer's isomorph-free enumeration
 leaves exactly four \((5,5)\)-cages \cite{Meringer1999}; each fixed record has
 an exact distance eigenvalue at most \(-5\).
 The complete case split, the four fixed graph6 records, characteristic
@@ -646,14 +670,14 @@ polynomials, and interlacing directions are independently checked by
 Let \(G\) be any connected finite simple graph, and let \(u,v\) be vertices at
 distance \(\ell=d_G(u,v)\ge5\).  Put \(p=d(u)\) and \(q=d(v)\).  Then
 \[
- \boxed{
+ \resultbox{
  \lambda_{\min}(D(G))
  \le p+q-2-\sqrt{(p-q)^2+pq(\ell-2)^2}.
  }
 \]
 If \(\delta\) is the ordinary minimum degree, then
 \[
- \boxed{
+ \resultbox{
  \lambda_{\min}(D(G))\le-\delta(\ell-4)-2.
  }
 \]
@@ -693,7 +717,7 @@ audited by \codefile{scripts/verify_proof_audit_10_endpoint_diameter.py}.
 Let \(G\) be connected, \(k\)-regular, of girth at least five and diameter
 four.  Then
 \[
- \boxed{
+ \resultbox{
  \lambda_{\min}(D(G))\le-\frac{7+\sqrt{16k+1}}2.
  }
 \]
@@ -733,8 +757,9 @@ independently checked by
 Every regular strict counterexample has one of the following forms:
 \begin{enumerate}
 \item diameter two, hence a Moore graph;
-\item diameter three, with all nonprincipal adjacency eigenvalues in the open
-shifted WOW window;
+\item diameter three, with
+\(\lvert\theta+1\rvert<\sqrt{2k-2}\) for every nonprincipal adjacency
+eigenvalue \(\theta\);
 \item diameter four, with degree at least ten.
 \end{enumerate}
 There are no regular strict counterexamples of diameter at least five.
@@ -754,7 +779,7 @@ One has
 \]
 Every strict counterexample therefore satisfies
 \[
- \boxed{
+ \resultbox{
  n< B_k:=\frac{(k+2)(k^2+3)}6.
  }
 \]
@@ -809,13 +834,13 @@ nonprincipal eigenvalue, so \(\tr f(A)\le f(k)\).  Thus
 \begin{theorem}[Exact LP ceiling and rigidity]\label{thm:lp-ceiling}
 For every integer \(k\ge4\) and every admissible \(f\),
 \[
- \boxed{
+ \resultbox{
  \frac{f(k)}{f_0}\ge B_k=\frac{(k+2)(k^2+3)}6.
  }
 \]
 Equality holds if and only if \(f\) is a positive scalar multiple of
 \[
- \boxed{
+ \resultbox{
  f_*(x)=\frac{(x+2)^2(x^2+2x-(2k-3))}{6(k+2)}.
  }
 \]
@@ -830,7 +855,7 @@ The primal expansion is
 \[
 \begin{aligned}
 6(k+2)f_*(x)={}&6(k+2)F_0(x)+2(2k+7)F_1(x)\\
-&+(k+13)F_2(x)+6F_3(x)+F_4(x),
+&+(k+13)F_2(x)+6F_3(x)+F_4(x).
 \end{aligned}
 \]
 On \(I_k\), the factor \((x+1)^2-(2k-2)\) is nonpositive, while
@@ -843,7 +868,7 @@ w_-&=\frac{k(k+2)(2k^2-6-3(k-1)\Delta)}{24(2k-3)},\\
 w_0&=\frac{k(k-1)(k^2+3)}{6(2k-3)},\\
 w_+&=\frac{k(k+2)(2k^2-6+3(k-1)\Delta)}{24(2k-3)}.
 \end{align*}
-All weights are positive.  For the only nontrivial one, this follows from
+\(w_-,w_0,w_+>0\).  For the only nontrivial inequality, this follows from
 \[
  (2k^2-6)^2-18(k-1)^3
  =2(k-3)(2k-3)(k^2+3)>0.
@@ -881,16 +906,18 @@ where \(U_j\) is the Chebyshev polynomial of the second kind.  Using
  \le \frac{2i+1}{3}\,3^{3-i/2}.
 \]
 At \(i=10\) the right-hand side is \(7/9\), and it decreases thereafter
-because \(3(2i+1)^2-(2i+3)^2=8i^2-6>0\).  Thus it is strictly less
-than one for every \(i\ge10\).
+because \(3(2i+1)^2-(2i+3)^2=8i^2-6>0\).  Hence
+\[
+ \frac{|\mu(F_i)|}{F_i(k)}<1\qquad(i\ge10).
+\]
 Expanding in the nonbacktracking basis gives
 \[
  \int f\,d\mu
  =B_kf_0-f(k)+\sum_{i\ge5}f_i a_i
  \ge B_kf_0-f(k).
 \]
-Since \(f\le0\) on the support of \(\mu\), the left-hand side is at
-most zero, which proves weak duality.
+Since \(f\le0\) on \(\operatorname{supp}\mu\),
+\(\int f\,d\mu\le0\), which proves weak duality.
 If equality holds, strict positivity of every high-degree slack forces
 \(f_i=0\) for \(i\ge5\).  Equality on the positive dual support forces zeros
 at \(\xi_-,-2,\xi_+\); the interior zero \(-2\) has even multiplicity because
@@ -911,8 +938,13 @@ the one-point LP trace bound does not see.
 
 \begin{proposition}[Edge-local cycle bounds]\label{prop:edge-cycle}
 Let \(G\) be connected and \(k\)-regular, of girth at least five and diameter
-three, and suppose its nonprincipal adjacency spectrum lies in the closed
-shifted WOW window.  For an edge \(uv\), let \(\sigma_{uv}\) be the number of
+three, and suppose
+\[
+ |\theta+1|\le\sqrt{2k-2}
+ \qquad(\theta\ne k)
+\]
+for every adjacency eigenvalue \(\theta\).  For an edge \(uv\), let
+\(\sigma_{uv}\) be the number of
 \(5\)-cycles containing that edge.  Then
 \[
  2k-2\le\sigma_{uv}\le
@@ -985,12 +1017,12 @@ Under the hypotheses of Proposition~\ref{prop:edge-cycle}, put
 \]
 Necessarily
 \[
- \boxed{\lceil L_{k,n}\rceil\le\lfloor U_{k,n}\rfloor.}
+ \resultbox{\lceil L_{k,n}\rceil\le\lfloor U_{k,n}\rfloor.}
 \]
 If both sides equal an integer \(s\), then every edge of \(G\) lies in
 exactly \(s\) five-cycles and
 \[
- \boxed{5\mid \frac{skn}{2}.}
+ \resultbox{5\mid \frac{skn}{2}.}
 \]
 \end{corollary}
 
@@ -1034,8 +1066,9 @@ Assume \(n=51\).  Corollary~\ref{cor:edge-cycle-sieve} has
 \(\lceil L_{6,51}\rceil=\lfloor U_{6,51}\rfloor=11\), and hence requires
 \[
  5N_5=153\cdot11=1683,
+ \qquad 5\nmid 1683,
 \]
-impossible modulo five.  The full diameter reduction and incidence audit are
+which is impossible.  The full diameter reduction and incidence audit are
 contained in \codefile{scripts/verify_proof_audit_01_edge_local.py}.
 \end{proof}
 
@@ -1053,16 +1086,18 @@ k=9&:\quad n\le152.
 Theorem~\ref{thm:diameter-four} removes diameter four for these degrees.  At
 \(k=7\), the diameter-two case is the order \(50\) Hoffman--Singleton graph,
 whereas Theorem~\ref{thm:lp-ceiling} gives \(n<78\) in diameter three;
-the handshake lemma makes \(n\) even, so \(n\le76\).  At \(k=8\) and
+\(7n=2|E(G)|\) implies \(n\equiv0\pmod2\), so \(n\le76\).  At \(k=8\) and
 \(k=9\), the Moore multiplicities are nonintegral, so diameter two is
 impossible.  The LP ceiling gives \(n\le111\) for \(k=8\) and
-\(n\le153\) for \(k=9\); parity improves the latter to \(152\).  Finally,
+\(n\le153\) for \(k=9\); since \(9n=2|E(G)|\), the latter improves to
+\(n\le152\).  Finally,
 at \(k=8,n=111\), Corollary~\ref{cor:edge-cycle-sieve} has
 \(\lceil L_{8,111}\rceil=\lfloor U_{8,111}\rfloor=14\), but it would require
 \[
- 5N_5=14\cdot444=6216
+ 5N_5=14\cdot444=6216,
+ \qquad 5\nmid 6216,
 \]
-is impossible.  Exact integer arithmetic is checked by
+which is impossible.  Exact integer arithmetic is checked by
 \codefile{scripts/verify_low_degree_windows.py}.
 \end{proof}
 
@@ -1411,7 +1446,7 @@ connected.  Put
 \]
 Then
 \[
- \boxed{
+ \resultbox{
  \Phi(H)\ge\gamma-(a-b)+\lambda_{\min}(E_S).
  }
 \]
@@ -1437,12 +1472,12 @@ Let \(M\) be a degree-\(k\) Moore graph, let \(S\subseteq V(M)\) have size
 \(s\le k-1\), and put \(H=M-S\).  Then \(H\) is connected, has diameter at
 most three, and
 \[
- \boxed{\delta^*(H)=k-\frac{s}{k}.}
+ \resultbox{\delta^*(H)=k-\frac{s}{k}.}
 \]
 Let \(B\) be the surviving-vertex by deleted-vertex incidence matrix, with
 \(B_{xz}=1\) exactly when \(x\sim_M z\).  Then
 \[
- \boxed{
+ \resultbox{
  D(H)=2(J-I)-A(H)+BB^{\mathsf T}
  -\operatorname{diag}(BB^{\mathsf T}).
  }
@@ -1507,7 +1542,7 @@ Under the hypotheses of Theorem~\ref{thm:small-puncture}, put
 \]
 Then
 \[
- \boxed{
+ \resultbox{
  \Phi(M-S)\ge
  k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}-\tau(S).
  }
@@ -1516,7 +1551,7 @@ In particular, the deletion is a strict counterexample whenever the
 right-hand side is positive.  Since \(\tau(S)\le s\), every deletion of
 \(s\) vertices is strict whenever
 \[
- \boxed{
+ \resultbox{
  s\left(1+\frac1k\right)
  <k-\frac{3+\sqrt{4k-3}}2.
  }
@@ -1813,51 +1848,18 @@ statements?
 commutativity is lost?  Can degree-weighted operators, nonbacktracking
 operators, or matrix-valued orthogonal polynomials provide comparably sharp
 certificates for irregular or multitype systems?
-\item Can one develop a perturbation theory for distance and other globally
-defined metric operators under local modifications?  In particular, when can
-combinatorial replacement paths be converted into sharp low-rank,
-interlacing, or positive-semidefinite stability principles?
-\item When do sporadic finite counterexamples reflect an underlying scalable
-mechanism?  Can local convergence, graph limits, or operator limits
-distinguish genuinely isolated phenomena from the finite shadows of infinite
+\item Can a unified perturbation-and-limit theory for globally defined metric
+operators explain when local modifications preserve a spectral inequality
+and distinguish sporadic finite phenomena from finite shadows of infinite
 families?
-\item Which computer-discovered spectral proofs admit certificates that are
-simultaneously human-compressible, independently reproducible, and
-kernel-checkable?  Is there a general certificate architecture that cleanly
-separates finite data verification from the conceptual argument without
-weakening the theorem's quantifiers?
 \end{enumerate}
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
-exploration, and Lean formalization.  No AI system is an
-author.  The author assumes full responsibility for the mathematics,
-attribution, and conclusions.  The source, exact certificates, and build
-instructions are available at
+exploration, and Lean formalization.  The author assumes full responsibility
+for the mathematics, attribution, and conclusions.  The source, exact
+certificates, and build instructions are available at
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}
-and correspond to release \texttt{v2.2.4}.
-
-\clearpage
-\appendix
-
-\section{Characteristic polynomials for the order-39 and order-38 descendants}
-
-For every labelled singleton deletion of \(R\),
-\begin{align*}
-P_{39}(x)={}&x^9(x+5)^{12}(x^2+6x+3)\\
-&\cdot(x^3+3x^2-15x-7)^2(x^3+3x^2-15x-3)^2\\
-&\cdot(x^4-78x^3+303x^2-70x-450).
-\end{align*}
-For every labelled edge-endpoint deletion of \(R\),
-\begin{align*}
-P_{38}(x)={}&x^4(x-2)(x+5)^8(x^2+6x+2)^2\\
-&\cdot(x^3+3x^2-15x-3)\\
-&\cdot(x^4+5x^3-7x^2-23x-6)\\
-&\cdot(x^5+9x^4+7x^3-77x^2-54x-4)\\
-&\cdot(x^9-67x^8-404x^7+1772x^6+7205x^5\\
-&\hspace{3em}-18489x^4-17018x^3+20288x^2+16824x+1680).
-\end{align*}
-The fixed graph6, adjacency-list, edge-list, and distance-matrix records are in
-\path{data/graphs/}.
+and correspond to release \texttt{v2.2.5}.
 
 \clearpage
 \begingroup

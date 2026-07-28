@@ -34,7 +34,7 @@ V22_DIR = ROOT / "v22"
 RELEASE_TITLE = (
     "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 )
-RELEASE_TAG = "v2.2.4"
+RELEASE_TAG = "v2.2.5"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -286,7 +286,7 @@ def validate_release_text() -> None:
         r"\label{cor:uniform-deletion}",
         "first proof that WOW-284 is false",
         r"\clearpage",
-        r"correspond to release \texttt{v2.2.4}",
+        r"correspond to release \texttt{v2.2.5}",
     ]
     missing = [item for item in required if item not in text]
     if missing:

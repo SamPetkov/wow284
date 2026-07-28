@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.2.4"
+EXPECTED_TAG = "v2.2.5"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -161,6 +161,27 @@ def main() -> None:
         or "within the scope stated above." not in tex
     ):
         raise AssertionError("Lean verification statement missing")
+    if (
+        r"\newcommand{\resultbox}[1]{\boxed{#1}}" not in tex
+        or tex.count(r"\boxed{") != 1
+        or tex.count(r"\resultbox{") != 14
+    ):
+        raise AssertionError("principal-result box style is not uniform")
+    exact_exposition_markers = (
+        r"(-k+1)^2-(2k-2)=(k-1)(k-3)\ge0",
+        r"5n=2|E(G)|",
+        r"5\nmid 1683",
+        r"5\nmid 6216",
+        r"\int f\,d\mu\le0",
+        r"\det(xI-D(R-v))=P_{39}(x)",
+        r"\det(xI-D(R-\{u,v\}))=P_{38}(x)",
+    )
+    for marker in exact_exposition_markers:
+        if marker not in tex:
+            raise AssertionError(f"exact proof-exposition marker missing: {marker}")
+    removed_ai_sentence = "No AI system is " + "an author"
+    if r"\appendix" in tex or removed_ai_sentence in tex:
+        raise AssertionError("removed appendix or AI-authorship sentence returned")
 
     report = {
         "labels": len(labels),
