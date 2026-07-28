@@ -13,6 +13,7 @@ on:
       - "scripts/apply_final_arxiv_line_review.py"
       - "scripts/run_final_arxiv_line_review.py"
       - "scripts/apply_final_arxiv_line_review_last.py"
+      - "scripts/align_final_arxiv_validators.py"
       - ".github/workflows/final-arxiv-audit-export.yml"
   workflow_dispatch:
 
@@ -35,6 +36,7 @@ jobs:
           {
             python scripts/run_final_arxiv_line_review.py
             python scripts/apply_final_arxiv_line_review_last.py
+            python scripts/align_final_arxiv_validators.py
           } 2>&1 | tee final-line-review-apply.log
       - name: Install exact, TeX, and document dependencies
         run: |
