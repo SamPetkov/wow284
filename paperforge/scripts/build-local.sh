@@ -20,7 +20,7 @@ if [[ ! -x "$VENV/bin/python" ]]; then
   python3 -m venv "$VENV"
 fi
 "$VENV/bin/python" -m pip install --upgrade pip
-"$VENV/bin/python" -m pip install "pretext==$PRETEXT_VERSION"
+"$VENV/bin/python" -m pip install "pretext==$PRETEXT_VERSION" pybtex
 "$VENV/bin/python" -m pip install -e "$TOOL_ROOT" -e "$TOOL_ROOT/validators"
 
 export PATH="$VENV/bin:$PATH"
@@ -31,12 +31,14 @@ paperforge init "$INSTANCE" \
   --force \
   --title "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284" \
   --slug wow284 \
-  --draft ../main.tex \
+  --draft inputs/draft/main.tex \
   --no-lean \
   --site \
   --non-interactive
 
 python "$INSTANCE/scripts/hydrate_paperforge_assets.py" "$TOOL_ROOT"
+python "$INSTANCE/scripts/prepare_paperforge_inputs.py"
+paperforge doctor "$INSTANCE"
 paperforge ingest "$INSTANCE" --bootstrap
 paperforge build web "$INSTANCE"
 paperforge build site "$INSTANCE"
