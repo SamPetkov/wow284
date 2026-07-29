@@ -1,14 +1,17 @@
-# WOW-284 v2.3.0
+# WOW-284 v2.2.6
 
 Substantive extension of the expanded manuscript.
 
+This release subsumes the unpublished v2.2.5 candidate and is the first
+public release of the integrated optimal-slack and signed-complement results.
+
 - Introduces the positive-semidefinite optimal-slack matrix whose trace is the
   exact one-variable LP defect.
-- Proves that its associated integral excess matrix is nonzero, yielding the
-  first strengthened diameter-three bound.
+- Proves that its associated integral excess matrix is nonzero, yielding a
+  strengthened diameter-three bound.
 - Proves the three-to-one excess theorem
   \(r>0\) and \(n\le3r\), where
-  \(r=2(k+2)^2(k^2+3)-(12k+27)n\), yielding the sharper universal bound
+  \(r=2(k+2)^2(k^2+3)-(12k+27)n\), yielding the sharper diameter-three bound
   \[
   n\le
   \left\lfloor

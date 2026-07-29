@@ -13,7 +13,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
-RELEASE_TAG = "v2.3.0"
+RELEASE_TAG = "v2.2.6"
 
 
 def require(condition: bool, message: str) -> None:
@@ -55,7 +55,7 @@ def main() -> None:
         "RELEASE_NOTES_v2.2.3.md",
         "RELEASE_NOTES_v2.2.4.md",
         "RELEASE_NOTES_v2.2.5.md",
-        "RELEASE_NOTES_v2.3.0.md",
+        "RELEASE_NOTES_v2.2.6.md",
         "SOURCE_LEDGER.md",
         "results/verification.json",
         "results/verification_40.json",
@@ -131,23 +131,35 @@ def main() -> None:
     require(
         r"\title[Counterexamples and obstructions for WOW-284]" in tex
         and RELEASE_TITLE in tex,
-        "expanded v2.3 title mismatch",
+        "expanded manuscript title mismatch",
     )
-    require(r"\newcommand{\RepoTag}{v2.3.0}" in tex, "v2.3 release tag missing")
+    require(
+        rf"\newcommand{{\RepoTag}}{{{RELEASE_TAG}}}" in tex,
+        "v2.2.6 release tag missing",
+    )
     require("WOW-284 asserts" in tex, "conjecture verb is not the requested wording")
     require(
         "OpenAI ChatGPT-5.6 Sol Pro assisted" in tex,
         "requested AI disclosure missing",
     )
+    lower_tex = tex.lower()
+    for phrase in (
+        "first counterexample",
+        "first proof that wow-284 is false",
+        "first lean formalization",
+        "smallest counterexample",
+        "previously unknown",
+    ):
+        require(phrase not in lower_tex, f"unsupported claim returned: {phrase}")
     require(
-        tex.count("first proof that WOW-284 is false") == 1,
-        "qualified priority statement must appear exactly once",
+        re.search(r"n\s*(?:\\leq?|<=|≤)\s*49", tex) is None,
+        "unsupported positive order-49 bound returned",
     )
     require(
         r"\label{cor:edge-cycle-sieve}" in tex
         and r"\label{cor:uniform-deletion}" in tex
         and r"\label{thm:integral-slack}" in tex,
-        "v2.3 structural results are missing",
+        "structural results are missing",
     )
     require(
         r"\label{thm:three-to-one}" in tex
@@ -157,7 +169,7 @@ def main() -> None:
         "three-to-one excess or signed-complement results are missing",
     )
     require(
-        r"correspond to release \texttt{v2.3.0}" in tex,
+        r"correspond to release \texttt{\RepoTag}" in tex,
         "manuscript-to-release correspondence statement missing",
     )
     require(
@@ -172,6 +184,7 @@ def main() -> None:
         ),
         "submission source mentions superseded release history",
     )
+    normalized_tex = " ".join(tex.split())
     for marker, message in (
         (
             r"\section{Moment bounds and the exact LP ceiling}",
@@ -182,7 +195,7 @@ def main() -> None:
             "exact LP theorem missing",
         ),
         (
-            "the analytic LP\noptimum and rigidity for every integer \\(k\\ge4\\)",
+            "the analytic LP optimum and rigidity for every integer \\(k\\ge4\\)",
             "LP formalization claim missing from abstract",
         ),
         (
@@ -210,13 +223,13 @@ def main() -> None:
             "deletion-robustness section missing",
         ),
     ):
-        require(marker in tex, message)
+        require(marker in tex or marker in normalized_tex, message)
     require(r"\clearpage" in tex, "references do not start on a new page")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
 
     submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
     require(
-        "**Current public research release:** `v2.3.0`" in submission_notes,
+        f"**Current public research release:** `{RELEASE_TAG}`" in submission_notes,
         "submission metadata does not identify the current research release",
     )
     require(

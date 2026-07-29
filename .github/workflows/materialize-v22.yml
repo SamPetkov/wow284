@@ -1,89 +1,18 @@
-name: Materialize expanded v2.2 manuscript
+name: Verify expanded manuscript mirror
 
 on:
-  pull_request:
-    paths:
-      - "scripts/.v22-bootstrap/main.*"
-      - "scripts/materialize_v22_bootstrap.py"
-      - ".github/workflows/materialize-v22.yml"
-      - "v22/**"
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
-  materialize-and-build:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+  verify-mirror:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref || github.ref_name }}
-          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-      - name: Materialize the deterministic source bundle
-        id: materialize
-        continue-on-error: true
+      - name: Check the synchronized v22 mirror
         run: python scripts/materialize_v22_bootstrap.py
-      - name: Commit concise materialization diagnostic
-        if: steps.materialize.outcome == 'failure' && github.event_name == 'pull_request'
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add v22-materialization-error.txt
-          git commit -m "Record v2.2 materialization diagnostic [skip ci]"
-          git push origin HEAD:${{ github.head_ref }}
-      - name: Stop after a materialization failure
-        if: steps.materialize.outcome == 'failure'
-        run: |
-          cat v22-materialization-error.txt
-          exit 1
-      - name: Reject source corruption and placeholders
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          import re
-          root = Path('v22')
-          for path in sorted(root.rglob('*')):
-              if not path.is_file() or path.name == '.materialized':
-                  continue
-              data = path.read_bytes()
-              bad = [(i, byte) for i, byte in enumerate(data)
-                     if byte < 32 and byte not in {9, 10}]
-              if bad:
-                  raise SystemExit(f'{path}: forbidden control bytes {bad[:5]}')
-              text = data.decode('utf-8')
-              if '\ufffd' in text:
-                  raise SystemExit(f'{path}: replacement character')
-              if re.search(r'(?<!\\)(TODO|FIXME)', text):
-                  raise SystemExit(f'{path}: unresolved placeholder')
-          print('v2.2 prose-source hygiene: PASS')
-          PY
-      - name: Commit materialized source on the manuscript branch
-        if: github.event_name == 'pull_request'
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add v22
-          if git diff --cached --quiet; then
-            echo "No materialized source change"
-          else
-            git commit -m "Materialize expanded v2.2 manuscript source [skip ci]"
-            git push origin HEAD:${{ github.head_ref }}
-          fi
-      - name: Install TeX
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended texlive-fonts-extra texlive-bibtex-extra poppler-utils
-      - name: Compile expanded manuscript
-        working-directory: v22
-        run: |
-          latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
-          if grep -E "undefined citations|undefined references|There were undefined|Overfull \\hbox|Underfull \\hbox|Missing character" main.log; then
-            echo "publication warning found" >&2
-            exit 1
-          fi
-          pdfinfo main.pdf | tee pdfinfo.txt

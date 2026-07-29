@@ -1,6 +1,6 @@
 # arXiv metadata
 
-**Release:** This manuscript corresponds to GitHub release `v2.3.0`.
+**Release:** This manuscript corresponds to GitHub release `v2.2.6`.
 
 **Title:** Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284
 
@@ -12,11 +12,11 @@
 
 **MSC class:** `05C50; 05C12; 05C35; 05E30`
 
-**Comments:** 25 pages. Corresponds to GitHub release `v2.3.0`.
+**Comments:** 26 pages. Corresponds to GitHub release `v2.2.6`.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-**Current public research release:** `v2.3.0`
+**Current public research release:** `v2.2.6`
 
 **Current package:** Identified by `MANIFEST.txt` and `SHA256SUMS`.
 

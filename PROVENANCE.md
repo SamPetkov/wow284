@@ -34,7 +34,7 @@ transitive axiom reports contain only `propext`, `Classical.choice`, and
 `Quot.sound`. Static source scans and deterministic generator checks reject
 proof placeholders, unsafe declarations, and new axioms.
 
-The expanded v2.3 manuscript integrates Proof Audits 01--14. Each records an
+The expanded manuscript integrates Proof Audits 01--14. Each records an
 exact theorem statement, corrections or strengthening discovered during
 review, a claim boundary, and an independent exact verifier. The registry at
 `research-notes/PROOF_AUDIT_REGISTRY.md` maps these audits to the theorems

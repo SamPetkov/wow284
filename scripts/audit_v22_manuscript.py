@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.3.0"
+EXPECTED_TAG = "v2.2.6"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -90,6 +90,8 @@ def main() -> None:
         "Exact Counterexamples and Spectral Mechanisms for WOW-284",
         "v2.1.0",
         "first counterexample",
+        "first proof that WOW-284 is false",
+        "first Lean formalization",
         "smallest counterexample",
         "previously unknown",
         "new distance spectrum",
@@ -103,6 +105,8 @@ def main() -> None:
     for phrase in forbidden_phrases:
         if phrase.lower() in lower_tex:
             raise AssertionError(f"forbidden or stale phrase: {phrase}")
+    if re.search(r"n\s*(?:\\leq?|<=|≤)\s*49", tex):
+        raise AssertionError("unsupported positive order-49 bound")
 
     labels = re.findall(r"\\label\{([^}]+)\}", tex)
     duplicates = sorted(key for key, count in Counter(labels).items() if count != 1)
@@ -150,22 +154,18 @@ def main() -> None:
             raise AssertionError(f"theorem/verifier mapping missing: {label} -> {verifier}")
 
     lean_claim_markers = (
-        "the analytic LP\noptimum and rigidity for every integer \\(k\\ge4\\)",
+        "the analytic LP optimum and rigidity for every integer \\(k\\ge4\\)",
         "proves that it is admissible and attains equality",
-        "both as a\npolynomial and at coefficient level",
+        "both as a polynomial and at coefficient level",
         "This LP formalization is deliberately graph-independent",
         r"the trace interpretation of the \(F_i(A)\)",
-        "are likewise analytic results supported by exact Python audits; they\nare not",
-        "part of the Lean claim",
+        "This is the precise scope of the Lean claims in the paper.",
     )
+    normalized_tex = " ".join(tex.split())
     for marker in lean_claim_markers:
-        if marker not in tex:
+        if marker not in tex and marker not in normalized_tex:
             raise AssertionError(f"Lean claim or scope marker missing: {marker}")
-    if (
-        "The public Lean development is sorry-free and kernel-checked by Lean 4.31"
-        not in tex
-        or "within the scope stated above." not in tex
-    ):
+    if "The public Lean development is sorry-free and kernel-checked by Lean 4.31" not in normalized_tex:
         raise AssertionError("Lean verification statement missing")
     if (
         r"\newcommand{\resultbox}[1]{\boxed{#1}}" not in tex
@@ -201,7 +201,7 @@ def main() -> None:
         "repository_paths_checked": len(paths),
         "theorem_verifier_mappings": len(theorem_verifiers),
     }
-    print("v2.3 integrated manuscript audit: PASS")
+    print("v2.2.6 integrated manuscript audit: PASS")
     print(json.dumps(report, indent=2, sort_keys=True))
 
 

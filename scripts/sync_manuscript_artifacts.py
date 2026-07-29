@@ -34,7 +34,7 @@ V22_DIR = ROOT / "v22"
 RELEASE_TITLE = (
     "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 )
-RELEASE_TAG = "v2.3.0"
+RELEASE_TAG = "v2.2.6"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -245,7 +245,10 @@ def make_arxiv_archive() -> None:
             info = zipfile.ZipInfo(name, date_time=(2026, 7, 24, 12, 0, 0))
             info.create_system = 3
             info.external_attr = 0o100644 << 16
-            info.compress_type = zipfile.ZIP_DEFLATED
+            # Stored members make the complete archive byte-reproducible across
+            # Python and zlib versions.  The source package is small enough that
+            # compression would not justify runtime-dependent deflate output.
+            info.compress_type = zipfile.ZIP_STORED
             archive.writestr(info, arxiv_member_bytes(source))
 
 
@@ -277,7 +280,7 @@ def validate_release_text() -> None:
         r"\begin{theorem}[Exact LP ceiling and rigidity]",
         r"\begin{theorem}[Integral optimal-slack bound]",
         r"\label{thm:integral-slack}",
-        "the analytic LP\noptimum and rigidity for every integer \\(k\\ge4\\)",
+        "the analytic LP optimum and rigidity for every integer \\(k\\ge4\\)",
         "proves that it is admissible and attains equality",
         "polynomial and at coefficient level",
         "This LP formalization is deliberately graph-independent",
@@ -286,18 +289,21 @@ def validate_release_text() -> None:
         r"\section{Small punctures and exact Hoffman--Singleton robustness}",
         r"\label{cor:edge-cycle-sieve}",
         r"\label{cor:uniform-deletion}",
-        "first proof that WOW-284 is false",
         r"\clearpage",
-        r"correspond to release \texttt{v2.3.0}",
+        r"correspond to release \texttt{\RepoTag}",
     ]
-    missing = [item for item in required if item not in text]
+    normalized_text = " ".join(text.split())
+    missing = [
+        item for item in required
+        if item not in text and item not in normalized_text
+    ]
     if missing:
         raise RuntimeError(f"canonical TeX is missing required release wording: {missing}")
-    if text.count("first proof that WOW-284 is false") != 1:
-        raise RuntimeError("the qualified priority statement must appear exactly once")
     forbidden = [
         r"\today",
         "first counterexample",
+        "first proof that WOW-284 is false",
+        "first Lean formalization",
         "smallest counterexample",
         "new distance spectrum",
         "Samuil Petkov and Codex",
@@ -316,9 +322,12 @@ def validate_release_text() -> None:
         "The earlier arXiv submission was withdrawn",
         "they are not included in the Lean claim above",
     ]
-    present = [item for item in forbidden if item in text]
+    lower_text = text.lower()
+    present = [item for item in forbidden if item.lower() in lower_text]
     if present:
         raise RuntimeError(f"canonical TeX contains forbidden release wording: {present}")
+    if re.search(r"n\s*(?:\\leq?|<=|≤)\s*49", text):
+        raise RuntimeError("canonical TeX contains unsupported positive order-49 bound")
 
     report = BUILD_REPORT.read_text(encoding="utf-8")
     authoritative = (

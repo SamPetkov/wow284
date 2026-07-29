@@ -1,4 +1,4 @@
-\begin{thebibliography}{22}
+\begin{thebibliography}{24}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -96,6 +96,13 @@ Markus Meringer.
   1999.
 \newblock \doi{10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G}.
 
+\bibitem[Cameron et~al.(1976)Cameron, Goethals, Seidel, and
+  Shult]{CameronEtAl1976}
+Peter~J. Cameron, Jean-Marie Goethals, Johan~J. Seidel, and Ernest~E. Shult.
+\newblock Line graphs, root systems, and elliptic geometry.
+\newblock \emph{Journal of Algebra}, 43\penalty0 (1):\penalty0 305--327, 1976.
+\newblock \doi{10.1016/0021-8693(76)90162-9}.
+
 \bibitem[Cvetkovi{\'c} et~al.(2004)Cvetkovi{\'c}, Rowlinson, and
   Simi{\'c}]{CvetkovicEtAl2004}
 Drago{\v{s}} Cvetkovi{\'c}, Peter Rowlinson, and Slobodan Simi{\'c}.
@@ -121,6 +128,13 @@ Gary Greaves, Jack~H. Koolen, Akihiro Munemasa, Yoshio Sano, and Tetsuji
   90--111, 2015.
 \newblock \doi{10.1016/j.jctb.2014.07.006}.
 
+\bibitem[Smith and Montemanni(2026)]{SmithMontemanni2026}
+Derek~H. Smith and Roberto Montemanni.
+\newblock The {Moore} graph of diameter 2 and degree 57 via cyclic
+  derangements.
+\newblock \emph{Axioms}, 15\penalty0 (5):\penalty0 332, 2026.
+\newblock \doi{10.3390/axioms15050332}.
+
 \bibitem[J{\o}rgensen(2005)]{Jorgensen2005}
 Leif~K. J{\o}rgensen.
 \newblock Girth 5 graphs from relative difference sets.
@@ -129,7 +143,7 @@ Leif~K. J{\o}rgensen.
 \newblock \doi{10.1016/j.disc.2004.08.029}.
 
 \bibitem[Abreu et~al.(2008)Abreu, Funk, Labbate, and Napolitano]{AbreuEtAl2008}
-Marien Abreu, Martin Funk, Domenico Labbate, and Vito Napolitano.
+Mari{\'e}n Abreu, Martin Funk, Domenico Labbate, and Vito Napolitano.
 \newblock A family of regular graphs of girth 5.
 \newblock \emph{Discrete Mathematics}, 308\penalty0 (10):\penalty0 1810--1815,
   2008.

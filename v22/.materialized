@@ -1,1 +1,2 @@
-Generated deterministically from scripts/.v22-bootstrap/main.*
+Synchronized from the canonical source by scripts/sync_manuscript_artifacts.py.
+The legacy bootstrap materializer was retired in release v2.2.6.

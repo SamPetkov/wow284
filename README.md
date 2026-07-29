@@ -4,7 +4,7 @@
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
 **Repository revision:** 29 July 2026 (`2026-07-29`); PDF date suppressed<br>
-**Repository status:** v2.3 expanded manuscript and reproducibility package
+**Repository status:** v2.2.6 expanded manuscript and reproducibility package
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
@@ -18,7 +18,7 @@ Survey*. For every degree-`k` Moore graph of diameter two,
 Consequently WOW-284 holds for `k = 2`, is an equality for `k = 3`, and
 fails for every realizable degree `k > 3`.
 
-The expanded v2.3 manuscript goes beyond the explicit counterexamples. It
+The expanded manuscript goes beyond the explicit counterexamples. It
 proves the regular diameter-three score identity, degree and diameter
 obstructions, the exact optimum and rigidity of the all-degree one-variable
 nonbacktracking LP bound, the integral optimal-slack excess theorem, sharper
@@ -289,8 +289,12 @@ python scripts/sync_manuscript_artifacts.py --check
 python scripts/validate_repository.py
 ```
 
-On Windows, `./build.ps1` performs the full verification and synchronization
-sequence. `make check` and `./build.sh` provide equivalent POSIX entry points.
+On Windows, `./build.ps1` runs the core exact certificate suite, tests,
+artifact synchronization, and repository validation.  `./build.sh` is the
+corresponding POSIX wrapper; `make check` performs the same read-only checks
+against already synchronized artifacts.  The complete audited command
+inventory and the separately established Lean status are recorded in
+`BUILD_VERIFICATION.txt`.
 
 ## arXiv package
 
@@ -303,7 +307,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 This manuscript and source package correspond to GitHub release
-[`v2.3.0`](https://github.com/SamPetkov/wow284/releases/tag/v2.3.0).
+[`v2.2.6`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.6).
 Their contents are identified by `MANIFEST.txt` and `SHA256SUMS`.
 
 Suggested arXiv primary category: `math.CO`. See
