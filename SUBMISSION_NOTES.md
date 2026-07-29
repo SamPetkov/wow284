@@ -12,7 +12,7 @@
 
 **MSC class:** `05C50; 05C12; 05C35; 05E30`
 
-**Comments:** 28 pages. Corresponds to GitHub release `v2.3.0`.
+**Comments:** 25 pages. Corresponds to GitHub release `v2.3.0`.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
