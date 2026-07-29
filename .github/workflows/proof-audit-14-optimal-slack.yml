@@ -8,18 +8,30 @@ on:
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
       - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md"
       - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
       - "research-notes/SIGNED_COMPLEMENT_BRIDGE.md"
-      - "research-notes/ORDER50_COMPONENT_DESIGN_EXCLUSION.md"
+      - "research-notes/SIGNED_PRIMARY_TRANSFER.md"
+      - "research-notes/ORDER50_MINUS_TWO_MULTIPLICITY.md"
+      - "research-notes/ORDER50_UNSIGNED_COMPLEMENT_EXCLUSION.md"
+      - "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md"
+      - "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md"
+      - "research-notes/LITERATURE_AUDIT_14.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
       - "scripts/verify_three_to_one_excess_bound.py"
+      - "scripts/verify_three_to_one_equality_rigidity.py"
       - "scripts/verify_proof_audit_14_three_to_one.py"
       - "scripts/verify_signed_complement_bridge.py"
-      - "scripts/verify_order50_component_design_exclusion.py"
-      - "scripts/verify_proof_audit_14_order50_exclusion.py"
+      - "scripts/verify_signed_primary_transfer.py"
+      - "scripts/verify_order50_minus_two_multiplicity.py"
+      - "scripts/verify_order50_unsigned_complement_exclusion.py"
+      - "scripts/verify_order50_component_quotients.py"
+      - "scripts/verify_proof_audit_14b_component_quotients.py"
+      - "scripts/order50_component_quotients_c7.cpp"
+      - "scripts/order50_component_quotients_c10.cpp"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
@@ -29,18 +41,30 @@ on:
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
       - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md"
       - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
       - "research-notes/SIGNED_COMPLEMENT_BRIDGE.md"
-      - "research-notes/ORDER50_COMPONENT_DESIGN_EXCLUSION.md"
+      - "research-notes/SIGNED_PRIMARY_TRANSFER.md"
+      - "research-notes/ORDER50_MINUS_TWO_MULTIPLICITY.md"
+      - "research-notes/ORDER50_UNSIGNED_COMPLEMENT_EXCLUSION.md"
+      - "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md"
+      - "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md"
+      - "research-notes/LITERATURE_AUDIT_14.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
       - "scripts/verify_three_to_one_excess_bound.py"
+      - "scripts/verify_three_to_one_equality_rigidity.py"
       - "scripts/verify_proof_audit_14_three_to_one.py"
       - "scripts/verify_signed_complement_bridge.py"
-      - "scripts/verify_order50_component_design_exclusion.py"
-      - "scripts/verify_proof_audit_14_order50_exclusion.py"
+      - "scripts/verify_signed_primary_transfer.py"
+      - "scripts/verify_order50_minus_two_multiplicity.py"
+      - "scripts/verify_order50_unsigned_complement_exclusion.py"
+      - "scripts/verify_order50_component_quotients.py"
+      - "scripts/verify_proof_audit_14b_component_quotients.py"
+      - "scripts/order50_component_quotients_c7.cpp"
+      - "scripts/order50_component_quotients_c10.cpp"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
@@ -84,14 +108,22 @@ jobs:
         run: python scripts/verify_two_gram_hierarchies.py
       - name: Run the three-to-one excess audit
         run: python scripts/verify_three_to_one_excess_bound.py
+      - name: Run the equality-rigidity audit
+        run: python scripts/verify_three_to_one_equality_rigidity.py
       - name: Run independent Proof Audit 14A
         run: python scripts/verify_proof_audit_14_three_to_one.py
       - name: Run the signed-complement bridge audit
         run: python scripts/verify_signed_complement_bridge.py
-      - name: Run the order-50 component-design exclusion audit
-        run: python scripts/verify_order50_component_design_exclusion.py
+      - name: Run the signed-primary transfer audit
+        run: python scripts/verify_signed_primary_transfer.py
+      - name: Run the order-50 minus-two multiplicity audit
+        run: python scripts/verify_order50_minus_two_multiplicity.py
+      - name: Run the corrected unsigned-complement audit
+        run: python scripts/verify_order50_unsigned_complement_exclusion.py
+      - name: Run the canonical component-quotient audit
+        run: python scripts/verify_order50_component_quotients.py
       - name: Run independent Proof Audit 14B
-        run: python scripts/verify_proof_audit_14_order50_exclusion.py
+        run: python scripts/verify_proof_audit_14b_component_quotients.py
       - name: Check source hygiene
         run: |
           python - <<'PY'
@@ -102,18 +134,30 @@ jobs:
               "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
               "research-notes/TWO_GRAM_HIERARCHIES.md",
               "research-notes/THREE_TO_ONE_EXCESS_BOUND.md",
+              "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md",
               "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md",
               "research-notes/SIGNED_COMPLEMENT_BRIDGE.md",
-              "research-notes/ORDER50_COMPONENT_DESIGN_EXCLUSION.md",
+              "research-notes/SIGNED_PRIMARY_TRANSFER.md",
+              "research-notes/ORDER50_MINUS_TWO_MULTIPLICITY.md",
+              "research-notes/ORDER50_UNSIGNED_COMPLEMENT_EXCLUSION.md",
+              "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md",
+              "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md",
+              "research-notes/LITERATURE_AUDIT_14.md",
               "scripts/verify_optimal_slack_gram_unification.py",
               "scripts/verify_integral_optimal_slack_collapse.py",
               "scripts/verify_optimal_slack_excess_matrix.py",
               "scripts/verify_two_gram_hierarchies.py",
               "scripts/verify_three_to_one_excess_bound.py",
+              "scripts/verify_three_to_one_equality_rigidity.py",
               "scripts/verify_proof_audit_14_three_to_one.py",
               "scripts/verify_signed_complement_bridge.py",
-              "scripts/verify_order50_component_design_exclusion.py",
-              "scripts/verify_proof_audit_14_order50_exclusion.py",
+              "scripts/verify_signed_primary_transfer.py",
+              "scripts/verify_order50_minus_two_multiplicity.py",
+              "scripts/verify_order50_unsigned_complement_exclusion.py",
+              "scripts/verify_order50_component_quotients.py",
+              "scripts/verify_proof_audit_14b_component_quotients.py",
+              "scripts/order50_component_quotients_c7.cpp",
+              "scripts/order50_component_quotients_c10.cpp",
               "scripts/clean_optimal_slack_note.py",
           ):
               data = Path(name).read_bytes()
