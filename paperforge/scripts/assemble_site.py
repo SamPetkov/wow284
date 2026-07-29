@@ -8,6 +8,7 @@ never edits the manuscript or the generated Paperforge source tree.
 from __future__ import annotations
 
 import hashlib
+from html import escape
 import json
 import os
 from pathlib import Path
@@ -20,6 +21,7 @@ REPOSITORY = INSTANCE.parent
 WEB_OUTPUT = INSTANCE / "output" / "web"
 SITE_SOURCE = INSTANCE / "web-assets" / "site"
 SITE_OUTPUT = INSTANCE / "output" / "site"
+EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 
 
 def sha256(path: Path) -> str:
@@ -101,6 +103,50 @@ def ensure_paper_index(paper_dir: Path) -> str:
     return entry
 
 
+def repository_link(path: str, tag: str) -> str:
+    clean = path.strip().replace("\\_", "_")
+    kind = "tree" if clean.endswith("/") else "blob"
+    clean = clean.rstrip("/")
+    href = f"https://github.com/SamPetkov/wow284/{kind}/{tag}/{clean}"
+    return (
+        f'<a class="paperforge-source-link" href="{escape(href, quote=True)}">'
+        f"<code>{escape(path.strip())}</code></a>"
+    )
+
+
+def patch_generated_paper(version: str) -> None:
+    """Adapt repository-path macros that Paperforge keeps verbatim in prose."""
+    paper = SITE_OUTPUT / "paper"
+    tag = version if version.startswith("v") else f"v{version}"
+    macro_patterns = [
+        r"\\newcommand\{\\RepoTag\}\{[^}]*\}\s*",
+        r"\\newcommand\{\\codefile\}\[1\]\{\s*"
+        r"\\href\{[^{}]*\}\{\\path\{#1\}\}\}\s*",
+        r"\\newcommand\{\\datafile\}\[1\]\{\s*"
+        r"\\href\{[^{}]*\}\{\\path\{#1\}\}\}\s*",
+    ]
+    path_pattern = re.compile(r"\\(?:codefile|datafile|path)\{([^{}\n]+)\}")
+
+    for html in paper.rglob("*.html"):
+        text = html.read_text(encoding="utf-8")
+        for pattern in macro_patterns:
+            text = re.sub(pattern, "", text, flags=re.DOTALL)
+        text = path_pattern.sub(lambda match: repository_link(match.group(1), tag), text)
+        html.write_text(text, encoding="utf-8", newline="\n")
+
+    stylesheet = paper / "paper-style.css"
+    if stylesheet.is_file():
+        css = stylesheet.read_text(encoding="utf-8")
+        addition = (
+            "\n/* WOW-284 repository paths inserted after Paperforge conversion. */\n"
+            ".paperforge-source-link code { overflow-wrap: anywhere; }\n"
+            ".paperforge-source-link { text-decoration-thickness: .08em; "
+            "text-underline-offset: .16em; }\n"
+        )
+        if "paperforge-source-link" not in css:
+            stylesheet.write_text(css + addition, encoding="utf-8", newline="\n")
+
+
 def replace_placeholders(values: dict[str, str]) -> None:
     for path in SITE_OUTPUT.rglob("*.html"):
         text = path.read_text(encoding="utf-8")
@@ -134,6 +180,8 @@ def main() -> None:
         shutil.copy2(provenance, SITE_OUTPUT / "build-provenance.json")
 
     version = manuscript_version()
+    patch_generated_paper(version)
+
     source_commit = os.environ.get("SOURCE_COMMIT") or git_value(
         "rev-parse", "HEAD", default="unknown"
     )
@@ -156,7 +204,7 @@ def main() -> None:
     status = {
         "schema": 1,
         "paper": {
-            "title": "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284",
+            "title": EXPECTED_TITLE,
             "version": version,
             "source_commit": source_commit,
             "pdf_sha256": pdf_hash,
