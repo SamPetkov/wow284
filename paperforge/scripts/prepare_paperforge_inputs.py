@@ -44,13 +44,14 @@ BIBLIOGRAPHY_BLOCK = re.compile(
     re.DOTALL,
 )
 BIBITEM = re.compile(r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}", re.DOTALL)
+NEEDSPACE = re.compile(r"\\Needspace\{[^{}]*\}")
 
 
 def stage_draft() -> None:
     text = DRAFT_SOURCE.read_text(encoding="utf-8")
 
     # Paperforge's current title extractor does not accept the amsart optional
-    # running title split over two lines.  Normalize only the generated staging
+    # running title split over two lines. Normalize only the generated staging
     # copy to the ordinary one-argument form.
     title_matches = TITLE_COMMAND.findall(text)
     if len(title_matches) != 1:
@@ -59,6 +60,21 @@ def stage_draft() -> None:
     if normalized_title != EXPECTED_TITLE:
         raise AssertionError(f"unexpected canonical title: {normalized_title!r}")
     text = TITLE_COMMAND.sub(lambda _match: f"\\title{{{EXPECTED_TITLE}}}", text, count=1)
+
+    # The unnumbered custom conjecture environment is not among Paperforge's
+    # built-in theorem environments. Convert it to an inline, unnumbered heading
+    # in the staging copy so no theorem counter or manuscript label changes.
+    if text.count(r"\begin{wowconjecture}") != 1 or text.count(r"\end{wowconjecture}") != 1:
+        raise AssertionError("unexpected WOW conjecture environment count")
+    text = text.replace(
+        r"\begin{wowconjecture}",
+        r"\paragraph{Conjecture (WOW-284)}",
+        1,
+    ).replace(r"\end{wowconjecture}", "", 1)
+
+    # Pagination controls are meaningful only in the archival PDF and otherwise
+    # appear as raw prose in the current converter.
+    text = NEEDSPACE.sub("", text)
 
     replacement = (
         "\\clearpage\n"
