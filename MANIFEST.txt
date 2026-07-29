@@ -295,7 +295,6 @@ research-notes/EDGE_WALK_MICROLEMMA.md
 research-notes/EQUALITY_BOUNDARY.md
 research-notes/EXTENSION_EXPLORATION_QUEUE.md
 research-notes/FLOAT_PROOF_PATH_AUDIT.md
-research-notes/FOUR_TO_ONE_EXCESS_BOUND.md
 research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md
 research-notes/JORGENSEN96_PROVENANCE.md
 research-notes/LAYER_MATCHING_DELETIONS.md
@@ -310,8 +309,10 @@ research-notes/NONADJACENT_DIRECT_SUM_AUDIT.md
 research-notes/NONADJACENT_PUNCTURED_MOORE.md
 research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md
 research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md
+research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md
 research-notes/ORDER50_LOCAL_FEASIBILITY.md
 research-notes/ORDER50_R29_REFINEMENT.md
+research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md
 research-notes/ORIGINAL_STATEMENT.md
 research-notes/PRIME_FIELD_DIAMETER_THREE_OBSTRUCTION.md
 research-notes/PROBLEM_BRIEF.md
@@ -328,11 +329,15 @@ research-notes/PROOF_AUDIT_10_ENDPOINT_DIAMETER.md
 research-notes/PROOF_AUDIT_11_DIAMETER_FOUR.md
 research-notes/PROOF_AUDIT_12_SMALL_PUNCTURE_NORMAL_FORM.md
 research-notes/PROOF_AUDIT_13_HS_ROBUSTNESS_RADIUS.md
+research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md
 research-notes/PROOF_AUDIT_REGISTRY.md
 research-notes/REGULAR_LOW_DEGREE_OBSTRUCTION.md
 research-notes/REGULAR_SCORE_CALCULUS.md
+research-notes/SIGNED_COMPLEMENT_BRIDGE.md
 research-notes/SPECTRAL_MOORE_COMPARISON.md
 research-notes/STANDARD_DEFINITIONS_AND_TERMINOLOGY.md
+research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md
+research-notes/THREE_TO_ONE_EXCESS_BOUND.md
 research-notes/TWO_GRAM_HIERARCHIES.md
 research-notes/TWO_SIDED_LP_CEILING.md
 research-notes/UNBOUNDED_DEGREE_NECESSITY.md
@@ -377,7 +382,6 @@ scripts/install_into_wow284.py
 scripts/lean3942_common.py
 scripts/lean3942_finite.py
 scripts/lean3942_ldl.py
-scripts/materialize_four_to_one_note.py
 scripts/materialize_v22_bootstrap.py
 scripts/revise_v22_manuscript.py
 scripts/revise_v22_second_pass.py
@@ -392,6 +396,7 @@ scripts/verify_40.py
 scripts/verify_40_deletion_orbits.py
 scripts/verify_42_deletion_orbits.py
 scripts/verify_42_descendants.py
+scripts/verify_component_indicator_noninvariance.py
 scripts/verify_degree_six_gate.py
 scripts/verify_descendant_families.py
 scripts/verify_diameter_puncture_extensions.py
@@ -399,7 +404,6 @@ scripts/verify_edge_local_order50.py
 scripts/verify_equality_boundary.py
 scripts/verify_exact.py
 scripts/verify_extended.py
-scripts/verify_four_to_one_excess_bound.py
 scripts/verify_integral_optimal_slack_collapse.py
 scripts/verify_jorgensen96_provenance.py
 scripts/verify_jorgensen_96.py
@@ -411,7 +415,9 @@ scripts/verify_nonadjacent_punctured_moore.py
 scripts/verify_optimal_slack_excess_matrix.py
 scripts/verify_optimal_slack_gram_unification.py
 scripts/verify_order50_local_feasibility.py
+scripts/verify_order50_minus_two_multiplicity.py
 scripts/verify_order50_r29_exclusion.py
+scripts/verify_order50_signed_complement_disconnected.py
 scripts/verify_prime_field_obstruction.py
 scripts/verify_proof_audit_01_edge_local.py
 scripts/verify_proof_audit_02_two_sided_lp.py
@@ -426,12 +432,16 @@ scripts/verify_proof_audit_10_endpoint_diameter.py
 scripts/verify_proof_audit_11_diameter_four.py
 scripts/verify_proof_audit_12_small_puncture.py
 scripts/verify_proof_audit_13_hs_robustness.py
+scripts/verify_proof_audit_14_three_to_one.py
 scripts/verify_regular_induced_subgraphs.py
 scripts/verify_regular_low_degree.py
 scripts/verify_regular_score_calculus.py
 scripts/verify_research_extensions.py
 scripts/verify_research_extensions_exact.py
+scripts/verify_signed_complement_bridge.py
 scripts/verify_spectral_moore_comparison.py
+scripts/verify_three_to_one_equality_rigidity.py
+scripts/verify_three_to_one_excess_bound.py
 scripts/verify_two_gram_hierarchies.py
 scripts/verify_two_sided_lp_ceiling.py
 scripts/verify_wow284_38_40_42.py

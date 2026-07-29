@@ -21,8 +21,11 @@ abstract: >-
   exact counterexamples of orders 38, 39, 40, 42, and 50 and develops regular
   spectral criteria, degree and diameter obstructions, the exact all-degree
   one-variable nonbacktracking linear-programming optimum, an integral
-  optimal-slack hierarchy and sharper order bounds, Moore-graph puncture
-  spectra, and deletion-stability results. Lean 4.31 kernel-checks
+  optimal-slack hierarchy with a three-to-one excess bound, a signed-complement
+  bridge, arithmetic equality rigidity, an order-50 signed-complement
+  disconnection theorem, Moore-graph puncture spectra, and deletion-stability
+  results.
+  Lean 4.31 kernel-checks
   the complete graph-level 50-vertex proof, finite spectral certificates for
   orders 38, 39, 40, and 42, and the separate analytic LP optimum,
   attainment, and coefficient-level optimizer rigidity.
@@ -40,6 +43,6 @@ preferred-citation:
       email: samuil.petkov@phys.ens.psl.eu
   year: 2026
   month: 7
-  date-released: 2026-07-28
+  date-released: 2026-07-29
   status: preprint
   repository-code: "https://github.com/SamPetkov/wow284"

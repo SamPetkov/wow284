@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -96,12 +96,13 @@ Markus Meringer.
   1999.
 \newblock \doi{10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G}.
 
-\bibitem[Cameron et~al.(1976)Cameron, Goethals, Seidel, and
-  Shult]{CameronEtAl1976}
-Peter~J. Cameron, Jean-Marie Goethals, Johan~J. Seidel, and Ernest~E. Shult.
-\newblock Line graphs, root systems, and elliptic geometry.
-\newblock \emph{Journal of Algebra}, 43\penalty0 (1):\penalty0 305--327, 1976.
-\newblock \doi{10.1016/0021-8693(76)90162-9}.
+\bibitem[Cvetkovi{\'c} et~al.(2004)Cvetkovi{\'c}, Rowlinson, and
+  Simi{\'c}]{CvetkovicEtAl2004}
+Drago{\v{s}} Cvetkovi{\'c}, Peter Rowlinson, and Slobodan Simi{\'c}.
+\newblock \emph{Spectral Generalizations of Line Graphs: On Graphs with Least
+  Eigenvalue -2}.
+\newblock Cambridge University Press, 2004.
+\newblock \doi{10.1017/CBO9780511751752}.
 
 \bibitem[Koolen et~al.(2025)Koolen, Yu, Liang, Choi, and
   Markowsky]{KoolenEtAl2025}
@@ -110,6 +111,15 @@ Jack~H. Koolen, Kefan Yu, Xiaoye Liang, Harrison Choi, and Greg Markowsky.
   smallest eigenvalue at least -3.
 \newblock \emph{European Journal of Combinatorics}, 126:\penalty0 104118, 2025.
 \newblock \doi{10.1016/j.ejc.2024.104118}.
+
+\bibitem[Greaves et~al.(2015)Greaves, Koolen, Munemasa, Sano, and
+  Taniguchi]{GreavesEtAl2015}
+Gary Greaves, Jack~H. Koolen, Akihiro Munemasa, Yoshio Sano, and Tetsuji
+  Taniguchi.
+\newblock Edge-signed graphs with smallest eigenvalue greater than -2.
+\newblock \emph{Journal of Combinatorial Theory, Series B}, 110:\penalty0
+  90--111, 2015.
+\newblock \doi{10.1016/j.jctb.2014.07.006}.
 
 \bibitem[J{\o}rgensen(2005)]{Jorgensen2005}
 Leif~K. J{\o}rgensen.

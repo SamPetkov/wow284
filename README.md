@@ -34,12 +34,12 @@ The optimal-slack excess parameter
 r=2(k+2)^2(k^2+3)-(12k+27)n
 \]
 
-is positive and satisfies \(n\le4r\). Consequently every diameter-three
+is positive and satisfies \(n\le3r\). Consequently every diameter-three
 regular strict counterexample of degree \(k\ge6\) satisfies
 
 \[
 n\le\left\lfloor
-\frac{8(k+2)^2(k^2+3)}{48k+109}
+\frac{3(k+2)^2(k^2+3)}{18k+41}
 \right\rfloor.
 \]
 
@@ -155,7 +155,13 @@ Primary links:
 - `scripts/verify_wow284_38_40_42.py` - combined exact verifier for orders 38, 39, 40, and 42.
 - `scripts/verify_38_graph6_independent.py` - graph6/integer-BFS/Fraction-LDL audit of the 38-vertex graph.
 - `scripts/verify_descendant_families.py` - exhaustive exact audit of all 40 singleton and 120 edge-endpoint deletions.
-- `scripts/verify_four_to_one_excess_bound.py` - exact audit of the integral four-to-one theorem and its finite classification cases.
+- `scripts/verify_three_to_one_excess_bound.py` - exact audit of the integral three-to-one theorem and its finite classification cases.
+- `scripts/verify_three_to_one_equality_rigidity.py` - exact audit of the unique arithmetic parameter triple at equality.
+- `scripts/verify_proof_audit_14_three_to_one.py` - independent replay of the three-to-one proof.
+- `scripts/verify_signed_complement_bridge.py` - exact audit of the signed-complement identities.
+- `scripts/verify_order50_minus_two_multiplicity.py` - exact moment audit of the order-50 adjacency \(-2\) multiplicity bound.
+- `scripts/verify_order50_signed_complement_disconnected.py` - corrected exact trace, parity, rank, and coordinate-level audit of the order-50 disconnection theorem.
+- `scripts/verify_component_indicator_noninvariance.py` - exact guard showing that commutation alone does not make signed-component cells equitable.
 - `scripts/explore_generalizations.py` - exact controls plus a separately labelled numerical screen.
 - `scripts/export_graphs.py` - deterministic graph6, adjacency-list, edge-list, and summary exporter.
 - `scripts/export_graph_data.py` - deterministic edge, adjacency, and distance CSV exporter.
@@ -216,10 +222,11 @@ duality, complementary slackness, and rigidity.
 
 That LP theorem is graph-independent. The trace interpretation of `F_i(A)`,
 the girth-five trace statements, the spectral trace bridge, and the resulting
-graph-order conclusions remain conventional analytic proofs. The
-integral optimal-slack theorem, the four-to-one excess bound, and the
-punctured-Moore and deletion-stability theorems are likewise analytic results
-with exact Python audits, not part of the Lean claim.
+graph-order conclusions remain conventional analytic proofs. The integral
+optimal-slack theorem, the three-to-one excess bound and equality rigidity,
+the order-50 signed-complement disconnection, and the punctured-Moore and
+deletion-stability theorems are likewise analytic results with exact Python
+audits, not part of the Lean claim.
 
 The spectral computation is sharded into bounded integer certificates and
 then assembled into a rational two-sided inverse and diagonalization. Within

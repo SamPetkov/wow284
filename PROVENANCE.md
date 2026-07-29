@@ -41,14 +41,25 @@ review, a claim boundary, and an independent exact verifier. The registry at
 that appear in `main.tex`.
 
 Proof Audit 14 introduces the integral optimal-slack and excess-matrix
-hierarchy and the four-to-one excess theorem. Its polynomial identities,
-rounding, modular irreducibility certificates, Gram determinants, finite
-line-root cases, low-degree arithmetic, and deletion-radius consequences were
-rerun exactly. The audit corrected the \(k=62\) certificate from modulus 23
-to the valid modulus 61 and normalized symbolic polynomial comparisons. Its
-only external theorem input, the classification of connected regular graphs
+hierarchy and the three-to-one excess theorem. Its polynomial identities,
+rounding, uniform irreducibility argument, Gram determinants, finite line-root
+cases, low-degree arithmetic, and signed-complement consequences were rerun in
+two independent exact audits. Its only external theorem input, the
+classification of connected regular graphs
 with least eigenvalue at least `-2` beyond order 28, was checked against the
-original Cameron--Goethals--Seidel--Shult source and a later journal statement.
+Cambridge monograph on graphs with least eigenvalue `-2` and a later journal
+statement of the same regular-graph corollary.
+
+The order-50 signed-complement disconnection theorem additionally uses the
+Cameron--Goethals--Seidel--Shult root representation for connected edge-signed
+graphs with smallest eigenvalue at least `-2`, as recorded by Greaves,
+Koolen, Munemasa, Sano, and Taniguchi. An adversarial pass corrected the
+length-seven and length-eight nonbacktracking traces by including their
+one-edge-tailed cycle walks. The corrected parity conclusion and the remaining
+root-coordinate argument were then replayed exactly. The proposed quotient
+classification was not promoted: a separate exact counterexample confirms
+that commutation alone does not imply equitability of the signed-component
+partition.
 
 The all-degree analytic LP optimum was formalized separately in Lean 4.31.
 The formal dependency chain covers the nonbacktracking recurrence, the

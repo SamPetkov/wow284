@@ -7,13 +7,23 @@ on:
       - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
-      - "research-notes/FOUR_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md"
+      - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
+      - "research-notes/SIGNED_COMPLEMENT_BRIDGE.md"
+      - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
+      - "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
-      - "scripts/verify_four_to_one_excess_bound.py"
-      - "scripts/materialize_four_to_one_note.py"
+      - "scripts/verify_three_to_one_excess_bound.py"
+      - "scripts/verify_three_to_one_equality_rigidity.py"
+      - "scripts/verify_proof_audit_14_three_to_one.py"
+      - "scripts/verify_signed_complement_bridge.py"
+      - "scripts/verify_order50_minus_two_multiplicity.py"
+      - "scripts/verify_order50_signed_complement_disconnected.py"
+      - "scripts/verify_component_indicator_noninvariance.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
     paths:
@@ -21,13 +31,23 @@ on:
       - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
-      - "research-notes/FOUR_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md"
+      - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
+      - "research-notes/SIGNED_COMPLEMENT_BRIDGE.md"
+      - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
+      - "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
-      - "scripts/verify_four_to_one_excess_bound.py"
-      - "scripts/materialize_four_to_one_note.py"
+      - "scripts/verify_three_to_one_excess_bound.py"
+      - "scripts/verify_three_to_one_equality_rigidity.py"
+      - "scripts/verify_proof_audit_14_three_to_one.py"
+      - "scripts/verify_signed_complement_bridge.py"
+      - "scripts/verify_order50_minus_two_multiplicity.py"
+      - "scripts/verify_order50_signed_complement_disconnected.py"
+      - "scripts/verify_component_indicator_noninvariance.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
 
@@ -54,10 +74,20 @@ jobs:
         run: python scripts/verify_optimal_slack_excess_matrix.py
       - name: Run the deletion Gram synthesis audit
         run: python scripts/verify_two_gram_hierarchies.py
-      - name: Run the four-to-one excess audit
-        run: python scripts/verify_four_to_one_excess_bound.py
-      - name: Check deterministic four-to-one note
-        run: python scripts/materialize_four_to_one_note.py --check
+      - name: Run the three-to-one excess audit
+        run: python scripts/verify_three_to_one_excess_bound.py
+      - name: Run the equality-rigidity audit
+        run: python scripts/verify_three_to_one_equality_rigidity.py
+      - name: Replay the three-to-one proof independently
+        run: python scripts/verify_proof_audit_14_three_to_one.py
+      - name: Run the signed-complement bridge audit
+        run: python scripts/verify_signed_complement_bridge.py
+      - name: Run the order-50 multiplicity audit
+        run: python scripts/verify_order50_minus_two_multiplicity.py
+      - name: Run the signed-complement disconnectedness audit
+        run: python scripts/verify_order50_signed_complement_disconnected.py
+      - name: Guard the component-invariance claim boundary
+        run: python scripts/verify_component_indicator_noninvariance.py
       - name: Check source hygiene
         run: |
           python - <<'PY'
@@ -67,13 +97,23 @@ jobs:
               "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
               "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
               "research-notes/TWO_GRAM_HIERARCHIES.md",
-              "research-notes/FOUR_TO_ONE_EXCESS_BOUND.md",
+              "research-notes/THREE_TO_ONE_EXCESS_BOUND.md",
+              "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md",
+              "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md",
+              "research-notes/SIGNED_COMPLEMENT_BRIDGE.md",
+              "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md",
+              "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md",
               "scripts/verify_optimal_slack_gram_unification.py",
               "scripts/verify_integral_optimal_slack_collapse.py",
               "scripts/verify_optimal_slack_excess_matrix.py",
               "scripts/verify_two_gram_hierarchies.py",
-              "scripts/verify_four_to_one_excess_bound.py",
-              "scripts/materialize_four_to_one_note.py",
+              "scripts/verify_three_to_one_excess_bound.py",
+              "scripts/verify_three_to_one_equality_rigidity.py",
+              "scripts/verify_proof_audit_14_three_to_one.py",
+              "scripts/verify_signed_complement_bridge.py",
+              "scripts/verify_order50_minus_two_multiplicity.py",
+              "scripts/verify_order50_signed_complement_disconnected.py",
+              "scripts/verify_component_indicator_noninvariance.py",
           ):
               data = Path(name).read_bytes()
               assert not any(byte < 32 and byte != 10 for byte in data), name

@@ -75,20 +75,29 @@ The v2.3 extension was reviewed separately. Its optimal-slack matrix is
 positive semidefinite by the strict shifted spectral window; the
 irreducibility argument excludes vanishing integral excess for every integral
 degree.  A second audit proves that the excess parameter is positive and that
-the graph order is at most four times that parameter, yielding
+the graph order is at most three times that parameter, yielding
 \[
 n\le\left\lfloor
-\frac{8(k+2)^2(k^2+3)}{48k+109}
+\frac{3(k+2)^2(k^2+3)}{18k+41}
 \right\rfloor.
 \]
-The proof combines small positive-semidefinite minors with the classical
-Cameron--Goethals--Seidel--Shult classification of connected regular graphs
-with least eigenvalue at least `-2`.  All polynomial divisions, modular
-irreducibility certificates, Gram determinants, and finite line-graph-root
-cases after that external theorem were checked exactly. The original
-\(k=62\) modular certificate was corrected from modulus \(23\) to modulus
-\(61\) before integration. These extensions remain analytic and are not
-included in the Lean LP claim.
+The proof combines an aggregate positive-semidefinite Gram argument with the
+classical classification of connected regular graphs with least eigenvalue at
+least `-2`.  All polynomial divisions, the uniform irreducibility argument,
+Gram determinants, and finite line-graph-root cases after that external
+theorem were checked exactly in two independent scripts. These extensions
+remain analytic and are not included in the Lean LP claim.
+
+Equality in the unrounded three-to-one bound has the unique arithmetic
+parameter triple `(k,n,r)=(103,185220,61740)`; this is not an existence claim.
+At degree six and order 50, the signed-complement Gram matrix has rank at least
+30. A corrected nonbacktracking trace calculation includes the tailed
+length-seven and length-eight walks and proves that the number of negative
+signed edges is odd. The signed-root representation theorem then forces the
+signed complement to be disconnected. The manuscript does not promote the
+subsequent quotient enumeration: an exact counterexample shows that
+commutation with the original adjacency matrix does not alone imply
+equitability of the signed-component partition.
 
 ## General Moore-graph audit
 

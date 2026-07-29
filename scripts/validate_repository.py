@@ -84,13 +84,23 @@ def main() -> None:
         "scripts/verify_integral_optimal_slack_collapse.py",
         "scripts/verify_optimal_slack_excess_matrix.py",
         "scripts/verify_two_gram_hierarchies.py",
-        "scripts/verify_four_to_one_excess_bound.py",
-        "scripts/materialize_four_to_one_note.py",
+        "scripts/verify_three_to_one_excess_bound.py",
+        "scripts/verify_three_to_one_equality_rigidity.py",
+        "scripts/verify_proof_audit_14_three_to_one.py",
+        "scripts/verify_signed_complement_bridge.py",
+        "scripts/verify_order50_minus_two_multiplicity.py",
+        "scripts/verify_order50_signed_complement_disconnected.py",
+        "scripts/verify_component_indicator_noninvariance.py",
         "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
         "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
         "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
         "research-notes/TWO_GRAM_HIERARCHIES.md",
-        "research-notes/FOUR_TO_ONE_EXCESS_BOUND.md",
+        "research-notes/THREE_TO_ONE_EXCESS_BOUND.md",
+        "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md",
+        "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md",
+        "research-notes/SIGNED_COMPLEMENT_BRIDGE.md",
+        "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md",
+        "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md",
         "lean/Wow284/LPDefinitions.lean",
         "lean/Wow284/LPRecurrence.lean",
         "lean/Wow284/LPPrimal.lean",
@@ -140,9 +150,11 @@ def main() -> None:
         "v2.3 structural results are missing",
     )
     require(
-        r"\label{thm:four-to-one}" in tex
-        and r"\frac{8(k+2)^2(k^2+3)}{48k+109}" in tex,
-        "four-to-one excess theorem is missing",
+        r"\label{thm:three-to-one}" in tex
+        and r"\frac{3(k+2)^2(k^2+3)}{18k+41}" in tex
+        and r"\label{prop:signed-complement}" in tex
+        and r"\label{prop:order50-minus-two}" in tex,
+        "three-to-one excess or signed-complement results are missing",
     )
     require(
         r"correspond to release \texttt{v2.3.0}" in tex,

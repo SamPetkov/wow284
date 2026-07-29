@@ -11,8 +11,13 @@ $python = if (Test-Path -LiteralPath (Join-Path $root '.venv\Scripts\python.exe'
 & $python (Join-Path $root 'scripts\verify_integral_optimal_slack_collapse.py')
 & $python (Join-Path $root 'scripts\verify_optimal_slack_excess_matrix.py')
 & $python (Join-Path $root 'scripts\verify_two_gram_hierarchies.py')
-& $python (Join-Path $root 'scripts\verify_four_to_one_excess_bound.py')
-& $python (Join-Path $root 'scripts\materialize_four_to_one_note.py') --check
+& $python (Join-Path $root 'scripts\verify_three_to_one_excess_bound.py')
+& $python (Join-Path $root 'scripts\verify_three_to_one_equality_rigidity.py')
+& $python (Join-Path $root 'scripts\verify_proof_audit_14_three_to_one.py')
+& $python (Join-Path $root 'scripts\verify_signed_complement_bridge.py')
+& $python (Join-Path $root 'scripts\verify_order50_minus_two_multiplicity.py')
+& $python (Join-Path $root 'scripts\verify_order50_signed_complement_disconnected.py')
+& $python (Join-Path $root 'scripts\verify_component_indicator_noninvariance.py')
 & $python (Join-Path $root 'scripts\sync_manuscript_artifacts.py')
 & $python -m pytest -q $root
 & $python (Join-Path $root 'scripts\validate_repository.py')

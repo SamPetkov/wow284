@@ -31,7 +31,7 @@ verification route have all been checked.
 | 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
 | 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `queued` |
 | 13 | Hoffman--Singleton deletion robustness radius five | generator provenance, orbit exhaustion, exact LDL signs, explicit six-deletion sharpness | `queued` |
-| 14 | Integral optimal-slack and two Gram hierarchies | PSD kernel, four-to-one quantization, modular irreducibility, least-eigenvalue classification, line-root arithmetic | `pass_after_correction` |
+| 14 | Integral optimal-slack and two Gram hierarchies | PSD kernel, three-to-one quantization, uniform irreducibility, least-eigenvalue classification, line-root arithmetic | `pass_after_correction` |
 
 ## Audit 01 outcome
 
@@ -292,25 +292,50 @@ The one-level collapse is impossible because \(g_k(x)+1\) is irreducible over
 \(n-1=2k/3\), contradicting \(n\ge k+1\). This yields the strengthened
 universal order bound.
 
-The stronger four-to-one theorem defines
+The stronger three-to-one theorem defines
 \[
 r=2(k+2)^2(k^2+3)-(12k+27)n
 \]
-and proves \(r>0\) and \(n\le4r\).  Doubled excess entries are quantized by
-\(3\times3\) and \(4\times4\) Gram determinants; once the excess is simple,
-its complementary relation graph has least eigenvalue at least \(-2\).  The
-remaining cases use the external Cameron--Goethals--Seidel--Shult
-classification, followed by exact regular and semiregular line-root
-arithmetic.  The resulting order bound is
+and proves \(r>0\) and \(n\le3r\).  An aggregate \(2\times2\) Gram
+determinant eliminates doubled excess entries above the putative boundary;
+the complementary relation graph then has least eigenvalue at least \(-2\).
+The remaining cases use the external classification of connected regular
+graphs with least eigenvalue at least \(-2\), followed by exact regular and
+semiregular line-root arithmetic.  The resulting order bound is
 \[
 n\le\left\lfloor
-\frac{8(k+2)^2(k^2+3)}{48k+109}
+\frac{3(k+2)^2(k^2+3)}{18k+41}
 \right\rfloor.
 \]
-The audit corrected the \(k=62\) modular certificate from modulus \(23\) to
-the valid modulus \(61\), normalized two symbolic comparisons, and removed a
-self-mutating workflow step.  The original draft's book theorem number was
-also replaced by the original 1976 source and a later journal statement.
+The audit replaces degree-specific modular certificates by a uniform
+Gauss-lemma irreducibility argument and checks every fixed-remainder case in
+two independent exact scripts.  The ordinary least-eigenvalue classification
+is cited from the Cambridge monograph and a later journal statement.
+
+Equality in the unrounded inequality \(n\le3r\) is arithmetically rigid:
+exact division by \(18k+41\) leaves the fixed remainder
+\(66325=5^2\cdot7\cdot379\), and its positive divisors leave only
+\[
+(k,n,r)=(103,185220,61740).
+\]
+This is a parameter classification only, not an existence theorem.
+
+At the degree-six order-\(50\) boundary, the signed-complement Gram matrix has
+rank at least \(30\). A corrected nonbacktracking trace calculation includes
+the one-edge-tailed walks
+\[
+\tr F_7(A)=14N_7+40N_5,\qquad
+\tr F_8(A)=16N_8+48N_6,
+\]
+and yields an odd number of negative signed edges. Together with the connected
+signed-root representation theorem, this proves that the signed complement is
+disconnected.
+
+No signed-component quotient classification is promoted. An exact
+counterexample shows that \(AS=SA\) does not by itself imply that the
+signed-component partition is \(A\)-equitable. The quotient enumeration
+therefore remains conditional on an additional component-space invariance
+lemma.
 
 ## Required structure of every audit
 
