@@ -1,6 +1,7 @@
 # WOW-284 Paperforge instance.
-# The canonical manuscript remains ../main.tex; generated PreTeXt source is never
-# edited by hand. Paperforge is pinned by .github/workflows/paperforge-pages.yml.
+# ../../main.tex and ../../references.bib remain canonical.  The generated
+# inputs/draft/main.tex only adapts BibTeX to Paperforge's current ingestion
+# boundary and is never edited by hand.
 
 [paperforge]
 instance_schema = 1
@@ -11,7 +12,7 @@ slug = "wow284"
 document_id = "wow284"
 
 [inputs]
-ai_draft = "../main.tex"
+ai_draft = "inputs/draft/main.tex"
 
 # Per-statement Lean badges are deliberately deferred until the generated
 # declaration map has been reviewed. The project site still links to the complete
