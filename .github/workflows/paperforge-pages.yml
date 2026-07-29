@@ -5,6 +5,7 @@ on:
     paths:
       - "main.tex"
       - "main.pdf"
+      - "main.bbl"
       - "references.bib"
       - "CITATION.cff"
       - "BUILD_VERIFICATION.txt"
@@ -16,6 +17,7 @@ on:
     paths:
       - "main.tex"
       - "main.pdf"
+      - "main.bbl"
       - "references.bib"
       - "CITATION.cff"
       - "BUILD_VERIFICATION.txt"
@@ -65,7 +67,7 @@ jobs:
           git clone https://github.com/roed-math/paperforge.git "$PAPERFORGE_TOOL_ROOT"
           git -C "$PAPERFORGE_TOOL_ROOT" checkout --detach "$PAPERFORGE_COMMIT"
           python -m pip install --upgrade pip
-          python -m pip install "pretext==$PRETEXT_VERSION"
+          python -m pip install "pretext==$PRETEXT_VERSION" pybtex
           python -m pip install -e "$PAPERFORGE_TOOL_ROOT" -e "$PAPERFORGE_TOOL_ROOT/validators"
 
       - name: Complete the Paperforge instance scaffold
@@ -76,11 +78,12 @@ jobs:
             --force \
             --title "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284" \
             --slug wow284 \
-            --draft ../main.tex \
+            --draft inputs/draft/main.tex \
             --no-lean \
             --site \
             --non-interactive
           python paperforge/scripts/hydrate_paperforge_assets.py "$PAPERFORGE_TOOL_ROOT"
+          python paperforge/scripts/prepare_paperforge_inputs.py
           paperforge doctor paperforge
 
       - name: Convert the canonical LaTeX manuscript
