@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.2.7"
+EXPECTED_TAG = "v2.2.8"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -201,7 +201,7 @@ def main() -> None:
         "repository_paths_checked": len(paths),
         "theorem_verifier_mappings": len(theorem_verifiers),
     }
-    print("v2.2.7 integrated manuscript audit: PASS")
+    print("v2.2.8 integrated manuscript audit: PASS")
     print(json.dumps(report, indent=2, sort_keys=True))
 
 

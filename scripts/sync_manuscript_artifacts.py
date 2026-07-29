@@ -34,7 +34,7 @@ V22_DIR = ROOT / "v22"
 RELEASE_TITLE = (
     "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 )
-RELEASE_TAG = "v2.2.7"
+RELEASE_TAG = "v2.2.8"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -169,8 +169,17 @@ def generate_markdown() -> None:
             escaped = re.sub(r"([_#%&])", r"\\\1", value)
             return rf"\texttt{{{escaped}}}"
 
+        markdown_latex = re.sub(r"\\path\{([^{}]*)\}", markdown_path, latex)
+        # Pandoc treats LaTeX's abstract environment as document metadata and
+        # can omit it from the GFM body.  Convert only the disposable Markdown
+        # input to an unnumbered section so the public reading copy retains the
+        # complete abstract.
+        markdown_latex = markdown_latex.replace(
+            r"\begin{abstract}", r"\section*{Abstract}"
+        ).replace(r"\end{abstract}", "")
+
         pandoc_source.write_text(
-            re.sub(r"\\path\{([^{}]*)\}", markdown_path, latex),
+            markdown_latex,
             encoding="utf-8",
             newline="\n",
         )
@@ -197,6 +206,8 @@ def generate_markdown() -> None:
             "**Conjecture (WOW-284)**.",
         )
         body = body.replace("**Theorem A 1**.", "**Theorem A**.")
+        if "# Abstract" not in body or "WOW-284 asserts" not in body:
+            raise RuntimeError("generated Markdown dropped the manuscript abstract")
         for expected_path in (
             "scripts/verify_extended.py",
             "scripts/verify_proof_audit_02_two_sided_lp.py",

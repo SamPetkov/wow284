@@ -63,7 +63,7 @@
 \newcommand{\tr}{\operatorname{tr}}
 \newcommand{\diam}{\operatorname{diam}}
 \newcommand{\resultbox}[1]{\boxed{#1}}
-\newcommand{\RepoTag}{v2.2.7}
+\newcommand{\RepoTag}{v2.2.8}
 \newcommand{\codefile}[1]{%
   \href{https://github.com/SamPetkov/wow284/blob/\RepoTag/#1}{\path{#1}}}
 \newcommand{\datafile}[1]{%
@@ -103,7 +103,7 @@ diameter three, we prove
  =2k-2-\max_{\theta\ne k}(\theta+1)^2.
 \]
 Here \(\theta\) ranges over the nonprincipal adjacency eigenvalues.
-Consequently every regular strict counterexample has degree at least six and
+We further prove that every regular strict counterexample has degree at least six and
 diameter at most four, while diameter four forces degree at least ten.  We
 solve the associated one-variable nonbacktracking linear program exactly,
 including optimizer rigidity.  For regular strict counterexamples of diameter
@@ -197,8 +197,10 @@ Our main conclusions are as follows.
 
 \begin{itemize}
 \item For connected regular graphs of girth at least five and diameter three,
-WOW-284 is equivalent to a two-sided adjacency-spectrum window centred at
-\(-1\); see Theorem~\ref{thm:diameter-three-score}.
+strict failure of WOW-284 is equivalent to confinement of every nonprincipal
+adjacency eigenvalue to the open interval
+\((-1-\sqrt{2k-2},-1+\sqrt{2k-2})\); see
+Theorem~\ref{thm:diameter-three-score}.
 \item Every regular strict counterexample has degree at least six and diameter
 at most four.  A diameter-four example, if one exists, has degree at least ten;
 see Theorems~\ref{thm:regular-degree-six},~\ref{thm:endpoint-diameter},
@@ -305,8 +307,9 @@ triangle.  These sets partition \(\Gamma_2(v)\), so
 \[
  |\Gamma_2(v)|=\sum_{u\in N(v)}(d(u)-1).
 \]
-Adding the centre and first sphere proves the formula.  This is the normalized
-form recorded in Backelin's Lemma~2.1 \cite{Backelin2015}.
+Adding the centre and first sphere proves the first identity, which is
+Backelin's Lemma~2.1 \cite{Backelin2015}; division by \(d(v)\) gives the
+normalized second identity.
 \end{proof}
 
 \subsection{The Moore threshold}
@@ -454,9 +457,10 @@ polynomial is constant.
 \end{theorem}
 
 \begin{proof}
-The graph \(R\) is the classical \((6,5)\)-cage of O'Keefe and Wong
-\cite{OKeefeWong1979,Wong1979}; its realization as a Petersen deletion of
-the Hoffman--Singleton graph also appears in
+The graph \(R\) is the Anstee--Robertson graph, the unique \((6,5)\)-cage.
+O'Keefe and Wong proved minimality, and Wong proved uniqueness
+\cite{OKeefeWong1979,Wong1979}; its realization as a Petersen deletion of the
+Hoffman--Singleton graph also appears in
 \cite[pp.~262--263]{KlinMuzychukZivAv2009}.
 The Moore block identity gives
 \[
@@ -693,6 +697,7 @@ formula.  This lies within the established distance-polynomial framework
 \cite{HowladerPanigrahi2022,Fiol2016}.
 \end{proof}
 
+\Needspace{8\baselineskip}
 \section{Degree and diameter obstructions}\label{sec:obstructions}
 
 \begin{lemma}\label{lem:diam-rayleigh}
@@ -792,6 +797,7 @@ The accompanying release contains an independent exact audit of the complete
 case split and the four fixed graph6 records.
 \end{proof}
 
+\Needspace{16\baselineskip}
 \begin{theorem}[Endpoint-neighbourhood obstruction]\label{thm:endpoint-diameter}
 Let \(G\) be any connected finite simple graph, and let \(u,v\) be vertices at
 distance \(\ell=d_G(u,v)\ge5\).  Put \(p=d(u)\) and \(q=d(v)\).  Then
@@ -829,7 +835,8 @@ quotient is at most that of
 \]
 Its least eigenvalue is the first displayed bound, and its least eigenvector can
 be chosen with both coordinates positive.  Write
-\(p=\delta+\alpha\), \(q=\delta+\beta\), and \(t=\ell-2\).  The identity
+\(p=\delta+\alpha\), \(q=\delta+\beta\), where
+\(\alpha,\beta\ge0\), and put \(t=\ell-2\).  The identity
 \[
  (p-q)^2+pqt^2-(p+q+\delta(t-2))^2
  =(t-2)\{\delta t(\alpha+\beta)+(t+2)\alpha\beta\}
@@ -1797,8 +1804,13 @@ Since \(\sigma_e\) is integral, \(\sigma_e\in\{12,13\}\) for every edge
 \(\Gamma_i=\Gamma_i(v)\) for the distance layers; their sizes are
 \(1,6,30,13\).  If \(\tau\) is the number of
 five-cycles through \(v\), the average row quotient is similar to the
-symmetric compression on normalized layer indicators.  Its nonprincipal factor
-\(q_\tau\) satisfies
+symmetric compression on normalized layer indicators.  Its characteristic
+polynomial is \((x-6)q_\tau(x)\), where
+\[
+ 195q_\tau(x)
+ =195x^3+(2250-43\tau)x^2+(105-30\tau)x+228\tau-11250.
+\]
+In particular,
 \[
  195q_\tau(-1+\sqrt{10})
  =(-215+56\sqrt{10})\tau+7350-1860\sqrt{10}.
@@ -2097,6 +2109,7 @@ Hence \(a-b-c-a'\) is a surviving path, and therefore
 \[
  D(H)=\begin{pmatrix}3(J-I)&2J-C\\2J-C^{\mathsf T}&2(J-I)-B_0\end{pmatrix}.
 \]
+\Needspace{10\baselineskip}
 The normalized constant quotient is
 \[
  Q_1=\begin{pmatrix}
@@ -2432,11 +2445,11 @@ One has
 \]
 Principal-submatrix interlacing gives
 \(\lambda_{\min}(D_0+aI)\ge\gamma\), and Weyl's inequality gives the result.
-For Moore punctures, \(E_S\) is an explicit distance-increase matrix; the exact
-specializations are checked by
-\codefile{scripts/verify_research_extensions_exact.py}.
+For Moore punctures, \(E_S\) is the explicit distance-increase matrix
+described above.
 \end{proof}
 
+\Needspace{8\baselineskip}
 \section{Small punctures and exact Hoffman--Singleton robustness}
 \label{sec:robustness}
 
@@ -2591,9 +2604,10 @@ For sharpness, delete
  \{P_{2,4},P_{3,1},P_{3,4},Q_{2,1},Q_{3,4},Q_{4,4}\}.
 \]
 The resulting graph has \(\delta^*=43/7\), while an exact
-\(LDL^{\mathsf T}\) decomposition of \(7D+43I\) has exactly one negative and
-no zero pivot.  Thus it is not strict.  Generator action, orbit exhaustion,
-BFS distances, the small-puncture formula, and a handwritten rational
+\(LDL^{\mathsf T}\) decomposition of \(7D(M-S)+43I\) has exactly one negative
+and no zero pivot.  Since \(L\) is invertible, Sylvester's law of inertia makes
+\(7D(M-S)+43I\) indefinite, so the graph is not strict.  Generator action,
+orbit exhaustion, BFS distances, the small-puncture formula, and a handwritten rational
 \(LDL^{\mathsf T}\) implementation are independently checked by
 \codefile{scripts/verify_proof_audit_13_hs_robustness.py}.
 \end{proof}
@@ -2686,8 +2700,8 @@ Since \(\|M\|_F^2=m^2\), one singular value satisfies
 For \(q\ge7\), both \(\cos(2\pi/q)\) and \(\cos(4\pi/q)\) increase with
 \(q\), so their sum is minimized at \(q=7\).  The last inequality then uses
 \(2\cos(2\pi/7)+2\cos(4\pi/7)=2\cos(\pi/7)-1\).
-Moreover \(\cos(\pi/7)>\sqrt3/2\), and the increasing function
-\(h(m)=\sqrt{2m+2}-\sqrt m\) satisfies
+Moreover \(\cos(\pi/7)>\sqrt3/2\), and
+\(h(m)=\sqrt{2m+2}-\sqrt m\) is increasing for \(m\ge1\) and satisfies
 \[
  h(m)\le h(6)=\sqrt{14}-\sqrt6
  <\frac{27}{20}<\frac{\sqrt3+1}{2}.

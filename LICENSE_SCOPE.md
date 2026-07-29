@@ -14,7 +14,7 @@ repository metadata.
 ## Recommended attribution
 
 > Samuil Petkov, *Counterexamples, Spectral Obstructions, and Deletion
-> Stability for WOW-284*, release v2.2.7, 29 July 2026,
+> Stability for WOW-284*, release v2.2.8, 29 July 2026,
 > <https://github.com/SamPetkov/wow284>, licensed
 > under CC BY 4.0. Changes were made.
 

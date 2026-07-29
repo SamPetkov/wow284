@@ -13,7 +13,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
-RELEASE_TAG = "v2.2.7"
+RELEASE_TAG = "v2.2.8"
 
 
 def require(condition: bool, message: str) -> None:
@@ -57,6 +57,8 @@ def main() -> None:
         "RELEASE_NOTES_v2.2.5.md",
         "RELEASE_NOTES_v2.2.6.md",
         "RELEASE_NOTES_v2.2.7.md",
+        "RELEASE_NOTES_v2.2.8.md",
+        "cover_letter_template.md",
         "SOURCE_LEDGER.md",
         "results/verification.json",
         "results/verification_40.json",
@@ -136,7 +138,7 @@ def main() -> None:
     )
     require(
         rf"\newcommand{{\RepoTag}}{{{RELEASE_TAG}}}" in tex,
-        "v2.2.7 release tag missing",
+        "v2.2.8 release tag missing",
     )
     require("WOW-284 asserts" in tex, "conjecture verb is not the requested wording")
     require(
@@ -227,6 +229,20 @@ def main() -> None:
         require(marker in tex or marker in normalized_tex, message)
     require(r"\clearpage" in tex, "references do not start on a new page")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
+
+    manuscript_md = (ROOT / "manuscript.md").read_text(encoding="utf-8")
+    require(
+        "# Abstract" in manuscript_md and "WOW-284 asserts" in manuscript_md,
+        "Markdown reading copy does not contain the manuscript abstract",
+    )
+
+    cover_letter = (ROOT / "cover_letter_template.md").read_text(encoding="utf-8")
+    require(
+        RELEASE_TITLE in cover_letter
+        and "Exact Counterexamples and Spectral Mechanisms for WOW-284"
+        not in cover_letter,
+        "cover-letter template does not match the current manuscript",
+    )
 
     submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
     require(

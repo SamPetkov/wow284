@@ -28,9 +28,9 @@ verification route have all been checked.
 | 08 | Prime-field diameter-three obstruction | Fourier decomposition, parameter scope, exact radical comparison | `pass_after_correction` |
 | 09 | Jørgensen order-96 equality control | provenance, independent reconstruction, least-root certification | `pass_after_correction` |
 | 10 | General endpoint-neighborhood diameter obstruction | support disjointness, cross-distance inequality direction, radical comparison, integer rounding | `pass_after_correction` |
-| 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
-| 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `queued` |
-| 13 | Hoffman--Singleton deletion robustness radius five | generator provenance, orbit exhaustion, exact LDL signs, explicit six-deletion sharpness | `queued` |
+| 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `pass_after_correction` |
+| 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `pass_after_correction` |
+| 13 | Hoffman--Singleton deletion robustness radius five | generator provenance, orbit exhaustion, exact LDL signs, explicit six-deletion sharpness | `pass_after_correction` |
 | 14 | Integral optimal-slack and two Gram hierarchies | PSD kernel, three-to-one quantization, uniform irreducibility, least-eigenvalue classification, line-root arithmetic | `pass_after_correction` |
 
 ## Audit 01 outcome

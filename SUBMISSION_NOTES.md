@@ -1,6 +1,6 @@
 # arXiv metadata
 
-**Release:** This manuscript corresponds to GitHub release `v2.2.7`.
+**Release:** This manuscript corresponds to GitHub release `v2.2.8`.
 
 **Title:** Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284
 
@@ -12,11 +12,11 @@
 
 **MSC class:** `05C50; 05C12; 05C35; 05E30`
 
-**Comments:** 27 pages. Corresponds to GitHub release `v2.2.7`.
+**Comments:** 28 pages. Corresponds to GitHub release `v2.2.8`.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
-**Current public research release:** `v2.2.7`
+**Current public research release:** `v2.2.8`
 
 **Current package:** Identified by `MANIFEST.txt` and `SHA256SUMS`.
 
@@ -33,7 +33,7 @@
 > $\delta^*(G)+\lambda_{\min}(D(G))
 > =2k-2-\max_{\theta\ne k}(\theta+1)^2$.
 > Here $\theta$ ranges over the nonprincipal adjacency eigenvalues.
-> Consequently every regular strict counterexample has degree at least six and
+> We further prove that every regular strict counterexample has degree at least six and
 > diameter at most four, while diameter four forces degree at least ten. We
 > solve the associated one-variable nonbacktracking linear program exactly,
 > including optimizer rigidity. For regular strict counterexamples of diameter

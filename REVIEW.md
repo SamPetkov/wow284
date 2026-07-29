@@ -53,9 +53,8 @@ clear resolution of the stated conjecture; it is not represented here as a
 broad spectral-graph-theory breakthrough. Suitability for a selective journal
 will depend on that journal's appetite for concise counterexample notes.
 
-The strongest remaining presentation risk is archival rather than
-mathematical: the versioned v2.2.7 release must be created from the exact
-audited tree before final journal submission. The explicit 50-vertex
+The audited publication tree is preserved in immutable release v2.2.8; final
+journal or arXiv submissions should use that exact package. The explicit 50-vertex
 counterexample has a complete Lean graph and spectral certificate.
 The constructions of orders 38, 39, 40, and 42 now have kernel-checked finite
 spectral certificates with public endpoints under Lean/Mathlib 4.31.

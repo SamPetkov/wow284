@@ -2,28 +2,28 @@
 
 Dear Editors,
 
-Please consider the enclosed manuscript, **“Exact Counterexamples and Spectral
-Mechanisms for WOW-284,”** by Samuil Petkov.
+Please consider the enclosed manuscript, **“Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284,”** by Samuil Petkov.
 
-The note proves that a degree-`k` Moore graph of diameter two violates the
-minimum-dual-degree inequality WOW-284 exactly when `k > 3`. The degree-7
-instance is the 50-vertex Hoffman-Singleton graph. Exact induced constructions
-give further counterexamples of orders 38, 39, 40, and 42, including exhaustive
-labelled singleton- and edge-deletion families. The note also proves a regular
-diameter-three criterion and a parameterized Moore-subconstituent mechanism.
+The paper refutes WOW-284 with exact counterexamples of orders 38, 39, 40, 42,
+and 50, then develops two complementary structural theories. On the obstruction
+side, it derives a regular diameter-three score identity, degree and diameter
+restrictions, the exact one-variable nonbacktracking linear-programming
+optimum, integral slack and order bounds, and a signed-complement description
+at the degree-six, order-50 boundary. On the stability side, it determines
+punctured Moore-graph spectra and proves uniform and sharp deletion results for
+the Hoffman--Singleton graph.
 
-The manuscript explicitly credits Howlader and Panigrahi's 2022
-distance-polynomial treatment of minimal cages and their published
-Hoffman-Singleton spectrum. Its contribution is the sharp WOW-284 degree
-criterion, the explicit counterexample connection, the smaller exact
-constructions, and direct reproducible certificates. It does not claim that
-the classical spectra are new, that order 38 is minimal, or that the
-parameterized mechanism gives an unconditional infinite family.
+All theorem-level computations use exact arithmetic. The repository contains
+complete graph data and independent verification scripts. Lean 4.31
+kernel-checks the explicit 50-vertex counterexample at graph level, finite
+spectral certificates for orders 38, 39, 40, and 42, and the separate
+graph-independent linear-programming optimum and rigidity theorem. The paper
+distinguishes these formal results from its conventional analytic and exact
+computer-assisted arguments. It makes no minimum-order claim and does not
+classify all counterexamples.
 
-Exact Python code, exhaustive deletion checks, complete graph data, the Lean
-4.31 formalization of the explicit 50-vertex counterexample and scalar
-threshold, finite spectral certificates for orders 38, 39, 40, and 42, and
-the source and priority ledger are available at
+The source, certificates, formalization, and reproducibility package are
+available at
 <https://github.com/SamPetkov/wow284>.
 
 [Before use, add the target journal, originality/exclusive-submission
