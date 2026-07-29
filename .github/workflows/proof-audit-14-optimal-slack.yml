@@ -14,6 +14,7 @@ on:
       - "research-notes/SIGNED_PRIMARY_TRANSFER.md"
       - "research-notes/ORDER50_MINUS_TWO_MULTIPLICITY.md"
       - "research-notes/ORDER50_UNSIGNED_COMPLEMENT_EXCLUSION.md"
+      - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
       - "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md"
       - "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md"
       - "research-notes/LITERATURE_AUDIT_14.md"
@@ -28,6 +29,7 @@ on:
       - "scripts/verify_signed_primary_transfer.py"
       - "scripts/verify_order50_minus_two_multiplicity.py"
       - "scripts/verify_order50_unsigned_complement_exclusion.py"
+      - "scripts/verify_order50_signed_complement_disconnected.py"
       - "scripts/verify_order50_component_quotients.py"
       - "scripts/verify_proof_audit_14b_component_quotients.py"
       - "scripts/order50_component_quotients_c7.cpp"
@@ -47,6 +49,7 @@ on:
       - "research-notes/SIGNED_PRIMARY_TRANSFER.md"
       - "research-notes/ORDER50_MINUS_TWO_MULTIPLICITY.md"
       - "research-notes/ORDER50_UNSIGNED_COMPLEMENT_EXCLUSION.md"
+      - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
       - "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md"
       - "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md"
       - "research-notes/LITERATURE_AUDIT_14.md"
@@ -61,6 +64,7 @@ on:
       - "scripts/verify_signed_primary_transfer.py"
       - "scripts/verify_order50_minus_two_multiplicity.py"
       - "scripts/verify_order50_unsigned_complement_exclusion.py"
+      - "scripts/verify_order50_signed_complement_disconnected.py"
       - "scripts/verify_order50_component_quotients.py"
       - "scripts/verify_proof_audit_14b_component_quotients.py"
       - "scripts/order50_component_quotients_c7.cpp"
@@ -120,6 +124,8 @@ jobs:
         run: python scripts/verify_order50_minus_two_multiplicity.py
       - name: Run the corrected unsigned-complement audit
         run: python scripts/verify_order50_unsigned_complement_exclusion.py
+      - name: Run the signed-complement disconnectedness audit
+        run: python scripts/verify_order50_signed_complement_disconnected.py
       - name: Run the canonical component-quotient audit
         run: python scripts/verify_order50_component_quotients.py
       - name: Run independent Proof Audit 14B
@@ -140,6 +146,7 @@ jobs:
               "research-notes/SIGNED_PRIMARY_TRANSFER.md",
               "research-notes/ORDER50_MINUS_TWO_MULTIPLICITY.md",
               "research-notes/ORDER50_UNSIGNED_COMPLEMENT_EXCLUSION.md",
+              "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md",
               "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md",
               "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md",
               "research-notes/LITERATURE_AUDIT_14.md",
@@ -154,6 +161,7 @@ jobs:
               "scripts/verify_signed_primary_transfer.py",
               "scripts/verify_order50_minus_two_multiplicity.py",
               "scripts/verify_order50_unsigned_complement_exclusion.py",
+              "scripts/verify_order50_signed_complement_disconnected.py",
               "scripts/verify_order50_component_quotients.py",
               "scripts/verify_proof_audit_14b_component_quotients.py",
               "scripts/order50_component_quotients_c7.cpp",
