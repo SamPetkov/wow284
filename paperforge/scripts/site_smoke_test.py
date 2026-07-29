@@ -6,11 +6,13 @@ from html.parser import HTMLParser
 import hashlib
 import json
 from pathlib import Path
+import re
 from urllib.parse import unquote, urlsplit
 
 INSTANCE = Path(__file__).resolve().parents[1]
 REPOSITORY = INSTANCE.parent
 SITE = INSTANCE / "output" / "site"
+EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 CUSTOM_PAGES = [
     SITE / "index.html",
     SITE / "formalization" / "index.html",
@@ -76,6 +78,43 @@ def check_custom_page(page: Path) -> int:
     return checked
 
 
+def check_interactive_paper() -> tuple[int, int]:
+    paper = SITE / "paper" / "paper.html"
+    if not paper.is_file():
+        raise AssertionError("Paperforge did not generate paper/paper.html")
+    text = paper.read_text(encoding="utf-8")
+
+    if f"<title>{EXPECTED_TITLE}</title>" not in text:
+        raise AssertionError("interactive paper has a blank or incorrect HTML title")
+    if EXPECTED_TITLE not in text:
+        raise AssertionError("interactive paper omits the manuscript title")
+    if '<h1 class="heading"><a href="paper.html"><span class="title"></span>' in text:
+        raise AssertionError("interactive paper masthead has a blank title")
+
+    raw_macros = [r"\codefile{", r"\datafile{", r"\path{"]
+    for macro in raw_macros:
+        if macro in text:
+            raise AssertionError(f"unconverted repository-path macro in paper HTML: {macro}")
+    if not re.search(r'class="paperforge-source-link"', text):
+        raise AssertionError("interactive paper contains no rendered verifier links")
+
+    if re.search(r">\[bib-[^<]+\]</a>", text):
+        raise AssertionError("bibliography citations display raw xml:id values")
+    bibliography_ids = re.findall(r'id="bib-([^"]+)"', text)
+    canonical_keys = re.findall(
+        r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}",
+        (REPOSITORY / "main.bbl").read_text(encoding="utf-8"),
+        flags=re.DOTALL,
+    )
+    if bibliography_ids != canonical_keys:
+        raise AssertionError(
+            "interactive bibliography differs from the canonical BBL order: "
+            f"{len(bibliography_ids)} HTML entries versus {len(canonical_keys)} canonical entries"
+        )
+
+    return len(bibliography_ids), text.count('class="paperforge-source-link"')
+
+
 def main() -> None:
     required = [
         SITE / "index.html",
@@ -103,6 +142,8 @@ def main() -> None:
     status = json.loads((SITE / "status.json").read_text(encoding="utf-8"))
     if status.get("schema") != 1:
         raise AssertionError("unexpected status.json schema")
+    if status["paper"]["title"] != EXPECTED_TITLE:
+        raise AssertionError("status.json has the wrong manuscript title")
     expected_hash = sha256(REPOSITORY / "main.pdf")
     if status["paper"]["pdf_sha256"] != expected_hash:
         raise AssertionError("site PDF checksum disagrees with canonical main.pdf")
@@ -110,6 +151,7 @@ def main() -> None:
         raise AssertionError("copied site PDF differs from canonical main.pdf")
 
     links = sum(check_custom_page(page) for page in CUSTOM_PAGES)
+    bibliography_entries, source_links = check_interactive_paper()
 
     custom_text = "\n".join(page.read_text(encoding="utf-8") for page in CUSTOM_PAGES)
     forbidden = [
@@ -126,6 +168,8 @@ def main() -> None:
     print(f"custom pages: {len(CUSTOM_PAGES)}")
     print(f"local links checked: {links}")
     print(f"generated HTML files: {len(paper_html)}")
+    print(f"bibliography entries: {bibliography_entries}")
+    print(f"inline source links: {source_links}")
     print(f"PDF SHA-256: {expected_hash}")
 
 
