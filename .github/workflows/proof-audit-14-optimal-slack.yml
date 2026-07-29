@@ -17,6 +17,8 @@ on:
       - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
       - "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md"
       - "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md"
+      - "research-notes/ORDER50_LIFT_EXCLUSION.md"
+      - "research-notes/PROOF_AUDIT_14C_ORDER50_LIFTS.md"
       - "research-notes/LITERATURE_AUDIT_14.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
@@ -34,6 +36,12 @@ on:
       - "scripts/verify_proof_audit_14b_component_quotients.py"
       - "scripts/order50_component_quotients_c7.cpp"
       - "scripts/order50_component_quotients_c10.cpp"
+      - "scripts/verify_order50_lift_exclusion.py"
+      - "scripts/verify_proof_audit_14c_order50_lifts.py"
+      - "scripts/order50_lift_independent.cpp"
+      - "scripts/order50_completion_filter.cpp"
+      - "scripts/materialize_order50_lift_audit.py"
+      - "scripts/.audit14c-bootstrap/payload.*"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
@@ -52,6 +60,8 @@ on:
       - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
       - "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md"
       - "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md"
+      - "research-notes/ORDER50_LIFT_EXCLUSION.md"
+      - "research-notes/PROOF_AUDIT_14C_ORDER50_LIFTS.md"
       - "research-notes/LITERATURE_AUDIT_14.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
@@ -69,6 +79,12 @@ on:
       - "scripts/verify_proof_audit_14b_component_quotients.py"
       - "scripts/order50_component_quotients_c7.cpp"
       - "scripts/order50_component_quotients_c10.cpp"
+      - "scripts/verify_order50_lift_exclusion.py"
+      - "scripts/verify_proof_audit_14c_order50_lifts.py"
+      - "scripts/order50_lift_independent.cpp"
+      - "scripts/order50_completion_filter.cpp"
+      - "scripts/materialize_order50_lift_audit.py"
+      - "scripts/.audit14c-bootstrap/payload.*"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
@@ -88,6 +104,24 @@ jobs:
           python-version: "3.13"
           cache: pip
           cache-dependency-path: requirements.txt
+      - name: Materialize and persist Proof Audit 14C sources
+        run: |
+          python scripts/materialize_order50_lift_audit.py
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            research-notes/ORDER50_LIFT_EXCLUSION.md \
+            research-notes/PROOF_AUDIT_14C_ORDER50_LIFTS.md \
+            scripts/verify_order50_lift_exclusion.py \
+            scripts/verify_proof_audit_14c_order50_lifts.py \
+            scripts/order50_lift_independent.cpp \
+            scripts/order50_completion_filter.cpp
+          if git diff --cached --quiet; then
+            echo "Proof Audit 14C sources already materialized."
+          else
+            git commit -m "Materialize Proof Audit 14C exact sources"
+            git push origin "HEAD:${{ github.head_ref || github.ref_name }}"
+          fi
       - name: Clean and persist the audited note
         run: |
           python scripts/clean_optimal_slack_note.py
@@ -97,7 +131,7 @@ jobs:
           if git diff --cached --quiet; then
             echo "No note cleanup required."
           else
-            git commit -m "Repair Audit 14 source hygiene [skip ci]"
+            git commit -m "Repair Audit 14 source hygiene"
             git push origin "HEAD:${{ github.head_ref || github.ref_name }}"
           fi
       - name: Install exact dependencies
@@ -130,11 +164,24 @@ jobs:
         run: python scripts/verify_order50_component_quotients.py
       - name: Run independent Proof Audit 14B
         run: python scripts/verify_proof_audit_14b_component_quotients.py
+      - name: Run Proof Audit 14C Type A
+        run: python scripts/verify_order50_lift_exclusion.py --type-a
+      - name: Run Proof Audit 14C Type B
+        run: python scripts/verify_order50_lift_exclusion.py --type-b
+      - name: Run independent Proof Audit 14C
+        run: python scripts/verify_proof_audit_14c_order50_lifts.py
+      - name: Compile exact sources
+        run: |
+          python -m py_compile \
+            scripts/verify_order50_lift_exclusion.py \
+            scripts/verify_proof_audit_14c_order50_lifts.py
+          g++ -O3 -std=c++17 scripts/order50_lift_independent.cpp -o /tmp/order50_lift_independent
+          g++ -O3 -std=c++17 scripts/order50_completion_filter.cpp -o /tmp/order50_completion_filter
       - name: Check source hygiene
         run: |
           python - <<'PY'
           from pathlib import Path
-          for name in (
+          names = (
               "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
               "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
               "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
@@ -149,6 +196,8 @@ jobs:
               "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md",
               "research-notes/ORDER50_COMPONENT_QUOTIENT_CLASSIFICATION.md",
               "research-notes/PROOF_AUDIT_14B_COMPONENT_QUOTIENTS.md",
+              "research-notes/ORDER50_LIFT_EXCLUSION.md",
+              "research-notes/PROOF_AUDIT_14C_ORDER50_LIFTS.md",
               "research-notes/LITERATURE_AUDIT_14.md",
               "scripts/verify_optimal_slack_gram_unification.py",
               "scripts/verify_integral_optimal_slack_collapse.py",
@@ -166,8 +215,15 @@ jobs:
               "scripts/verify_proof_audit_14b_component_quotients.py",
               "scripts/order50_component_quotients_c7.cpp",
               "scripts/order50_component_quotients_c10.cpp",
+              "scripts/verify_order50_lift_exclusion.py",
+              "scripts/verify_proof_audit_14c_order50_lifts.py",
+              "scripts/order50_lift_independent.cpp",
+              "scripts/order50_completion_filter.cpp",
+              "scripts/materialize_order50_lift_audit.py",
+              "scripts/.audit14c-bootstrap/payload.00",
               "scripts/clean_optimal_slack_note.py",
-          ):
+          )
+          for name in names:
               data = Path(name).read_bytes()
               assert not any(byte < 32 and byte not in {9, 10} for byte in data), name
           print("source hygiene: PASS")
