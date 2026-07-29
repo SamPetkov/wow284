@@ -78,29 +78,33 @@ def check_custom_page(page: Path) -> int:
     return checked
 
 
-def check_interactive_paper() -> tuple[int, int]:
+def check_interactive_paper(paper_html: list[Path]) -> tuple[int, int]:
     paper = SITE / "paper" / "paper.html"
     if not paper.is_file():
         raise AssertionError("Paperforge did not generate paper/paper.html")
-    text = paper.read_text(encoding="utf-8")
+    masthead = paper.read_text(encoding="utf-8")
 
-    if f"<title>{EXPECTED_TITLE}</title>" not in text:
+    if f"<title>{EXPECTED_TITLE}</title>" not in masthead:
         raise AssertionError("interactive paper has a blank or incorrect HTML title")
-    if EXPECTED_TITLE not in text:
+    if EXPECTED_TITLE not in masthead:
         raise AssertionError("interactive paper omits the manuscript title")
-    if '<h1 class="heading"><a href="paper.html"><span class="title"></span>' in text:
+    if '<h1 class="heading"><a href="paper.html"><span class="title"></span>' in masthead:
         raise AssertionError("interactive paper masthead has a blank title")
 
+    combined = "\n".join(path.read_text(encoding="utf-8") for path in paper_html)
     raw_macros = [r"\codefile{", r"\datafile{", r"\path{"]
     for macro in raw_macros:
-        if macro in text:
+        if macro in combined:
             raise AssertionError(f"unconverted repository-path macro in paper HTML: {macro}")
-    if not re.search(r'class="paperforge-source-link"', text):
+    source_links = combined.count('class="paperforge-source-link"')
+    if not source_links:
         raise AssertionError("interactive paper contains no rendered verifier links")
 
-    if re.search(r">\[bib-[^<]+\]</a>", text):
+    if re.search(r">\[bib-[^<]+\]</a>", combined):
         raise AssertionError("bibliography citations display raw xml:id values")
-    bibliography_ids = re.findall(r'id="bib-([^"]+)"', text)
+    bibliography_ids: list[str] = []
+    for path in paper_html:
+        bibliography_ids.extend(re.findall(r'id="bib-([^"]+)"', path.read_text(encoding="utf-8")))
     canonical_keys = re.findall(
         r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}",
         (REPOSITORY / "main.bbl").read_text(encoding="utf-8"),
@@ -109,10 +113,11 @@ def check_interactive_paper() -> tuple[int, int]:
     if bibliography_ids != canonical_keys:
         raise AssertionError(
             "interactive bibliography differs from the canonical BBL order: "
-            f"{len(bibliography_ids)} HTML entries versus {len(canonical_keys)} canonical entries"
+            f"{len(bibliography_ids)} HTML entries versus {len(canonical_keys)} canonical entries; "
+            f"first HTML keys={bibliography_ids[:4]!r}"
         )
 
-    return len(bibliography_ids), text.count('class="paperforge-source-link"')
+    return len(bibliography_ids), source_links
 
 
 def main() -> None:
@@ -151,7 +156,7 @@ def main() -> None:
         raise AssertionError("copied site PDF differs from canonical main.pdf")
 
     links = sum(check_custom_page(page) for page in CUSTOM_PAGES)
-    bibliography_entries, source_links = check_interactive_paper()
+    bibliography_entries, source_links = check_interactive_paper(paper_html)
 
     custom_text = "\n".join(page.read_text(encoding="utf-8") for page in CUSTOM_PAGES)
     forbidden = [
