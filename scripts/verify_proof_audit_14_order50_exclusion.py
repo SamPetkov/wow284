@@ -47,11 +47,9 @@ def parity_replay() -> None:
         + 16 * solution[8] * n8
         - (sp.expand(g).subs(x, 6) + 2) ** 2
     )
-    if sp.rem(sp.Poly(trace, n5, n6, n7, n8), 8) != 0:
-        # SymPy's multivariate remainder by an integer is version dependent.
-        coefficients = sp.Poly(trace, n5, n6, n7, n8).coeffs()
-        if any(int(value) % 8 for value in coefficients):
-            raise AssertionError("trace square is not coefficientwise divisible by eight")
+    coefficients = sp.Poly(trace, n5, n6, n7, n8).coeffs()
+    if any(int(value) % 8 for value in coefficients):
+        raise AssertionError("trace square is not coefficientwise divisible by eight")
 
 
 def root_level_replay() -> None:
