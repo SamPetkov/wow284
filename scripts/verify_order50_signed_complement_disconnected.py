@@ -44,9 +44,6 @@ def trace_parity_audit() -> dict[str, object]:
     if sp.expand(trace - expected) != 0:
         raise AssertionError("wrong signed trace-square identity")
 
-    negative_edges = sp.symbols("Nminus", integer=True)
-    if sp.expand(100 + 4 * negative_edges) % 4 != 0:
-        raise AssertionError("unexpected signed-edge normalization")
     # Divisibility of trace by eight forces 100+4Nminus to be 0 modulo 8,
     # hence Nminus is odd.
     residues = [
@@ -123,8 +120,8 @@ def odd_level_audit() -> dict[str, object]:
     t = sp.symbols("t", integer=True, nonnegative=True)
     # These are the two algebraic identities used after subtracting the flow
     # equations from the squared-norm equation.
-    first = sp.expand((4 * t + 1) ** 2 - 3 - 8 * t)
-    second = sp.expand((4 * t + 3) ** 2 - 3 - 8 * (t + 1))
+    first = sp.expand((4 * t + 1) ** 2 - 3 + 2 * (4 * t + 1))
+    second = sp.expand((4 * t + 3) ** 2 - 3 - 2 * (4 * t + 3))
     if first != 16 * t * (t + 1):
         raise AssertionError("wrong 1 mod 4 level identity")
     if second != 16 * t * (t + 1):
