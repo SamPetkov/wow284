@@ -19,6 +19,7 @@ tmp/
 # Paperforge-generated and machine-local state
 .cache/
 paperforge/output/
+paperforge/inputs/
 paperforge/source/
 paperforge/xsl/
 paperforge/publication/
