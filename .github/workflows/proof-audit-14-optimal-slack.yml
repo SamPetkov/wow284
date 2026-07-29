@@ -89,6 +89,10 @@ on:
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
 
+concurrency:
+  group: proof-audit-14-${{ github.ref }}
+  cancel-in-progress: true
+
 permissions:
   contents: write
 
@@ -220,11 +224,15 @@ jobs:
               "scripts/order50_lift_independent.cpp",
               "scripts/order50_completion_filter.cpp",
               "scripts/materialize_order50_lift_audit.py",
-              "scripts/.audit14c-bootstrap/payload.00",
               "scripts/clean_optimal_slack_note.py",
           )
           for name in names:
               data = Path(name).read_bytes()
               assert not any(byte < 32 and byte not in {9, 10} for byte in data), name
+          chunks = sorted(Path("scripts/.audit14c-bootstrap").glob("payload.*"))
+          assert len(chunks) == 7, chunks
+          for path in chunks:
+              data = path.read_bytes()
+              assert not any(byte < 32 and byte not in {9, 10} for byte in data), path
           print("source hygiene: PASS")
           PY
