@@ -8,11 +8,13 @@ on:
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
       - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
       - "scripts/verify_three_to_one_excess_bound.py"
+      - "scripts/verify_proof_audit_14_three_to_one.py"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
@@ -22,11 +24,13 @@ on:
       - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
       - "research-notes/TWO_GRAM_HIERARCHIES.md"
       - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
+      - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
       - "scripts/verify_two_gram_hierarchies.py"
       - "scripts/verify_three_to_one_excess_bound.py"
+      - "scripts/verify_proof_audit_14_three_to_one.py"
       - "scripts/clean_optimal_slack_note.py"
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   workflow_dispatch:
@@ -70,6 +74,8 @@ jobs:
         run: python scripts/verify_two_gram_hierarchies.py
       - name: Run the three-to-one excess audit
         run: python scripts/verify_three_to_one_excess_bound.py
+      - name: Run independent Proof Audit 14A
+        run: python scripts/verify_proof_audit_14_three_to_one.py
       - name: Check source hygiene
         run: |
           python - <<'PY'
@@ -80,11 +86,13 @@ jobs:
               "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
               "research-notes/TWO_GRAM_HIERARCHIES.md",
               "research-notes/THREE_TO_ONE_EXCESS_BOUND.md",
+              "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md",
               "scripts/verify_optimal_slack_gram_unification.py",
               "scripts/verify_integral_optimal_slack_collapse.py",
               "scripts/verify_optimal_slack_excess_matrix.py",
               "scripts/verify_two_gram_hierarchies.py",
               "scripts/verify_three_to_one_excess_bound.py",
+              "scripts/verify_proof_audit_14_three_to_one.py",
               "scripts/clean_optimal_slack_note.py",
           ):
               data = Path(name).read_bytes()
