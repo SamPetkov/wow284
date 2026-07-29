@@ -98,6 +98,7 @@ jobs:
         run: paperforge build site paperforge
 
       - name: Upload preview artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: wow284-paperforge-site
@@ -106,11 +107,11 @@ jobs:
           retention-days: 14
 
       - name: Configure GitHub Pages
-        if: github.event_name != 'pull_request'
+        if: success() && github.event_name != 'pull_request'
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
-        if: github.event_name != 'pull_request'
+        if: success() && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: paperforge/output/site
