@@ -44,7 +44,9 @@ def stage_draft() -> None:
         "\\begin{thebibliography}{99}\n"
         "\\end{thebibliography}\n"
     )
-    text, count = BIBLIOGRAPHY_BLOCK.subn(replacement, text)
+    # A callable replacement prevents the regular-expression engine from
+    # interpreting LaTeX backslashes (for example ``\clearpage``) as escapes.
+    text, count = BIBLIOGRAPHY_BLOCK.subn(lambda _match: replacement, text)
     if count != 1:
         raise AssertionError(
             f"expected one canonical bibliography block in {DRAFT_SOURCE}, found {count}"
