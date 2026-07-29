@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Exact reproduction commands and artifact boundaries for the WOW-284 paper.">
+  <title>Reproducibility · WOW-284</title>
+  <link rel="stylesheet" href="../site.css">
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="shell inner">
+      <a class="brand" href="../"><span class="brand-mark">W</span><span>WOW-284</span></a>
+      <div class="nav-links">
+        <a href="../paper/">Paper</a>
+        <a href="../paper.pdf">PDF</a>
+        <a href="../formalization/">Formalization</a>
+        <a href="./">Reproduce</a>
+        <a href="https://github.com/SamPetkov/wow284">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <header class="page-header prose">
+      <p class="eyebrow">Exact arithmetic · deterministic builds · pinned formalization</p>
+      <h1>Reproducibility</h1>
+      <p class="lede">
+        The publication artifacts, exact computations, and Lean development are separate but synchronized layers. This page gives the shortest supported commands for each layer and records what each command certifies.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/SamPetkov/wow284/releases/tag/v2.2.8">Immutable release</a>
+        <a class="button" href="../CITATION.cff">Citation metadata</a>
+        <a class="button" href="https://github.com/SamPetkov/wow284/blob/v2.2.8/BUILD_VERIFICATION.txt">Release verification ledger</a>
+      </div>
+    </header>
+
+    <section class="section prose">
+      <h2>Publication build</h2>
+      <p>Clone the repository and check out the immutable manuscript release.</p>
+      <code class="command">git clone https://github.com/SamPetkov/wow284.git
+cd wow284
+git checkout v2.2.8
+bash build.sh</code>
+      <p>
+        The release records a clean multi-pass LaTeX/BibTeX build, synchronized root and arXiv sources, a deterministic three-file arXiv archive, and a complete SHA-256 ledger. The website copies the already-audited PDF; it does not regenerate or silently alter the canonical manuscript.
+      </p>
+    </section>
+
+    <section class="section prose">
+      <h2>Exact computation</h2>
+      <p>The principal release checks can be rerun from the repository root.</p>
+      <code class="command">python scripts/audit_v22_manuscript.py
+python scripts/verify_extended.py
+python scripts/validate_repository.py</code>
+      <p>Individual theorem-level verifiers are linked inline from the manuscript. Representative examples include:</p>
+      <code class="command">python scripts/verify_proof_audit_02_two_sided_lp.py
+python scripts/verify_proof_audit_05_small_moore_punctures.py
+python scripts/verify_proof_audit_09_jorgensen96.py
+python scripts/verify_proof_audit_13_hs_robustness.py
+python scripts/verify_three_to_one_excess_bound.py</code>
+      <div class="card">
+        <h3>Exact means exact</h3>
+        <p>Graph distances are reconstructed by integer breadth-first search. Spectral sign decisions use rational LDLᵀ, exact characteristic polynomials, Sturm sequences, integer matrix identities, or explicitly described finite enumeration. Floating-point values may be used for diagnostics, but not for theorem-level eigenvalue ordering.</p>
+      </div>
+    </section>
+
+    <section class="section prose">
+      <h2>Lean 4.31</h2>
+      <p>The repository pins its Lean toolchain and Mathlib manifest. The core graph and LP developments can be checked with:</p>
+      <code class="command">cd lean
+lake build Wow284 --wfail
+lake env lean -DwarningAsError=true Wow284CoreAudit.lean
+lake build Wow284.LPCeiling --wfail
+lake env lean -DwarningAsError=true Wow284LPAudit.lean</code>
+      <p>The non-50 finite certificates have separate build targets:</p>
+      <code class="command">lake build Wow284Extension
+lake env lean -DwarningAsError=true Wow284ExtensionAudit.lean
+lake build Wow284Generated3942
+lake env lean -DwarningAsError=true Wow284Generated3942Audit.lean</code>
+      <p>For a flattened standalone replay:</p>
+      <code class="command">cd ..
+python scripts/generate_lean_standalone.py --check
+cd lean
+lake env lean -DwarningAsError=true Wow284Standalone.lean</code>
+    </section>
+
+    <section class="section prose">
+      <h2>Paperforge website</h2>
+      <p>
+        The interactive HTML is generated from the canonical root <span class="mono">main.tex</span> using a pinned Paperforge checkout and PreTeXt. The custom project pages are hand-authored, while <span class="mono">paper/</span> is generated and must not be edited directly.
+      </p>
+      <code class="command">bash paperforge/scripts/build-local.sh</code>
+      <p>The assembled site is written to <span class="mono">paperforge/output/site/</span>. The GitHub Pages workflow performs the same build, runs the smoke tests, and publishes only on pushes to <span class="mono">main</span>.</p>
+    </section>
+
+    <section class="section prose">
+      <h2>Artifact map</h2>
+      <div class="card-grid">
+        <article class="card"><span class="tag">Canonical prose</span><h3><span class="mono">main.tex</span></h3><p>The editable source of the paper. Paperforge re-ingestion always starts here.</p></article>
+        <article class="card"><span class="tag">Archival PDF</span><h3><span class="mono">main.pdf</span></h3><p>The synchronized manuscript copied to this site as <span class="mono">paper.pdf</span>.</p></article>
+        <article class="card"><span class="tag">Interactive HTML</span><h3><span class="mono">paper/</span></h3><p>Generated PreTeXt output with navigation, knowls, notation support, and detail controls.</p></article>
+        <article class="card"><span class="tag">Formal proof</span><h3><span class="mono">lean/</span></h3><p>The pinned Lean 4.31 project and public axiom-audit endpoints.</p></article>
+        <article class="card"><span class="tag">Exact certificates</span><h3><span class="mono">scripts/</span></h3><p>Independent graph, polynomial, matrix, orbit, and packaging checks.</p></article>
+        <article class="card"><span class="tag">Integrity</span><h3><span class="mono">SHA256SUMS</span></h3><p>One digest for every release-visible file listed by the manifest.</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>Reproducibility snapshot <span class="mono">{{VERSION}}</span> · source <span class="mono">{{COMMIT_SHORT}}</span>.</div>
+      <div>PDF SHA-256 <span class="mono">{{PDF_SHA256_SHORT}}</span></div>
+    </div>
+  </footer>
+</body>
+</html>
