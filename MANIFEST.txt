@@ -295,6 +295,7 @@ research-notes/EDGE_WALK_MICROLEMMA.md
 research-notes/EQUALITY_BOUNDARY.md
 research-notes/EXTENSION_EXPLORATION_QUEUE.md
 research-notes/FLOAT_PROOF_PATH_AUDIT.md
+research-notes/FOUR_TO_ONE_EXCESS_BOUND.md
 research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md
 research-notes/JORGENSEN96_PROVENANCE.md
 research-notes/LAYER_MATCHING_DELETIONS.md
@@ -376,6 +377,7 @@ scripts/install_into_wow284.py
 scripts/lean3942_common.py
 scripts/lean3942_finite.py
 scripts/lean3942_ldl.py
+scripts/materialize_four_to_one_note.py
 scripts/materialize_v22_bootstrap.py
 scripts/revise_v22_manuscript.py
 scripts/revise_v22_second_pass.py
@@ -397,6 +399,7 @@ scripts/verify_edge_local_order50.py
 scripts/verify_equality_boundary.py
 scripts/verify_exact.py
 scripts/verify_extended.py
+scripts/verify_four_to_one_excess_bound.py
 scripts/verify_integral_optimal_slack_collapse.py
 scripts/verify_jorgensen96_provenance.py
 scripts/verify_jorgensen_96.py

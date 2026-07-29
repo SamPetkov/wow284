@@ -41,11 +41,14 @@ review, a claim boundary, and an independent exact verifier. The registry at
 that appear in `main.tex`.
 
 Proof Audit 14 introduces the integral optimal-slack and excess-matrix
-hierarchy. Its polynomial identities, rounding, low-degree arithmetic, and
-deletion-radius consequences were rerun exactly. Its only external theorem
-input, the classification of connected regular graphs with least eigenvalue
-at least `-2` beyond order 28, was checked against the original
-Cameron--Goethals--Seidel--Shult source and a later journal statement.
+hierarchy and the four-to-one excess theorem. Its polynomial identities,
+rounding, modular irreducibility certificates, Gram determinants, finite
+line-root cases, low-degree arithmetic, and deletion-radius consequences were
+rerun exactly. The audit corrected the \(k=62\) certificate from modulus 23
+to the valid modulus 61 and normalized symbolic polynomial comparisons. Its
+only external theorem input, the classification of connected regular graphs
+with least eigenvalue at least `-2` beyond order 28, was checked against the
+original Cameron--Goethals--Seidel--Shult source and a later journal statement.
 
 The all-degree analytic LP optimum was formalized separately in Lean 4.31.
 The formal dependency chain covers the nonbacktracking recurrence, the

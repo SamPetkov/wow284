@@ -31,7 +31,7 @@ verification route have all been checked.
 | 11 | Diameter-four degree-at-most-nine exclusion | cross-pair count, 4-cycle exclusion, quotient normalization, threshold strictness | `queued` |
 | 12 | Small-puncture Moore normal form | internally disjoint length-three paths, correction-matrix identity, exact dual-degree attainment | `queued` |
 | 13 | Hoffman--Singleton deletion robustness radius five | generator provenance, orbit exhaustion, exact LDL signs, explicit six-deletion sharpness | `queued` |
-| 14 | Integral optimal-slack and two Gram hierarchies | PSD kernel, irreducibility, integer rounding, least-eigenvalue classification, line-root arithmetic | `pass_after_correction` |
+| 14 | Integral optimal-slack and two Gram hierarchies | PSD kernel, four-to-one quantization, modular irreducibility, least-eigenvalue classification, line-root arithmetic | `pass_after_correction` |
 
 ## Audit 01 outcome
 
@@ -292,13 +292,25 @@ The one-level collapse is impossible because \(g_k(x)+1\) is irreducible over
 \(n-1=2k/3\), contradicting \(n\ge k+1\). This yields the strengthened
 universal order bound.
 
-At the simple-excess level, the complementary relation graph has least
-eigenvalue at least \(-2\). The degree-seven and degree-eight exclusions use
-the external Cameron--Goethals--Seidel--Shult classification; the subsequent
-regular and semiregular line-root divisibility arguments are exact. The
-original draft's book theorem number was corrected to the original 1976
-source and a later journal statement. A hidden control byte and a
-self-mutating workflow step were also removed before promotion.
+The stronger four-to-one theorem defines
+\[
+r=2(k+2)^2(k^2+3)-(12k+27)n
+\]
+and proves \(r>0\) and \(n\le4r\).  Doubled excess entries are quantized by
+\(3\times3\) and \(4\times4\) Gram determinants; once the excess is simple,
+its complementary relation graph has least eigenvalue at least \(-2\).  The
+remaining cases use the external Cameron--Goethals--Seidel--Shult
+classification, followed by exact regular and semiregular line-root
+arithmetic.  The resulting order bound is
+\[
+n\le\left\lfloor
+\frac{8(k+2)^2(k^2+3)}{48k+109}
+\right\rfloor.
+\]
+The audit corrected the \(k=62\) modular certificate from modulus \(23\) to
+the valid modulus \(61\), normalized two symbolic comparisons, and removed a
+self-mutating workflow step.  The original draft's book theorem number was
+also replaced by the original 1976 source and a later journal statement.
 
 ## Required structure of every audit
 

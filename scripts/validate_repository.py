@@ -84,10 +84,13 @@ def main() -> None:
         "scripts/verify_integral_optimal_slack_collapse.py",
         "scripts/verify_optimal_slack_excess_matrix.py",
         "scripts/verify_two_gram_hierarchies.py",
+        "scripts/verify_four_to_one_excess_bound.py",
+        "scripts/materialize_four_to_one_note.py",
         "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
         "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
         "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
         "research-notes/TWO_GRAM_HIERARCHIES.md",
+        "research-notes/FOUR_TO_ONE_EXCESS_BOUND.md",
         "lean/Wow284/LPDefinitions.lean",
         "lean/Wow284/LPRecurrence.lean",
         "lean/Wow284/LPPrimal.lean",
@@ -135,6 +138,11 @@ def main() -> None:
         and r"\label{cor:uniform-deletion}" in tex
         and r"\label{thm:integral-slack}" in tex,
         "v2.3 structural results are missing",
+    )
+    require(
+        r"\label{thm:four-to-one}" in tex
+        and r"\frac{8(k+2)^2(k^2+3)}{48k+109}" in tex,
+        "four-to-one excess theorem is missing",
     )
     require(
         r"correspond to release \texttt{v2.3.0}" in tex,

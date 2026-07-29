@@ -11,6 +11,8 @@ verify:
 	python scripts/verify_integral_optimal_slack_collapse.py
 	python scripts/verify_optimal_slack_excess_matrix.py
 	python scripts/verify_two_gram_hierarchies.py
+	python scripts/verify_four_to_one_excess_bound.py
+	python scripts/materialize_four_to_one_note.py --check
 
 data:
 	python scripts/export_graph_data.py --output-dir results
@@ -28,6 +30,8 @@ check:
 	python scripts/verify_integral_optimal_slack_collapse.py
 	python scripts/verify_optimal_slack_excess_matrix.py
 	python scripts/verify_two_gram_hierarchies.py
+	python scripts/verify_four_to_one_excess_bound.py
+	python scripts/materialize_four_to_one_note.py --check
 	python scripts/sync_manuscript_artifacts.py --check
 	python scripts/validate_repository.py
 

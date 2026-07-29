@@ -12,7 +12,7 @@
 
 **MSC class:** `05C50; 05C12; 05C35; 05E30`
 
-**Comments:** 23 pages. Corresponds to GitHub release `v2.3.0`.
+**Comments:** 25 pages. Corresponds to GitHub release `v2.3.0`.
 
 **License:** Creative Commons Attribution 4.0 International (CC BY 4.0)
 
@@ -38,11 +38,12 @@
 > including optimizer rigidity. The optimizer yields a positive-semidefinite
 > slack matrix whose integral excess gives the stronger universal bound
 > $n\le\left\lfloor
-> (k+2)^2(k^2+3)/(6(k+2)+1)
-> \right\rfloor$; its principal minors recover local cycle constraints and
-> imply sharper low-degree windows. In particular, degree-six counterexamples
-> have order at most $50$. We also determine the distance spectra of one- and
-> two-vertex punctures of Moore graphs and establish a uniform
+> 8(k+2)^2(k^2+3)/(48k+109)
+> \right\rfloor$; this follows from a four-to-one quantization theorem for the
+> integral excess. The slack matrix's principal minors also recover local
+> cycle constraints. In particular, degree-six counterexamples have order at
+> most $50$. We determine the distance spectra of one- and two-vertex
+> punctures of Moore graphs and establish a uniform
 > deletion-stability bound: every deletion of at most five vertices from the
 > Hoffman--Singleton graph remains a strict counterexample, whereas an
 > explicit six-vertex deletion does not. All

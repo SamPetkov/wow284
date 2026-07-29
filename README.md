@@ -28,6 +28,21 @@ inequality, and a metric normal form for all punctures of size at most
 `k - 1`. In particular, every deletion of at most five vertices from the
 Hoffman--Singleton graph remains a strict counterexample.
 
+The optimal-slack excess parameter
+
+\[
+r=2(k+2)^2(k^2+3)-(12k+27)n
+\]
+
+is positive and satisfies \(n\le4r\). Consequently every diameter-three
+regular strict counterexample of degree \(k\ge6\) satisfies
+
+\[
+n\le\left\lfloor
+\frac{8(k+2)^2(k^2+3)}{48k+109}
+\right\rfloor.
+\]
+
 For the explicitly constructed graph (G),
 
 \[
@@ -140,6 +155,7 @@ Primary links:
 - `scripts/verify_wow284_38_40_42.py` - combined exact verifier for orders 38, 39, 40, and 42.
 - `scripts/verify_38_graph6_independent.py` - graph6/integer-BFS/Fraction-LDL audit of the 38-vertex graph.
 - `scripts/verify_descendant_families.py` - exhaustive exact audit of all 40 singleton and 120 edge-endpoint deletions.
+- `scripts/verify_four_to_one_excess_bound.py` - exact audit of the integral four-to-one theorem and its finite classification cases.
 - `scripts/explore_generalizations.py` - exact controls plus a separately labelled numerical screen.
 - `scripts/export_graphs.py` - deterministic graph6, adjacency-list, edge-list, and summary exporter.
 - `scripts/export_graph_data.py` - deterministic edge, adjacency, and distance CSV exporter.
@@ -201,6 +217,7 @@ duality, complementary slackness, and rigidity.
 That LP theorem is graph-independent. The trace interpretation of `F_i(A)`,
 the girth-five trace statements, the spectral trace bridge, and the resulting
 graph-order conclusions remain conventional analytic proofs. The
+integral optimal-slack theorem, the four-to-one excess bound, and the
 punctured-Moore and deletion-stability theorems are likewise analytic results
 with exact Python audits, not part of the Lean claim.
 
@@ -212,7 +229,7 @@ the Lean documentation and release-verification report.
 
 ## Audited research extensions
 
-The repository contains thirteen systematic proof audits of the expanded
+The repository contains fourteen systematic proof audits of the expanded
 results. Their statements, corrections,
 claim boundaries, and independent exact verifiers are indexed in
 [`research-notes/PROOF_AUDIT_REGISTRY.md`](research-notes/PROOF_AUDIT_REGISTRY.md).

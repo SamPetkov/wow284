@@ -109,13 +109,14 @@ including optimizer rigidity.  The optimizer yields a positive-semidefinite
 slack matrix whose integral excess gives the stronger universal bound
 \[
  n\le\left\lfloor
- \frac{(k+2)^2(k^2+3)}{6(k+2)+1}
+ \frac{8(k+2)^2(k^2+3)}{48k+109}
  \right\rfloor;
 \]
-its principal minors recover local cycle constraints and imply sharper
-low-degree windows.  In particular, degree-six counterexamples have order at
-most \(50\).  We also determine the distance spectra of one- and two-vertex
-punctures of Moore graphs and establish a uniform deletion-stability bound:
+this follows from a four-to-one quantization theorem for the integral excess.
+The slack matrix's principal minors also recover local cycle constraints.  In
+particular, degree-six counterexamples have order at most \(50\).  We determine
+the distance spectra of one- and two-vertex punctures of Moore graphs and
+establish a uniform deletion-stability bound:
 every deletion of at most five vertices from the Hoffman--Singleton graph
 remains a strict counterexample, whereas an explicit six-vertex deletion does
 not.  All
@@ -204,20 +205,21 @@ has exact ceiling
 with a unique optimizer up to positive scaling; see
 Theorem~\ref{thm:lp-ceiling}.
 \item The optimizer defines one positive-semidefinite slack matrix.  Its trace
-is the LP defect, while integrality gives
+is the LP defect.  Its integral excess satisfies a four-to-one quantization
+inequality, giving
 \[
  n\le\left\lfloor
- \frac{(k+2)^2(k^2+3)}{6(k+2)+1}
+ \frac{8(k+2)^2(k^2+3)}{48k+109}
  \right\rfloor;
 \]
-see Theorem~\ref{thm:integral-slack}.  Its \(2\times2\) minors yield a general
-cycle-divisibility sieve and the local order-\(51\) contradiction
+see Theorems~\ref{thm:integral-slack} and~\ref{thm:four-to-one}.  Its
+\(2\times2\) minors yield a general cycle-divisibility sieve and the local
+order-\(51\) contradiction
 \[
  5N_5=153\cdot11=1683,
 \]
-while the next integral level gives the sharper degree-\(7,8,9\) order
-windows \(74,108,150\); see
-Corollary~\ref{cor:low-degree-windows}.
+while the global theorem gives the degree-\(7,8,9\) order windows
+\(74,108,150\); see Corollary~\ref{cor:low-degree-windows}.
 \item One-vertex, adjacent-pair, and nonadjacent-pair deletions of Moore graphs
 admit exact invariant-subspace decompositions for their recomputed distance
 matrices; see Section~\ref{sec:punctures}.
@@ -229,9 +231,11 @@ Theorem~\ref{thm:hs-radius}.
 The proofs form two complementary hierarchies.  In the obstruction direction,
 the distance-polynomial identity converts WOW-284 into a shifted adjacency
 window; scalar trace moments give the one-point LP ceiling; integrality of the
-optimal slack matrix strengthens the order bound; \(2\times2\) principal
-minors localize that certificate to edge--cycle counts; and \(3\times3\)
-minors impose the two-path constraints at order fifty.  In the stability
+optimal slack matrix strengthens the order bound; graph realizability and
+small Gram minors quantize the remaining excess into the four-to-one bound;
+edge-local \(2\times2\) minors convert the same certificate into cycle counts;
+and \(3\times3\) minors impose the two-path constraints at order fifty.  In
+the stability
 direction, deleting vertices from a Moore graph produces an incidence-Gram
 correction to the distance matrix and a configuration-sensitive perturbation
 bound.
@@ -1066,6 +1070,194 @@ principal minors form a canonical semidefinite hierarchy.  We retain the
 edge-local argument below because it exposes the cycle-count obstruction
 hidden by the stronger global order bound.
 
+\begin{theorem}[Four-to-one excess bound]\label{thm:four-to-one}
+Under the hypotheses of Theorem~\ref{thm:integral-slack}, assume \(k\ge6\)
+and write \(\varepsilon=\varepsilon_{k,n}\).  The integral parameter
+\[
+ r=2\varepsilon-n-2
+   =2(k+2)^2(k^2+3)-(12k+27)n
+\]
+satisfies
+\[
+ r>0,\qquad n\le4r.
+\]
+Consequently
+\[
+ \resultbox{
+ n\le\left\lfloor
+ \frac{8(k+2)^2(k^2+3)}{48k+109}
+ \right\rfloor.
+ }
+\]
+\end{theorem}
+
+\begin{proof}
+Put \(E=\mathcal E_k\), \(C=C_k\), \(h=h_k\), and
+\[
+ \rho=\frac{\varepsilon-1}{n}
+      =\frac{1+r/n}{2}.
+\]
+The optimal slack matrix has the form
+\[
+ \mathcal S_k=I-E+\rho J\succeq0.
+\]
+We first record the divisibility identity
+\[
+ 128(2C-r)
+ =(4k+9)(64k^3+112k^2+196k+327)+(129-128r).
+\]
+Since \(n=(2C-r)/(12k+27)\) is integral and \(4k+9\) is odd,
+\begin{equation}\label{eq:r-divisibility}
+ 4k+9\mid129-128r.
+\end{equation}
+
+\smallskip
+\noindent\emph{Positivity of \(r\).}
+Suppose \(r\le0\).  A \(2\times2\) principal minor of \(\mathcal S_k\)
+gives
+\[
+ E_{uv}\le2+\frac rn\qquad(u\ne v).
+\]
+Thus \(E\) is the adjacency matrix of a simple graph when \(r<0\).  If
+\(r=0\) and \(E_{uv}=2\), positivity puts \(e_u+e_v\) in
+\(\ker\mathcal S_k\).  After subtracting its projection onto \(\one\), the
+strict spectral window gives a \((-2)\)-eigenvector of \(A\).  Its
+\(u\)-coordinate would require
+\[
+ A_{uv}=-2+\frac{2k+4}{n},
+\]
+which is impossible because \(n\ge k^2+2\) and \(A_{uv}\in\{0,1\}\).
+Hence \(E\) is simple also when \(r=0\).
+
+Let \(X=\overline E\).  It is regular of degree
+\[
+ d=n-1-\varepsilon=\frac{n-r-4}{2},
+\]
+and \(A(X)=-I-E+J\) has least eigenvalue at least \(-2\).  Every component
+has at least \(d+1\) vertices, so \(X\) has at most two components.  We use
+the fact that \(E\), being a polynomial in \(A\) and \(J\), commutes with
+\(A\); hence every rational eigenspace of \(E\) is \(A\)-invariant.  We use
+the classification of connected regular graphs of order greater than \(28\)
+and least eigenvalue at least \(-2\): such a graph is a line graph or a
+cocktail-party graph \cite{CameronEtAl1976,KoolenEtAl2025}.
+
+Suppose first that \(X\) is connected.  The complete case would give
+\(E=0\), excluded in Theorem~\ref{thm:integral-slack}.  In the
+cocktail-party case, \(E\) is a perfect matching and \(r=-n\).  The identity
+\[
+ 1296C=(6k+13)(216k^3+396k^2+654k+1175)+277
+\]
+forces \(k=44\) and \(n=14812\).  On the \(7406\)-dimensional
+\((-1)\)-eigenspace of \(E\), the rational operator \(A\) is annihilated by
+\(g_{44}(x)+2\).  This quartic is irreducible modulo \(11\), so that
+dimension must be divisible by four, a contradiction.
+
+If \(X=L(Y)\) and \(Y\) is \(q\)-regular, then \(q\ge n/4\) and
+\(|V(Y)|\le8\), contradicting \(q\le |V(Y)|-1\) because \(n\ge38\).
+If \(Y\) is semiregular bipartite with part sizes \(a\ge b\ge2\), then
+\[
+ \frac1a+\frac1b=\frac{n-r}{2n}\ge\frac12,\qquad n\le ab.
+\]
+The cases \(b\ge3\) have \(ab<38\).  For \(b=2\), connectedness forces
+\(Y=K_{a,2}\), hence \(r=-4\).  Equation~\eqref{eq:r-divisibility} leaves
+\(k=158\) and \(n=664748\).  The resulting \((-1)\)-eigenspace of \(E\)
+has dimension \(332373\), whereas \(g_{158}(x)+2\) is irreducible modulo
+\(23\), again a contradiction.
+
+If \(X\) has two components, write their orders as
+\(d+1+a_1\) and \(d+1+a_2\).  Then
+\[
+ a_1+a_2=r+2,
+\]
+so \(r\in\{-2,-1,0\}\).  Checking the divisors in
+\eqref{eq:r-divisibility}, together with \(n\ge k^2+2\) and \(kn\) even,
+leaves only
+\[
+ (r,k,n)=(-1,62,40875).
+\]
+The components then have orders \(20437\) and \(20438\); one is complete
+and the other cocktail-party.  Thus \(E\) has eigenvalue \(-1\) with
+multiplicity \(10219\).  The quartic \(g_{62}(x)+2\) is irreducible modulo
+\(61\), contradicting divisibility of this rational primary component by
+four.  Therefore \(r>0\).
+
+\smallskip
+\noindent\emph{The four-to-one inequality.}
+Assume for contradiction that \(n>4r\), and put \(x=r/n\in(0,1/4)\).
+The \(2\times2\) minors now give \(E_{uv}\le2\).  Suppose
+\(E_{uv}=2\), and for \(w\notin\{u,v\}\) set
+\(s_w=E_{uw}+E_{vw}\).  Cauchy--Schwarz in the Gram matrix
+\(\mathcal S_k\) gives
+\[
+ (1+x-s_w)^2\le x(3+x),
+\]
+so \(s_w\in\{1,2\}\).  The row sums show that exactly \(r\) vertices have
+\(s_w=2\).  A vertex of type
+\((E_{uw},E_{vw})=(2,0)\) or \((0,2)\) would give the negative principal
+minor
+\[
+ \frac{11x-3}{2}<0;
+\]
+hence all \(r\) exceptional vertices have type \((1,1)\).  If two such
+vertices \(w,z\) existed, the corresponding \(4\times4\) determinant would
+be
+\[
+ 3(4x-1),\quad6(3x-1),\quad\text{or}\quad9(2x-1),
+\]
+according as \(E_{wz}=0,1,2\).  Each is negative.  Thus \(r\le1\), while
+\eqref{eq:r-divisibility} excludes \(r=1\).  Consequently \(E\) is simple.
+
+Again \(X=\overline E\) is \(d\)-regular with least eigenvalue at least
+\(-2\).  Three components would imply \(n\le3r+6\), incompatible with
+\(n>4r\), \(r\ge1\), and \(n\ge38\).  If \(X\) is connected and
+\(X=L(Y)\) for a \(q\)-regular graph \(Y\), then
+\[
+ q=\frac{n-r}{4}>\frac{3n}{16},
+ \qquad |V(Y)|=\frac{2n}{q}<\frac{32}{3}.
+\]
+Simplicity leaves only
+\[
+ (q,|V(Y)|;n,r)=(8,10;40,8),\ (9,10;45,9).
+\]
+The radius-two bound forces \(k=6\), and the defining formula for \(r\)
+excludes both cases.
+
+For a semiregular bipartite root with part sizes \(a\ge b\ge2\),
+\[
+ \frac38<\frac1a+\frac1b<\frac12,\qquad n\le ab.
+\]
+The only possibilities have \(b=3\) and
+\[
+ (a,n,r)\in
+ \{(a,3a,a-6):13\le a\le20\}
+ \cup
+ \{(21,42,10),(21,63,15),(22,66,16),(23,69,17)\}.
+\]
+Exact substitution in the formula for \(r\), subject to \(n\ge k^2+2\)
+and \(kn\) even, excludes every entry.
+
+It remains to consider two components.  For \(k=6,7,8\), the inequalities
+\(r>0\) and \(n>4r\) contain no admissible integral order.  For \(k\ge9\),
+both components have order greater than \(28\).  A regular line-graph root
+would have degree greater than \(3n/16\) and order less than seven, which is
+impossible.  For a semiregular bipartite root, component size gives
+\[
+ \frac1a+\frac1b>\frac7{12}.
+\]
+The possible part sizes have \(ab\le22\), smaller than the component order.
+The classification therefore leaves only complete and cocktail-party
+components.  Their respective excesses over \(d+1\) are \(0\) and \(1\), so
+\(a_1+a_2\le2\), contradicting \(a_1+a_2=r+2>2\).
+
+We conclude that \(n\le4r\).  Substituting the definition of \(r\) gives
+\[
+ (48k+109)n\le8(k+2)^2(k^2+3),
+\]
+which is the displayed bound.  All polynomial divisions, modular
+irreducibility certificates, finite line-root cases, and Gram determinants
+in this argument have been independently checked in exact arithmetic.
+\end{proof}
+
 \begin{proposition}[Edge-local cycle bounds]\label{prop:edge-cycle}
 Let \(G\) be connected and \(k\)-regular, of girth at least five and diameter
 three, and suppose
@@ -1191,9 +1383,9 @@ contradicting \(\delta^*=6\).  Diameter two would force equality in the
 Moore bound, hence order \(37\) and adjacency characteristic polynomial
 \((x-6)(x^2+x-5)^{18}\); its root sum is \(-12\), contradicting
 \(\tr A=0\).  Thus the diameter is three, and
-Theorem~\ref{thm:integral-slack} gives
+Theorem~\ref{thm:four-to-one} gives
 \[
- n\le\left\lfloor\frac{8^2\cdot39}{49}\right\rfloor=50.
+ n\le\left\lfloor\frac{8\cdot8^2\cdot39}{397}\right\rfloor=50.
 \]
 
 For an independent local explanation of the excluded boundary, assume
@@ -1208,9 +1400,9 @@ reduction and incidence calculation.
 \end{proof}
 
 \begin{corollary}[Low-degree order windows]\label{cor:low-degree-windows}
-Every regular strict counterexample in the indicated degrees satisfies
+There is no regular strict counterexample of degree at most five.  In degrees
+six through nine, every regular strict counterexample satisfies
 \begin{align*}
-k=5&:\quad n\le30,\\
 k=6&:\quad n\le50,\\
 k=7&:\quad n=50\text{ in diameter two, or }n\le74\text{ in diameter three},\\
 k=8&:\quad n\le108,\\
@@ -1219,59 +1411,30 @@ k=9&:\quad n\le150.
 \end{corollary}
 
 \begin{proof}
-Theorem~\ref{thm:diameter-four} removes diameter four.  The integral bound
-gives, for \(k=5,6,7,8,9\), respectively,
+The degree exclusion is Theorem~\ref{thm:regular-degree-six}, and
+Theorem~\ref{thm:diameter-four} removes diameter four for \(k\le9\).
+For diameter three, Theorem~\ref{thm:four-to-one} gives, for
+\(k=6,7,8,9\), respectively,
 \[
- n\le31,\ 50,\ 76,\ 109,\ 151.
+ n\le50,\ 75,\ 108,\ 150.
 \]
-The equations \(5n=2|E(G)|\) and \(9n=2|E(G)|\) improve the first and last
-bounds to \(30\) and \(150\).  The diameter-two alternatives are determined
-by the Moore multiplicities: only the degree-seven, order-\(50\)
-Hoffman--Singleton case survives.
-
-It remains to exclude \((k,n)=(7,76)\) and \((8,109)\) in diameter three.
-In either case the upper half of the \(2\times2\) estimate in the proof of
-Theorem~\ref{thm:integral-slack} gives
-\[
- h_k+1\le(g_k(A))_{uv}\le h_k+2
- \qquad(u\ne v).
-\]
-Indeed, the respective upper endpoints are
-\[
- \frac{2C_7}{76}-h_7=\frac{1080}{19}<57,
- \qquad
- \frac{2C_8}{109}-h_8=\frac{6860}{109}<63.
-\]
-Hence \(\mathcal E_k\) is the adjacency matrix of a regular graph \(Y\).
-For its complement \(X\),
-\[
- A(X)=(h_k+2)J-2I-g_k(A),\qquad
- \lambda_{\min}(A(X))\ge-2.
-\]
-The parameters of \(X\) are
-\[
- (|V(X)|,d_X)=(76,42)\quad\text{or}\quad(109,56).
-\]
-In both cases \(d_X>(|V(X)|-2)/2\), so \(X\) is connected.  The
-Cameron--Goethals--Seidel--Shult classification
-\cite{CameronEtAl1976,KoolenEtAl2025} now implies that \(X\) is a line graph
-or a cocktail-party graph.  Its degree is not \(|V(X)|-2\), so the latter is
-impossible.
-
-Write \(X=L(Z)\).  Since \(X\) is regular and connected, the degree sum across
-every edge of \(Z\) is constant; hence \(Z\) is regular or semiregular
-bipartite.  For \((76,42)\), a regular root would have degree \(22\), but
-\[
- |V(Z)|=\frac{2\cdot76}{22}=\frac{76}{11}\notin\mathbb Z.
-\]
-A semiregular bipartite root would require two divisors of \(76\) summing to
-\(44\), and no such pair exists.  For \((109,56)\), a regular root would
-have degree \(29\), but \(29\nmid218\); a semiregular root would require two
-divisors of the prime \(109\) summing to \(58\), again impossible.  Therefore
-\(n\ne76,109\).  Since \(7n\) is even, the degree-seven diameter-three bound
-improves to \(74\).  All arithmetic after the cited classification theorem has
-also been checked exactly.
+Since \(7n=2|E(G)|\), the degree-seven bound improves to \(74\).  The
+diameter-two alternatives are determined by the Moore multiplicities: only
+the degree-seven, order-\(50\) Hoffman--Singleton case survives.
 \end{proof}
+
+For comparison, the unadjusted diameter-three bounds in degrees \(6\) through
+\(20\) are
+\[
+\begin{array}{c|rrrrrrrrrrrrrrr}
+ k&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20\\
+ \hline
+ n&50&75&108&150&201&263&336&422&521&635&765&911&1075&1257&1459.
+\end{array}
+\]
+When \(k\) is odd, \(kn=2|E(G)|\) requires \(n\) to be even; in particular,
+the entries for \(k=7,11,15,17,19\) improve to
+\(74,262,634,910,1256\), respectively.
 
 \subsection{Necessary structure at order fifty}
 
@@ -2026,9 +2189,10 @@ formalize the trace interpretation of the \(F_i(A)\), the girth-five
 vanishing and nonnegativity statements, the spectral trace decomposition, or
 the passage from the analytic LP inequality to graph-order bounds.
 Consequently the graph conclusions \(n<B_k\), the degree-six reductions
-\(n\le51\) and \(n\le50\), the integral optimal-slack theorem, the sharper
-low-degree windows, and the local Gram hierarchy remain conventional analytic
-proofs, with exact executable audits where cited.  The punctured-Moore
+\(n\le51\) and \(n\le50\), the integral optimal-slack theorem, the
+four-to-one excess bound, the sharper low-degree windows, and the local Gram
+hierarchy remain conventional analytic proofs, with exact executable audits
+where cited.  The punctured-Moore
 spectra, the general deletion-stability inequality, the small-puncture normal
 form, the uniform Gram bound, and the Hoffman--Singleton deletion-radius
 theorem are likewise analytic results supported by exact Python audits; they

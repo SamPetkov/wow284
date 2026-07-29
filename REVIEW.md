@@ -74,12 +74,21 @@ conventional analytic proofs supported by exact computation.
 The v2.3 extension was reviewed separately. Its optimal-slack matrix is
 positive semidefinite by the strict shifted spectral window; the
 irreducibility argument excludes vanishing integral excess for every integral
-degree; and the resulting universal order bound is exact at the stated
-rounding. The degree-seven and degree-eight refinements use the classical
+degree.  A second audit proves that the excess parameter is positive and that
+the graph order is at most four times that parameter, yielding
+\[
+n\le\left\lfloor
+\frac{8(k+2)^2(k^2+3)}{48k+109}
+\right\rfloor.
+\]
+The proof combines small positive-semidefinite minors with the classical
 Cameron--Goethals--Seidel--Shult classification of connected regular graphs
-with least eigenvalue at least `-2`; all line-graph-root arithmetic after that
-external theorem is checked exactly. These extensions remain analytic and are
-not included in the Lean LP claim.
+with least eigenvalue at least `-2`.  All polynomial divisions, modular
+irreducibility certificates, Gram determinants, and finite line-graph-root
+cases after that external theorem were checked exactly. The original
+\(k=62\) modular certificate was corrected from modulus \(23\) to modulus
+\(61\) before integration. These extensions remain analytic and are not
+included in the Lean LP claim.
 
 ## General Moore-graph audit
 

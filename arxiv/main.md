@@ -70,23 +70,23 @@ Our main conclusions are as follows.
   ```
   with a unique optimizer up to positive scaling; see Theorem <a href="#thm:lp-ceiling" data-reference-type="ref" data-reference="thm:lp-ceiling">16</a>.
 
-- The optimizer defines one positive-semidefinite slack matrix. Its trace is the LP defect, while integrality gives
+- The optimizer defines one positive-semidefinite slack matrix. Its trace is the LP defect. Its integral excess satisfies a four-to-one quantization inequality, giving
   ``` math
   n\le\left\lfloor
-   \frac{(k+2)^2(k^2+3)}{6(k+2)+1}
+   \frac{8(k+2)^2(k^2+3)}{48k+109}
    \right\rfloor;
   ```
-  see Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a>. Its $`2\times2`$ minors yield a general cycle-divisibility sieve and the local order-$`51`$ contradiction
+  see Theorems <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a> and <a href="#thm:four-to-one" data-reference-type="ref" data-reference="thm:four-to-one">18</a>. Its $`2\times2`$ minors yield a general cycle-divisibility sieve and the local order-$`51`$ contradiction
   ``` math
   5N_5=153\cdot11=1683,
   ```
-  while the next integral level gives the sharper degree-$`7,8,9`$ order windows $`74,108,150`$; see Corollary <a href="#cor:low-degree-windows" data-reference-type="ref" data-reference="cor:low-degree-windows">21</a>.
+  while the global theorem gives the degree-$`7,8,9`$ order windows $`74,108,150`$; see Corollary <a href="#cor:low-degree-windows" data-reference-type="ref" data-reference="cor:low-degree-windows">22</a>.
 
 - One-vertex, adjacent-pair, and nonadjacent-pair deletions of Moore graphs admit exact invariant-subspace decompositions for their recomputed distance matrices; see Section <a href="#sec:punctures" data-reference-type="ref" data-reference="sec:punctures">7</a>.
 
-- Every deletion of at most five vertices from the Hoffman–Singleton graph remains a strict counterexample, and this universal radius is sharp; see Theorem <a href="#thm:hs-radius" data-reference-type="ref" data-reference="thm:hs-radius">30</a>.
+- Every deletion of at most five vertices from the Hoffman–Singleton graph remains a strict counterexample, and this universal radius is sharp; see Theorem <a href="#thm:hs-radius" data-reference-type="ref" data-reference="thm:hs-radius">31</a>.
 
-The proofs form two complementary hierarchies. In the obstruction direction, the distance-polynomial identity converts WOW-284 into a shifted adjacency window; scalar trace moments give the one-point LP ceiling; integrality of the optimal slack matrix strengthens the order bound; $`2\times2`$ principal minors localize that certificate to edge–cycle counts; and $`3\times3`$ minors impose the two-path constraints at order fifty. In the stability direction, deleting vertices from a Moore graph produces an incidence-Gram correction to the distance matrix and a configuration-sensitive perturbation bound. Invariant-subspace decompositions then give exact puncture spectra, while orbitwise positive-definiteness certificates determine the sharp Hoffman–Singleton deletion radius.
+The proofs form two complementary hierarchies. In the obstruction direction, the distance-polynomial identity converts WOW-284 into a shifted adjacency window; scalar trace moments give the one-point LP ceiling; integrality of the optimal slack matrix strengthens the order bound; graph realizability and small Gram minors quantize the remaining excess into the four-to-one bound; edge-local $`2\times2`$ minors convert the same certificate into cycle counts; and $`3\times3`$ minors impose the two-path constraints at order fifty. In the stability direction, deleting vertices from a Moore graph produces an incidence-Gram correction to the distance matrix and a configuration-sensitive perturbation bound. Invariant-subspace decompositions then give exact puncture spectra, while orbitwise positive-definiteness certificates determine the sharp Hoffman–Singleton deletion radius.
 
 The distance-polynomial viewpoint is established in the theory of minimal cages, distance-polynomial graphs, and spectral excess ([Howlader and Panigrahi 2022](#ref-HowladerPanigrahi2022); [Fiol 2016](#ref-Fiol2016)). Nonbacktracking linear-programming bounds are due to Nozaki and related spectral-Moore work ([Nozaki 2015](#ref-Nozaki2015); [Cioabă et al. 2016](#ref-CioabaEtAl2016)). Our contribution is the specialization to the two-sided WOW window, the exact method ceiling, the integral optimal-slack hierarchy, the edge-local cycle certificate, and the deletion theory developed below. Completed in its original counterexample form on 19 July 2026, this work is, to the author’s knowledge, the first proof that WOW-284 is false and the first Lean formalization of such a refutation. We do not claim that order $`38`$ is minimum or that the constructions classify all counterexamples. The literature boundaries are returned to in Section <a href="#sec:scope" data-reference-type="ref" data-reference="sec:scope">11</a>.
 
@@ -764,9 +764,145 @@ Hence $`n-1=4m=2k/3`$, contradicting $`n\ge k+1`$. Thus $`\mathcal E_k\ne0`$. It
 
 The trace of $`\mathcal S_k`$ is the one-variable LP defect. Its $`2\times2`$ principal minors give integral local restrictions, and larger principal minors form a canonical semidefinite hierarchy. We retain the edge-local argument below because it exposes the cycle-count obstruction hidden by the stronger global order bound.
 
+<div id="thm:four-to-one" class="theorem">
+
+**Theorem 18** (Four-to-one excess bound). *Under the hypotheses of Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a>, assume $`k\ge6`$ and write $`\varepsilon=\varepsilon_{k,n}`$. The integral parameter
+``` math
+r=2\varepsilon-n-2
+   =2(k+2)^2(k^2+3)-(12k+27)n
+```
+satisfies
+``` math
+r>0,\qquad n\le4r.
+```
+Consequently
+``` math
+\boxed{
+ n\le\left\lfloor
+ \frac{8(k+2)^2(k^2+3)}{48k+109}
+ \right\rfloor.
+ }
+```*
+
+</div>
+
+<div class="proof">
+
+*Proof.* Put $`E=\mathcal E_k`$, $`C=C_k`$, $`h=h_k`$, and
+``` math
+\rho=\frac{\varepsilon-1}{n}
+      =\frac{1+r/n}{2}.
+```
+The optimal slack matrix has the form
+``` math
+\mathcal S_k=I-E+\rho J\succeq0.
+```
+We first record the divisibility identity
+``` math
+128(2C-r)
+ =(4k+9)(64k^3+112k^2+196k+327)+(129-128r).
+```
+Since $`n=(2C-r)/(12k+27)`$ is integral and $`4k+9`$ is odd,
+``` math
+\begin{equation}
+\label{eq:r-divisibility}
+ 4k+9\mid129-128r.
+\end{equation}
+```
+
+*Positivity of $`r`$.* Suppose $`r\le0`$. A $`2\times2`$ principal minor of $`\mathcal S_k`$ gives
+``` math
+E_{uv}\le2+\frac rn\qquad(u\ne v).
+```
+Thus $`E`$ is the adjacency matrix of a simple graph when $`r<0`$. If $`r=0`$ and $`E_{uv}=2`$, positivity puts $`e_u+e_v`$ in $`\ker\mathcal S_k`$. After subtracting its projection onto $`\mathbf 1`$, the strict spectral window gives a $`(-2)`$-eigenvector of $`A`$. Its $`u`$-coordinate would require
+``` math
+A_{uv}=-2+\frac{2k+4}{n},
+```
+which is impossible because $`n\ge k^2+2`$ and $`A_{uv}\in\{0,1\}`$. Hence $`E`$ is simple also when $`r=0`$.
+
+Let $`X=\overline E`$. It is regular of degree
+``` math
+d=n-1-\varepsilon=\frac{n-r-4}{2},
+```
+and $`A(X)=-I-E+J`$ has least eigenvalue at least $`-2`$. Every component has at least $`d+1`$ vertices, so $`X`$ has at most two components. We use the fact that $`E`$, being a polynomial in $`A`$ and $`J`$, commutes with $`A`$; hence every rational eigenspace of $`E`$ is $`A`$-invariant. We use the classification of connected regular graphs of order greater than $`28`$ and least eigenvalue at least $`-2`$: such a graph is a line graph or a cocktail-party graph ([Cameron et al. 1976](#ref-CameronEtAl1976); [Koolen et al. 2025](#ref-KoolenEtAl2025)).
+
+Suppose first that $`X`$ is connected. The complete case would give $`E=0`$, excluded in Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a>. In the cocktail-party case, $`E`$ is a perfect matching and $`r=-n`$. The identity
+``` math
+1296C=(6k+13)(216k^3+396k^2+654k+1175)+277
+```
+forces $`k=44`$ and $`n=14812`$. On the $`7406`$-dimensional $`(-1)`$-eigenspace of $`E`$, the rational operator $`A`$ is annihilated by $`g_{44}(x)+2`$. This quartic is irreducible modulo $`11`$, so that dimension must be divisible by four, a contradiction.
+
+If $`X=L(Y)`$ and $`Y`$ is $`q`$-regular, then $`q\ge n/4`$ and $`|V(Y)|\le8`$, contradicting $`q\le |V(Y)|-1`$ because $`n\ge38`$. If $`Y`$ is semiregular bipartite with part sizes $`a\ge b\ge2`$, then
+``` math
+\frac1a+\frac1b=\frac{n-r}{2n}\ge\frac12,\qquad n\le ab.
+```
+The cases $`b\ge3`$ have $`ab<38`$. For $`b=2`$, connectedness forces $`Y=K_{a,2}`$, hence $`r=-4`$. Equation <a href="#eq:r-divisibility" data-reference-type="eqref" data-reference="eq:r-divisibility">[eq:r-divisibility]</a> leaves $`k=158`$ and $`n=664748`$. The resulting $`(-1)`$-eigenspace of $`E`$ has dimension $`332373`$, whereas $`g_{158}(x)+2`$ is irreducible modulo $`23`$, again a contradiction.
+
+If $`X`$ has two components, write their orders as $`d+1+a_1`$ and $`d+1+a_2`$. Then
+``` math
+a_1+a_2=r+2,
+```
+so $`r\in\{-2,-1,0\}`$. Checking the divisors in <a href="#eq:r-divisibility" data-reference-type="eqref" data-reference="eq:r-divisibility">[eq:r-divisibility]</a>, together with $`n\ge k^2+2`$ and $`kn`$ even, leaves only
+``` math
+(r,k,n)=(-1,62,40875).
+```
+The components then have orders $`20437`$ and $`20438`$; one is complete and the other cocktail-party. Thus $`E`$ has eigenvalue $`-1`$ with multiplicity $`10219`$. The quartic $`g_{62}(x)+2`$ is irreducible modulo $`61`$, contradicting divisibility of this rational primary component by four. Therefore $`r>0`$.
+
+*The four-to-one inequality.* Assume for contradiction that $`n>4r`$, and put $`x=r/n\in(0,1/4)`$. The $`2\times2`$ minors now give $`E_{uv}\le2`$. Suppose $`E_{uv}=2`$, and for $`w\notin\{u,v\}`$ set $`s_w=E_{uw}+E_{vw}`$. Cauchy–Schwarz in the Gram matrix $`\mathcal S_k`$ gives
+``` math
+(1+x-s_w)^2\le x(3+x),
+```
+so $`s_w\in\{1,2\}`$. The row sums show that exactly $`r`$ vertices have $`s_w=2`$. A vertex of type $`(E_{uw},E_{vw})=(2,0)`$ or $`(0,2)`$ would give the negative principal minor
+``` math
+\frac{11x-3}{2}<0;
+```
+hence all $`r`$ exceptional vertices have type $`(1,1)`$. If two such vertices $`w,z`$ existed, the corresponding $`4\times4`$ determinant would be
+``` math
+3(4x-1),\quad6(3x-1),\quad\text{or}\quad9(2x-1),
+```
+according as $`E_{wz}=0,1,2`$. Each is negative. Thus $`r\le1`$, while <a href="#eq:r-divisibility" data-reference-type="eqref" data-reference="eq:r-divisibility">[eq:r-divisibility]</a> excludes $`r=1`$. Consequently $`E`$ is simple.
+
+Again $`X=\overline E`$ is $`d`$-regular with least eigenvalue at least $`-2`$. Three components would imply $`n\le3r+6`$, incompatible with $`n>4r`$, $`r\ge1`$, and $`n\ge38`$. If $`X`$ is connected and $`X=L(Y)`$ for a $`q`$-regular graph $`Y`$, then
+``` math
+q=\frac{n-r}{4}>\frac{3n}{16},
+ \qquad |V(Y)|=\frac{2n}{q}<\frac{32}{3}.
+```
+Simplicity leaves only
+``` math
+(q,|V(Y)|;n,r)=(8,10;40,8),\ (9,10;45,9).
+```
+The radius-two bound forces $`k=6`$, and the defining formula for $`r`$ excludes both cases.
+
+For a semiregular bipartite root with part sizes $`a\ge b\ge2`$,
+``` math
+\frac38<\frac1a+\frac1b<\frac12,\qquad n\le ab.
+```
+The only possibilities have $`b=3`$ and
+``` math
+(a,n,r)\in
+ \{(a,3a,a-6):13\le a\le20\}
+ \cup
+ \{(21,42,10),(21,63,15),(22,66,16),(23,69,17)\}.
+```
+Exact substitution in the formula for $`r`$, subject to $`n\ge k^2+2`$ and $`kn`$ even, excludes every entry.
+
+It remains to consider two components. For $`k=6,7,8`$, the inequalities $`r>0`$ and $`n>4r`$ contain no admissible integral order. For $`k\ge9`$, both components have order greater than $`28`$. A regular line-graph root would have degree greater than $`3n/16`$ and order less than seven, which is impossible. For a semiregular bipartite root, component size gives
+``` math
+\frac1a+\frac1b>\frac7{12}.
+```
+The possible part sizes have $`ab\le22`$, smaller than the component order. The classification therefore leaves only complete and cocktail-party components. Their respective excesses over $`d+1`$ are $`0`$ and $`1`$, so $`a_1+a_2\le2`$, contradicting $`a_1+a_2=r+2>2`$.
+
+We conclude that $`n\le4r`$. Substituting the definition of $`r`$ gives
+``` math
+(48k+109)n\le8(k+2)^2(k^2+3),
+```
+which is the displayed bound. All polynomial divisions, modular irreducibility certificates, finite line-root cases, and Gram determinants in this argument have been independently checked in exact arithmetic. ◻
+
+</div>
+
 <div id="prop:edge-cycle" class="proposition">
 
-**Proposition 18** (Edge-local cycle bounds). *Let $`G`$ be connected and $`k`$-regular, of girth at least five and diameter three, and suppose
+**Proposition 19** (Edge-local cycle bounds). *Let $`G`$ be connected and $`k`$-regular, of girth at least five and diameter three, and suppose
 ``` math
 |\theta+1|\le\sqrt{2k-2}
  \qquad(\theta\ne k)
@@ -824,7 +960,7 @@ Inclusion–exclusion and $`n=k^2+1+c`$ now give $`\sigma_{uv}\ge(k-1)^2-c`$. Th
 
 <div id="cor:edge-cycle-sieve" class="corollary">
 
-**Corollary 19** (Edge–cycle divisibility sieve). *Under the hypotheses of Proposition <a href="#prop:edge-cycle" data-reference-type="ref" data-reference="prop:edge-cycle">18</a>, put
+**Corollary 20** (Edge–cycle divisibility sieve). *Under the hypotheses of Proposition <a href="#prop:edge-cycle" data-reference-type="ref" data-reference="prop:edge-cycle">19</a>, put
 ``` math
 L_{k,n}=\max\{2k-2,\;2k^2-2k+2-n\},
  \qquad
@@ -843,7 +979,7 @@ If both sides equal an integer $`s`$, then every edge of $`G`$ lies in exactly $
 
 <div class="proof">
 
-*Proof.* Writing $`n=k^2+1+c`$, the two lower bounds in Proposition <a href="#prop:edge-cycle" data-reference-type="ref" data-reference="prop:edge-cycle">18</a> combine to
+*Proof.* Writing $`n=k^2+1+c`$, the two lower bounds in Proposition <a href="#prop:edge-cycle" data-reference-type="ref" data-reference="prop:edge-cycle">19</a> combine to
 ``` math
 \sigma_{uv}\ge
  \max\{2k-2,(k-1)^2-c\}=L_{k,n},
@@ -859,7 +995,7 @@ which proves the divisibility condition. ◻
 
 <div id="thm:degree-six-fifty" class="theorem">
 
-**Theorem 20**. *Every connected $`6`$-regular strict counterexample to WOW-284 has order at most $`50`$.*
+**Theorem 21**. *Every connected $`6`$-regular strict counterexample to WOW-284 has order at most $`50`$.*
 
 </div>
 
@@ -869,12 +1005,12 @@ which proves the divisibility condition. ◻
 ``` math
 \frac{204-81d}{15}\le-8,
 ```
-contradicting $`\delta^*=6`$. Diameter two would force equality in the Moore bound, hence order $`37`$ and adjacency characteristic polynomial $`(x-6)(x^2+x-5)^{18}`$; its root sum is $`-12`$, contradicting $`\operatorname{tr}A=0`$. Thus the diameter is three, and Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a> gives
+contradicting $`\delta^*=6`$. Diameter two would force equality in the Moore bound, hence order $`37`$ and adjacency characteristic polynomial $`(x-6)(x^2+x-5)^{18}`$; its root sum is $`-12`$, contradicting $`\operatorname{tr}A=0`$. Thus the diameter is three, and Theorem <a href="#thm:four-to-one" data-reference-type="ref" data-reference="thm:four-to-one">18</a> gives
 ``` math
-n\le\left\lfloor\frac{8^2\cdot39}{49}\right\rfloor=50.
+n\le\left\lfloor\frac{8\cdot8^2\cdot39}{397}\right\rfloor=50.
 ```
 
-For an independent local explanation of the excluded boundary, assume $`n=51`$. Corollary <a href="#cor:edge-cycle-sieve" data-reference-type="ref" data-reference="cor:edge-cycle-sieve">19</a> has $`\lceil L_{6,51}\rceil=\lfloor U_{6,51}\rfloor=11`$, and hence requires
+For an independent local explanation of the excluded boundary, assume $`n=51`$. Corollary <a href="#cor:edge-cycle-sieve" data-reference-type="ref" data-reference="cor:edge-cycle-sieve">20</a> has $`\lceil L_{6,51}\rceil=\lfloor U_{6,51}\rfloor=11`$, and hence requires
 ``` math
 5N_5=153\cdot11=1683,
  \qquad 5\nmid 1683,
@@ -885,10 +1021,9 @@ which is impossible. An independent exact audit verifies the full diameter reduc
 
 <div id="cor:low-degree-windows" class="corollary">
 
-**Corollary 21** (Low-degree order windows). *Every regular strict counterexample in the indicated degrees satisfies
+**Corollary 22** (Low-degree order windows). *There is no regular strict counterexample of degree at most five. In degrees six through nine, every regular strict counterexample satisfies
 ``` math
 \begin{align*}
-k=5&:\quad n\le30,\\
 k=6&:\quad n\le50,\\
 k=7&:\quad n=50\text{ in diameter two, or }n\le74\text{ in diameter three},\\
 k=8&:\quad n\le108,\\
@@ -900,41 +1035,23 @@ k=9&:\quad n\le150.
 
 <div class="proof">
 
-*Proof.* Theorem <a href="#thm:diameter-four" data-reference-type="ref" data-reference="thm:diameter-four">12</a> removes diameter four. The integral bound gives, for $`k=5,6,7,8,9`$, respectively,
+*Proof.* The degree exclusion is Theorem <a href="#thm:regular-degree-six" data-reference-type="ref" data-reference="thm:regular-degree-six">10</a>, and Theorem <a href="#thm:diameter-four" data-reference-type="ref" data-reference="thm:diameter-four">12</a> removes diameter four for $`k\le9`$. For diameter three, Theorem <a href="#thm:four-to-one" data-reference-type="ref" data-reference="thm:four-to-one">18</a> gives, for $`k=6,7,8,9`$, respectively,
 ``` math
-n\le31,\ 50,\ 76,\ 109,\ 151.
+n\le50,\ 75,\ 108,\ 150.
 ```
-The equations $`5n=2|E(G)|`$ and $`9n=2|E(G)|`$ improve the first and last bounds to $`30`$ and $`150`$. The diameter-two alternatives are determined by the Moore multiplicities: only the degree-seven, order-$`50`$ Hoffman–Singleton case survives.
-
-It remains to exclude $`(k,n)=(7,76)`$ and $`(8,109)`$ in diameter three. In either case the upper half of the $`2\times2`$ estimate in the proof of Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a> gives
-``` math
-h_k+1\le(g_k(A))_{uv}\le h_k+2
- \qquad(u\ne v).
-```
-Indeed, the respective upper endpoints are
-``` math
-\frac{2C_7}{76}-h_7=\frac{1080}{19}<57,
- \qquad
- \frac{2C_8}{109}-h_8=\frac{6860}{109}<63.
-```
-Hence $`\mathcal E_k`$ is the adjacency matrix of a regular graph $`Y`$. For its complement $`X`$,
-``` math
-A(X)=(h_k+2)J-2I-g_k(A),\qquad
- \lambda_{\min}(A(X))\ge-2.
-```
-The parameters of $`X`$ are
-``` math
-(|V(X)|,d_X)=(76,42)\quad\text{or}\quad(109,56).
-```
-In both cases $`d_X>(|V(X)|-2)/2`$, so $`X`$ is connected. The Cameron–Goethals–Seidel–Shult classification ([Cameron et al. 1976](#ref-CameronEtAl1976); [Koolen et al. 2025](#ref-KoolenEtAl2025)) now implies that $`X`$ is a line graph or a cocktail-party graph. Its degree is not $`|V(X)|-2`$, so the latter is impossible.
-
-Write $`X=L(Z)`$. Since $`X`$ is regular and connected, the degree sum across every edge of $`Z`$ is constant; hence $`Z`$ is regular or semiregular bipartite. For $`(76,42)`$, a regular root would have degree $`22`$, but
-``` math
-|V(Z)|=\frac{2\cdot76}{22}=\frac{76}{11}\notin\mathbb Z.
-```
-A semiregular bipartite root would require two divisors of $`76`$ summing to $`44`$, and no such pair exists. For $`(109,56)`$, a regular root would have degree $`29`$, but $`29\nmid218`$; a semiregular root would require two divisors of the prime $`109`$ summing to $`58`$, again impossible. Therefore $`n\ne76,109`$. Since $`7n`$ is even, the degree-seven diameter-three bound improves to $`74`$. All arithmetic after the cited classification theorem has also been checked exactly. ◻
+Since $`7n=2|E(G)|`$, the degree-seven bound improves to $`74`$. The diameter-two alternatives are determined by the Moore multiplicities: only the degree-seven, order-$`50`$ Hoffman–Singleton case survives. ◻
 
 </div>
+
+For comparison, the unadjusted diameter-three bounds in degrees $`6`$ through $`20`$ are
+``` math
+\begin{array}{c|rrrrrrrrrrrrrrr}
+ k&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20\\
+ \hline
+ n&50&75&108&150&201&263&336&422&521&635&765&911&1075&1257&1459.
+\end{array}
+```
+When $`k`$ is odd, $`kn=2|E(G)|`$ requires $`n`$ to be even; in particular, the entries for $`k=7,11,15,17,19`$ improve to $`74,262,634,910,1256`$, respectively.
 
 ## Necessary structure at order fifty
 
@@ -942,7 +1059,7 @@ The remaining degree-six boundary is highly constrained, although not yet elimin
 
 <div id="thm:order50-feasibility" class="theorem">
 
-**Theorem 22**. *Let $`G`$ be a connected $`6`$-regular graph of order $`50`$ and girth at least five, and suppose $`\Phi(G)>0`$. Then $`G`$ has diameter three. Every edge lies in $`12`$ or $`13`$ five-cycles. Let $`H`$ be the spanning subgraph of edges of the second type, let $`m=|E(H)|`$, and let $`\tau(v)`$ be the number of five-cycles through $`v`$. Then
+**Theorem 23**. *Let $`G`$ be a connected $`6`$-regular graph of order $`50`$ and girth at least five, and suppose $`\Phi(G)>0`$. Then $`G`$ has diameter three. Every edge lies in $`12`$ or $`13`$ five-cycles. Let $`H`$ be the spanning subgraph of edges of the second type, let $`m=|E(H)|`$, and let $`\tau(v)`$ be the number of five-cycles through $`v`$. Then
 ``` math
 \tau(v)\in\{36,37,38\},
  \qquad d_H(v)=2\tau(v)-72\in\{0,2,4\},
@@ -981,7 +1098,7 @@ Exact enumeration of the resulting coarse degree profiles leaves $`266`$ possibi
 
 <div class="proof">
 
-*Proof.* The diameter reduction used in Theorem <a href="#thm:degree-six-fifty" data-reference-type="ref" data-reference="thm:degree-six-fifty">20</a> applies verbatim: diameter at least four gives a Rayleigh quotient at most $`-8`$, and diameter two gives the trace contradiction from $`(x-6)(x^2+x-5)^{18}`$. Hence the diameter is three. Around a fixed vertex the distance layers have sizes $`1,6,30,13`$. If $`\tau`$ is the number of five-cycles through the centre, the average row quotient is similar to the symmetric compression on normalized layer indicators. Its nonprincipal factor $`q_\tau`$ satisfies
+*Proof.* The diameter reduction used in Theorem <a href="#thm:degree-six-fifty" data-reference-type="ref" data-reference="thm:degree-six-fifty">21</a> applies verbatim: diameter at least four gives a Rayleigh quotient at most $`-8`$, and diameter two gives the trace contradiction from $`(x-6)(x^2+x-5)^{18}`$. Hence the diameter is three. Around a fixed vertex the distance layers have sizes $`1,6,30,13`$. If $`\tau`$ is the number of five-cycles through the centre, the average row quotient is similar to the symmetric compression on normalized layer indicators. Its nonprincipal factor $`q_\tau`$ satisfies
 ``` math
 195q_\tau(-1+\sqrt{10})
  =(-215+56\sqrt{10})\tau+7350-1860\sqrt{10}.
@@ -998,7 +1115,7 @@ For a two-path $`u-v-w`$, girth at least five gives $`(A^3)_{uw}=\alpha_{uvw}`$ 
 
 <div id="rem:signed-root" class="remark">
 
-*Remark 23* (Signed-root Gram formulation). Under the hypotheses of Theorem <a href="#thm:order50-feasibility" data-reference-type="ref" data-reference="thm:order50-feasibility">22</a>, put
+*Remark 24* (Signed-root Gram formulation). Under the hypotheses of Theorem <a href="#thm:order50-feasibility" data-reference-type="ref" data-reference="thm:order50-feasibility">23</a>, put
 ``` math
 T=50J-g_6(A)-2I.
 ```
@@ -1011,7 +1128,7 @@ For vertices $`u,z`$ at distance three, put
 ``` math
 q_{uz}=6(A^3)_{uz}+(A^4)_{uz}.
 ```
-The $`2\times2`$ estimate gives $`q_{uz}\in\{48,49,50,51\}`$, and the kernel argument in Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a> excludes $`48`$. Together with the edge and two-path intervals in Theorem <a href="#thm:order50-feasibility" data-reference-type="ref" data-reference="thm:order50-feasibility">22</a>, this gives
+The $`2\times2`$ estimate gives $`q_{uz}\in\{48,49,50,51\}`$, and the kernel argument in Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">17</a> excludes $`48`$. Together with the edge and two-path intervals in Theorem <a href="#thm:order50-feasibility" data-reference-type="ref" data-reference="thm:order50-feasibility">23</a>, this gives
 ``` math
 T_{uv}\in\{-1,0,1\}\qquad(u\ne v),\qquad T_{uu}=0.
 ```
@@ -1025,7 +1142,7 @@ Let $`M`$ be a degree-$`k`$ Moore graph of diameter two and put $`\Delta=\sqrt{4
 
 <div id="thm:one-puncture" class="theorem">
 
-**Theorem 24** (One deleted vertex). *For $`H=M-v`$,
+**Theorem 25** (One deleted vertex). *For $`H=M-v`$,
 ``` math
 |V(H)|=k^2,
  \qquad \delta^*(H)=k-\frac1k,
@@ -1057,7 +1174,7 @@ which is positive exactly for integers $`k\ge5`$.*
 
 <div id="thm:edge-puncture" class="theorem">
 
-**Theorem 25** (Endpoints of an edge). *Let $`uv\in E(M)`$ and $`H=M-\{u,v\}`$. For $`k\ge3`$,
+**Theorem 26** (Endpoints of an edge). *Let $`uv\in E(M)`$ and $`H=M-\{u,v\}`$. For $`k\ge3`$,
 ``` math
 |V(H)|=k^2-1,
  \qquad \delta^*(H)=k-\frac2k,
@@ -1091,7 +1208,7 @@ which is positive exactly for integers $`k\ge5`$.*
 
 <div class="proof">
 
-*Proof architecture for Theorems <a href="#thm:one-puncture" data-reference-type="ref" data-reference="thm:one-puncture">24</a> and <a href="#thm:edge-puncture" data-reference-type="ref" data-reference="thm:edge-puncture">25</a>.* The displayed dual-degree formulas are the cases $`s=1`$ and $`s=2`$ of Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">28</a>; its proof below is independent of the spectral decompositions. For one deleted vertex, put $`A=N(v)`$, $`B=\Gamma_2(v)`$, let $`C`$ be the $`A`$-by-$`B`$ incidence matrix, and let $`B_0`$ be the adjacency matrix on $`B`$. Only pairs inside $`A`$ lose their unique length-two path. For distinct $`a,a'\in A`$, choose a neighbour $`b\in B`$ of $`a`$. The vertices $`b,a'`$ are nonadjacent, and their unique common neighbour $`c`$ lies in $`B`$: it is not $`v`$, since $`b\not\sim v`$, and it is not in $`A`$, since an edge inside $`A`$ would form a triangle through $`v`$. Hence $`a-b-c-a'`$ is a surviving path, and therefore
+*Proof architecture for Theorems <a href="#thm:one-puncture" data-reference-type="ref" data-reference="thm:one-puncture">25</a> and <a href="#thm:edge-puncture" data-reference-type="ref" data-reference="thm:edge-puncture">26</a>.* The displayed dual-degree formulas are the cases $`s=1`$ and $`s=2`$ of Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">29</a>; its proof below is independent of the spectral decompositions. For one deleted vertex, put $`A=N(v)`$, $`B=\Gamma_2(v)`$, let $`C`$ be the $`A`$-by-$`B`$ incidence matrix, and let $`B_0`$ be the adjacency matrix on $`B`$. Only pairs inside $`A`$ lose their unique length-two path. For distinct $`a,a'\in A`$, choose a neighbour $`b\in B`$ of $`a`$. The vertices $`b,a'`$ are nonadjacent, and their unique common neighbour $`c`$ lies in $`B`$: it is not $`v`$, since $`b\not\sim v`$, and it is not in $`A`$, since an edge inside $`A`$ would form a triangle through $`v`$. Hence $`a-b-c-a'`$ is a surviving path, and therefore
 ``` math
 D(H)=\begin{pmatrix}3(J-I)&2J-C\\2J-C^{\mathsf T}&2(J-I)-B_0\end{pmatrix}.
 ```
@@ -1136,7 +1253,7 @@ Exact quotient normalization, trace-to-multiplicity equations, replacement paths
 
 <div id="thm:nonadjacent-puncture" class="theorem">
 
-**Theorem 26** (Two nonadjacent deleted vertices). *Let $`u,v`$ be nonadjacent vertices of $`M`$, $`k\ge5`$, and put $`H=M-\{u,v\}`$. Define
+**Theorem 27** (Two nonadjacent deleted vertices). *Let $`u,v`$ be nonadjacent vertices of $`M`$, $`k\ge5`$, and put $`H=M-\{u,v\}`$. Define
 ``` math
 \begin{align*}
 R_k(x)={}&x^4+(10-2k^2)x^3+(2k^3-17k^2-2k+36)x^2\\
@@ -1181,11 +1298,11 @@ The constant direction of $`Z`$ has $`T`$-eigenvalue $`k-3`$, the symmetric, ant
 5+4(k-2)+2(k-3)+(k-2)(k-4)=k^2-1.
 ```
 
-The value $`\delta^*(H)=k-2/k`$ is again the $`s=2`$ case of Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">28</a>. For strictness, the distance-increase matrix is the adjacency matrix of two copies of $`K_k`$ meeting in $`w`$, and hence has least eigenvalue
+The value $`\delta^*(H)=k-2/k`$ is again the $`s=2`$ case of Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">29</a>. For strictness, the distance-increase matrix is the adjacency matrix of two copies of $`K_k`$ meeting in $`w`$, and hence has least eigenvalue
 ``` math
 \lambda_{\min}(E_S)=\frac{k-2-\sqrt{k^2+4k-4}}2.
 ```
-Since the parent Moore graph has score $`k-(3+\Delta)/2`$ and deletion lowers the minimum dual degree by $`2/k`$, Proposition <a href="#prop:deletion-stability" data-reference-type="ref" data-reference="prop:deletion-stability">27</a> gives
+Since the parent Moore graph has score $`k-(3+\Delta)/2`$ and deletion lowers the minimum dual degree by $`2/k`$, Proposition <a href="#prop:deletion-stability" data-reference-type="ref" data-reference="prop:deletion-stability">28</a> gives
 ``` math
 \Phi(H)\ge
  \frac{3k-5-\Delta-\sqrt{k^2+4k-4}}2-\frac2k.
@@ -1208,7 +1325,7 @@ The direct-sum decomposition, injectivity, orthogonality, all recomputed distanc
 
 <div id="prop:deletion-stability" class="proposition">
 
-**Proposition 27** (Deletion stability). *Let $`G`$ be connected, $`S\subseteq V(G)`$, and suppose $`H=G-S`$ is connected. Put
+**Proposition 28** (Deletion stability). *Let $`G`$ be connected, $`S\subseteq V(G)`$, and suppose $`H=G-S`$ is connected. Put
 ``` math
 D_0=D(G)[V(H)],
  \qquad E_S=D(H)-D_0,
@@ -1241,7 +1358,7 @@ Principal-submatrix interlacing gives $`\lambda_{\min}(D_0+aI)\ge\gamma`$, and W
 
 <div id="thm:small-puncture" class="theorem">
 
-**Theorem 28** (Small-puncture normal form). *Let $`M`$ be a degree-$`k`$ Moore graph, let $`S\subseteq V(M)`$ have size $`s\le k-1`$, and put $`H=M-S`$. Then $`H`$ is connected, has diameter at most three, and
+**Theorem 29** (Small-puncture normal form). *Let $`M`$ be a degree-$`k`$ Moore graph, let $`S\subseteq V(M)`$ have size $`s\le k-1`$, and put $`H=M-S`$. Then $`H`$ is connected, has diameter at most three, and
 ``` math
 \boxed{\delta^*(H)=k-\frac{s}{k}.}
 ```
@@ -1289,7 +1406,7 @@ provides a surviving vertex $`x`$ at distance two from every deleted vertex. For
 
 <div id="cor:uniform-deletion" class="corollary">
 
-**Corollary 29** (Uniform deletion stability). *Under the hypotheses of Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">28</a>, put
+**Corollary 30** (Uniform deletion stability). *Under the hypotheses of Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">29</a>, put
 ``` math
 t_x=|N_M(x)\cap S|,
  \qquad
@@ -1324,7 +1441,7 @@ vertices is strict. In particular, $`r_7=2`$; for a hypothetical degree-$`57`$ M
 
 <div class="proof">
 
-*Proof.* By Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">28</a>, the distance-increase matrix is
+*Proof.* By Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">29</a>, the distance-increase matrix is
 ``` math
 E_S=BB^{\mathsf T}-\operatorname{diag}(t_x).
 ```
@@ -1332,23 +1449,23 @@ Since $`BB^{\mathsf T}\succeq0`$ and $`\operatorname{diag}(t_x)\preceq\tau(S)I`$
 ``` math
 \Phi(M)=k-\frac{3+\sqrt{4k-3}}2,
 ```
-and Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">28</a> shows that deletion lowers the minimum dual degree by $`s/k`$. Proposition <a href="#prop:deletion-stability" data-reference-type="ref" data-reference="prop:deletion-stability">27</a> now gives the first bound. The second follows from $`\tau(S)\le s`$, and solving its strict scalar inequality for the largest integral $`s`$ gives $`r_k`$. ◻
+and Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">29</a> shows that deletion lowers the minimum dual degree by $`s/k`$. Proposition <a href="#prop:deletion-stability" data-reference-type="ref" data-reference="prop:deletion-stability">28</a> now gives the first bound. The second follows from $`\tau(S)\le s`$, and solving its strict scalar inequality for the largest integral $`s`$ gives $`r_k`$. ◻
 
 </div>
 
 <div id="thm:hs-radius" class="theorem">
 
-**Theorem 30** (Hoffman–Singleton robustness radius). *Let $`M`$ be the Hoffman–Singleton graph. Every induced graph $`M-S`$ with $`|S|\le5`$ is a strict counterexample to WOW-284. This is sharp in the universal sense: there exists a six-vertex set whose deletion is not strict. Hence the universal vertex-deletion robustness radius is exactly five.*
+**Theorem 31** (Hoffman–Singleton robustness radius). *Let $`M`$ be the Hoffman–Singleton graph. Every induced graph $`M-S`$ with $`|S|\le5`$ is a strict counterexample to WOW-284. This is sharp in the universal sense: there exists a six-vertex set whose deletion is not strict. Hence the universal vertex-deletion robustness radius is exactly five.*
 
 </div>
 
 <div class="proof">
 
-*Proof.* Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">28</a> gives
+*Proof.* Theorem <a href="#thm:small-puncture" data-reference-type="ref" data-reference="thm:small-puncture">29</a> gives
 ``` math
 \delta^*(M-S)=\frac{49-|S|}{7}.
 ```
-Corollary <a href="#cor:uniform-deletion" data-reference-type="ref" data-reference="cor:uniform-deletion">29</a> already proves strictness uniformly for $`|S|\le2`$. To obtain the sharp universal radius, two explicitly stored permutations are verified edge-by-edge as automorphisms of the coordinate graph; the group they generate has order $`252000`$. Their orbits on deletion sets of sizes $`0,1,2,3,4,5`$ have counts
+Corollary <a href="#cor:uniform-deletion" data-reference-type="ref" data-reference="cor:uniform-deletion">30</a> already proves strictness uniformly for $`|S|\le2`$. To obtain the sharp universal radius, two explicitly stored permutations are verified edge-by-edge as automorphisms of the coordinate graph; the group they generate has order $`252000`$. Their orbits on deletion sets of sizes $`0,1,2,3,4,5`$ have counts
 ``` math
 1,1,2,4,11,33.
 ```
@@ -1368,7 +1485,7 @@ The resulting graph has $`\delta^*=43/7`$, while an exact $`LDL^{\mathsf T}`$ de
 
 <div class="remark">
 
-*Remark 31*. The theorem asserts that every deletion through size five succeeds and that at least one deletion of size six fails. It does not assert that every six-vertex deletion fails.
+*Remark 32*. The theorem asserts that every deletion through size five succeeds and that at least one deletion of size six fails. It does not assert that every six-vertex deletion fails.
 
 </div>
 
@@ -1376,7 +1493,7 @@ The resulting graph has $`\delta^*=43/7`$, while an exact $`LDL^{\mathsf T}`$ de
 
 <div id="thm:equality-boundary" class="theorem">
 
-**Theorem 32** (Equality boundary). *Let $`G`$ be connected, $`k`$-regular, of girth at least five and diameter three. Then
+**Theorem 33** (Equality boundary). *Let $`G`$ be connected, $`k`$-regular, of girth at least five and diameter three. Then
 ``` math
 \Phi(G)=0
  \quad\Longleftrightarrow\quad
@@ -1413,7 +1530,7 @@ This is a balanced specialization of known finite-field girth-five constructions
 
 <div id="thm:prime-field" class="theorem">
 
-**Theorem 33**. *If $`G(q,m)`$ has diameter three, then it is not a strict counterexample to WOW-284.*
+**Theorem 34**. *If $`G(q,m)`$ has diameter three, then it is not a strict counterexample to WOW-284.*
 
 </div>
 
@@ -1450,7 +1567,7 @@ from the Hoffman–Singleton graph.
 
 <div id="thm:matching-deletions" class="theorem">
 
-**Theorem 34**. *Each deletion produces a connected simple $`6`$-regular graph of order $`50`$, girth five, and diameter four. The $`120`$ labelled graphs form exactly two isomorphism classes. The $`20`$ affine permutations have
+**Theorem 35**. *Each deletion produces a connected simple $`6`$-regular graph of order $`50`$, girth five, and diameter four. The $`120`$ labelled graphs form exactly two isomorphism classes. The $`20`$ affine permutations have
 ``` math
 \lambda_{\min}(D)=-13,
  \qquad \Phi=-7,
@@ -1496,7 +1613,7 @@ B_kc_0\le f(k),
 ```
 The formal development defines the coefficient family of the displayed quartic $`f_*`$, proves that it is admissible and attains equality, and proves that every equality case is its unique positive scalar multiple, both as a polynomial and at coefficient level. The kernel-checked dependency chain includes the nonbacktracking recurrence, the exact primal expansion, positivity and moment identities for the three-point dual certificate, strict slacks in degrees $`5`$ through $`9`$, the Chebyshev tail for every degree at least $`10`$, finite-support weak duality, complementary slackness, and optimizer rigidity.
 
-This LP formalization is deliberately graph-independent. It does not formalize the trace interpretation of the $`F_i(A)`$, the girth-five vanishing and nonnegativity statements, the spectral trace decomposition, or the passage from the analytic LP inequality to graph-order bounds. Consequently the graph conclusions $`n<B_k`$, the degree-six reductions $`n\le51`$ and $`n\le50`$, the integral optimal-slack theorem, the sharper low-degree windows, and the local Gram hierarchy remain conventional analytic proofs, with exact executable audits where cited. The punctured-Moore spectra, the general deletion-stability inequality, the small-puncture normal form, the uniform Gram bound, and the Hoffman–Singleton deletion-radius theorem are likewise analytic results supported by exact Python audits; they are not part of the Lean claim.
+This LP formalization is deliberately graph-independent. It does not formalize the trace interpretation of the $`F_i(A)`$, the girth-five vanishing and nonnegativity statements, the spectral trace decomposition, or the passage from the analytic LP inequality to graph-order bounds. Consequently the graph conclusions $`n<B_k`$, the degree-six reductions $`n\le51`$ and $`n\le50`$, the integral optimal-slack theorem, the four-to-one excess bound, the sharper low-degree windows, and the local Gram hierarchy remain conventional analytic proofs, with exact executable audits where cited. The punctured-Moore spectra, the general deletion-stability inequality, the small-puncture normal form, the uniform Gram bound, and the Hoffman–Singleton deletion-radius theorem are likewise analytic results supported by exact Python audits; they are not part of the Lean claim.
 
 The public Lean development is sorry-free and kernel-checked by Lean 4.31 within the scope stated above.
 

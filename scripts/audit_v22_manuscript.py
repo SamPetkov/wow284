@@ -130,6 +130,7 @@ def main() -> None:
         "thm:diameter-four": "scripts/verify_proof_audit_11_diameter_four.py",
         "thm:lp-ceiling": "scripts/verify_proof_audit_02_two_sided_lp.py",
         "thm:integral-slack": "scripts/verify_integral_optimal_slack_collapse.py",
+        "thm:four-to-one": "scripts/verify_four_to_one_excess_bound.py",
         "thm:degree-six-fifty": "scripts/verify_proof_audit_01_edge_local.py",
         "thm:order50-feasibility": "scripts/verify_proof_audit_06_order50_feasibility.py",
         "thm:one-puncture": "scripts/verify_proof_audit_05_small_moore_punctures.py",
@@ -165,7 +166,7 @@ def main() -> None:
     if (
         r"\newcommand{\resultbox}[1]{\boxed{#1}}" not in tex
         or tex.count(r"\boxed{") != 1
-        or tex.count(r"\resultbox{") != 15
+        or tex.count(r"\resultbox{") != 16
     ):
         raise AssertionError("principal-result box style is not uniform")
     exact_exposition_markers = (
@@ -174,7 +175,9 @@ def main() -> None:
         r"5\nmid 1683",
         r"\int f\,d\mu\le0",
         r"\mathcal E_k=g_k(A)-(h_k+1)J+I",
-        r"\lambda_{\min}(A(X))\ge-2",
+        r"r=2\varepsilon-n-2",
+        r"\frac{8(k+2)^2(k^2+3)}{48k+109}",
+        r"A(X)=-I-E+J",
         r"\det(xI-D(R-v))=P_{39}(x)",
         r"\det(xI-D(R-\{u,v\}))=P_{38}(x)",
     )

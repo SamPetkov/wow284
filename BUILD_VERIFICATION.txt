@@ -16,8 +16,8 @@ PASS  General edge-cycle divisibility sieve, including the degree-six
       order-51 local exclusion.
 PASS  Exact all-degree one-variable nonbacktracking LP optimum and rigidity.
 PASS  Integral optimal-slack excess theorem, universal strengthened order
-      bound, least-eigenvalue-minus-two relation graphs, and sharpened
-      degree-seven through degree-nine windows.
+      bound, four-to-one excess quantization, least-eigenvalue-minus-two
+      relation graphs, and sharpened degree-seven through degree-nine windows.
 PASS  One- and two-vertex punctured-Moore spectra, deletion stability,
       small-puncture normal form, uniform deletion bound, and sharp
       Hoffman--Singleton deletion radius.
@@ -79,6 +79,8 @@ PASS  scripts/verify_optimal_slack_gram_unification.py.
 PASS  scripts/verify_integral_optimal_slack_collapse.py.
 PASS  scripts/verify_optimal_slack_excess_matrix.py.
 PASS  scripts/verify_two_gram_hierarchies.py.
+PASS  scripts/verify_four_to_one_excess_bound.py.
+PASS  scripts/materialize_four_to_one_note.py --check.
 PASS  scripts/sync_manuscript_artifacts.py --check.
 PASS  scripts/validate_repository.py, subject to the exact-tree Lean gate
       above before publication.
@@ -88,7 +90,7 @@ MANUSCRIPT AND PDF
 PASS  Clean multi-pass LaTeX/BibTeX build with no unresolved citations or
       references, no overfull/underfull boxes, and no missing glyphs.
 PASS  PDF metadata carries the expanded v2.3 title and Samuil Petkov as author.
-PASS  PDF page count: 23.
+PASS  PDF page count: 25.
 PASS  A4 paper with the explicit one-inch geometry setting.
 PASS  References begin on a fresh page.
 PASS  Canonical root TeX/Bib, arXiv mirrors, Markdown reading copy, PDF, BBL,
