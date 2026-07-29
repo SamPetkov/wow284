@@ -13,7 +13,7 @@ BIB_PATH = ROOT / "v22" / "references.bib"
 
 EXPECTED_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 EXPECTED_EMAIL = "samuil.petkov@phys.ens.psl.eu"
-EXPECTED_TAG = "v2.2.6"
+EXPECTED_TAG = "v2.2.7"
 
 
 def citation_keys(tex: str) -> list[str]:
@@ -156,7 +156,7 @@ def main() -> None:
     lean_claim_markers = (
         "the analytic LP optimum and rigidity for every integer \\(k\\ge4\\)",
         "proves that it is admissible and attains equality",
-        "both as a polynomial and at coefficient level",
+        "both as polynomials and at coefficient level",
         "This LP formalization is deliberately graph-independent",
         r"the trace interpretation of the \(F_i(A)\)",
         "This is the precise scope of the Lean claims in the paper.",
@@ -201,7 +201,7 @@ def main() -> None:
         "repository_paths_checked": len(paths),
         "theorem_verifier_mappings": len(theorem_verifiers),
     }
-    print("v2.2.6 integrated manuscript audit: PASS")
+    print("v2.2.7 integrated manuscript audit: PASS")
     print(json.dumps(report, indent=2, sort_keys=True))
 
 

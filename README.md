@@ -4,7 +4,7 @@
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
 **Repository revision:** 29 July 2026 (`2026-07-29`); PDF date suppressed<br>
-**Repository status:** v2.2.6 expanded manuscript and reproducibility package
+**Repository status:** v2.2.7 expanded manuscript and reproducibility package
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
@@ -307,7 +307,7 @@ file uses `\date{}` rather than a dynamic `\today`.
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
 This manuscript and source package correspond to GitHub release
-[`v2.2.6`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.6).
+[`v2.2.7`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.7).
 Their contents are identified by `MANIFEST.txt` and `SHA256SUMS`.
 
 Suggested arXiv primary category: `math.CO`. See

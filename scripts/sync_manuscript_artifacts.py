@@ -34,7 +34,7 @@ V22_DIR = ROOT / "v22"
 RELEASE_TITLE = (
     "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 )
-RELEASE_TAG = "v2.2.6"
+RELEASE_TAG = "v2.2.7"
 
 ARXIV_MIRRORS = {
     CANONICAL_TEX: ARXIV_DIR / "main.tex",
@@ -282,7 +282,7 @@ def validate_release_text() -> None:
         r"\label{thm:integral-slack}",
         "the analytic LP optimum and rigidity for every integer \\(k\\ge4\\)",
         "proves that it is admissible and attains equality",
-        "polynomial and at coefficient level",
+        "both as polynomials and at coefficient level",
         "This LP formalization is deliberately graph-independent",
         r"the trace interpretation of the \(F_i(A)\)",
         r"\section{Distance spectra of punctured Moore graphs}",

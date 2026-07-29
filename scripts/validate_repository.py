@@ -13,7 +13,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
 RELEASE_TITLE = "Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
-RELEASE_TAG = "v2.2.6"
+RELEASE_TAG = "v2.2.7"
 
 
 def require(condition: bool, message: str) -> None:
@@ -56,6 +56,7 @@ def main() -> None:
         "RELEASE_NOTES_v2.2.4.md",
         "RELEASE_NOTES_v2.2.5.md",
         "RELEASE_NOTES_v2.2.6.md",
+        "RELEASE_NOTES_v2.2.7.md",
         "SOURCE_LEDGER.md",
         "results/verification.json",
         "results/verification_40.json",
@@ -135,7 +136,7 @@ def main() -> None:
     )
     require(
         rf"\newcommand{{\RepoTag}}{{{RELEASE_TAG}}}" in tex,
-        "v2.2.6 release tag missing",
+        "v2.2.7 release tag missing",
     )
     require("WOW-284 asserts" in tex, "conjecture verb is not the requested wording")
     require(
@@ -203,7 +204,7 @@ def main() -> None:
             "formalized optimizer-attainment claim missing",
         ),
         (
-            "polynomial and at coefficient level",
+            "both as polynomials and at coefficient level",
             "coefficient-level uniqueness claim missing",
         ),
         (
