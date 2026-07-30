@@ -10,6 +10,15 @@ The public site is intended for GitHub Pages at:
 https://sampetkov.github.io/wow284/
 ```
 
+## Presentation
+
+The project pages follow the restrained, document-first layout of David Roe
+and David Turturean's public [GQ2 project](https://roed314.github.io/gq2/):
+Computer Modern prose, a centered paper header, two-column exposition, quiet
+resource cards, and its charcoal-and-green palette. The interactive paper opens
+in dark mode on a reader's first visit while preserving any later theme choice
+made through PreTeXt's readability controls.
+
 ## Source policy
 
 - `../main.tex`, `../references.bib`, and `../main.bbl` remain the canonical

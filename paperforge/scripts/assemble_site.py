@@ -147,6 +147,41 @@ def patch_generated_paper(version: str) -> None:
             stylesheet.write_text(css + addition, encoding="utf-8", newline="\n")
 
 
+def install_dark_first_paper_theme() -> None:
+    """Make dark mode the first-visit default without overriding reader choices."""
+    paper = SITE_OUTPUT / "paper"
+    marker = 'id="wow284-dark-first"'
+    bootstrap = (
+        '<script id="wow284-dark-first">\n'
+        "(function () {\n"
+        "  try {\n"
+        '    if (!localStorage.getItem("wow284-theme-initialized")) {\n'
+        '      if (!localStorage.getItem("theme")) {\n'
+        '        localStorage.setItem("theme", "dark");\n'
+        "      }\n"
+        '      localStorage.setItem("wow284-theme-initialized", "1");\n'
+        "    }\n"
+        "  } catch (error) {\n"
+        '    document.documentElement.classList.add("dark-mode");\n'
+        "  }\n"
+        "}());\n"
+        "</script>"
+    )
+    for html in paper.glob("*.html"):
+        text = html.read_text(encoding="utf-8")
+        if "pretext-core.js" not in text:
+            continue
+        if '<html class="dark-mode"' not in text:
+            text = text.replace("<html ", '<html class="dark-mode" ', 1)
+        if marker not in text:
+            anchor = '<script src="_static/pretext/js/jquery.min.js"></script>'
+            if anchor in text:
+                text = text.replace(anchor, bootstrap + anchor, 1)
+            else:
+                text = text.replace("</head>", bootstrap + "</head>", 1)
+        html.write_text(text, encoding="utf-8", newline="\n")
+
+
 def replace_placeholders(values: dict[str, str]) -> None:
     for path in SITE_OUTPUT.rglob("*.html"):
         text = path.read_text(encoding="utf-8")
@@ -181,6 +216,7 @@ def main() -> None:
 
     version = manuscript_version()
     patch_generated_paper(version)
+    install_dark_first_paper_theme()
 
     source_commit = os.environ.get("SOURCE_COMMIT") or git_value(
         "rev-parse", "HEAD", default="unknown"
