@@ -90,6 +90,12 @@ def check_interactive_paper(paper_html: list[Path]) -> tuple[int, int]:
         raise AssertionError("interactive paper omits the manuscript title")
     if '<h1 class="heading"><a href="paper.html"><span class="title"></span>' in masthead:
         raise AssertionError("interactive paper masthead has a blank title")
+    if '<html class="dark-mode"' not in masthead:
+        raise AssertionError("interactive paper is not dark-first")
+    if 'id="wow284-dark-first"' not in masthead:
+        raise AssertionError("interactive paper omits the persistent theme bootstrap")
+    if 'localStorage.setItem("theme", "dark")' not in masthead:
+        raise AssertionError("interactive paper does not initialize the dark theme")
 
     combined = "\n".join(path.read_text(encoding="utf-8") for path in paper_html)
     raw_macros = [r"\codefile{", r"\datafile{", r"\path{"]
@@ -181,6 +187,17 @@ def main() -> None:
         raise AssertionError("site PDF checksum disagrees with canonical main.pdf")
     if sha256(pdf) != expected_hash:
         raise AssertionError("copied site PDF differs from canonical main.pdf")
+
+    site_css = (SITE / "site.css").read_text(encoding="utf-8")
+    required_theme_tokens = [
+        "color-scheme: dark",
+        "--paper: #16181c",
+        "--accent: #3f9c6b",
+        '"Computer Modern Serif"',
+    ]
+    for token in required_theme_tokens:
+        if token not in site_css:
+            raise AssertionError(f"project site omits the dark GQ2-style theme token: {token}")
 
     links = sum(check_custom_page(page) for page in CUSTOM_PAGES)
     bibliography_entries, source_links = check_interactive_paper(paper_html)
