@@ -102,22 +102,49 @@ def check_interactive_paper(paper_html: list[Path]) -> tuple[int, int]:
 
     if re.search(r">\[bib-[^<]+\]</a>", combined):
         raise AssertionError("bibliography citations display raw xml:id values")
-    bibliography_ids: list[str] = []
-    for path in paper_html:
-        bibliography_ids.extend(re.findall(r'id="bib-([^"]+)"', path.read_text(encoding="utf-8")))
     canonical_keys = re.findall(
         r"\\bibitem(?:\[[^\]]*\])?\{([^}]+)\}",
         (REPOSITORY / "main.bbl").read_text(encoding="utf-8"),
         flags=re.DOTALL,
     )
-    if bibliography_ids != canonical_keys:
+    bibliography_entries: list[tuple[int, str]] = []
+    bibliography_knowls = SITE / "paper" / "knowl" / "xref"
+    for path in sorted(bibliography_knowls.glob("bib-*.html")):
+        key = path.stem.removeprefix("bib-")
+        match = re.search(
+            r'<div class="bibitem">\[(\d+)\]</div>',
+            path.read_text(encoding="utf-8"),
+        )
+        if match is None:
+            raise AssertionError(f"bibliography knowl has no numbered entry: {path.name}")
+        bibliography_entries.append((int(match.group(1)), key))
+    bibliography_entries.sort()
+
+    bibliography_numbers = [number for number, _ in bibliography_entries]
+    expected_numbers = list(range(1, len(canonical_keys) + 1))
+    if bibliography_numbers != expected_numbers:
         raise AssertionError(
-            "interactive bibliography differs from the canonical BBL order: "
-            f"{len(bibliography_ids)} HTML entries versus {len(canonical_keys)} canonical entries; "
-            f"first HTML keys={bibliography_ids[:4]!r}"
+            "interactive bibliography numbering is incomplete or duplicated: "
+            f"HTML numbers={bibliography_numbers!r}"
+        )
+    main_bibliography_numbers = [
+        int(number) for number in re.findall(r'<article class="bib" id="(\d+)">', masthead)
+    ]
+    if main_bibliography_numbers != expected_numbers:
+        raise AssertionError(
+            "interactive paper omits or reorders numbered bibliography entries: "
+            f"HTML numbers={main_bibliography_numbers!r}"
         )
 
-    return len(bibliography_ids), source_links
+    bibliography_keys = [key for _, key in bibliography_entries]
+    if bibliography_keys != canonical_keys:
+        raise AssertionError(
+            "interactive bibliography differs from the canonical BBL order: "
+            f"{len(bibliography_keys)} HTML entries versus {len(canonical_keys)} canonical entries; "
+            f"first HTML keys={bibliography_keys[:4]!r}"
+        )
+
+    return len(bibliography_keys), source_links
 
 
 def main() -> None:

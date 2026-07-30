@@ -19,6 +19,8 @@ https://sampetkov.github.io/wow284/
   bibliography entries. This is an ingestion adapter, not a second manuscript.
 - `source/`, `inputs/`, and `output/` are generated and are never hand-edited.
 - website-only explanations live under `web-assets/site/`.
+- the homepage reserves `#arxiv-link` for the public abstract-page URL; until
+  arXiv assigns an identifier at announcement, it displays a forthcoming notice.
 - the archived PDF copied to the site is `../main.pdf`; Paperforge does not
   replace the arXiv/journal PDF.
 - formalization claims follow `../lean/README.md` and

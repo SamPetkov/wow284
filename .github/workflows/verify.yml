@@ -7,10 +7,6 @@ on:
   pull_request:
   workflow_dispatch:
 
-concurrency:
-  group: exact-manuscript-${{ github.ref }}
-  cancel-in-progress: true
-
 permissions:
   contents: read
 
@@ -82,30 +78,160 @@ jobs:
       - uses: actions/checkout@v4
       - name: Reject proof placeholders and unsafe shortcuts
         run: python scripts/static_lean_audit.py
-      - uses: leanprover/lean-action@v1
+      - name: Build Lean 4.31 and the committed order-38/order-40 development
+        uses: leanprover/lean-action@v1
         with:
           lake-package-directory: lean
-          build-args: Wow284Extension Wow284ExtensionAudit
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Compile order-38 and order-40 public endpoints
+        id: build3840
+        continue-on-error: true
+        shell: bash
+        run: |
+          if (cd lean && lake build Wow284Extension) >/tmp/lean-38-40.log 2>&1; then
+            touch /tmp/lean-38-40-build.ok
+          fi
+      - name: Upload order-38/order-40 Lake build diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-38-40-build-diagnostic
+          path: /tmp/lean-38-40.log
+          if-no-files-found: error
+      - name: Enforce order-38 and order-40 endpoint build
+        if: always()
+        shell: bash
+        run: |
+          if [[ -f /tmp/lean-38-40-build.ok ]]; then
+            tail -n 30 /tmp/lean-38-40.log
+            exit 0
+          fi
+          tail -n 180 /tmp/lean-38-40.log
+          exit 1
+      - name: Report order-38 and order-40 endpoint axioms
+        run: cd lean && lake env lean Wow284ExtensionAudit.lean
 
   lean-39-42:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Reject proof placeholders and unsafe shortcuts
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+          cache-dependency-path: requirements.txt
+      - name: Install exact generator dependency
+        run: python -m pip install -r requirements.txt
+      - name: Check committed generated and standalone Lean sources
+        run: |
+          python scripts/generate_lean39_42.py --check
+          python scripts/generate_lean_standalone.py --check
+      - name: Audit generated source hygiene and import closure
         run: python scripts/static_lean_audit.py
-      - uses: leanprover/lean-action@v1
+      - name: Record generated-source checksums
+        shell: bash
+        run: |
+          find lean/Wow284/Induced39 lean/Wow284/Induced42 \
+            -type f -name '*.lean' -print0 |
+            sort -z |
+            xargs -0 sha256sum > lean/GENERATED_39_42_SHA256SUMS
+          sha256sum lean/Wow284Generated3942.lean \
+            lean/Wow284Generated3942Audit.lean \
+            lean/Wow284Standalone.lean >> lean/GENERATED_39_42_SHA256SUMS
+      - name: Upload exact generated Lean sources
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-39-42-generated-source
+          path: |
+            lean/Wow284/Induced39
+            lean/Wow284/Induced42
+            lean/Wow284Generated3942.lean
+            lean/Wow284Generated3942Audit.lean
+            lean/Wow284Standalone.lean
+            lean/GENERATED_39_42_SHA256SUMS
+          if-no-files-found: error
+      - name: Install Lean 4.31 and restore the Mathlib cache
+        uses: leanprover/lean-action@v1
         with:
           lake-package-directory: lean
-          build-args: Wow284Generated3942 Wow284Generated3942Audit
+          build: true
+          test: false
+          lint: false
+          use-mathlib-cache: true
+      - name: Build order-39 and order-42 dependency graph and public endpoints
+        id: build3942
+        continue-on-error: true
+        shell: bash
+        run: |
+          if (cd lean && lake build Wow284Generated3942) >/tmp/lean-39-42-build.log 2>&1; then
+            touch /tmp/lean-39-42-build.ok
+          fi
+      - name: Upload generated Lake build diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lean-39-42-build-diagnostic
+          path: /tmp/lean-39-42-build.log
+          if-no-files-found: error
+      - name: Enforce generated Lake build
+        if: always()
+        shell: bash
+        run: |
+          if [[ -f /tmp/lean-39-42-build.ok ]]; then
+            tail -n 30 /tmp/lean-39-42-build.log
+            exit 0
+          fi
+          tail -n 180 /tmp/lean-39-42-build.log
+          exit 1
+      - name: Compile the standalone development with warnings fatal
+        run: cd lean && lake env lean -DwarningAsError=true Wow284Standalone.lean
+      - name: Report order-39 and order-42 endpoint axioms
+        run: |
+          cd lean
+          lake env lean Wow284CoreAudit.lean
+          lake env lean Wow284Generated3942Audit.lean
 
   v22-source-export:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.head_ref == 'agent/v2.2-expanded-manuscript'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          ref: ${{ github.ref }}
-          fetch-depth: 0
-          token: ${{ secrets.GITHUB_TOKEN }}
-      - name: Materialize v2.2 source and PDF
+          python-version: "3.13"
+      - name: Materialize expanded source
         run: python scripts/materialize_v22_bootstrap.py
+      - name: Upload materialized source
+        uses: actions/upload-artifact@v4
+        with:
+          name: v22-materialized-source
+          path: v22
+          if-no-files-found: error
+      - name: Install TeX build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y latexmk texlive-latex-base texlive-latex-extra texlive-fonts-recommended poppler-utils
+      - name: Compile expanded source
+        id: compile
+        continue-on-error: true
+        working-directory: v22
+        run: latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+      - name: Upload expanded build diagnostic
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: v22-build-diagnostic
+          path: |
+            v22/main.log
+            v22/main.pdf
+          if-no-files-found: warn
+      - name: Enforce expanded build
+        if: always()
+        run: |
+          if [[ '${{ steps.compile.outcome }}' != 'success' ]]; then
+            tail -n 180 v22/main.log || true
+            exit 1
+          fi
