@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive paper, exact certificates, and Lean formalization for Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284.">
+  <title>WOW-284 — Counterexamples, Spectral Obstructions, and Deletion Stability</title>
+  <link rel="stylesheet" href="site.css">
+  <script>
+    window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }, chtml: { scale: 0.96 } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="shell inner">
+      <a class="brand" href="./"><span class="brand-mark">W</span><span>WOW-284</span></a>
+      <div class="nav-links">
+        <a href="paper/">Paper</a>
+        <a href="paper.pdf">PDF</a>
+        <a href="formalization/">Formalization</a>
+        <a href="reproducibility/">Reproduce</a>
+        <a href="https://github.com/SamPetkov/wow284">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="shell hero">
+      <div>
+        <p class="eyebrow">Distance spectral graph theory · exact and formal verification</p>
+        <h1>Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284</h1>
+        <p class="byline">Samuil Petkov · École normale supérieure, Université PSL</p>
+        <p class="lede">
+          WOW-284 predicted that minimum dual degree is controlled by the least distance eigenvalue in every connected graph of girth at least five. The paper gives exact counterexamples, identifies the shifted adjacency-spectrum mechanism behind the failure, proves structural restrictions on regular counterexamples, and develops a deletion theory for punctured Moore graphs.
+        </p>
+        <div class="actions">
+          <a class="button primary" href="paper/">Read the interactive paper <span aria-hidden="true">→</span></a>
+          <a class="button" href="paper.pdf">Download the PDF</a>
+          <a class="button" href="formalization/">Explore the Lean certificates</a>
+        </div>
+      </div>
+
+      <aside class="graph-card" aria-label="A stylized graph and the regular score identity">
+        <div class="graph-art">
+          <svg viewBox="0 0 320 240" role="img" aria-label="Stylized regular graph">
+            <line x1="160" y1="28" x2="254" y2="66"/><line x1="254" y1="66" x2="286" y2="154"/>
+            <line x1="286" y1="154" x2="220" y2="214"/><line x1="220" y1="214" x2="103" y2="214"/>
+            <line x1="103" y1="214" x2="34" y2="151"/><line x1="34" y1="151" x2="63" y2="65"/>
+            <line x1="63" y1="65" x2="160" y2="28"/><line x1="160" y1="28" x2="220" y2="214"/>
+            <line x1="160" y1="28" x2="103" y2="214"/><line x1="254" y1="66" x2="34" y2="151"/>
+            <line x1="286" y1="154" x2="63" y2="65"/><line x1="103" y1="214" x2="254" y2="66"/>
+            <line x1="34" y1="151" x2="220" y2="214"/><line x1="63" y1="65" x2="286" y2="154"/>
+            <line x1="160" y1="121" x2="160" y2="28"/><line x1="160" y1="121" x2="254" y2="66"/>
+            <line x1="160" y1="121" x2="286" y2="154"/><line x1="160" y1="121" x2="220" y2="214"/>
+            <line x1="160" y1="121" x2="103" y2="214"/><line x1="160" y1="121" x2="34" y2="151"/>
+            <line x1="160" y1="121" x2="63" y2="65"/>
+            <circle cx="160" cy="28" r="10"/><circle cx="254" cy="66" r="10"/>
+            <circle cx="286" cy="154" r="10"/><circle cx="220" cy="214" r="10"/>
+            <circle cx="103" cy="214" r="10"/><circle cx="34" cy="151" r="10"/>
+            <circle cx="63" cy="65" r="10"/><circle class="core" cx="160" cy="121" r="13"/>
+          </svg>
+        </div>
+        <div class="formula">
+          \[\Phi(G)=2k-2-\max_{\theta\ne k}(\theta+1)^2.\]
+        </div>
+      </aside>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-heading">
+          <h2>The result at a glance</h2>
+          <p class="section-intro">
+            The disproof is short; the surrounding structure is not. The paper turns a distance-eigenvalue conjecture into a shifted adjacency-window problem, then studies the global, local, and perturbative consequences of that conversion.
+          </p>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><strong>38</strong><span>smallest explicit counterexample exhibited in the paper; no minimum-order claim</span></div>
+          <div class="metric"><strong>5</strong><span>exact counterexample orders: 38, 39, 40, 42, and 50</span></div>
+          <div class="metric"><strong>6</strong><span>minimum possible degree for a regular strict counterexample</span></div>
+          <div class="metric"><strong>5</strong><span>sharp universal deletion radius for the Hoffman–Singleton graph</span></div>
+        </div>
+
+        <article class="theorem">
+          <div class="label">Central regular mechanism</div>
+          <h3>Diameter three converts WOW-284 into an open shifted spectral window.</h3>
+          <p>For a connected \(k\)-regular graph of girth at least five and diameter three, strict failure is equivalent to every nonprincipal adjacency eigenvalue lying in the interval centered at \(-1\).</p>
+          <div class="display">
+            \[|\theta+1|<\sqrt{2k-2}.\]
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="mechanism">
+      <div class="shell">
+        <div class="section-heading">
+          <h2>One obstruction hierarchy</h2>
+          <p class="section-intro">
+            A single optimal slack operator connects the global linear-programming bound to integral order restrictions and local cycle constraints. The hierarchy explains why simply increasing the degree of the one-variable polynomial cannot settle the remaining graph-realizability questions.
+          </p>
+        </div>
+        <div class="flow">
+          <div class="flow-step"><b>Distance identity</b><span>Rewrite the distance matrix as a polynomial in adjacency.</span></div>
+          <div class="flow-step"><b>Shifted window</b><span>Translate strict failure into \(|\theta+1|<\sqrt{2k-2}\).</span></div>
+          <div class="flow-step"><b>Exact LP</b><span>Find the unique optimal one-variable nonbacktracking certificate.</span></div>
+          <div class="flow-step"><b>Integral excess</b><span>Use graph integrality to strengthen the abstract LP ceiling.</span></div>
+          <div class="flow-step"><b>Principal minors</b><span>Turn the same positive-semidefinite certificate into edge-cycle constraints.</span></div>
+          <div class="flow-step"><b>Signed complement</b><span>Expose the root-system structure at the degree-six order boundary.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contributions">
+      <div class="shell">
+        <div class="section-heading">
+          <h2>What the paper proves</h2>
+          <p class="section-intro">The claims below are deliberately separated by proof mode: analytic arguments, exact finite computations, and Lean kernel-checked certificates.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card"><span class="tag">Counterexamples</span><h3>Five exact orders</h3><p>Explicit strict counterexamples at orders 38, 39, 40, 42, and 50, with exact graph, distance, dual-degree, and spectral certificates.</p></article>
+          <article class="card"><span class="tag">Structure</span><h3>Degree and diameter restrictions</h3><p>Every regular strict counterexample has degree at least six and diameter at most four; diameter four forces degree at least ten.</p></article>
+          <article class="card"><span class="tag">Optimization</span><h3>Exact LP optimum and rigidity</h3><p>The natural one-variable nonbacktracking LP has an exact optimum and a unique optimizer up to positive scale.</p></article>
+          <article class="card"><span class="tag">Integrality</span><h3>Three-to-one quantization</h3><p>The integral excess of the optimal slack matrix yields a strengthened universal order bound and a rigid arithmetic equality case.</p></article>
+          <article class="card"><span class="tag">Local theory</span><h3>Cycle divisibility sieve</h3><p>Two-by-two principal minors localize the spectral certificate into exact constraints on five-cycles through each edge.</p></article>
+          <article class="card"><span class="tag">Punctures</span><h3>Exact Moore deletion spectra</h3><p>One-vertex and two-vertex punctures admit complete invariant-subspace decompositions after distances are recomputed.</p></article>
+          <article class="card"><span class="tag">Stability</span><h3>Uniform deletion bound</h3><p>An incidence-Gram correction separates dual-degree loss from metric damage and gives configuration-sensitive stability estimates.</p></article>
+          <article class="card"><span class="tag">Formal methods</span><h3>Lean and exact replay</h3><p>The 50-vertex graph and selected finite spectra are kernel checked; the all-degree LP optimum and rigidity are formalized separately.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="verification">
+      <div class="shell">
+        <div class="section-heading">
+          <h2>Three verification layers</h2>
+          <p class="section-intro">The website makes the trust boundary visible. A finite verifier is not called a proof of a general theorem, and a matrix certificate is not presented as a full graph-level formalization unless the Lean development actually contains that bridge.</p>
+        </div>
+        <div class="split">
+          <div class="card">
+            <h3>Exact computation</h3>
+            <ul class="checklist">
+              <li>Integer breadth-first-search distance matrices</li>
+              <li>Rational LDLᵀ and positive-definiteness certificates</li>
+              <li>Characteristic polynomials and exact Sturm isolation</li>
+              <li>Finite orbit and deletion-family exhaustion</li>
+              <li>Deterministic source and checksum validation</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>Lean 4.31</h3>
+            <ul class="checklist">
+              <li>Complete 50-vertex coordinate graph and spectral certificate</li>
+              <li>Finite certificates for orders 38, 39, 40, and 42</li>
+              <li>All-degree LP optimum, attainment, and rigidity</li>
+              <li>No <span class="mono">sorry</span>, <span class="mono">admit</span>, unsafe declarations, or project axioms</li>
+              <li>Published axiom reports limited to standard Mathlib foundations</li>
+            </ul>
+          </div>
+        </div>
+        <div class="actions">
+          <a class="button primary" href="formalization/">Formalization guide</a>
+          <a class="button" href="reproducibility/">Reproduction commands</a>
+          <a class="button" href="https://github.com/SamPetkov/wow284/tree/v2.2.8/lean">Browse Lean source</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="cite">
+      <div class="shell">
+        <div class="section-heading">
+          <h2>Cite and inspect</h2>
+          <p class="section-intro">
+            This site is a reading and verification interface. The PDF and deterministic arXiv package remain the archival manuscript artifacts, while the repository records the exact code, formalization scope, and release checks.
+          </p>
+        </div>
+        <div class="card-grid">
+          <article class="card" id="arxiv"><h3>arXiv</h3><p><span id="arxiv-link">Public arXiv link forthcoming after announcement.</span></p></article>
+          <article class="card"><h3>Interactive paper</h3><p><a href="paper/">Read theorem statements and expandable proofs in Paperforge HTML.</a></p></article>
+          <article class="card"><h3>PDF</h3><p><a href="paper.pdf">Download the synchronized 28-page manuscript.</a></p></article>
+          <article class="card"><h3>Machine-readable citation</h3><p><a href="CITATION.cff">Download <span class="mono">CITATION.cff</span>.</a></p></article>
+          <article class="card"><h3>Release source</h3><p><a href="https://github.com/SamPetkov/wow284/releases/tag/v2.2.8">Inspect the immutable v2.2.8 release.</a></p></article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>
+        <strong>WOW-284 Paperforge site</strong><br>
+        Manuscript <span class="mono">{{VERSION}}</span> · source commit <span class="mono">{{COMMIT_SHORT}}</span> · PDF SHA-256 <span class="mono">{{PDF_SHA256_SHORT}}</span>
+      </div>
+      <div>Built with <a href="https://github.com/roed-math/paperforge">Paperforge</a> at <span class="mono">{{PAPERFORGE_SHORT}}</span>.</div>
+    </div>
+  </footer>
+</body>
+</html>

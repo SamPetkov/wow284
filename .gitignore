@@ -15,3 +15,22 @@ __pycache__/
 *.toc
 
 tmp/
+
+# Paperforge-generated and machine-local state
+.cache/
+paperforge/output/
+paperforge/inputs/
+paperforge/source/
+paperforge/xsl/
+paperforge/publication/
+paperforge/content/
+paperforge/crosswalk/
+paperforge/notation/
+paperforge/references/
+paperforge/directives/
+paperforge/project.ptx
+paperforge/.paperforge.local.toml
+paperforge/.gitignore
+paperforge/web-assets/fonts/
+paperforge/web-assets/js/
+paperforge/web-assets/css/

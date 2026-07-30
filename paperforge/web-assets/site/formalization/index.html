@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Scope and entry points for the Lean 4.31 formalization accompanying the WOW-284 paper.">
+  <title>Formalization · WOW-284</title>
+  <link rel="stylesheet" href="../site.css">
+  <script>
+    window.MathJax = { tex: { inlineMath: [['\\(', '\\)']], displayMath: [['\\[', '\\]']] }, chtml: { scale: 0.96 } };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body>
+  <nav class="site-nav">
+    <div class="shell inner">
+      <a class="brand" href="../"><span class="brand-mark">W</span><span>WOW-284</span></a>
+      <div class="nav-links">
+        <a href="../paper/">Paper</a>
+        <a href="../paper.pdf">PDF</a>
+        <a href="./">Formalization</a>
+        <a href="../reproducibility/">Reproduce</a>
+        <a href="https://github.com/SamPetkov/wow284">GitHub</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <header class="page-header prose">
+      <p class="eyebrow">Lean 4.31 · Mathlib 4.31</p>
+      <h1>Formalization guide</h1>
+      <p class="lede">
+        The repository contains three distinct formal layers: a complete graph-level certificate for the 50-vertex Hoffman–Singleton counterexample, finite matrix certificates for the smaller examples, and a graph-independent formalization of the exact nonbacktracking LP optimum and its rigidity. The distinctions below are part of the mathematical claim.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/SamPetkov/wow284/tree/v2.2.8/lean">Browse Lean source</a>
+        <a class="button" href="https://github.com/SamPetkov/wow284/blob/v2.2.8/lean/README.md">Read the full Lean README</a>
+        <a class="button" href="../reproducibility/">Build instructions</a>
+      </div>
+    </header>
+
+    <section class="section prose">
+      <h2>1. Complete 50-vertex development</h2>
+      <p>
+        The default <span class="mono">Wow284</span> library defines the coordinate graph on fifty vertices and checks symmetry, irreflexivity, degree seven, the common-neighbour rule, diameter two, girth five, the adjacency-square and distance identities, and an exact rational diagonalization. The endpoint therefore verifies the least distance eigenvalue and the strict WOW-284 gap at graph level.
+      </p>
+      <div class="card-grid">
+        <article class="card"><span class="tag">Structure</span><h3>Coordinate graph</h3><p><span class="mono">Wow284.Adjacent</span>, <span class="mono">Wow284.degree_seven</span>, and the exhaustive common-neighbour certificate.</p></article>
+        <article class="card"><span class="tag">Spectrum</span><h3>Exact diagonalization</h3><p>The distance spectrum is verified as \(91^{(1)},(-4)^{(28)},1^{(21)}\) using rational matrix identities.</p></article>
+        <article class="card"><span class="tag">Threshold</span><h3>Moore obstruction</h3><p><span class="mono">Wow284.moore_wow_bound_iff</span> formalizes the exact degree threshold in the Moore-graph family.</p></article>
+        <article class="card"><span class="tag">Trust</span><h3>Kernel checks</h3><p>Warnings are fatal; public audits reject proof shortcuts and expose the exact axiom surface.</p></article>
+      </div>
+    </section>
+
+    <section class="section prose">
+      <h2>2. Finite certificates at orders 38, 39, 40, and 42</h2>
+      <p>
+        These endpoints certify explicit finite matrices and exact dual-degree data. The order-40 development includes a complete invertible diagonalization. Orders 38, 39, and 42 use exact shifted positive-definiteness certificates sufficient for strict failure. Their scope is intentionally described as a kernel-checked finite spectral certificate rather than a single end-to-end theorem phrased through Mathlib’s generic graph-distance API.
+      </p>
+      <ul class="checklist">
+        <li><span class="mono">Wow284.Induced38.counterexample_endpoint</span></li>
+        <li><span class="mono">Wow284.Induced39.counterexample_endpoint</span></li>
+        <li><span class="mono">Wow284.Induced40.exact_counterexample_certificate</span></li>
+        <li><span class="mono">Wow284.Induced42.counterexample_endpoint</span></li>
+      </ul>
+      <p><a href="https://github.com/SamPetkov/wow284/blob/v2.2.8/lean/NON50_CERTIFICATES.md">Read the exact claim-by-claim scope for the non-50 certificates.</a></p>
+    </section>
+
+    <section class="section prose">
+      <h2>3. Exact all-degree LP optimum</h2>
+      <p>
+        The separate analytic development formalizes the one-variable, all-degree two-sided nonbacktracking linear program. For every integer \(k\ge4\), it constructs the normalized extremal coefficient family, proves admissibility and attainment, establishes finite-support weak duality and the universal Chebyshev tail, and identifies all equality cases both polynomially and coefficientwise.
+      </p>
+      <article class="theorem">
+        <div class="label">Lean endpoint</div>
+        <h3><span class="mono">Wow284.LP.twoSidedLP_exact_optimum_and_coefficient_rigidity</span></h3>
+        <p>The theorem is graph-independent: it proves the optimization statement but does not formalize the later graph trace bridge, integral-excess theorem, puncture spectra, or deletion theory.</p>
+      </article>
+    </section>
+
+    <section class="section prose">
+      <h2>Trust boundary</h2>
+      <div class="split">
+        <article class="card">
+          <h3>Included in the Lean claim</h3>
+          <ul class="checklist">
+            <li>The explicit fifty-vertex graph and exact spectrum</li>
+            <li>Finite spectral endpoints at orders 38, 39, 40, and 42</li>
+            <li>The nonbacktracking recurrence and exact LP optimum</li>
+            <li>Attainment, weak duality, complementary slackness, and optimizer rigidity</li>
+          </ul>
+        </article>
+        <article class="card">
+          <h3>Proved outside that Lean claim</h3>
+          <ul class="checklist">
+            <li>The graph trace interpretation of the LP polynomials</li>
+            <li>The integral optimal-slack and three-to-one theorems</li>
+            <li>Punctured-Moore spectra and deletion stability</li>
+            <li>Finite Python classifications explicitly identified in the paper</li>
+          </ul>
+        </article>
+      </div>
+      <p>
+        The release-static axiom reports for representative endpoints contain only standard Mathlib foundations such as <span class="mono">propext</span>, <span class="mono">Classical.choice</span>, and <span class="mono">Quot.sound</span>. The public source rejects <span class="mono">sorry</span>, <span class="mono">admit</span>, <span class="mono">native_decide</span>, <span class="mono">bv_decide</span>, unsafe declarations, and project axioms in imported roots.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell footer-grid">
+      <div>Formalization snapshot for manuscript <span class="mono">{{VERSION}}</span> · source <span class="mono">{{COMMIT_SHORT}}</span>.</div>
+      <div><a href="../paper/">Return to the paper</a></div>
+    </div>
+  </footer>
+</body>
+</html>
