@@ -1,4 +1,4 @@
-\begin{thebibliography}{24}
+\begin{thebibliography}{26}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -17,6 +17,13 @@ Mustapha Aouchiche and Pierre Hansen.
 \newblock \emph{Linear Algebra and its Applications}, 458:\penalty0 301--386,
   2014.
 \newblock \doi{10.1016/j.laa.2014.06.010}.
+
+\bibitem[Hoffman and Singleton(1960)]{HoffmanSingleton1960}
+Alan~J. Hoffman and Robert~R. Singleton.
+\newblock On {Moore} graphs with diameters 2 and 3.
+\newblock \emph{IBM Journal of Research and Development}, 4\penalty0
+  (5):\penalty0 497--504, 1960.
+\newblock \doi{10.1147/rd.45.0497}.
 
 \bibitem[Howlader and Panigrahi(2022)]{HowladerPanigrahi2022}
 Aditi Howlader and Pratima Panigrahi.
@@ -128,6 +135,14 @@ Gary Greaves, Jack~H. Koolen, Akihiro Munemasa, Yoshio Sano, and Tetsuji
 \newblock \emph{Journal of Combinatorial Theory, Series B}, 110:\penalty0
   90--111, 2015.
 \newblock \doi{10.1016/j.jctb.2014.07.006}.
+
+\bibitem[Haemers(1995)]{Haemers1995}
+Willem~H. Haemers.
+\newblock Interlacing eigenvalues and graphs.
+\newblock \emph{Linear Algebra and its Applications}, 226--228:\penalty0
+  593--616, 1995.
+\newblock \doi{10.1016/0024-3795(95)00199-2}.
+\newblock URL \url{https://doi.org/10.1016/0024-3795(95)00199-2}.
 
 \bibitem[Smith and Montemanni(2026)]{SmithMontemanni2026}
 Derek~H. Smith and Roberto Montemanni.

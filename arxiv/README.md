@@ -1,20 +1,11 @@
-# WOW-284 arXiv package
+# WOW284 revised v2 manuscript
 
-The upload artifact is `wow284_arxiv_source.zip`. It contains only
-`main.tex`, `references.bib`, and the matching generated `main.bbl`.
+Current checked v2 sources and PDF, prepared 12 October 2026. This is a preparation for an arXiv replacement, not a record of submission.
 
-The `main.tex`, `main.bbl`, `references.bib`, `main.pdf`, and `main.md` files
-in this directory mirror the canonical root artifacts for inspection. The
-mirrored PDF and Markdown are not members of the source ZIP.
+Download [main.pdf](main.pdf) or [WOW284-v2-arxiv-upload.zip](WOW284-v2-arxiv-upload.zip). The legacy archive name wow284_arxiv_source.zip contains the same current package.
 
-Build the unpacked source with:
+The source archive contains main.tex, main.bbl, references.bib and petkov-preprint.sty. Compile with pdflatex (or latexmk -pdf); keep the supplied bibliography. arxiv-abstract.txt and arxiv-comments.txt provide separate metadata.
 
-```text
-pdflatex main.tex
-bibtex main
-pdflatex main.tex
-pdflatex main.tex
-```
+[Previous GitHub manuscript](https://github.com/SamPetkov/wow284/tree/bb7ac2d3ec56bf29374993f0260134f5b05ead4e/arxiv) is preserved in history.
 
-The manuscript uses `\date{}` so the PDF does not carry a stale internal
-version date. arXiv records submission and revision dates separately.
+main.md and root manuscript mirrors are legacy artifacts; use this directory’s current TeX and PDF for v2.
