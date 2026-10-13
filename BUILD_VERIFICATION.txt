@@ -1,4 +1,4 @@
-CURRENT V2 MANUSCRIPT VERIFICATION — 13 OCTOBER 2026
+CURRENT V2 MANUSCRIPT VERIFICATION — 14 OCTOBER 2026
 ===================================================
 
 The current manuscript and upload package are in arxiv/. The root manuscript,
@@ -29,6 +29,14 @@ and individual endpoint axiom output remain unconfirmed in this fresh run.
 Archived source-identified successful compilation is historical evidence;
 do not infer the exact axiom subset of each endpoint without its raw output.
 No unpublished endpoint patch is counted as released.
+
+LATEST RELEASE RECHECK
+Both fresh GPT-6 Pro reports recommend author-managed v2 release within their
+stated coverage. Two local wording/notation edits per paper were checked and
+applied. The exact revised four-file packages compiled without warnings or
+errors. The author waived further Lean reruns and log retrieval; the earlier
+unconfirmed fresh replay is not promoted to completed evidence. No Lean source
+or toolchain was changed and no new kernel run is claimed.
 
 HISTORICAL JULY REPORT — PRESERVED WITH FORMALIZATION SCOPE CORRECTIONS
 ======================================================================
