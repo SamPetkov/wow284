@@ -69,7 +69,7 @@ Universit\'e PSL, Paris, France}
 \begin{abstract}
 The dual degree of a vertex is the average degree of its neighbours. WOW-284 asserts that, for every finite simple connected graph of order at least three and girth at least five, the minimum dual degree is at most minus the least distance eigenvalue. We give exact counterexamples on \(38,39,40,42\), and \(50\) vertices.
 
-For regular graphs, adjacency eigenvalues give order restrictions. Let \(G\) be finite, simple, connected and \(k\)-regular, with girth at least five and integer \(k\ge4\). If every nonprincipal adjacency eigenvalue \(\theta\) satisfies \(|\theta+1|\le\sqrt{2k-2}\), then \(|V(G)|<(k+2)(k^2+3)/6\). No diameter assumption is needed. For regular strict counterexamples of diameter three, we strengthen the bound using integer entries of a polynomial with integer coefficients in the adjacency matrix.
+For regular graphs of girth at least five and diameter three, we express the distance matrix as a polynomial in the adjacency matrix. Strict counterexamples then correspond to an interval condition on adjacency eigenvalues. We also prove an order bound without a diameter assumption: if \(G\) is finite, simple, connected and \(k\)-regular, has girth at least five and integer \(k\ge4\), and every nonprincipal adjacency eigenvalue \(\theta\) satisfies \(|\theta+1|\le\sqrt{2k-2}\), then \(|V(G)|<(k+2)(k^2+3)/6\). For regular strict counterexamples of diameter three, integer entries of the associated slack matrix give stronger restrictions.
 
 Counterexamples can survive vertex deletion. Every deletion of at most five vertices from the Hoffman--Singleton graph remains a strict counterexample; we exhibit a deletion of six vertices for which strictness fails. If a degree-57 Moore graph of diameter two exists, every deletion of at most \(56\) vertices leaves a connected strict counterexample. The arguments combine spectral proofs with exact arithmetic certificates.
 \end{abstract}
@@ -158,88 +158,34 @@ that the constructions classify all counterexamples.
 
 The exact computational certificates and the scope of the Lean verification are described in Appendix~\ref{sec:verification}.
 
-The first five conclusions concern spectral and order restrictions; the last
-two concern deletion stability.
+The paper follows two lines of argument. For regular graphs of diameter
+three, the distance-polynomial identity turns strict failure of WOW-284 into
+an interval condition on the nonprincipal adjacency eigenvalues
+(Theorem~\ref{thm:diameter-three-score}). A polynomial trace bound restricts
+the order. Keeping that polynomial as a matrix gives an integral excess
+matrix; its entries and small positive-semidefinite minors impose stronger
+order and cycle constraints. These lead to the three-to-one bound
+(Theorem~\ref{thm:three-to-one}) and necessary conditions at the unresolved
+degree-six, order-\(50\) boundary. The exact polynomial optimum is proved in
+Section~\ref{sec:lp}. It is an optimum within the stated polynomial class,
+not a claim that the graph-order bound is best possible.
 
-\begin{itemize}
-\item For connected regular graphs of girth at least five and diameter three,
-strict failure of WOW-284 is equivalent to confinement of every nonprincipal
-adjacency eigenvalue to the open interval
-\((-1-\sqrt{2k-2},-1+\sqrt{2k-2})\); see
-Theorem~\ref{thm:diameter-three-score}.
-\item Every regular strict counterexample has degree at least six and diameter
-at most four.  A diameter-four example, if one exists, has degree at least ten;
-see Theorems~\ref{thm:regular-degree-six},~\ref{thm:endpoint-diameter},
-and~\ref{thm:diameter-four}.
-\item The standard one-variable nonbacktracking linear-programming hierarchy
-has exact ceiling
-\[
- B_k=\frac{(k+2)(k^2+3)}6,
-\]
-with a unique optimizer up to positive scaling; see
-Theorem~\ref{thm:lp-ceiling}.
-\item For regular strict counterexamples of diameter three, the optimizer
-defines a positive-semidefinite slack matrix.  Writing
-\[
- r=2(k+2)^2(k^2+3)-(12k+27)n,
-\]
-its integral excess satisfies \(r>0\) and \(n\le3r\), giving
-\[
- n\le\left\lfloor
- \frac{3(k+2)^2(k^2+3)}{18k+41}
- \right\rfloor;
-\]
- see Theorems~\ref{thm:integral-slack} and~\ref{thm:three-to-one}.  Equality
- in the unrounded inequality is arithmetically rigid:
- \[
-  (k,n,r)=(103,185220,61740);
- \]
- see Corollary~\ref{cor:three-to-one-equality}.  The same slack matrix's
-\(2\times2\) minors yield a general cycle-divisibility sieve and the local
-degree-six, order-\(51\) contradiction
-\[
- 5N_5=153\cdot11=1683,
-\]
-where \(N_5\) denotes the number of \(5\)-cycles.  The global theorem gives
-the degree-\(7,8,9\) order windows
-\(74,108,150\); see Corollary~\ref{cor:low-degree-windows}.
-\item At the unresolved degree-six order-\(50\) boundary, the integral
-signed-complement Gram matrix has rank at least \(30\), and its underlying
-signed graph is disconnected; see Proposition~\ref{prop:order50-minus-two}
-and Theorem~\ref{thm:order50-disconnected}.
-\item One-vertex, adjacent-pair, and nonadjacent-pair deletions of Moore graphs
-admit exact invariant-subspace decompositions for their recomputed distance
-matrices; see Section~\ref{sec:punctures}.
-\item Every deletion of at most five vertices from the Hoffman--Singleton graph
-remains a strict counterexample, and this universal radius is sharp; see
-Theorem~\ref{thm:hs-radius}.
-\end{itemize}
+The degree and diameter restrictions narrow the search: every regular strict
+counterexample has degree at least six and diameter at most four, and a
+diameter-four example would have degree at least ten
+(Theorems~\ref{thm:regular-degree-six}, \ref{thm:endpoint-diameter},
+and~\ref{thm:diameter-four}). We give the detailed arithmetic and cycle
+restrictions where they enter the proofs.
 
-For diameter three, under our regularity and girth assumptions, the distance
-matrix is a polynomial in the adjacency matrix.  We can therefore express
-strict failure of WOW-284 as an interval condition on the nonprincipal
-adjacency eigenvalues, then use traces and the one-variable LP to bound
-the order.
-
-To strengthen this bound, we keep the optimal polynomial as a matrix
-identity.  It gives a positive-semidefinite slack matrix with an associated
-integral excess matrix.  The trace gives the scalar bound; individual
-entries and small principal minors impose further conditions.
-Combining these with graph realizability gives the three-to-one bound.
-The edge-local \(2\times2\) minors count cycles, and
-\(3\times3\) minors restrict two-paths at order fifty.
-There we rule out connectedness of the signed complement by deriving a
-contradiction from its signed-root representation.
-
-Deleting vertices can increase the distances between those left behind.
-For a Moore graph, give each surviving vertex a zero-one vector recording
-its neighbours in the deleted set.  Inner products count common deleted
-neighbours, so the Gram matrix of these vectors enters the distance
-correction and gives a bound depending on the deleted set.  With one
-or two deletions, we split the corrected matrix into invariant subspaces
-and diagonalize it exactly.  For Hoffman--Singleton, the bound proves
-strictness up to three deletions.  Exact orbitwise positive-definiteness
-certificates handle four and five, giving the sharp radius.
+The second argument concerns deletion. Deleting vertices can increase the
+distances between those left behind, so taking a principal submatrix of the
+old distance matrix is not enough. For small deletions from a Moore graph,
+we identify exactly which distances increase. This correction gives general
+stability bounds and the exact spectra for one- and two-vertex deletions
+(Section~\ref{sec:punctures}). For Hoffman--Singleton, the bounds prove
+strictness through three deletions; exact orbit certificates handle four
+and five. A six-vertex deletion shows that the universal radius is five
+(Theorem~\ref{thm:hs-radius}).
 
 The analytic arguments are proved below.  The finite classifications and
 matrix certificates require computer assistance; the accompanying release
@@ -441,13 +387,47 @@ O'Keefe and Wong proved minimality, and Wong proved uniqueness
 \cite{OKeefeWong1979,Wong1979}; its realization as a Petersen deletion of the
 Hoffman--Singleton graph also appears in
 \cite[pp.~262--263]{KlinMuzychukZivAv2009}.
-The Moore block identity gives
+Here is a direct derivation of its spectrum. Write \(B\) for the
+adjacency matrix of the deleted Petersen graph, \(A_R=A(R)\), and \(C\)
+for the \(10\times40\) incidence matrix between \(\mathcal P\) and \(R\).
+A vertex of \(R\) has at most one neighbour in \(\mathcal P\): two adjacent
+neighbours would make a triangle, while two nonadjacent Petersen vertices
+already have their unique common neighbour in \(\mathcal P\).
+There are \(10(7-3)=40\) edges between the two parts. Thus each vertex of
+\(R\) has exactly one neighbour in \(\mathcal P\), and \(R\) is \(6\)-regular.
+
+The Petersen identity \(B^2=2I-B+J\) and the blocks of the Moore identity give
 \[
- \Spec A(R)=\{6^{(1)},2^{(18)},1^{(4)},(-2)^{(5)},(-3)^{(12)}\},
+ CC^{\mathsf T}=4I,\qquad
+ A_RC^{\mathsf T}=J_{40,10}-C^{\mathsf T}-C^{\mathsf T}B.
 \]
-and Theorem~\ref{thm:diameter-three-score} below converts it to
+The image of \(C^{\mathsf T}\) therefore has dimension ten. The Petersen
+eigenvalues \(1^{(5)}\) and \((-2)^{(4)}\) give eigenvalues
+\((-2)^{(5)}\) and \(1^{(4)}\) on this image; the constant vector gives
+the eigenvalue \(6\). Its orthogonal complement is \(\ker C\).
+On this \(30\)-dimensional space, the other diagonal block gives
 \[
- \Spec D(R)=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}.
+ A_R^2+A_R-6I=0.
+\]
+Hence its eigenvalues are \(2\) and \(-3\). The dimension and trace
+equations give multiplicities \(18\) and \(12\), respectively. We obtain
+\[
+ \Spec A_R=\{6^{(1)},2^{(18)},1^{(4)},(-2)^{(5)},(-3)^{(12)}\}.
+\]
+
+It remains to check the diameter before applying the distance polynomial.
+Let \(x,y\in V(R)\) be nonadjacent. If their common neighbour in \(M\)
+survives, they remain at distance two. Otherwise they share a deleted
+Petersen neighbour. Choose \(a\in N_R(x)\). Girth five makes \(a,y\)
+nonadjacent, and makes the Petersen neighbour of \(a\) different from that
+of \(y\). Their unique common neighbour therefore lies in \(R\), giving a
+path of length three from \(x\) to \(y\).
+Each deleted vertex has four neighbours in \(R\), so pairs whose common
+neighbour was deleted do occur. Thus \(R\) is connected with diameter three.
+Theorem~\ref{thm:diameter-three-score} now gives
+\[
+ \Spec D(R)=\{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\},
+ \qquad \Phi(R)=1.
 \]
 For the other regular example, the second-subconstituent calculation gives
 \[
@@ -462,22 +442,8 @@ Sturm isolation certifies that it is the least root.  For \(H_{39}\),
 strictness is certified directly: the exact matrix \(6D+35I\) is
 positive definite.  All graph, girth, distance, dual-degree,
 Sturm, and rational \(LDL^{\mathsf T}\) certificates are checked by
-\codefile{scripts/verify_extended.py}.  More explicitly, for every
-\(v\in V(R)\),
-\begin{align*}
-\det(xI-D(R-v))=P_{39}(x):={}&x^9(x+5)^{12}(x^2+6x+3)\\
-&\cdot(x^3+3x^2-15x-7)^2(x^3+3x^2-15x-3)^2\\
-&\cdot(x^4-78x^3+303x^2-70x-450),
-\end{align*}
-whereas for every \(uv\in E(R)\),
-\begin{align*}
-\det(xI-D(R-\{u,v\}))=P_{38}(x):={}&x^4(x-2)(x+5)^8(x^2+6x+2)^2\\
-&\cdot(x^3+3x^2-15x-3)\\
-&\cdot(x^4+5x^3-7x^2-23x-6)\\
-&\cdot(x^5+9x^4+7x^3-77x^2-54x-4)\\
-&\cdot(x^9-67x^8-404x^7+1772x^6+7205x^5\\
-&\hspace{3em}-18489x^4-17018x^3+20288x^2+16824x+1680).
-\end{align*}
+\codefile{scripts/verify_extended.py}.  The characteristic polynomials for the two labelled deletion families are
+recorded in Appendix~\ref{app:small-example-certificates}.
 The labelled deletion families are exhausted by
 \codefile{scripts/verify_descendant_families.py}.  No transitivity or
 numerical root ordering is used.  Fixed graph6, adjacency-list, and edge-list
@@ -717,7 +683,10 @@ Since \(p_{5,6}(11/6)<0\) and \(p_{5,6}(x)\to+\infty\) as
 contradicting the necessary bound \(\theta_2(A)<-1+\sqrt8\).  At \(n=30\),
 Meringer's isomorph-free enumeration leaves exactly four
 \((5,5)\)-cages \cite[p.~142]{Meringer1999}; each fixed record has an exact
-distance eigenvalue at most \(-5\).
+distance eigenvalue at most \(-5\). The witness factors and their
+roots are listed in Appendix~\ref{app:small-example-certificates};
+the classification supplies exhaustion, while the factors supply the
+distance-spectral obstruction.
 The accompanying release contains an independent exact audit of the complete
 case split and the four fixed graph6 records.
 \end{proof}
@@ -1443,13 +1412,12 @@ of order \(N\) has a semiregular bipartite root, its part sizes satisfy
  of order \(d+2\), or \(L(K_{d,2})\).  The first two types alone force
  \(r\le0\).  If exactly one component has order \(2d\), then
  \(n=3r+8\) or \(n=3r+10\); if both do, then \(n=2r+8\).
- The respective fixed remainders are
- \[
-  412586,\qquad482570,\qquad1792898.
- \]
- The first and third have no admissible divisor of the required linear form.
- The second leaves only \(k=123\), for which \(kn\) is odd.  This final
- contradiction proves \(n\le3r\).
+  If both components have order \(2d\), then \(n=2r+8\).
+  Together with \(n>3r\), this gives \(r<8\), hence \(n<24\),
+  contrary to \(n>150\). For the two remaining mixed cases,
+  the divisor checks in Appendix~\ref{app:three-to-one-arithmetic} exclude
+  \(n=3r+8\) and leave only \(k=123\) for \(n=3r+10\).
+  In that case \(kn\) is odd. This final contradiction proves \(n\le3r\).
 
 We have excluded every case under the contrary assumption.  Substituting
 the definition of \(r\) into the resulting three-to-one inequality gives
@@ -1877,26 +1845,51 @@ so \(\tau\ge36\).  Hence \(\tau\in\{36,37,38\}\).  Finally,
 \(2\tau(v)-72\); counting edge--five-cycle incidences gives
 \(5N_5=12\cdot150+m\).
 
-The next restrictions come from a two-path \(u-v-w\).  Girth at least
+The next restrictions come from a two-path \(u-v-w\). Girth at least
 five gives \((A^3)_{uw}=\alpha_{uvw}\) and
-\((A^4)_{uw}=16+\beta_{uvw}\).  Substituting these walk counts into the
-\(3\times3\) principal minor of the centered positive-semidefinite matrix
-gives the displayed possibilities for \(R_{uvw}\), together with the
-apparent equality case \(R_{uvw}=29\).
-To exclude equality, note that the Gram norm of \(e_u-e_w\) would
-vanish, placing this vector in the kernel of the centered matrix.  On
-\(\one^\perp\), the matrix equals \(-g_6(A)\).  The strict shifted
-window excludes the endpoint zeros of \(g_6\), leaving only the double
-zero at \(-2\); its kernel is therefore the adjacency
-\(-2\)-eigenspace.  This is impossible: the \(u\)-coordinate of
-\(A(e_u-e_w)\) is zero, since \(u\not\sim w\), while the same
-\(u\)-coordinate of \(-2(e_u-e_w)\) is \(-2\).  Thus
-\(R_{uvw}=29\) is excluded.  Summing the remaining local inequalities
-gives the first pair of \(N_6\) bounds.  For the second pair, we evaluate
-polynomials on the shifted nonprincipal spectrum.  A Gram matrix gives the
-lower bound, and a weighted Gram matrix gives the upper bound; the spectral
-window makes the weights positive.  Appendix~\ref{app:order50-moment-bounds}
-displays both matrices and their determinant calculations.
+\((A^4)_{uw}=16+\beta_{uvw}\). Let \(h_e=0\) for a low edge and
+\(h_e=1\) for a high edge. Substitution into the centered slack matrix gives
+\[
+ 25\mathcal S_6[\{u,v,w\}]=
+ \begin{pmatrix}
+ 48&-2-25h_{uv}&773-25R_{uvw}\\
+ -2-25h_{uv}&48&-2-25h_{vw}\\
+ 773-25R_{uvw}&-2-25h_{vw}&48
+ \end{pmatrix}\succeq0.
+\]
+The \(2\times2\) minors give \(R_{uvw}\in\{29,30,31,32\}\).
+At \(R_{uvw}=29\), the Gram norm of \(e_u-e_w\) vanishes, so this
+vector lies in the kernel of \(\mathcal S_6\). On \(\one^\perp\),
+\(\mathcal S_6=-g_6(A)\). The strict shifted window excludes the
+endpoint zeros of \(g_6\), leaving only its double zero at \(-2\).
+Thus \(A(e_u-e_w)=-2(e_u-e_w)\), which is impossible: its
+\(u\)-coordinate would have to be both zero and \(-2\).
+If both edges are high and \(R_{uvw}=32\), the displayed determinant
+is \(-33750\), also impossible. This proves the local table.
+
+We now make the cycle count explicit. Sum over unoriented two-edge paths.
+Each five-cycle contains five such paths and each six-cycle contains six,
+so
+\[
+ \sum_{u-v-w}R_{uvw}=30N_5+6N_6
+                   =10800+6m+6N_6.
+\]
+There are \(50\binom62=750\) paths, of which
+\[
+ \sum_v\binom{d_H(v)}2=\frac{S_2-2m}{2}
+\]
+have two high edges. Every local value is at least \(30\) and at most
+\(32\), with upper bound \(31\) for a high--high path. Hence
+\[
+ 22500\le10800+6m+6N_6
+ \le24000-\frac{S_2-2m}{2}.
+\]
+Rearranging gives the first pair of \(N_6\) bounds.
+For the second pair, we evaluate polynomials on the shifted nonprincipal
+spectrum. A Gram matrix gives the lower bound, and a weighted Gram matrix
+gives the upper bound; the spectral window makes the weights positive.
+Appendix~\ref{app:order50-moment-bounds} displays both matrices and their
+determinant calculations.
 The complete symbolic determinants, Schur complements, kernel argument, and
 exact profile enumeration are independently checked by
 \codefile{scripts/verify_proof_audit_06_order50_feasibility.py}.  The
@@ -2092,43 +2085,183 @@ is disconnected.
 
 \section{Distance spectra after vertex deletion in Moore graphs}\label{sec:punctures}
 
-We next ask what remains of a Moore counterexample after deleting
-vertices.  Deletion changes the metric as well as the degrees: destroying
-a pair's unique length-two path may increase its distance to three.
-For one or two deleted vertices, we first determine these changed
-distances.  The Moore identities then split the new distance matrix into
-invariant subspaces and give its spectrum.
+Deleting vertices changes some distances as well as removing rows and
+columns from the original distance matrix. We first identify the distance
+increases and prove a stability bound. We then compute the spectra for
+one- and two-vertex deletions.
 
 Let \(M\) be a degree-\(k\) Moore graph of diameter two and put
 \(\Delta=\sqrt{4k-3}\).
 
-We use two facts about deletion before computing the spectra.
-For \(S\subseteq V(M)\) with \(s=|S|\le k-1\), put \(H=M-S\).
-Theorem~\ref{thm:small-puncture} gives a connected graph of diameter at
-most three and
-\[
- \delta^*(H)=k-\frac{s}{k}.
-\]
-A surviving pair keeps its original distance unless it is nonadjacent and
-its unique common neighbour has been deleted; its new distance is then
-exactly three.  Thus
-\[
- D(H)=D(M)[V(H)]+E_S,
-\]
-where \(E_S\) has zero diagonal and an off-diagonal entry equal to one
-exactly for those pairs, and zero otherwise.  Theorem~\ref{thm:small-puncture}
-proves these statements using replacement paths and degree counts alone.
-Its proof does not use the spectral calculations in this section.
+\subsection{Changed distances and a stability bound}
 
-The second fact separates the changed distances from the changed dual
-degree.  Proposition~\ref{prop:deletion-stability}, proved below by
-interlacing and Weyl's inequality, gives
+\begin{theorem}[Small-puncture normal form]\label{thm:small-puncture}
+Let \(M\) be a degree-\(k\) Moore graph of diameter two, let
+\(S\subseteq V(M)\) have size \(s\le k-1\), and put \(H=M-S\).  Then \(H\)
+is connected, has diameter at most three, and
 \[
- \Phi(H)\ge\Phi(M)-\bigl(\delta^*(M)-\delta^*(H)\bigr)
-                  +\lambda_{\min}(E_S).
+ \resultbox{\delta^*(H)=k-\frac{s}{k}.}
 \]
-In particular, the matrix whose spectrum we compute is the recomputed
-distance matrix \(D(H)\), with the correction \(E_S\) included.
+Let \(B\) be the surviving-vertex by deleted-vertex incidence matrix, with
+\(B_{xz}=1\) exactly when \(x\sim_M z\).  Then
+\[
+ \resultbox{
+ D(H)=2(J-I)-A(H)+BB^{\mathsf T}
+ -\operatorname{diag}(BB^{\mathsf T}).
+ }
+\]
+\end{theorem}
+
+\begin{proof}
+The case \(s=0\) is immediate, so assume \(1\le s\le k-1\).  Let
+\(x,y\in V(H)\) be nonadjacent in \(M\), and suppose their unique common
+neighbour \(z\) lies in \(S\).  For every
+\(a\in N_M(x)\setminus\{z\}\), the vertices \(a,y\) are nonadjacent and
+have a unique common neighbour \(b_a\).  Thus
+\[
+ x-a-b_a-y
+\]
+is a length-three path.  The \(k-1\) paths are internally vertex-disjoint:
+if \(b_a=b_{a'}\), there would be a four-cycle, and if \(b_a=a'\),
+there would be a triangle through \(x\).  Apart from \(z\), only
+\(s-1\le k-2\) vertices have been deleted, so they cannot meet all these
+paths.  At least one survives.  Thus every destroyed length-two path is
+replaced by distance exactly three, giving the matrix formula.
+
+For \(x\in V(H)\), let \(t_x=|N_M(x)\cap S|\).  A deleted neighbour of
+\(x\) is adjacent to no surviving neighbour of \(x\), by triangle-freeness;
+each other deleted vertex has at most one common neighbour with \(x\).  Thus
+\[
+ \sum_{y\in N_H(x)}t_y\le s-t_x.
+\]
+Consequently,
+\[
+ d_H^*(x)
+ \ge k-\frac{s-t_x}{k-t_x}
+ \ge k-\frac{s}{k},
+\]
+where the last inequality follows from
+\[
+ \left(k-\frac{s-t}{k-t}\right)-\left(k-\frac{s}{k}\right)
+ =\frac{t(k-s)}{k(k-t)}\ge0.
+\]
+The intersection bound
+\[
+ \left|\bigcap_{z\in S}\Gamma_2(z)\right|
+ \ge k^2+1-s(k+1)\ge2
+\]
+provides a surviving vertex \(x\) at distance two from every deleted
+vertex.  This vertex attains the lower bound.  For \(z\in S\), let
+\(y_z\) be the unique common neighbour of \(x,z\).  It cannot be deleted:
+\(y_z\in S\) would, by the choice of \(x\), require \(d_M(x,y_z)=2\),
+contrary to \(x\sim y_z\).  All these witnesses therefore survive, and
+each deleted vertex contributes once to the neighbour-degree deficit.
+The lower bound is consequently an equality.  The
+replacement paths, boundary case \(s=k-1\), distance formula, and attainment
+step are independently checked by
+\codefile{scripts/verify_proof_audit_12_small_puncture.py}.
+\end{proof}
+
+\begin{proposition}[Deletion stability]\label{prop:deletion-stability}
+Let \(G\) be connected with at least two vertices, let
+\(S\subseteq V(G)\), and suppose \(H=G-S\) is connected with at least two
+vertices.  Put
+\[
+ D_0=D(G)[V(H)],
+ \qquad E_S=D(H)-D_0,
+\]
+\[
+ a=\delta^*(G),
+ \quad b=\delta^*(H),
+ \quad \gamma=\Phi(G).
+\]
+Then
+\[
+ \resultbox{
+ \Phi(H)\ge\gamma-(a-b)+\lambda_{\min}(E_S).
+ }
+\]
+\end{proposition}
+
+\begin{proof}
+The score \(\Phi(H)\) is the least eigenvalue of \(D(H)+bI\).
+We write this matrix as
+\[
+ D(H)+bI=(D_0+aI)+E_S-(a-b)I.
+\]
+The first term is a principal submatrix of \(D(G)+aI\), whose least
+eigenvalue is \(\gamma\).  Principal-submatrix interlacing
+\cite[Corollary~2.2]{Haemers1995} therefore gives
+\(\lambda_{\min}(D_0+aI)\ge\gamma\).
+Weyl's inequality bounds the least eigenvalue after adding \(E_S\),
+and subtracting \((a-b)I\) shifts every eigenvalue by \(-(a-b)\).
+This gives the stated bound.  For Moore punctures, \(E_S\) is the
+explicit distance-increase matrix specified in Theorem~\ref{thm:small-puncture}.
+\end{proof}
+
+\begin{corollary}[Uniform deletion stability]
+\label{cor:uniform-deletion}
+Under the hypotheses of Theorem~\ref{thm:small-puncture}, put
+\[
+ t_x=|N_M(x)\cap S|,
+ \qquad
+ \tau(S)=\max_{x\in V(M-S)}t_x.
+\]
+Then
+\[
+ \resultbox{
+ \Phi(M-S)\ge
+ k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}-\tau(S).
+ }
+\]
+In particular, the deletion is a strict counterexample whenever the
+right-hand side is positive.  Since \(\tau(S)\le s\), every deletion of
+\(s\) vertices is strict whenever
+\[
+ \resultbox{
+ s\left(1+\frac1k\right)
+ <k-\frac{3+\sqrt{4k-3}}2.
+ }
+\]
+For \(k>3\), equivalently, every deletion of at most
+\[
+ r_k=\min\left\{
+ k-1,\
+ \left\lceil
+ \frac{k}{k+1}\left(k-\frac{3+\sqrt{4k-3}}2\right)
+ \right\rceil-1
+ \right\}
+\]
+vertices is strict.  In particular, \(r_7=2\); for a hypothetical
+degree-\(57\) Moore graph, whose existence remains open
+\cite{SmithMontemanni2026}, this estimate gives \(r_{57}=47\).
+Proposition~\ref{prop:clique-deletion-bound} strengthens that
+guarantee to every deletion of at most \(56\) vertices.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:small-puncture}, the distance-increase matrix is
+\[
+ E_S=BB^{\mathsf T}-\operatorname{diag}(t_x).
+\]
+Since \(BB^{\mathsf T}\succeq0\) and
+\(\operatorname{diag}(t_x)\preceq\tau(S)I\), one has
+\(\lambda_{\min}(E_S)\ge-\tau(S)\).  The parent Moore graph has score
+\[
+ \Phi(M)=k-\frac{3+\sqrt{4k-3}}2,
+\]
+and Theorem~\ref{thm:small-puncture} shows that deletion lowers the minimum
+dual degree by \(s/k\).  Proposition~\ref{prop:deletion-stability} now gives
+the first bound.  The second follows from \(\tau(S)\le s\), and solving its
+strict scalar inequality for the largest integral \(s\) gives \(r_k\).
+\end{proof}
+
+\subsection{Exact spectra for one or two deletions}
+
+The matrix in the following theorems is the recomputed distance matrix.
+Its correction is already given by Theorem~\ref{thm:small-puncture}:
+a surviving nonadjacent pair moves from distance two to distance three
+exactly when its unique common neighbour was deleted.
 
 \begin{theorem}[One deleted vertex]\label{thm:one-puncture}
 For \(v\in V(M)\), put \(H=M-v\).  Then
@@ -2548,179 +2681,15 @@ are independently checked by
 \codefile{scripts/verify_research_extensions_exact.py}.
 \end{proof}
 
-\begin{proposition}[Deletion stability]\label{prop:deletion-stability}
-Let \(G\) be connected with at least two vertices, let
-\(S\subseteq V(G)\), and suppose \(H=G-S\) is connected with at least two
-vertices.  Put
-\[
- D_0=D(G)[V(H)],
- \qquad E_S=D(H)-D_0,
-\]
-\[
- a=\delta^*(G),
- \quad b=\delta^*(H),
- \quad \gamma=\Phi(G).
-\]
-Then
-\[
- \resultbox{
- \Phi(H)\ge\gamma-(a-b)+\lambda_{\min}(E_S).
- }
-\]
-\end{proposition}
-
-\begin{proof}
-The score \(\Phi(H)\) is the least eigenvalue of \(D(H)+bI\).
-We write this matrix as
-\[
- D(H)+bI=(D_0+aI)+E_S-(a-b)I.
-\]
-The first term is a principal submatrix of \(D(G)+aI\), whose least
-eigenvalue is \(\gamma\).  Principal-submatrix interlacing
-\cite[Corollary~2.2]{Haemers1995} therefore gives
-\(\lambda_{\min}(D_0+aI)\ge\gamma\).
-Weyl's inequality bounds the least eigenvalue after adding \(E_S\),
-and subtracting \((a-b)I\) shifts every eigenvalue by \(-(a-b)\).
-This gives the stated bound.  For Moore punctures, \(E_S\) is the
-explicit distance-increase matrix used above.
-\end{proof}
-
 \Needspace{6\baselineskip}
 \section{Uniform deletion bounds and the Hoffman--Singleton radius}
 \label{sec:robustness}
 
-The stability inequality lets us handle many deletion sets without
-computing a new spectrum for each.  We first determine the changed
-distances and the minimum dual degree for small punctures.  Positivity
-of the incidence Gram matrix gives a uniform sufficient condition for
-strictness.  A more precise calculation when the deleted vertices share
-a neighbour then proves analytic stability through three deletions for
-Hoffman--Singleton.  Exact orbit certificates cover sizes four and five
-and determine the sharp universal radius.
-
-\begin{theorem}[Small-puncture normal form]\label{thm:small-puncture}
-Let \(M\) be a degree-\(k\) Moore graph of diameter two, let
-\(S\subseteq V(M)\) have size \(s\le k-1\), and put \(H=M-S\).  Then \(H\)
-is connected, has diameter at most three, and
-\[
- \resultbox{\delta^*(H)=k-\frac{s}{k}.}
-\]
-Let \(B\) be the surviving-vertex by deleted-vertex incidence matrix, with
-\(B_{xz}=1\) exactly when \(x\sim_M z\).  Then
-\[
- \resultbox{
- D(H)=2(J-I)-A(H)+BB^{\mathsf T}
- -\operatorname{diag}(BB^{\mathsf T}).
- }
-\]
-\end{theorem}
-
-\begin{proof}
-The case \(s=0\) is immediate, so assume \(1\le s\le k-1\).  Let
-\(x,y\in V(H)\) be nonadjacent in \(M\), and suppose their unique common
-neighbour \(z\) lies in \(S\).  For every
-\(a\in N_M(x)\setminus\{z\}\), the vertices \(a,y\) are nonadjacent and
-have a unique common neighbour \(b_a\).  Thus
-\[
- x-a-b_a-y
-\]
-is a length-three path.  The \(k-1\) paths are internally vertex-disjoint:
-if \(b_a=b_{a'}\), there would be a four-cycle, and if \(b_a=a'\),
-there would be a triangle through \(x\).  Apart from \(z\), only
-\(s-1\le k-2\) vertices have been deleted, so they cannot meet all these
-paths.  At least one survives.  Thus every destroyed length-two path is
-replaced by distance exactly three, giving the matrix formula.
-
-For \(x\in V(H)\), let \(t_x=|N_M(x)\cap S|\).  A deleted neighbour of
-\(x\) is adjacent to no surviving neighbour of \(x\), by triangle-freeness;
-each other deleted vertex has at most one common neighbour with \(x\).  Thus
-\[
- \sum_{y\in N_H(x)}t_y\le s-t_x.
-\]
-Consequently,
-\[
- d_H^*(x)
- \ge k-\frac{s-t_x}{k-t_x}
- \ge k-\frac{s}{k},
-\]
-where the last inequality follows from
-\[
- \left(k-\frac{s-t}{k-t}\right)-\left(k-\frac{s}{k}\right)
- =\frac{t(k-s)}{k(k-t)}\ge0.
-\]
-The intersection bound
-\[
- \left|\bigcap_{z\in S}\Gamma_2(z)\right|
- \ge k^2+1-s(k+1)\ge2
-\]
-provides a surviving vertex \(x\) at distance two from every deleted
-vertex.  This vertex attains the lower bound.  For \(z\in S\), let
-\(y_z\) be the unique common neighbour of \(x,z\).  It cannot be deleted:
-\(y_z\in S\) would, by the choice of \(x\), require \(d_M(x,y_z)=2\),
-contrary to \(x\sim y_z\).  All these witnesses therefore survive, and
-each deleted vertex contributes once to the neighbour-degree deficit.
-The lower bound is consequently an equality.  The
-replacement paths, boundary case \(s=k-1\), distance formula, and attainment
-step are independently checked by
-\codefile{scripts/verify_proof_audit_12_small_puncture.py}.
-\end{proof}
-
-\begin{corollary}[Uniform deletion stability]
-\label{cor:uniform-deletion}
-Under the hypotheses of Theorem~\ref{thm:small-puncture}, put
-\[
- t_x=|N_M(x)\cap S|,
- \qquad
- \tau(S)=\max_{x\in V(M-S)}t_x.
-\]
-Then
-\[
- \resultbox{
- \Phi(M-S)\ge
- k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}-\tau(S).
- }
-\]
-In particular, the deletion is a strict counterexample whenever the
-right-hand side is positive.  Since \(\tau(S)\le s\), every deletion of
-\(s\) vertices is strict whenever
-\[
- \resultbox{
- s\left(1+\frac1k\right)
- <k-\frac{3+\sqrt{4k-3}}2.
- }
-\]
-For \(k>3\), equivalently, every deletion of at most
-\[
- r_k=\min\left\{
- k-1,\
- \left\lceil
- \frac{k}{k+1}\left(k-\frac{3+\sqrt{4k-3}}2\right)
- \right\rceil-1
- \right\}
-\]
-vertices is strict.  In particular, \(r_7=2\); for a hypothetical
-degree-\(57\) Moore graph, whose existence remains open
-\cite{SmithMontemanni2026}, this estimate gives \(r_{57}=47\).
-Proposition~\ref{prop:clique-deletion-bound} strengthens that
-guarantee to every deletion of at most \(56\) vertices.
-\end{corollary}
-
-\begin{proof}
-By Theorem~\ref{thm:small-puncture}, the distance-increase matrix is
-\[
- E_S=BB^{\mathsf T}-\operatorname{diag}(t_x).
-\]
-Since \(BB^{\mathsf T}\succeq0\) and
-\(\operatorname{diag}(t_x)\preceq\tau(S)I\), one has
-\(\lambda_{\min}(E_S)\ge-\tau(S)\).  The parent Moore graph has score
-\[
- \Phi(M)=k-\frac{3+\sqrt{4k-3}}2,
-\]
-and Theorem~\ref{thm:small-puncture} shows that deletion lowers the minimum
-dual degree by \(s/k\).  Proposition~\ref{prop:deletion-stability} now gives
-the first bound.  The second follows from \(\tau(S)\le s\), and solving its
-strict scalar inequality for the largest integral \(s\) gives \(r_k\).
-\end{proof}
+The stability bound from Section~\ref{sec:punctures} handles many deletion
+sets without a new spectral calculation. We now improve it when the deleted
+vertices share a surviving neighbour. This proves stability through three
+deletions for Hoffman--Singleton. Exact orbit certificates cover sizes four
+and five and determine the sharp universal radius.
 
 The uniform estimate can be improved when the deleted vertices have a
 common surviving neighbour.  The distance correction then has a simple
@@ -3511,6 +3480,117 @@ the stated least roots.  All \(120\) matchings, \(400\) coordinate maps,
 certificates are checked
 by \codefile{scripts/verify_proof_audit_07_layer_matchings.py}.
 \end{proof}
+
+\section{Finite spectral witnesses and deletion certificates}
+\label{app:small-example-certificates}
+
+The finite checks establish different assertions. The following register
+records the graph, the exact output needed, and the resulting inequality.
+The graph encodings are fixed in \path{data/graphs/} and
+\path{data/cages55/}; the coordinate definitions of the small counterexamples
+are given above Theorem~\ref{thm:explicit-examples}.
+
+For the four degree-five cages, the displayed factor divides
+\(\det(xI-D)\) over \(\mathbb Z[x]\). Its negative root is an eigenvalue,
+which suffices for \(\lambda_{\min}(D)<-5\); no assertion that it is the
+least eigenvalue is needed.
+\[
+\begin{array}{lcc}
+\toprule
+\text{fixed graph6 record}&\text{distance factor}&\text{witness eigenvalue}\\
+\midrule
+\text{Foster}&x^2+6x-11&-3-2\sqrt5\\
+\text{Meringer}&x+6&-6\\
+\text{Robertson--Wegner}&x+6&-6\\
+\text{Wong}&x^2+6x-11&-3-2\sqrt5\\
+\bottomrule
+\end{array}
+\]
+The records have order \(30\), degree five, girth five and diameter three,
+and are pairwise nonisomorphic. Meringer's classification
+\cite[p.~142]{Meringer1999} supplies completeness.
+The integer characteristic polynomials, graph properties and
+nonisomorphism checks are reproduced by
+\codefile{scripts/verify_proof_audit_04_regular_low_degree.py}.
+
+For \(H_{38}\), the factor \(x^2+6x+2\), together with the exact Sturm
+count, identifies the least distance root as \(-3-\sqrt7\).
+An independent rational \(LDL^{\mathsf T}\) decomposition of
+\(3D(H_{38})+17I\) has inertia \((38,0,0)\), where the entries count
+positive, negative and zero eigenvalues.
+For \(H_{39}\), the decomposition of \(6D(H_{39})+35I\) has inertia
+\((39,0,0)\). Thus each shift is positive definite and proves strictness.
+For \(R\) and \(X_{42}\), the exact spectra in
+Theorem~\ref{thm:explicit-examples} identify the least eigenvalue \(-5\).
+These graph, metric, dual-degree and matrix checks are reproduced by
+\codefile{scripts/verify_wow284_38_40_42.py}.
+
+The two labelled deletion families of \(R\) have the following common
+distance characteristic polynomials.
+For every
+\(v\in V(R)\),
+\begin{align*}
+\det(xI-D(R-v))=P_{39}(x):={}&x^9(x+5)^{12}(x^2+6x+3)\\
+&\cdot(x^3+3x^2-15x-7)^2(x^3+3x^2-15x-3)^2\\
+&\cdot(x^4-78x^3+303x^2-70x-450),
+\end{align*}
+whereas for every \(uv\in E(R)\),
+\begin{align*}
+\det(xI-D(R-\{u,v\}))=P_{38}(x):={}&x^4(x-2)(x+5)^8(x^2+6x+2)^2\\
+&\cdot(x^3+3x^2-15x-3)\\
+&\cdot(x^4+5x^3-7x^2-23x-6)\\
+&\cdot(x^5+9x^4+7x^3-77x^2-54x-4)\\
+&\cdot(x^9-67x^8-404x^7+1772x^6+7205x^5\\
+&\hspace{3em}-18489x^4-17018x^3+20288x^2+16824x+1680).
+\end{align*}
+
+The \(40\) singleton and \(120\) edge-endpoint deletions are exhausted by
+\codefile{scripts/verify_descendant_families.py}; the root and
+positive-definiteness checks accompany the family records.
+
+For Hoffman--Singleton, the two stored automorphisms generate a group of
+order \(252000\). The orbit counts on deletion sets of sizes \(0\) through
+\(5\) are \(1,1,2,4,11,33\), and for each size the orbit cardinalities sum
+to \(\binom{50}{s}\). For every representative with \(s=4\) or \(5\),
+\[
+ \operatorname{inertia}\bigl(7D(M-S)+(49-s)I\bigr)=(50-s,0,0).
+\]
+This checks \(11+33=44\) representatives; all \(52\) representatives
+through size five are retained. The six-vertex set displayed in
+Theorem~\ref{thm:hs-radius} instead gives inertia \((43,1,0)\) for
+\(7D(M-S)+43I\), proving failure of strictness. The verifier
+\codefile{scripts/verify_proof_audit_13_hs_robustness.py} checks the
+generator action, orbit exhaustion, BFS distances, dual degrees and exact
+rational congruence. The orbit classification and the matrix sign are
+separate checks; both are required.
+
+\section{The final divisor checks in the three-to-one proof}
+\label{app:three-to-one-arithmetic}
+
+Only the mixed two-component cases remain after the direct inequality
+excludes \(n=2r+8\). Write \(C_k=(k+2)^2(k^2+3)\) and \(d_k=12k+27\).
+For \(n=3r+t\), the identity \(r=2C_k-d_kn\) gives
+\[
+ (1+3d_k)r=2C_k-d_kt.
+\]
+In particular, \(18k+41\) divides the numerator on the right.
+Modulo this linear divisor, multiplication by \(18^4\) gives the integer
+remainder in the middle column below. Enumerating its positive divisors
+of the form \(18k+41\), with \(k\ge6\), gives the last column.
+\[
+\begin{array}{ccc}
+\toprule
+t&\text{remainder}&\text{candidate }k\\
+\midrule
+8&412586&\text{none}\\
+10&482570&123\\
+\bottomrule
+\end{array}
+\]
+For \(t=10\) and \(k=123\), substitution gives an odd value of \(kn\),
+contradicting the handshake identity. These divisions and candidates are
+checked over the integers by
+\codefile{scripts/verify_proof_audit_14_three_to_one.py}.
 
 \section{Exact certificates and the scope of Lean verification}\label{sec:verification}
 
