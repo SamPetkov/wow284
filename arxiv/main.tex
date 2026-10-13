@@ -154,8 +154,8 @@ an interval condition on the nonprincipal adjacency eigenvalues
 the order. Evaluating the optimal polynomial at the adjacency matrix also
 gives a matrix of integer combinations of short-walk counts. Subtracting a
 constant all-ones term and adjusting the diagonal gives the integral excess matrix of
-Theorem~\ref{thm:integral-slack}. Its entries and positive-semidefinite
-minors impose stronger order and cycle constraints. These lead to the three-to-one bound
+Theorem~\ref{thm:integral-slack}. The excess matrix has integral entries, while the associated slack matrix
+has nonnegative principal minors. Together these give stronger order and cycle constraints. These lead to the three-to-one bound
 (Theorem~\ref{thm:three-to-one}) and necessary conditions at the unresolved
 degree-six, order-\(50\) boundary. The exact polynomial optimum is proved in
 Section~\ref{sec:lp}. It is an optimum within the stated polynomial class,
@@ -562,7 +562,7 @@ The girth condition makes this count agree with distance: up to length
 \(d-1\), a nonbacktracking walk between two vertices is unique exactly
 when its length is their graph distance.  Thus the distance-\(i\)
 matrices are the corresponding polynomials in \(A\).
-In the sum \(D=\sum_{i=0}^d iA_i\), the final layer need not be a polynomial.
+In the sum \(D=\sum_{i=0}^d iA_i\), the identity \(A_d=F_d(A)\) need not hold.
 Eliminate \(A_d\) using \(J=\sum_{i=0}^d A_i\).
 This proves the formula within the established distance-polynomial
 framework \cite{HowladerPanigrahi2022,Fiol2016}.
@@ -1047,9 +1047,9 @@ principal minor on \(\{u,v\}\) gives
 \[
  \left|\frac{C_k}{n}-z_{uv}\right|\le a.
 \]
-We must exclude equality in the upper bound.  It would imply
+We must exclude \(C_k/n-z_{uv}=a\), equivalently \(z_{uv}=h_k\). This would imply
 \((e_u-e_v)^{\mathsf T}\mathcal S_k(e_u-e_v)=0\), and positivity would then
-put \(e_u-e_v\in\ker\mathcal S_k\).  By the strict spectral window,
+put \(e_u-e_v\in\ker\mathcal S_k\). Write \(E_{-2}(A)=\ker(A+2I)\). The strict spectral window gives
 \[
  \ker\mathcal S_k=\langle\one\rangle\oplus E_{-2}(A).
 \]
@@ -1340,8 +1340,11 @@ Equation~\eqref{eq:fixed-remainder} gives
  has at most two components.
 
 For connected \(X\), the cocktail-party case contradicts \(r>0\).
-We are left with \(X=L(Y)\), and distinguish the two possible types of
-root graph.  If \(Y\) is \(q\)-regular on \(v\) vertices, then
+We are left with \(X=L(Y)\). Since \(X\) is \(d\)-regular, every edge \(ab\)
+of its connected root satisfies \(\deg_Y(a)+\deg_Y(b)=d+2\). Degrees
+alternate along paths. An odd cycle forces them to coincide; otherwise
+\(Y\) is bipartite, with a constant degree on each part. Thus \(Y\) is
+regular or semiregular bipartite. If \(Y\) is \(q\)-regular on \(v\) vertices, then
  \[
   q=\frac{n-r}{4}>\frac n6,\qquad v=\frac{2n}{q}<12.
  \]
@@ -1661,18 +1664,8 @@ diameter-two alternatives are determined by the Moore multiplicities: only
 the degree-seven, order-\(50\) Hoffman--Singleton case survives.
 \end{proof}
 
-For comparison, the unadjusted diameter-three bounds in degrees \(6\) through
-\(20\) are
-\[
-\begin{array}{c|rrrrrrrrrrrrrrr}
- k&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20\\
- \hline
- n&50&75&108&150&201&263&336&422&521&635&765&911&1075&1257&1459.
-\end{array}
-\]
-When \(k\) is odd, \(kn=2|E(G)|\) requires \(n\) to be even; in particular,
-the entries for \(k=7,11,15,17,19\) improve to
-\(74,262,634,910,1256\), respectively.
+Appendix~\ref{app:three-to-one-arithmetic} lists the corresponding order bounds
+through degree twenty, including the parity adjustment for odd degrees.
 
 The degree-six order bound leaves the endpoint \(n=50\) unresolved.
 Appendix~\ref{app:order50-details} gives further restrictions on adjacency
@@ -2041,8 +2034,11 @@ parent \(p\) and \(q\in N_M(w)\setminus\{p\}\), the unique common
 neighbour of the nonadjacent pair \(x,q\) belongs to \(\Gamma_2(w)\)
 and has parent \(q\).
 
-The distance sum from a vertex to each of these four parts depends only on
-the part containing that vertex. Thus the partition is equitable for the
+The distance sum from a vertex to each part depends only on its own part.
+For example, a vertex of \(B\) has five siblings at distance three, five
+other vertices of \(B\) at distance one, and twenty-five at distance two.
+Its distance sum to \(B\) is therefore \(5\cdot3+5\cdot1+25\cdot2=70\).
+Thus the partition is equitable for the
 distance matrix. On vectors constant on each part, the distance operator
 acts by the following row-sum quotient, in the order \(\{w\},A,B,C\):
 \[
@@ -2053,7 +2049,7 @@ acts by the following row-sum quotient, in the order \(\{w\},A,B,C\):
  2&1&66&10
  \end{pmatrix}.
 \]
-The parent distances on the surviving vertices are given by
+The distances in the original Moore graph, restricted to the surviving vertices, are given by
 \(D_0=2(J-I)-A(H)\).  Proposition~\ref{prop:neighbourhood-puncture}
 changes only the distances from \(w\) to \(B\) and between two children
 of the same deleted parent, adding one in each case.
@@ -2072,7 +2068,7 @@ because its part has only one vertex. For \(x\in U^\perp\),
    -\sum_{y\in B}x_y^2
  \ge-\lVert x\rVert^2.
 \]
-The parent distance matrix has least eigenvalue \(-4\).
+The distance matrix of the original Moore graph has least eigenvalue \(-4\).
 Taking its principal submatrix on the surviving vertices gives
 \(D_0\succeq-4I\), and the correction estimate above gives
 \(D(H)|_{U^\perp}\succeq-5I\).
@@ -2117,7 +2113,7 @@ WOW-284.
 \end{corollary}
 
 \begin{proof}
-Theorem~\ref{thm:moore-threshold} gives the parent score \(48\), which
+Theorem~\ref{thm:moore-threshold} gives the original Moore graph a score of \(48\), which
 handles \(S=\varnothing\).  For nonempty \(S\), put \(s=|S|\).
 Theorem~\ref{thm:small-puncture} applies through \(s=56\): the survivor
 graph is connected and has minimum dual degree \(57-s/57\).  Its order
@@ -2216,7 +2212,7 @@ Together with \(E_S\succeq-\tau I\), this proves the first inequality.
 The score bound follows from Proposition~\ref{prop:deletion-stability}
 and \(\delta^*(H)=k-s/k\).
 
-For \(k=57\), the parent score is \(48\).  If \(\tau\le42\), the first
+For \(k=57\), the original Moore graph has score \(48\).  If \(\tau\le42\), the first
 bound gives \(\lambda_{\min}(E_S)\ge-42\).  If \(\tau\ge43\), then
 \[
  (27+2\tau)^2-(55^2+224\tau)
@@ -2248,7 +2244,7 @@ three.  Then
  \quad\Longleftrightarrow\quad
  \max_{\theta\ne k}|\theta+1|=\sqrt{2k-2}.
 \]
-Equivalently, \(D+kI\) is positive semidefinite and singular.  If \(2k-2\) is
+Equivalently, \(D+kI\) is positive semidefinite and singular. When \(\Phi(G)=0\) and \(2k-2\) is
 not a square, the two boundary adjacency eigenvalues occur with equal
 multiplicity, so the distance eigenvalue \(-k\) has even multiplicity.  If
 \(2k-2\) is a square, then \(k=2r^2+1\) for some integer \(r\).
@@ -3565,6 +3561,19 @@ separate checks; both are required.
 
 \section{The final divisor checks in the three-to-one proof}
 \label{app:three-to-one-arithmetic}
+
+For comparison, the unadjusted diameter-three bounds in degrees \(6\) through
+\(20\) are
+\[
+\begin{array}{c|rrrrrrrrrrrrrrr}
+ k&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20\\
+ \hline
+ n&50&75&108&150&201&263&336&422&521&635&765&911&1075&1257&1459.
+\end{array}
+\]
+When \(k\) is odd, \(kn=2|E(G)|\) requires \(n\) to be even; in particular,
+the entries for \(k=7,11,15,17,19\) improve to
+\(74,262,634,910,1256\), respectively.
 
 Only the mixed two-component cases remain after the direct inequality
 excludes \(n=2r+8\). Write \(C_k=(k+2)^2(k^2+3)\) and \(d_k=12k+27\).
