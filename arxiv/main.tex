@@ -1230,10 +1230,16 @@ forces \(k=44\) and \(n=14812\).  On the \(7406\)-dimensional
  \((-1)\)-eigenspace of \(E\), the rational operator \(A\) is annihilated by
  \(g_{44}(x)+2\).
 
-If \(X=L(Y)\) and \(Y\) is \(q\)-regular, then \(q\ge n/4\) and
+If \(X=L(Y)\), choose a connected root \(Y\). Since \(X\) is
+\(d\)-regular, every edge \(ab\) of \(Y\) satisfies
+\(\deg_Y(a)+\deg_Y(b)=d+2\). Degrees alternate along paths. An odd
+cycle forces them to coincide; otherwise \(Y\) is bipartite, with a
+constant degree on each part. Thus \(Y\) is regular or semiregular
+bipartite. Here semiregular means that the degree is constant within each
+part, though the two degrees may differ.
+
+If \(Y\) is \(q\)-regular, then \(q\ge n/4\) and
 \(|V(Y)|\le8\), contradicting \(q\le |V(Y)|-1\) because \(n\ge38\).
-A bipartite graph is semiregular when every vertex in a given part has
-the same degree; the degrees in the two parts may differ.
 If \(Y\) is semiregular bipartite with part sizes \(a\ge b\ge2\), then
 \[
  \frac1a+\frac1b=\frac{n-r}{2n}\ge\frac12,\qquad n\le ab.
@@ -1340,11 +1346,8 @@ Equation~\eqref{eq:fixed-remainder} gives
  has at most two components.
 
 For connected \(X\), the cocktail-party case contradicts \(r>0\).
-We are left with \(X=L(Y)\). Since \(X\) is \(d\)-regular, every edge \(ab\)
-of its connected root satisfies \(\deg_Y(a)+\deg_Y(b)=d+2\). Degrees
-alternate along paths. An odd cycle forces them to coincide; otherwise
-\(Y\) is bipartite, with a constant degree on each part. Thus \(Y\) is
-regular or semiregular bipartite. If \(Y\) is \(q\)-regular on \(v\) vertices, then
+We are left with \(X=L(Y)\), with the same regular/semiregular
+dichotomy as above. If \(Y\) is \(q\)-regular on \(v\) vertices, then
  \[
   q=\frac{n-r}{4}>\frac n6,\qquad v=\frac{2n}{q}<12.
  \]
@@ -1414,10 +1417,13 @@ the definition of \(r\) into the resulting three-to-one inequality gives
  \[
   (18k+41)n\le3(k+2)^2(k^2+3),
  \]
- which is the displayed bound.  All polynomial divisions, irreducibility
- alternatives, fixed-remainder cases, line-root reductions, and Gram
- determinants in this argument have been replayed independently in exact
- arithmetic by \codefile{scripts/verify_proof_audit_14_three_to_one.py}.
+ which is the displayed bound.  The quartic factorization alternatives, aggregate Gram
+ determinant, and divisor and line-root cases used after \(r>0\) is
+ established are checked in
+ \codefile{scripts/verify_proof_audit_14_three_to_one.py}. The exceptional
+ nonpositive-\(r\) parameter cases are also checked by
+ \texttt{nonpositive\_r\_audit()} in
+ \codefile{scripts/verify_three_to_one_excess_bound.py}.
 \end{proof}
 
 \begin{corollary}[Rigidity at equality]\label{cor:three-to-one-equality}
@@ -1488,7 +1494,8 @@ It remains to identify the shared eigenspace.  The matrices \(A\) and
 \(\theta\) has, under \(S\), eigenvalue \(-2-g_k(\theta)\).
 Inside the open shifted WOW window, \(g_k\) vanishes only at
 \(\theta=-2\), since its other zeros are the excluded endpoints.
-The principal eigenvalue of \(S\) is not \(-2\), because \(r<n\).
+The eigenvalue of \(S\) on the constant vector is
+\((n-r-4)/2>-2\), since \(r<n\).
 Thus the two \((-2)\)-eigenspaces coincide.
 \end{proof}
 
@@ -1610,15 +1617,9 @@ most \(50\).
 \end{theorem}
 
 \begin{proof}
-To apply the order bound, we first reduce to diameter three.  For vertices
-at distance \(d\ge4\), take the vector with weights \(3,1,-3,-1\)
-on the two endpoints and their respective neighbourhoods.  Its Rayleigh
-quotient is at most
-\[
- \frac{204-81d}{15}\le-8.
-\]
-Thus \(\lambda_{\min}(D(G))\le-8\), so
-\(\Phi(G)\le6-8=-2\), contradicting strictness.  Diameter two would force equality in the
+To apply the order bound, we first reduce to diameter three.
+Theorem~\ref{thm:endpoint-diameter} excludes diameter at least five,
+and Theorem~\ref{thm:diameter-four} excludes diameter four.  Diameter two would force equality in the
 Moore bound, hence order \(37\) and adjacency characteristic polynomial
 \((x-6)(x^2+x-5)^{18}\); its root sum is \(-12\), contradicting
 \(\tr A=0\).  Diameter one is excluded by the girth hypothesis.  Thus the
@@ -2270,10 +2271,10 @@ graph6 decoder, characteristic polynomials, root intervals, and provenance
 boundary are checked by
 \codefile{scripts/verify_proof_audit_09_jorgensen96.py}.
 
-Two natural construction routes also fail: a balanced prime-field family
-of girth-five graphs, and the layer-respecting perfect-matching deletions of
-Hoffman--Singleton.  Appendix~\ref{app:excluded-constructions} defines both
-families and proves their spectral exclusions.  These calculations test the
+Appendix~\ref{app:excluded-constructions} defines a balanced prime-field
+family of girth-five graphs and rules out strict counterexamples in that
+family when the diameter is three. It also rules out every layer-respecting
+perfect-matching deletion of Hoffman--Singleton considered there.  These calculations test the
 window criterion but are not needed for the counterexamples or the deletion
 bounds above.
 
@@ -2532,8 +2533,8 @@ gives
  T_{uv}\in\{-1,0,1\}\qquad(u\ne v),\qquad T_{uu}=0.
 \]
  Consequently \(T+2I\) is the Gram matrix of \(50\) vectors of norm
- \(\sqrt2\) with pairwise inner products in \(\{-1,0,1\}\) and constant signed
- row sum \(2\).  Its kernel is \(E_{-2}(A)\), so
+ \(\sqrt2\), with inner products in \(\{-1,0,1\}\) between distinct vectors.
+ Its row sum is \(4\); the signed adjacency matrix \(T\) has row sum \(2\).  Its kernel is \(E_{-2}(A)\), so
  Proposition~\ref{prop:order50-minus-two} gives
  \[
   \operatorname{rank}(T+2I)\ge30.
@@ -2782,11 +2783,8 @@ For one deleted vertex, put \(A=N(v)\),
 \(B=\Gamma_2(v)\), let \(C\) be
 the \(A\)-by-\(B\) incidence matrix, and let \(B_0\) be the adjacency
 matrix on \(B\).  Only pairs inside \(A\) lose their unique length-two path.
-For distinct \(a,a'\in A\), choose a neighbour \(b\in B\) of \(a\).  The
-vertices \(b,a'\) are nonadjacent, and their unique common neighbour \(c\)
-lies in \(B\): it is not \(v\), since \(b\not\sim v\), and it is not in
-\(A\), since an edge inside \(A\) would form a triangle through \(v\).
-Hence \(a-b-c-a'\) is a surviving path, and therefore
+By Theorem~\ref{thm:small-puncture}, their new distance is three.
+All other distances are unchanged, so
 \[
  D(H)=\begin{pmatrix}3(J-I)&2J-C\\2J-C^{\mathsf T}&2(J-I)-B_0\end{pmatrix}.
 \]
@@ -2847,13 +2845,8 @@ For an adjacent deleted pair, put
  A=N(u)\setminus\{v\},\qquad B=N(v)\setminus\{u\},\qquad
  C=V(M)\setminus\bigl(\{u,v\}\cup A\cup B\bigr).
 \]
-Only pairs inside \(A\) or inside \(B\) lose a length-two path.  For
-distinct \(a,a'\in A\), choose a residual neighbour \(c\) of \(a\).  The
-vertices \(c,a'\) are nonadjacent, and their unique common neighbour is also
-residual: it cannot be one of the deleted endpoints, cannot lie in \(A\) by
-triangle-freeness, and cannot lie in \(B\) because no edge joins \(A\) to
-\(B\).  This gives a surviving length-three path; the argument for \(B\) is
-symmetric.  The antisymmetric constant line has eigenvalue
+Only pairs inside \(A\) or inside \(B\) lose a length-two path.  Since \(k\ge3\), Theorem~\ref{thm:small-puncture} applies to the
+two deleted vertices and makes the new distance of each such pair three.  The antisymmetric constant line has eigenvalue
 \(k-4\), and the normalized symmetric quotient is
 \[
  Q_2=\begin{pmatrix}
@@ -3203,8 +3196,9 @@ Both roots occur.  It remains to check that \(X\) has diameter three.
 If the unique common neighbour in \(M\) of nonadjacent vertices \(x,y\in X\)
 lies in \(X\), their distance in \(X\) is two.  The only other
 possibility is their common parent in \(N(v)\).  Choose
-\(b\in N_X(x)\).  The parent of \(b\) differs from the common parent of
-\(x,y\), since otherwise those three vertices would form a triangle.
+\(b\in N_X(x)\), and let \(p\) be the common parent of \(x,y\).
+The parent of \(b\) is not \(p\), since otherwise \(p,x,b\) would form
+a triangle.
 Moreover \(b\not\sim y\), and the unique common neighbour
 \(c\) of \(b,y\) belongs to \(X\): it cannot be \(v\), and it cannot
 lie in \(N(v)\), since \(b\) and \(y\) have different parents there.
@@ -3359,14 +3353,16 @@ and isolating \(N_6\) gives exactly
  \le\frac{4220000-2200m-7m^2}{2000}.
 \]
 
-\section{Two construction families excluded by the spectral window}
+\section{Spectral exclusions for two construction families}
 \label{app:excluded-constructions}
 
-The two families below do not produce strict counterexamples.  Their
+The prime-field family below does not produce strict counterexamples of
+diameter three. None of the layer-respecting perfect-matching deletions
+considered in the second subsection is a strict counterexample.  Their
 definitions and proofs are kept together so the coordinate calculations can
 be read independently of the principal counterexamples and deletion bounds.
 
-\subsection{Why the prime-field construction fails the spectral window}
+\subsection{The prime-field construction in diameter three}
 
 For an odd prime \(q\ge7\) and \(1\le m\le q\), define \(G(q,m)\) on
 vertices \(P_{i,j},Q_{k,\ell}\), with \(0\le i,k<m\) and
@@ -3559,7 +3555,7 @@ generator action, orbit exhaustion, BFS distances, dual degrees and exact
 rational congruence. The orbit classification and the matrix sign are
 separate checks; both are required.
 
-\section{The final divisor checks in the three-to-one proof}
+\section{Order comparisons and divisor checks for the three-to-one bound}
 \label{app:three-to-one-arithmetic}
 
 For comparison, the unadjusted diameter-three bounds in degrees \(6\) through
