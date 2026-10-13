@@ -134,29 +134,15 @@ The conjecture holds on these graphs exactly for \(k\le3\), with equality at
 \(k=3\), and fails for every realizable \(k>3\).  The degree-seven
 Hoffman--Singleton graph therefore gives a gap of three.
 
-The Hoffman--Singleton example leaves three questions about the failure of
-the conjecture.
-
-\begin{enumerate}
-\item Which spectral mechanism governs regular counterexamples?
-\item How restrictive are the degree, diameter, and order conditions?
-\item How stable is the counterexample property under deletion?
-\end{enumerate}
-
 The distance-polynomial viewpoint is established for minimal cages and
 distance-polynomial graphs
 \cite{HowladerPanigrahi2022,Fiol2016}.  Nonbacktracking linear-programming
 bounds are due to Nozaki \cite{Nozaki2015}; related spectral-Moore work appears
-in \cite{CioabaEtAl2016}.  Our contribution is the specialization to
-the two-sided WOW window, the exact optimum for the admissible LP class of
-Section~\ref{sec:lp}, the order restrictions obtained from the integer
-entries of the excess matrix, the edge-local cycle certificate, and the
-deletion theory developed below.  We give an exact
-refutation of WOW-284 and a Lean 4.31 graph-level formalization of the
-\(50\)-vertex certificate.  We do not claim that order \(38\) is minimum or
-that the constructions classify all counterexamples.
-
-The exact computational certificates and the scope of the Lean verification are described in Appendix~\ref{sec:verification}.
+in \cite{CioabaEtAl2016}.  We specialize these methods to the interval imposed by WOW-284 and to
+vertex deletion. Our examples are not claimed to exhaust all
+counterexamples, and the order-$38$ example is not claimed minimal.
+Appendix~\ref{sec:verification} records the exact computations and the
+scope of the Lean verification.
 
 The paper follows two lines of argument. For regular graphs of diameter
 three, the distance-polynomial identity turns strict failure of WOW-284 into
@@ -186,10 +172,6 @@ stability bounds and the exact spectra for one- and two-vertex deletions
 strictness through three deletions; exact orbit certificates handle four
 and five. A six-vertex deletion shows that the universal radius is five
 (Theorem~\ref{thm:hs-radius}).
-
-The analytic arguments are proved below.  The finite classifications and
-matrix certificates require computer assistance; the accompanying release
-archives their exact inputs and the materials needed to reproduce them.
 
 \section{Dual degree, Moore graphs, and explicit counterexamples}
 \label{sec:examples}
@@ -683,7 +665,7 @@ Since \(p_{5,6}(11/6)<0\) and \(p_{5,6}(x)\to+\infty\) as
 contradicting the necessary bound \(\theta_2(A)<-1+\sqrt8\).  At \(n=30\),
 Meringer's isomorph-free enumeration leaves exactly four
 \((5,5)\)-cages \cite[p.~142]{Meringer1999}; each fixed record has an exact
-distance eigenvalue at most \(-5\). The witness factors and their
+distance eigenvalue at most \(-5\). The characteristic-polynomial factors and their
 roots are listed in Appendix~\ref{app:small-example-certificates};
 the classification supplies exhaustion, while the factors supply the
 distance-spectral obstruction.
@@ -1890,11 +1872,9 @@ spectrum. A Gram matrix gives the lower bound, and a weighted Gram matrix
 gives the upper bound; the spectral window makes the weights positive.
 Appendix~\ref{app:order50-moment-bounds} displays both matrices and their
 determinant calculations.
-The complete symbolic determinants, Schur complements, kernel argument, and
-exact profile enumeration are independently checked by
-\codefile{scripts/verify_proof_audit_06_order50_feasibility.py}.  The
-surviving \(266\) profiles are exact pruning data, not an existence or
-nonexistence claim.
+The exact matrix calculations and enumeration are checked by
+\codefile{scripts/verify_proof_audit_06_order50_feasibility.py}.
+The $266$ surviving profiles neither establish nor rule out a graph.
 \end{proof}
 
 \begin{remark}[Signed-root Gram formulation]\label{rem:signed-root}
@@ -2154,7 +2134,7 @@ provides a surviving vertex \(x\) at distance two from every deleted
 vertex.  This vertex attains the lower bound.  For \(z\in S\), let
 \(y_z\) be the unique common neighbour of \(x,z\).  It cannot be deleted:
 \(y_z\in S\) would, by the choice of \(x\), require \(d_M(x,y_z)=2\),
-contrary to \(x\sim y_z\).  All these witnesses therefore survive, and
+contrary to \(x\sim y_z\).  All these common neighbours therefore survive, and
 each deleted vertex contributes once to the neighbour-degree deficit.
 The lower bound is consequently an equality.  The
 replacement paths, boundary case \(s=k-1\), distance formula, and attainment
@@ -3095,26 +3075,11 @@ bounds above.
 
 \section{Open questions on spectral constraints and stability}\label{sec:scope}
 
-The arguments above use extremal polynomial certificates to obtain local
-positive-semidefinite constraints, and metric perturbations to study
-deletion.  Their exact computations and formal proofs suggest three broader
-questions.
-
-\begin{enumerate}
-\item Given an optimal polynomial or semidefinite certificate for a global
-spectral inequality, when do the principal minors of its slack operator form a
-complete hierarchy of local constraints?  Can rank or flat-extension
-conditions force finite convergence and reconstruct the extremal discrete
-objects?
-\item Is there a general stability theory for spectral inequalities in which a
-small global defect forces proximity to a structured algebraic model, and
-local perturbations distinguish sporadic objects from finite shadows of
-infinite families?
-\item Which one-variable spectral arguments survive when homogeneity or
-commutativity is lost?  Can degree-weighted operators, nonbacktracking
-operators, or matrix-valued orthogonal polynomials provide comparably sharp
-certificates for irregular or multitype systems?
-\end{enumerate}
+The necessary conditions at degree six and order $50$ do not settle
+existence. It remains to determine whether a graph satisfying them is a
+strict counterexample. The present results also do not determine the minimum
+order of a strict counterexample. Extending the regular-graph order bounds
+to irregular graphs is another direction.
 
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
 exploration, and Lean formalization.  Codex also assisted with English-language
@@ -3481,11 +3446,11 @@ certificates are checked
 by \codefile{scripts/verify_proof_audit_07_layer_matchings.py}.
 \end{proof}
 
-\section{Finite spectral witnesses and deletion certificates}
+\section{Finite spectral computations and deletion checks}
 \label{app:small-example-certificates}
 
-The finite checks establish different assertions. The following register
-records the graph, the exact output needed, and the resulting inequality.
+We record the exact spectral and matrix computations used above, together
+with the graph data and the inequalities they establish.
 The graph encodings are fixed in \path{data/graphs/} and
 \path{data/cages55/}; the coordinate definitions of the small counterexamples
 are given above Theorem~\ref{thm:explicit-examples}.
@@ -3497,7 +3462,7 @@ least eigenvalue is needed.
 \[
 \begin{array}{lcc}
 \toprule
-\text{fixed graph6 record}&\text{distance factor}&\text{witness eigenvalue}\\
+\text{fixed graph6 record}&\text{distance factor}&\text{eigenvalue}\\
 \midrule
 \text{Foster}&x^2+6x-11&-3-2\sqrt5\\
 \text{Meringer}&x+6&-6\\
