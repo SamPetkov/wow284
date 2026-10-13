@@ -167,8 +167,9 @@ The second argument concerns deletion. Deleting vertices can increase the
 distances between those left behind, so taking a principal submatrix of the
 old distance matrix is not enough. For small deletions from a Moore graph,
 we identify exactly which distances increase. This correction gives general
-stability bounds and the exact spectra for one- and two-vertex deletions
-(Section~\ref{sec:punctures}). For Hoffman--Singleton, the bounds prove
+stability bounds (Section~\ref{sec:punctures});
+Appendix~\ref{app:small-deletion-spectra} gives the exact one- and
+two-deletion spectra. For Hoffman--Singleton, the bounds prove
 strictness through three deletions; exact orbit certificates handle four
 and five. A six-vertex deletion shows that the universal radius is five
 (Theorem~\ref{thm:hs-radius}).
@@ -1669,6 +1670,637 @@ When \(k\) is odd, \(kn=2|E(G)|\) requires \(n\) to be even; in particular,
 the entries for \(k=7,11,15,17,19\) improve to
 \(74,262,634,910,1256\), respectively.
 
+The degree-six order bound leaves the endpoint \(n=50\) unresolved.
+Appendix~\ref{app:order50-details} gives further restrictions on adjacency
+multiplicity and cycle counts, and studies a signed graph associated with
+the excess matrix. These are necessary conditions; they do not establish
+whether a strict counterexample at this endpoint exists.
+
+\section{Distance spectra after vertex deletion in Moore graphs}\label{sec:punctures}
+
+Deleting vertices can increase the distances between those that remain.
+We identify these increases and use them to bound the change in the least
+distance eigenvalue. The full one- and two-deletion spectra are given in
+Appendix~\ref{app:small-deletion-spectra}.
+
+Let \(M\) be a degree-\(k\) Moore graph of diameter two and put
+\(\Delta=\sqrt{4k-3}\).
+
+\subsection{Changed distances and a stability bound}
+
+\begin{theorem}[Small-puncture normal form]\label{thm:small-puncture}
+Let \(M\) be a degree-\(k\) Moore graph of diameter two, let
+\(S\subseteq V(M)\) have size \(s\le k-1\), and put \(H=M-S\).  Then \(H\)
+is connected, has diameter at most three, and
+\[
+ \resultbox{\delta^*(H)=k-\frac{s}{k}.}
+\]
+Let \(B\) be the surviving-vertex by deleted-vertex incidence matrix, with
+\(B_{xz}=1\) exactly when \(x\sim_M z\).  Then
+\[
+ \resultbox{
+ D(H)=2(J-I)-A(H)+BB^{\mathsf T}
+ -\operatorname{diag}(BB^{\mathsf T}).
+ }
+\]
+\end{theorem}
+
+\begin{proof}
+The case \(s=0\) is immediate, so assume \(1\le s\le k-1\).  Let
+\(x,y\in V(H)\) be nonadjacent in \(M\), and suppose their unique common
+neighbour \(z\) lies in \(S\).  For every
+\(a\in N_M(x)\setminus\{z\}\), the vertices \(a,y\) are nonadjacent and
+have a unique common neighbour \(b_a\).  Thus
+\[
+ x-a-b_a-y
+\]
+is a length-three path.  The \(k-1\) paths are internally vertex-disjoint:
+if \(b_a=b_{a'}\), there would be a four-cycle, and if \(b_a=a'\),
+there would be a triangle through \(x\).  Apart from \(z\), only
+\(s-1\le k-2\) vertices have been deleted, so they cannot meet all these
+paths.  At least one survives.  Thus every destroyed length-two path is
+replaced by distance exactly three, giving the matrix formula.
+
+For \(x\in V(H)\), let \(t_x=|N_M(x)\cap S|\).  A deleted neighbour of
+\(x\) is adjacent to no surviving neighbour of \(x\), by triangle-freeness;
+each other deleted vertex has at most one common neighbour with \(x\).  Thus
+\[
+ \sum_{y\in N_H(x)}t_y\le s-t_x.
+\]
+Consequently,
+\[
+ d_H^*(x)
+ \ge k-\frac{s-t_x}{k-t_x}
+ \ge k-\frac{s}{k},
+\]
+where the last inequality follows from
+\[
+ \left(k-\frac{s-t}{k-t}\right)-\left(k-\frac{s}{k}\right)
+ =\frac{t(k-s)}{k(k-t)}\ge0.
+\]
+The intersection bound
+\[
+ \left|\bigcap_{z\in S}\Gamma_2(z)\right|
+ \ge k^2+1-s(k+1)\ge2
+\]
+provides a surviving vertex \(x\) at distance two from every deleted
+vertex.  This vertex attains the lower bound.  For \(z\in S\), let
+\(y_z\) be the unique common neighbour of \(x,z\).  It cannot be deleted:
+\(y_z\in S\) would, by the choice of \(x\), require \(d_M(x,y_z)=2\),
+contrary to \(x\sim y_z\).  All these common neighbours therefore survive, and
+each deleted vertex contributes once to the neighbour-degree deficit.
+The lower bound is consequently an equality.  The
+replacement paths, boundary case \(s=k-1\), distance formula, and attainment
+step are independently checked by
+\codefile{scripts/verify_proof_audit_12_small_puncture.py}.
+\end{proof}
+
+\begin{proposition}[Deletion stability]\label{prop:deletion-stability}
+Let \(G\) be connected with at least two vertices, let
+\(S\subseteq V(G)\), and suppose \(H=G-S\) is connected with at least two
+vertices.  Put
+\[
+ D_0=D(G)[V(H)],
+ \qquad E_S=D(H)-D_0,
+\]
+\[
+ a=\delta^*(G),
+ \quad b=\delta^*(H),
+ \quad \gamma=\Phi(G).
+\]
+Then
+\[
+ \resultbox{
+ \Phi(H)\ge\gamma-(a-b)+\lambda_{\min}(E_S).
+ }
+\]
+\end{proposition}
+
+\begin{proof}
+The score \(\Phi(H)\) is the least eigenvalue of \(D(H)+bI\).
+We write this matrix as
+\[
+ D(H)+bI=(D_0+aI)+E_S-(a-b)I.
+\]
+The first term is a principal submatrix of \(D(G)+aI\), whose least
+eigenvalue is \(\gamma\).  Principal-submatrix interlacing
+\cite[Corollary~2.2]{Haemers1995} therefore gives
+\(\lambda_{\min}(D_0+aI)\ge\gamma\).
+Weyl's inequality bounds the least eigenvalue after adding \(E_S\),
+and subtracting \((a-b)I\) shifts every eigenvalue by \(-(a-b)\).
+This gives the stated bound.  For Moore punctures, \(E_S\) is the
+explicit distance-increase matrix specified in Theorem~\ref{thm:small-puncture}.
+\end{proof}
+
+\begin{corollary}[Uniform deletion stability]
+\label{cor:uniform-deletion}
+Under the hypotheses of Theorem~\ref{thm:small-puncture}, put
+\[
+ t_x=|N_M(x)\cap S|,
+ \qquad
+ \tau(S)=\max_{x\in V(M-S)}t_x.
+\]
+Then
+\[
+ \resultbox{
+ \Phi(M-S)\ge
+ k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}-\tau(S).
+ }
+\]
+In particular, the deletion is a strict counterexample whenever the
+right-hand side is positive.  Since \(\tau(S)\le s\), every deletion of
+\(s\) vertices is strict whenever
+\[
+ \resultbox{
+ s\left(1+\frac1k\right)
+ <k-\frac{3+\sqrt{4k-3}}2.
+ }
+\]
+For \(k>3\), equivalently, every deletion of at most
+\[
+ r_k=\min\left\{
+ k-1,\
+ \left\lceil
+ \frac{k}{k+1}\left(k-\frac{3+\sqrt{4k-3}}2\right)
+ \right\rceil-1
+ \right\}
+\]
+vertices is strict.  In particular, \(r_7=2\); for a hypothetical
+degree-\(57\) Moore graph, whose existence remains open
+\cite{SmithMontemanni2026}, this estimate gives \(r_{57}=47\).
+Proposition~\ref{prop:clique-deletion-bound} strengthens that
+guarantee to every deletion of at most \(56\) vertices.
+\end{corollary}
+
+\begin{proof}
+By Theorem~\ref{thm:small-puncture}, the distance-increase matrix is
+\[
+ E_S=BB^{\mathsf T}-\operatorname{diag}(t_x).
+\]
+Since \(BB^{\mathsf T}\succeq0\) and
+\(\operatorname{diag}(t_x)\preceq\tau(S)I\), one has
+\(\lambda_{\min}(E_S)\ge-\tau(S)\).  The parent Moore graph has score
+\[
+ \Phi(M)=k-\frac{3+\sqrt{4k-3}}2,
+\]
+and Theorem~\ref{thm:small-puncture} shows that deletion lowers the minimum
+dual degree by \(s/k\).  Proposition~\ref{prop:deletion-stability} now gives
+the first bound.  The second follows from \(\tau(S)\le s\), and solving its
+strict scalar inequality for the largest integral \(s\) gives \(r_k\).
+\end{proof}
+
+\subsection{One and two vertex deletions}
+
+For one deleted vertex, and for the endpoints of an edge when \(k\ge3\),
+the least distance eigenvalue is \(-2-\sqrt{k}\). Combining this with the
+dual-degree formula gives, respectively,
+\[
+ \Phi(M-v)=k-\frac1k-2-\sqrt{k},
+ \qquad
+ \Phi(M-\{u,v\})=k-\frac2k-2-\sqrt{k}\quad(uv\in E(M)).
+\]
+Both scores are positive for every realizable integer \(k\ge5\).
+Theorems~\ref{thm:one-puncture} and~\ref{thm:edge-puncture} give the
+complete spectra in Appendix~\ref{app:small-deletion-spectra}.
+For two nonadjacent deletions, Theorem~\ref{thm:nonadjacent-puncture}
+also gives a full factorization and proves strictness for every realizable
+integer \(k\ge6\). The stability bound above avoids these diagonalizations
+when only strictness is needed.
+
+\Needspace{6\baselineskip}
+\section{Uniform deletion bounds and the Hoffman--Singleton radius}
+\label{sec:robustness}
+
+The stability bound from Section~\ref{sec:punctures} handles many deletion
+sets without a new spectral calculation. We now improve it when the deleted
+vertices share a surviving neighbour. This proves stability through three
+deletions for Hoffman--Singleton. Exact orbit certificates cover sizes four
+and five and determine the sharp universal radius.
+
+For a common surviving neighbour, the distance correction is a union of
+cliques. Its least eigenvalue gives the sharper bound below.
+
+\begin{proposition}[Neighbourhood punctures]
+\label{prop:neighbourhood-puncture}
+Let \(M\) be a degree-\(k\) Moore graph of diameter two, \(k\ge2\).
+Let \(w\in V(M)\), let \(\varnothing\ne S\subseteq N_M(w)\), and put
+\(s=|S|\le k-1\) and \(H=M-S\).  The distance-increase matrix
+\[
+ E_S=D(H)-D(M)[V(H)]
+\]
+is the adjacency matrix of \(s\) copies of \(K_k\) meeting only at \(w\),
+together with \(k(k-s)\) isolated vertices.  In particular,
+\[
+ \lambda_{\min}(E_S)
+ =\frac{k-2-\sqrt{(k-2)^2+4s(k-1)}}2,
+\]
+and
+\[
+ \Phi(H)\ge
+ k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}
+ +\frac{k-2-\sqrt{(k-2)^2+4s(k-1)}}2.
+\]
+\end{proposition}
+
+\begin{proof}
+The deleted set is independent, since a pair of its vertices joined by an
+edge would form a triangle with \(w\).  Thus each deleted vertex has all
+\(k\) of its neighbours in \(H\).  For distinct \(z,z'\in S\), the Moore
+property gives
+\[
+ N_M(z)\cap N_M(z')=\{w\}.
+\]
+By Theorem~\ref{thm:small-puncture}, every destroyed length-two path is
+replaced by a length-three path.  Hence \((E_S)_{xy}=1\), for distinct
+surviving vertices \(x,y\), precisely when they belong to \(N_M(z)\) for
+some \(z\in S\).  There is at most one such \(z\).  These neighbourhoods
+therefore give the asserted cliques, with \(k(k-s)\) remaining vertices.
+
+We take the coordinate vector at the centre and the indicator vector of
+all noncentral clique vertices.  Their span is invariant under the
+correction matrix.  After normalizing both vectors to have length one,
+the matrix on this span is the normalized symmetric quotient
+\[
+ \begin{pmatrix}
+ 0&\sqrt{s(k-1)}\\
+ \sqrt{s(k-1)}&k-2
+ \end{pmatrix}.
+\]
+The other eigenvalues are \(-1\) on the zero-sum space of the \(k-1\)
+noncentral vertices of each clique, \(k-2\) on the differences of their
+constant sums, and \(0\) on the isolated vertices.  These spaces have
+dimensions \(s(k-2)\), \(s-1\), and \(k(k-s)\), respectively, so the
+decomposition is complete.  The smaller quotient root is at most \(-1\), because its
+characteristic polynomial has value \((k-1)(1-s)\le0\) at \(-1\).
+It is therefore the least eigenvalue of \(E_S\).
+The final inequality follows from Proposition~\ref{prop:deletion-stability}
+and \(\delta^*(H)=k-s/k\).
+\end{proof}
+
+\begin{corollary}[Analytic three-vertex stability]
+\label{cor:analytic-three-puncture}
+Let \(M\) be the Hoffman--Singleton graph.  For every
+\(S\subseteq V(M)\) with \(|S|\le3\),
+\[
+ \Phi(M-S)>\frac17.
+\]
+In particular, every such puncture is a strict counterexample to WOW-284.
+\end{corollary}
+
+\begin{proof}
+The graph \(M\) has score \(3\).  If \(|S|\le2\),
+Corollary~\ref{cor:uniform-deletion} gives
+\(\Phi(M-S)\ge3-|S|/7-|S|\ge5/7\).
+Now let \(|S|=3\), and put
+\[
+ \tau=\max_{x\in V(M-S)}|N_M(x)\cap S|.
+\]
+If \(\tau\le2\), the same corollary gives
+\(\Phi(M-S)\ge3-3/7-2=4/7\).
+If \(\tau=3\), some surviving vertex \(w\) is adjacent to all three
+deleted vertices.  Proposition~\ref{prop:neighbourhood-puncture} gives
+\[
+ \Phi(M-S)\ge\frac{71-7\sqrt{97}}{14}>\frac17,
+\]
+where the strict comparison follows from
+\(49\cdot97=4753<4761=69^2\).
+\end{proof}
+
+\begin{theorem}[Hoffman--Singleton robustness radius]\label{thm:hs-radius}
+Let \(M\) be the Hoffman--Singleton graph.  Every induced graph \(M-S\) with
+\(|S|\le5\) is a strict counterexample to WOW-284.  This is sharp in the
+universal sense: there exists a six-vertex set whose deletion is not strict.
+Hence the universal vertex-deletion robustness radius is exactly five.
+\end{theorem}
+
+\begin{proof}
+Theorem~\ref{thm:small-puncture} gives
+\[
+ \delta^*(M-S)=\frac{49-|S|}{7}.
+\]
+Corollary~\ref{cor:analytic-three-puncture} proves strictness analytically
+for every set with \(|S|\le3\).  Only sets of sizes four and five remain
+to be certified.  We reduce that finite check by automorphisms.  Two
+explicitly stored permutations are verified edge by edge on the coordinate
+graph, and they generate a group of order \(252000\).  The full orbit
+inventory on deletion sets of sizes \(0,1,2,3,4,5\) has counts
+\[
+ 1,1,2,4,11,33.
+\]
+Thus the remaining sizes require \(44\) representatives.  For each one,
+exact fraction arithmetic gives
+\[
+ 7D(M-S)+(49-|S|)I\succ0.
+\]
+The archived certificates for all \(52\) original representatives are
+retained; those for the smaller sets provide redundant checks.
+
+To show that the radius cannot be increased, delete
+\[
+ \{P_{2,4},P_{3,1},P_{3,4},Q_{2,1},Q_{3,4},Q_{4,4}\}.
+\]
+The resulting graph has \(\delta^*=43/7\), while an exact
+\(LDL^{\mathsf T}\) decomposition of \(7D(M-S)+43I\) has exactly one negative
+and no zero pivot.  Since \(L\) is invertible, Sylvester's law of inertia makes
+\(7D(M-S)+43I\) indefinite, so the graph is not strict.  Generator action,
+orbit exhaustion, BFS distances, the small-puncture formula, and a handwritten rational
+\(LDL^{\mathsf T}\) implementation are independently checked by
+\codefile{scripts/verify_proof_audit_13_hs_robustness.py}.
+\end{proof}
+
+\begin{remark}
+The theorem asserts that every deletion through size five succeeds and that at
+least one deletion of size six fails.  It does not assert that every
+six-vertex deletion fails.
+\end{remark}
+
+\begin{proposition}[Six-neighbour punctures]
+\label{prop:hs-neighbourhood-six}
+Let \(M\) be the Hoffman--Singleton graph.  For every \(w\in V(M)\) and
+every \(S\subseteq N_M(w)\) with \(|S|=6\), the graph \(M-S\) is a
+strict counterexample to WOW-284.
+\end{proposition}
+
+\begin{proof}
+Put \(H=M-S\).  Each vertex in \(\Gamma_2(w)\) has a unique
+parent in \(N_M(w)\).  Partition \(V(H)\) into \(\{w\},A,B,C\), where
+\(A=N_M(w)\setminus S\), \(B\) consists of children of the deleted
+parents, and \(C\) consists of children of the surviving parents.  Their
+sizes are
+\[
+ 1,\qquad1,\qquad36,\qquad6.
+\]
+The Moore property gives no edge between children of the same parent and
+exactly one neighbour in every other child class.  Indeed, if \(x\) has
+parent \(p\) and \(q\in N_M(w)\setminus\{p\}\), the unique common
+neighbour of the nonadjacent pair \(x,q\) belongs to \(\Gamma_2(w)\)
+and has parent \(q\).
+
+We first compute the distance matrix on vectors constant on each cell.
+The partition is equitable, and the row-sum quotient, in the order
+\(\{w\},A,B,C\), is
+\[
+ Q=\begin{pmatrix}
+ 0&1&108&12\\
+ 1&0&72&6\\
+ 3&2&70&11\\
+ 2&1&66&10
+ \end{pmatrix}.
+\]
+The parent distances on the surviving vertices are given by
+\(D_0=2(J-I)-A(H)\).  Proposition~\ref{prop:neighbourhood-puncture}
+changes only the distances from \(w\) to \(B\) and between two children
+of the same deleted parent, adding one in each case.
+
+The quotient reduces the cell-constant part to a four-by-four matrix.
+We leave that check until the end and first treat vectors whose
+coordinates sum to zero on every cell.  Let \(U\) be the
+four-dimensional cell-constant space.  Both \(D_0\) and the
+distance-increase matrix \(E_S\) preserve \(U\).
+Symmetry gives an invariant orthogonal complement \(U^\perp\).
+In \(U^\perp\), the coordinates on each cell sum to zero.
+The singleton cell at the centre forces the \(w\)-coordinate to vanish.
+For \(x\in U^\perp\),
+\[
+ x^{\mathsf T}E_Sx
+ =\sum_{z\in S}\left(\sum_{y\in N_M(z)\setminus\{w\}}x_y\right)^2
+   -\sum_{y\in B}x_y^2
+ \ge-\lVert x\rVert^2.
+\]
+The parent distance matrix has least eigenvalue \(-4\).
+Taking its principal submatrix on the surviving vertices gives
+\(D_0\succeq-4I\), and the correction estimate above gives
+\(D(H)|_{U^\perp}\succeq-5I\).
+Theorem~\ref{thm:small-puncture} gives
+\(\delta^*(H)=43/7>5\).
+
+It remains to check the restriction to \(U\).  In the basis of cell
+indicators, the quadratic form of \(7D(H)+43I\) has symmetric matrix
+\[
+ T=\operatorname{diag}(1,1,36,6)(7Q+43I)
+ =\begin{pmatrix}
+ 43&7&756&84\\
+ 7&43&504&42\\
+ 756&504&19188&2772\\
+ 84&42&2772&678
+ \end{pmatrix}.
+\]
+Its leading principal minors are
+\[
+ 43,\qquad1800,\qquad4374000,\qquad226834992.
+\]
+All four are positive, so Sylvester's criterion gives
+\(T\succ0\).  The shifted distance matrix is therefore positive
+definite on both \(U\) and \(U^\perp\), proving \(\Phi(H)>0\).
+\end{proof}
+
+The universal deletion radius remains five: the preceding proposition
+describes successful six-vertex deletions of one particular form, whereas
+Theorem~\ref{thm:hs-radius} supplies a different six-vertex deletion that
+fails.
+
+For a hypothetical degree-\(57\) Moore graph, the neighbourhood
+calculation reaches the endpoint of the small-puncture theorem.
+
+\begin{corollary}[Degree-\(57\) neighbourhood punctures]
+\label{cor:degree57-neighbourhood}
+If \(M\) is a degree-\(57\) Moore graph of diameter two, then for every
+\(w\in V(M)\) and every \(S\subseteq N_M(w)\) with \(|S|\le56\),
+\[
+ \Phi(M-S)>\frac{685}{57}.
+\]
+In particular, every such induced graph is a strict counterexample to
+WOW-284.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:moore-threshold} gives the parent score \(48\), which
+handles \(S=\varnothing\).  For nonempty \(S\), put \(s=|S|\).
+Theorem~\ref{thm:small-puncture} applies through \(s=56\): the survivor
+graph is connected and has minimum dual degree \(57-s/57\).  Its order
+is at least \(3194\), and it inherits girth at least five.
+Proposition~\ref{prop:neighbourhood-puncture} gives
+\[
+ \lambda_{\min}(E_S)
+ =\frac{55-\sqrt{55^2+224s}}2>-35,
+\]
+since
+\[
+ 55^2+224s\le15569<15625=125^2.
+\]
+The loss of minimum dual degree is exactly \(s/57\), so
+Proposition~\ref{prop:deletion-stability} yields
+\[
+ \Phi(M-S)\ge48-\frac{s}{57}+\lambda_{\min}(E_S)
+ >48-\frac{56}{57}-35=\frac{685}{57}>0.
+\]
+\end{proof}
+
+Grouping the correction cliques through one surviving vertex improves
+the estimate for arbitrary deletion sets.
+
+\begin{proposition}[Splitting the distance correction at a vertex]
+\label{prop:clique-deletion-bound}
+Let \(M\) be a degree-\(k\) Moore graph of diameter two, \(k\ge2\),
+and let \(S\subseteq V(M)\) have size \(s\le k-1\).  Put \(H=M-S\),
+\[
+ E_S=D(H)-D(M)[V(H)],
+ \qquad
+ \tau=\max_{x\in V(H)}|N_M(x)\cap S|,
+\]
+and, for \(0\le r\le k-1\), define
+\[
+ f_k(r)=\frac{k-2-\sqrt{(k-2)^2+4r(k-1)}}2.
+\]
+Then
+\[
+ \lambda_{\min}(E_S)
+ \ge \max\{-\tau,\,f_k(\tau)-s+\tau\},
+\]
+and
+\[
+ \Phi(H)\ge k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}
+ +\max\{-\tau,\,f_k(\tau)-s+\tau\}.
+\]
+In particular, if \(M\) has degree \(57\), then every
+\(S\subseteq V(M)\) with \(|S|\le56\) satisfies
+\[
+ \Phi(M-S)\ge\frac{286}{57}>0.
+\]
+Thus every such puncture is a strict counterexample to WOW-284.
+\end{proposition}
+
+\begin{proof}
+For \(s=0\), one has \(\tau=0\), \(f_k(0)=0\), and \(E_S=0\), so the
+claims follow from Theorem~\ref{thm:moore-threshold}.  Assume \(s\ge1\).
+For \(z\in S\), let \(b_z\) be the indicator vector of
+\(N_M(z)\cap V(H)\), and put
+\[
+ C_z=b_zb_z^{\mathsf T}-\operatorname{diag}(b_z).
+\]
+The matrix \(C_z\) records the distance increases caused by deleting
+\(z\): it is the adjacency matrix of a clique on the surviving neighbours
+of \(z\), with all other vertices isolated.
+Theorem~\ref{thm:small-puncture} gives \(E_S=\sum_{z\in S}C_z\).
+Each clique matrix has least eigenvalue at least \(-1\), since
+\[
+ C_z+I=b_zb_z^{\mathsf T}
+       +\operatorname{diag}(\mathbf1-b_z)\succeq0.
+\]
+The Gram-matrix estimate also gives \(E_S\succeq-\tau I\).
+
+To obtain the second bound, choose \(w\in V(H)\) attaining \(\tau\),
+and put \(Z=N_M(w)\cap S\).  Every deleted vertex has a surviving
+neighbour, since \(s<k\), so \(1\le|Z|=\tau\le k-1\).
+We group the \(\tau\) clique matrices indexed by \(Z\) and estimate
+the remaining \(s-\tau\) separately.
+The correction matrix for deleting \(Z\) alone is
+\[
+ F_Z=D(M-Z)-D(M)[V(M-Z)].
+\]
+By the small-puncture formula, its principal submatrix on \(V(H)\)
+is exactly \(\sum_{z\in Z}C_z\).
+Proposition~\ref{prop:neighbourhood-puncture} gives
+\(\lambda_{\min}(F_Z)=f_k(\tau)\), so interlacing bounds the least
+eigenvalue of this grouped sum below by \(f_k(\tau)\).
+Each of the remaining clique matrices has least eigenvalue at least
+\(-1\).  Weyl's inequality therefore yields
+\[
+ \lambda_{\min}(E_S)
+ \ge f_k(\tau)-(s-\tau).
+\]
+Together with \(E_S\succeq-\tau I\), this proves the first inequality.
+The score bound follows from Proposition~\ref{prop:deletion-stability}
+and \(\delta^*(H)=k-s/k\).
+
+For \(k=57\), the parent score is \(48\).  If \(\tau\le42\), the first
+bound gives \(\lambda_{\min}(E_S)\ge-42\).  If \(\tau\ge43\), then
+\[
+ (27+2\tau)^2-(55^2+224\tau)
+ =4\bigl((\tau-43)(\tau+14)+28\bigr)>0.
+\]
+Since \(27+2\tau>0\), this implies
+\(f_{57}(\tau)>14-\tau\), and hence
+\[
+ \lambda_{\min}(E_S)>14-s\ge-42.
+\]
+Consequently, for every \(s\le56\),
+\[
+ \Phi(M-S)\ge48-\frac{s}{57}-42
+ \ge48-\frac{56}{57}-42=\frac{286}{57}>0.
+\]
+\end{proof}
+
+\section{The equality boundary and a graph attaining it}
+\label{sec:controls}
+
+The shifted adjacency window also identifies the equality case of WOW-284.
+We state the criterion and give an exact graph attaining it.
+
+\begin{theorem}[Equality boundary]\label{thm:equality-boundary}
+Let \(G\) be connected, \(k\)-regular, of girth at least five and diameter
+three.  Then
+\[
+ \Phi(G)=0
+ \quad\Longleftrightarrow\quad
+ \max_{\theta\ne k}|\theta+1|=\sqrt{2k-2}.
+\]
+Equivalently, \(D+kI\) is positive semidefinite and singular.  If \(2k-2\) is
+not a square, the two boundary adjacency eigenvalues occur with equal
+multiplicity, so the distance eigenvalue \(-k\) has even multiplicity.  If
+\(2k-2\) is a square, then \(k=2r^2+1\) for some integer \(r\).
+\end{theorem}
+
+\begin{proof}
+This is immediate from Theorem~\ref{thm:diameter-three-score}.  In the
+nonsquare case, the two boundary values are algebraic conjugates, so their
+multiplicities in the integral characteristic polynomial agree.  In the square
+case, \(2k-2=s^2\) forces \(s\) even.  The exact scalar audit is
+\codefile{scripts/verify_equality_boundary.py}.
+\end{proof}
+
+J{\o}rgensen's \(9\)-regular order-\(96\) graph of girth five is an exact equality
+case:
+\[
+ \delta^*=9,
+ \qquad \lambda_{\min}(D)=-9,
+\]
+with multiplicity eight.  The construction is due to J{\o}rgensen
+\cite{Jorgensen2005}; the three local graph representations, handwritten
+graph6 decoder, characteristic polynomials, root intervals, and provenance
+boundary are checked by
+\codefile{scripts/verify_proof_audit_09_jorgensen96.py}.
+
+Two natural construction routes also fail: a balanced prime-field family
+of girth-five graphs, and the layer-respecting perfect-matching deletions of
+Hoffman--Singleton.  Appendix~\ref{app:excluded-constructions} defines both
+families and proves their spectral exclusions.  These calculations test the
+window criterion but are not needed for the counterexamples or the deletion
+bounds above.
+
+\section{Open questions on spectral constraints and stability}\label{sec:scope}
+
+The necessary conditions at degree six and order $50$ do not settle
+existence. It remains to determine whether a graph satisfying them is a
+strict counterexample. The present results also do not determine the minimum
+order of a strict counterexample. Extending the regular-graph order bounds
+to irregular graphs is another direction.
+
+OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
+exploration, and Lean formalization.  Codex also assisted with English-language
+editing, organization, and supplementary proof arguments.  The author assumes full responsibility
+for the mathematics, attribution, and conclusions.  The original source, exact
+certificates, and build instructions are available at
+\href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
+Release \texttt{\RepoTag} is the historical certificate baseline.
+The analytic additions in this v2 are given in the present source and are
+separate from that release.
+
+\appendix
+
+\section{Further restrictions at degree six and order fifty}
+\label{app:order50-details}
+
 \subsection{The adjacency multiplicity bound at order fifty}
 
 \begin{proposition}[The order-\(50\) \((-2)\)-multiplicity bound]
@@ -2063,180 +2695,10 @@ The right-hand side is an integer.  Hence \(v\equiv24\pmod {32}\), which is impo
 is disconnected.
 \end{proof}
 
-\section{Distance spectra after vertex deletion in Moore graphs}\label{sec:punctures}
+\section{Exact spectra after one or two vertex deletions}
+\label{app:small-deletion-spectra}
 
-Deleting vertices changes some distances as well as removing rows and
-columns from the original distance matrix. We first identify the distance
-increases and prove a stability bound. We then compute the spectra for
-one- and two-vertex deletions.
-
-Let \(M\) be a degree-\(k\) Moore graph of diameter two and put
-\(\Delta=\sqrt{4k-3}\).
-
-\subsection{Changed distances and a stability bound}
-
-\begin{theorem}[Small-puncture normal form]\label{thm:small-puncture}
-Let \(M\) be a degree-\(k\) Moore graph of diameter two, let
-\(S\subseteq V(M)\) have size \(s\le k-1\), and put \(H=M-S\).  Then \(H\)
-is connected, has diameter at most three, and
-\[
- \resultbox{\delta^*(H)=k-\frac{s}{k}.}
-\]
-Let \(B\) be the surviving-vertex by deleted-vertex incidence matrix, with
-\(B_{xz}=1\) exactly when \(x\sim_M z\).  Then
-\[
- \resultbox{
- D(H)=2(J-I)-A(H)+BB^{\mathsf T}
- -\operatorname{diag}(BB^{\mathsf T}).
- }
-\]
-\end{theorem}
-
-\begin{proof}
-The case \(s=0\) is immediate, so assume \(1\le s\le k-1\).  Let
-\(x,y\in V(H)\) be nonadjacent in \(M\), and suppose their unique common
-neighbour \(z\) lies in \(S\).  For every
-\(a\in N_M(x)\setminus\{z\}\), the vertices \(a,y\) are nonadjacent and
-have a unique common neighbour \(b_a\).  Thus
-\[
- x-a-b_a-y
-\]
-is a length-three path.  The \(k-1\) paths are internally vertex-disjoint:
-if \(b_a=b_{a'}\), there would be a four-cycle, and if \(b_a=a'\),
-there would be a triangle through \(x\).  Apart from \(z\), only
-\(s-1\le k-2\) vertices have been deleted, so they cannot meet all these
-paths.  At least one survives.  Thus every destroyed length-two path is
-replaced by distance exactly three, giving the matrix formula.
-
-For \(x\in V(H)\), let \(t_x=|N_M(x)\cap S|\).  A deleted neighbour of
-\(x\) is adjacent to no surviving neighbour of \(x\), by triangle-freeness;
-each other deleted vertex has at most one common neighbour with \(x\).  Thus
-\[
- \sum_{y\in N_H(x)}t_y\le s-t_x.
-\]
-Consequently,
-\[
- d_H^*(x)
- \ge k-\frac{s-t_x}{k-t_x}
- \ge k-\frac{s}{k},
-\]
-where the last inequality follows from
-\[
- \left(k-\frac{s-t}{k-t}\right)-\left(k-\frac{s}{k}\right)
- =\frac{t(k-s)}{k(k-t)}\ge0.
-\]
-The intersection bound
-\[
- \left|\bigcap_{z\in S}\Gamma_2(z)\right|
- \ge k^2+1-s(k+1)\ge2
-\]
-provides a surviving vertex \(x\) at distance two from every deleted
-vertex.  This vertex attains the lower bound.  For \(z\in S\), let
-\(y_z\) be the unique common neighbour of \(x,z\).  It cannot be deleted:
-\(y_z\in S\) would, by the choice of \(x\), require \(d_M(x,y_z)=2\),
-contrary to \(x\sim y_z\).  All these common neighbours therefore survive, and
-each deleted vertex contributes once to the neighbour-degree deficit.
-The lower bound is consequently an equality.  The
-replacement paths, boundary case \(s=k-1\), distance formula, and attainment
-step are independently checked by
-\codefile{scripts/verify_proof_audit_12_small_puncture.py}.
-\end{proof}
-
-\begin{proposition}[Deletion stability]\label{prop:deletion-stability}
-Let \(G\) be connected with at least two vertices, let
-\(S\subseteq V(G)\), and suppose \(H=G-S\) is connected with at least two
-vertices.  Put
-\[
- D_0=D(G)[V(H)],
- \qquad E_S=D(H)-D_0,
-\]
-\[
- a=\delta^*(G),
- \quad b=\delta^*(H),
- \quad \gamma=\Phi(G).
-\]
-Then
-\[
- \resultbox{
- \Phi(H)\ge\gamma-(a-b)+\lambda_{\min}(E_S).
- }
-\]
-\end{proposition}
-
-\begin{proof}
-The score \(\Phi(H)\) is the least eigenvalue of \(D(H)+bI\).
-We write this matrix as
-\[
- D(H)+bI=(D_0+aI)+E_S-(a-b)I.
-\]
-The first term is a principal submatrix of \(D(G)+aI\), whose least
-eigenvalue is \(\gamma\).  Principal-submatrix interlacing
-\cite[Corollary~2.2]{Haemers1995} therefore gives
-\(\lambda_{\min}(D_0+aI)\ge\gamma\).
-Weyl's inequality bounds the least eigenvalue after adding \(E_S\),
-and subtracting \((a-b)I\) shifts every eigenvalue by \(-(a-b)\).
-This gives the stated bound.  For Moore punctures, \(E_S\) is the
-explicit distance-increase matrix specified in Theorem~\ref{thm:small-puncture}.
-\end{proof}
-
-\begin{corollary}[Uniform deletion stability]
-\label{cor:uniform-deletion}
-Under the hypotheses of Theorem~\ref{thm:small-puncture}, put
-\[
- t_x=|N_M(x)\cap S|,
- \qquad
- \tau(S)=\max_{x\in V(M-S)}t_x.
-\]
-Then
-\[
- \resultbox{
- \Phi(M-S)\ge
- k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}-\tau(S).
- }
-\]
-In particular, the deletion is a strict counterexample whenever the
-right-hand side is positive.  Since \(\tau(S)\le s\), every deletion of
-\(s\) vertices is strict whenever
-\[
- \resultbox{
- s\left(1+\frac1k\right)
- <k-\frac{3+\sqrt{4k-3}}2.
- }
-\]
-For \(k>3\), equivalently, every deletion of at most
-\[
- r_k=\min\left\{
- k-1,\
- \left\lceil
- \frac{k}{k+1}\left(k-\frac{3+\sqrt{4k-3}}2\right)
- \right\rceil-1
- \right\}
-\]
-vertices is strict.  In particular, \(r_7=2\); for a hypothetical
-degree-\(57\) Moore graph, whose existence remains open
-\cite{SmithMontemanni2026}, this estimate gives \(r_{57}=47\).
-Proposition~\ref{prop:clique-deletion-bound} strengthens that
-guarantee to every deletion of at most \(56\) vertices.
-\end{corollary}
-
-\begin{proof}
-By Theorem~\ref{thm:small-puncture}, the distance-increase matrix is
-\[
- E_S=BB^{\mathsf T}-\operatorname{diag}(t_x).
-\]
-Since \(BB^{\mathsf T}\succeq0\) and
-\(\operatorname{diag}(t_x)\preceq\tau(S)I\), one has
-\(\lambda_{\min}(E_S)\ge-\tau(S)\).  The parent Moore graph has score
-\[
- \Phi(M)=k-\frac{3+\sqrt{4k-3}}2,
-\]
-and Theorem~\ref{thm:small-puncture} shows that deletion lowers the minimum
-dual degree by \(s/k\).  Proposition~\ref{prop:deletion-stability} now gives
-the first bound.  The second follows from \(\tau(S)\le s\), and solving its
-strict scalar inequality for the largest integral \(s\) gives \(r_k\).
-\end{proof}
-
-\subsection{Exact spectra for one or two deletions}
+Let \(M\) be a degree-\(k\) Moore graph of diameter two, and let \(\Delta=\sqrt{4k-3}\).
 
 The matrix in the following theorems is the recomputed distance matrix.
 Its correction is already given by Theorem~\ref{thm:small-puncture}:
@@ -2661,437 +3123,6 @@ are independently checked by
 \codefile{scripts/verify_research_extensions_exact.py}.
 \end{proof}
 
-\Needspace{6\baselineskip}
-\section{Uniform deletion bounds and the Hoffman--Singleton radius}
-\label{sec:robustness}
-
-The stability bound from Section~\ref{sec:punctures} handles many deletion
-sets without a new spectral calculation. We now improve it when the deleted
-vertices share a surviving neighbour. This proves stability through three
-deletions for Hoffman--Singleton. Exact orbit certificates cover sizes four
-and five and determine the sharp universal radius.
-
-The uniform estimate can be improved when the deleted vertices have a
-common surviving neighbour.  The distance correction then has a simple
-clique structure, which we can diagonalize exactly.
-
-\begin{proposition}[Neighbourhood punctures]
-\label{prop:neighbourhood-puncture}
-Let \(M\) be a degree-\(k\) Moore graph of diameter two, \(k\ge2\).
-Let \(w\in V(M)\), let \(\varnothing\ne S\subseteq N_M(w)\), and put
-\(s=|S|\le k-1\) and \(H=M-S\).  The distance-increase matrix
-\[
- E_S=D(H)-D(M)[V(H)]
-\]
-is the adjacency matrix of \(s\) copies of \(K_k\) meeting only at \(w\),
-together with \(k(k-s)\) isolated vertices.  In particular,
-\[
- \lambda_{\min}(E_S)
- =\frac{k-2-\sqrt{(k-2)^2+4s(k-1)}}2,
-\]
-and
-\[
- \Phi(H)\ge
- k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}
- +\frac{k-2-\sqrt{(k-2)^2+4s(k-1)}}2.
-\]
-\end{proposition}
-
-\begin{proof}
-The deleted set is independent, since a pair of its vertices joined by an
-edge would form a triangle with \(w\).  Thus each deleted vertex has all
-\(k\) of its neighbours in \(H\).  For distinct \(z,z'\in S\), the Moore
-property gives
-\[
- N_M(z)\cap N_M(z')=\{w\}.
-\]
-By Theorem~\ref{thm:small-puncture}, every destroyed length-two path is
-replaced by a length-three path.  Hence \((E_S)_{xy}=1\), for distinct
-surviving vertices \(x,y\), precisely when they belong to \(N_M(z)\) for
-some \(z\in S\).  There is at most one such \(z\).  These neighbourhoods
-therefore give the asserted cliques, with \(k(k-s)\) remaining vertices.
-
-We take the coordinate vector at the centre and the indicator vector of
-all noncentral clique vertices.  Their span is invariant under the
-correction matrix.  After normalizing both vectors to have length one,
-the matrix on this span is the normalized symmetric quotient
-\[
- \begin{pmatrix}
- 0&\sqrt{s(k-1)}\\
- \sqrt{s(k-1)}&k-2
- \end{pmatrix}.
-\]
-The other eigenvalues are \(-1\) on the zero-sum space of the \(k-1\)
-noncentral vertices of each clique, \(k-2\) on the differences of their
-constant sums, and \(0\) on the isolated vertices.  These spaces have
-dimensions \(s(k-2)\), \(s-1\), and \(k(k-s)\), respectively, so the
-decomposition is complete.  The smaller quotient root is at most \(-1\), because its
-characteristic polynomial has value \((k-1)(1-s)\le0\) at \(-1\).
-It is therefore the least eigenvalue of \(E_S\).
-The final inequality follows from Proposition~\ref{prop:deletion-stability}
-and \(\delta^*(H)=k-s/k\).
-\end{proof}
-
-\begin{corollary}[Analytic three-vertex stability]
-\label{cor:analytic-three-puncture}
-Let \(M\) be the Hoffman--Singleton graph.  For every
-\(S\subseteq V(M)\) with \(|S|\le3\),
-\[
- \Phi(M-S)>\frac17.
-\]
-In particular, every such puncture is a strict counterexample to WOW-284.
-\end{corollary}
-
-\begin{proof}
-The graph \(M\) has score \(3\).  If \(|S|\le2\),
-Corollary~\ref{cor:uniform-deletion} gives
-\(\Phi(M-S)\ge3-|S|/7-|S|\ge5/7\).
-Now let \(|S|=3\), and put
-\[
- \tau=\max_{x\in V(M-S)}|N_M(x)\cap S|.
-\]
-If \(\tau\le2\), the same corollary gives
-\(\Phi(M-S)\ge3-3/7-2=4/7\).
-If \(\tau=3\), some surviving vertex \(w\) is adjacent to all three
-deleted vertices.  Proposition~\ref{prop:neighbourhood-puncture} gives
-\[
- \Phi(M-S)\ge\frac{71-7\sqrt{97}}{14}>\frac17,
-\]
-where the strict comparison follows from
-\(49\cdot97=4753<4761=69^2\).
-\end{proof}
-
-\begin{theorem}[Hoffman--Singleton robustness radius]\label{thm:hs-radius}
-Let \(M\) be the Hoffman--Singleton graph.  Every induced graph \(M-S\) with
-\(|S|\le5\) is a strict counterexample to WOW-284.  This is sharp in the
-universal sense: there exists a six-vertex set whose deletion is not strict.
-Hence the universal vertex-deletion robustness radius is exactly five.
-\end{theorem}
-
-\begin{proof}
-Theorem~\ref{thm:small-puncture} gives
-\[
- \delta^*(M-S)=\frac{49-|S|}{7}.
-\]
-Corollary~\ref{cor:analytic-three-puncture} proves strictness analytically
-for every set with \(|S|\le3\).  Only sets of sizes four and five remain
-to be certified.  We reduce that finite check by automorphisms.  Two
-explicitly stored permutations are verified edge by edge on the coordinate
-graph, and they generate a group of order \(252000\).  The full orbit
-inventory on deletion sets of sizes \(0,1,2,3,4,5\) has counts
-\[
- 1,1,2,4,11,33.
-\]
-Thus the remaining sizes require \(44\) representatives.  For each one,
-exact fraction arithmetic gives
-\[
- 7D(M-S)+(49-|S|)I\succ0.
-\]
-The archived certificates for all \(52\) original representatives are
-retained; those for the smaller sets provide redundant checks.
-
-To show that the radius cannot be increased, delete
-\[
- \{P_{2,4},P_{3,1},P_{3,4},Q_{2,1},Q_{3,4},Q_{4,4}\}.
-\]
-The resulting graph has \(\delta^*=43/7\), while an exact
-\(LDL^{\mathsf T}\) decomposition of \(7D(M-S)+43I\) has exactly one negative
-and no zero pivot.  Since \(L\) is invertible, Sylvester's law of inertia makes
-\(7D(M-S)+43I\) indefinite, so the graph is not strict.  Generator action,
-orbit exhaustion, BFS distances, the small-puncture formula, and a handwritten rational
-\(LDL^{\mathsf T}\) implementation are independently checked by
-\codefile{scripts/verify_proof_audit_13_hs_robustness.py}.
-\end{proof}
-
-\begin{remark}
-The theorem asserts that every deletion through size five succeeds and that at
-least one deletion of size six fails.  It does not assert that every
-six-vertex deletion fails.
-\end{remark}
-
-\begin{proposition}[Six-neighbour punctures]
-\label{prop:hs-neighbourhood-six}
-Let \(M\) be the Hoffman--Singleton graph.  For every \(w\in V(M)\) and
-every \(S\subseteq N_M(w)\) with \(|S|=6\), the graph \(M-S\) is a
-strict counterexample to WOW-284.
-\end{proposition}
-
-\begin{proof}
-Put \(H=M-S\).  Each vertex in \(\Gamma_2(w)\) has a unique
-parent in \(N_M(w)\).  Partition \(V(H)\) into \(\{w\},A,B,C\), where
-\(A=N_M(w)\setminus S\), \(B\) consists of children of the deleted
-parents, and \(C\) consists of children of the surviving parents.  Their
-sizes are
-\[
- 1,\qquad1,\qquad36,\qquad6.
-\]
-The Moore property gives no edge between children of the same parent and
-exactly one neighbour in every other child class.  Indeed, if \(x\) has
-parent \(p\) and \(q\in N_M(w)\setminus\{p\}\), the unique common
-neighbour of the nonadjacent pair \(x,q\) belongs to \(\Gamma_2(w)\)
-and has parent \(q\).
-
-We first compute the distance matrix on vectors constant on each cell.
-The partition is equitable, and the row-sum quotient, in the order
-\(\{w\},A,B,C\), is
-\[
- Q=\begin{pmatrix}
- 0&1&108&12\\
- 1&0&72&6\\
- 3&2&70&11\\
- 2&1&66&10
- \end{pmatrix}.
-\]
-The parent distances on the surviving vertices are given by
-\(D_0=2(J-I)-A(H)\).  Proposition~\ref{prop:neighbourhood-puncture}
-changes only the distances from \(w\) to \(B\) and between two children
-of the same deleted parent, adding one in each case.
-
-The quotient reduces the cell-constant part to a four-by-four matrix.
-We leave that check until the end and first treat vectors whose
-coordinates sum to zero on every cell.  Let \(U\) be the
-four-dimensional cell-constant space.  Both \(D_0\) and the
-distance-increase matrix \(E_S\) preserve \(U\).
-Symmetry gives an invariant orthogonal complement \(U^\perp\).
-In \(U^\perp\), the coordinates on each cell sum to zero.
-The singleton cell at the centre forces the \(w\)-coordinate to vanish.
-For \(x\in U^\perp\),
-\[
- x^{\mathsf T}E_Sx
- =\sum_{z\in S}\left(\sum_{y\in N_M(z)\setminus\{w\}}x_y\right)^2
-   -\sum_{y\in B}x_y^2
- \ge-\lVert x\rVert^2.
-\]
-The parent distance matrix has least eigenvalue \(-4\).
-Taking its principal submatrix on the surviving vertices gives
-\(D_0\succeq-4I\), and the correction estimate above gives
-\(D(H)|_{U^\perp}\succeq-5I\).
-Theorem~\ref{thm:small-puncture} gives
-\(\delta^*(H)=43/7>5\).
-
-It remains to check the restriction to \(U\).  In the basis of cell
-indicators, the quadratic form of \(7D(H)+43I\) has symmetric matrix
-\[
- T=\operatorname{diag}(1,1,36,6)(7Q+43I)
- =\begin{pmatrix}
- 43&7&756&84\\
- 7&43&504&42\\
- 756&504&19188&2772\\
- 84&42&2772&678
- \end{pmatrix}.
-\]
-Its leading principal minors are
-\[
- 43,\qquad1800,\qquad4374000,\qquad226834992.
-\]
-All four are positive, so Sylvester's criterion gives
-\(T\succ0\).  The shifted distance matrix is therefore positive
-definite on both \(U\) and \(U^\perp\), proving \(\Phi(H)>0\).
-\end{proof}
-
-The universal deletion radius remains five: the preceding proposition
-describes successful six-vertex deletions of one particular form, whereas
-Theorem~\ref{thm:hs-radius} supplies a different six-vertex deletion that
-fails.
-
-For a hypothetical degree-\(57\) Moore graph, the neighbourhood
-calculation reaches the endpoint of the small-puncture theorem.
-
-\begin{corollary}[Degree-\(57\) neighbourhood punctures]
-\label{cor:degree57-neighbourhood}
-If \(M\) is a degree-\(57\) Moore graph of diameter two, then for every
-\(w\in V(M)\) and every \(S\subseteq N_M(w)\) with \(|S|\le56\),
-\[
- \Phi(M-S)>\frac{685}{57}.
-\]
-In particular, every such induced graph is a strict counterexample to
-WOW-284.
-\end{corollary}
-
-\begin{proof}
-Theorem~\ref{thm:moore-threshold} gives the parent score \(48\), which
-handles \(S=\varnothing\).  For nonempty \(S\), put \(s=|S|\).
-Theorem~\ref{thm:small-puncture} applies through \(s=56\): the survivor
-graph is connected and has minimum dual degree \(57-s/57\).  Its order
-is at least \(3194\), and it inherits girth at least five.
-Proposition~\ref{prop:neighbourhood-puncture} gives
-\[
- \lambda_{\min}(E_S)
- =\frac{55-\sqrt{55^2+224s}}2>-35,
-\]
-since
-\[
- 55^2+224s\le15569<15625=125^2.
-\]
-The loss of minimum dual degree is exactly \(s/57\), so
-Proposition~\ref{prop:deletion-stability} yields
-\[
- \Phi(M-S)\ge48-\frac{s}{57}+\lambda_{\min}(E_S)
- >48-\frac{56}{57}-35=\frac{685}{57}>0.
-\]
-\end{proof}
-
-Grouping the correction cliques through one surviving vertex improves
-the estimate for arbitrary deletion sets.
-
-\begin{proposition}[Splitting the distance correction at a vertex]
-\label{prop:clique-deletion-bound}
-Let \(M\) be a degree-\(k\) Moore graph of diameter two, \(k\ge2\),
-and let \(S\subseteq V(M)\) have size \(s\le k-1\).  Put \(H=M-S\),
-\[
- E_S=D(H)-D(M)[V(H)],
- \qquad
- \tau=\max_{x\in V(H)}|N_M(x)\cap S|,
-\]
-and, for \(0\le r\le k-1\), define
-\[
- f_k(r)=\frac{k-2-\sqrt{(k-2)^2+4r(k-1)}}2.
-\]
-Then
-\[
- \lambda_{\min}(E_S)
- \ge \max\{-\tau,\,f_k(\tau)-s+\tau\},
-\]
-and
-\[
- \Phi(H)\ge k-\frac{3+\sqrt{4k-3}}2-\frac{s}{k}
- +\max\{-\tau,\,f_k(\tau)-s+\tau\}.
-\]
-In particular, if \(M\) has degree \(57\), then every
-\(S\subseteq V(M)\) with \(|S|\le56\) satisfies
-\[
- \Phi(M-S)\ge\frac{286}{57}>0.
-\]
-Thus every such puncture is a strict counterexample to WOW-284.
-\end{proposition}
-
-\begin{proof}
-For \(s=0\), one has \(\tau=0\), \(f_k(0)=0\), and \(E_S=0\), so the
-claims follow from Theorem~\ref{thm:moore-threshold}.  Assume \(s\ge1\).
-For \(z\in S\), let \(b_z\) be the indicator vector of
-\(N_M(z)\cap V(H)\), and put
-\[
- C_z=b_zb_z^{\mathsf T}-\operatorname{diag}(b_z).
-\]
-The matrix \(C_z\) records the distance increases caused by deleting
-\(z\): it is the adjacency matrix of a clique on the surviving neighbours
-of \(z\), with all other vertices isolated.
-Theorem~\ref{thm:small-puncture} gives \(E_S=\sum_{z\in S}C_z\).
-Each clique matrix has least eigenvalue at least \(-1\), since
-\[
- C_z+I=b_zb_z^{\mathsf T}
-       +\operatorname{diag}(\mathbf1-b_z)\succeq0.
-\]
-The Gram-matrix estimate also gives \(E_S\succeq-\tau I\).
-
-To obtain the second bound, choose \(w\in V(H)\) attaining \(\tau\),
-and put \(Z=N_M(w)\cap S\).  Every deleted vertex has a surviving
-neighbour, since \(s<k\), so \(1\le|Z|=\tau\le k-1\).
-We group the \(\tau\) clique matrices indexed by \(Z\) and estimate
-the remaining \(s-\tau\) separately.
-The correction matrix for deleting \(Z\) alone is
-\[
- F_Z=D(M-Z)-D(M)[V(M-Z)].
-\]
-By the small-puncture formula, its principal submatrix on \(V(H)\)
-is exactly \(\sum_{z\in Z}C_z\).
-Proposition~\ref{prop:neighbourhood-puncture} gives
-\(\lambda_{\min}(F_Z)=f_k(\tau)\), so interlacing bounds the least
-eigenvalue of this grouped sum below by \(f_k(\tau)\).
-Each of the remaining clique matrices has least eigenvalue at least
-\(-1\).  Weyl's inequality therefore yields
-\[
- \lambda_{\min}(E_S)
- \ge f_k(\tau)-(s-\tau).
-\]
-Together with \(E_S\succeq-\tau I\), this proves the first inequality.
-The score bound follows from Proposition~\ref{prop:deletion-stability}
-and \(\delta^*(H)=k-s/k\).
-
-For \(k=57\), the parent score is \(48\).  If \(\tau\le42\), the first
-bound gives \(\lambda_{\min}(E_S)\ge-42\).  If \(\tau\ge43\), then
-\[
- (27+2\tau)^2-(55^2+224\tau)
- =4\bigl((\tau-43)(\tau+14)+28\bigr)>0.
-\]
-Since \(27+2\tau>0\), this implies
-\(f_{57}(\tau)>14-\tau\), and hence
-\[
- \lambda_{\min}(E_S)>14-s\ge-42.
-\]
-Consequently, for every \(s\le56\),
-\[
- \Phi(M-S)\ge48-\frac{s}{57}-42
- \ge48-\frac{56}{57}-42=\frac{286}{57}>0.
-\]
-\end{proof}
-
-\section{The equality boundary and a graph attaining it}
-\label{sec:controls}
-
-The shifted adjacency window also identifies the equality case of WOW-284.
-We state the criterion and give an exact graph attaining it.
-
-\begin{theorem}[Equality boundary]\label{thm:equality-boundary}
-Let \(G\) be connected, \(k\)-regular, of girth at least five and diameter
-three.  Then
-\[
- \Phi(G)=0
- \quad\Longleftrightarrow\quad
- \max_{\theta\ne k}|\theta+1|=\sqrt{2k-2}.
-\]
-Equivalently, \(D+kI\) is positive semidefinite and singular.  If \(2k-2\) is
-not a square, the two boundary adjacency eigenvalues occur with equal
-multiplicity, so the distance eigenvalue \(-k\) has even multiplicity.  If
-\(2k-2\) is a square, then \(k=2r^2+1\) for some integer \(r\).
-\end{theorem}
-
-\begin{proof}
-This is immediate from Theorem~\ref{thm:diameter-three-score}.  In the
-nonsquare case, the two boundary values are algebraic conjugates, so their
-multiplicities in the integral characteristic polynomial agree.  In the square
-case, \(2k-2=s^2\) forces \(s\) even.  The exact scalar audit is
-\codefile{scripts/verify_equality_boundary.py}.
-\end{proof}
-
-J{\o}rgensen's \(9\)-regular order-\(96\) graph of girth five is an exact equality
-case:
-\[
- \delta^*=9,
- \qquad \lambda_{\min}(D)=-9,
-\]
-with multiplicity eight.  The construction is due to J{\o}rgensen
-\cite{Jorgensen2005}; the three local graph representations, handwritten
-graph6 decoder, characteristic polynomials, root intervals, and provenance
-boundary are checked by
-\codefile{scripts/verify_proof_audit_09_jorgensen96.py}.
-
-Two natural construction routes also fail: a balanced prime-field family
-of girth-five graphs, and the layer-respecting perfect-matching deletions of
-Hoffman--Singleton.  Appendix~\ref{app:excluded-constructions} defines both
-families and proves their spectral exclusions.  These calculations test the
-window criterion but are not needed for the counterexamples or the deletion
-bounds above.
-
-\section{Open questions on spectral constraints and stability}\label{sec:scope}
-
-The necessary conditions at degree six and order $50$ do not settle
-existence. It remains to determine whether a graph satisfying them is a
-strict counterexample. The present results also do not determine the minimum
-order of a strict counterexample. Extending the regular-graph order bounds
-to irregular graphs is another direction.
-
-OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
-exploration, and Lean formalization.  Codex also assisted with English-language
-editing, organization, and supplementary proof arguments.  The author assumes full responsibility
-for the mathematics, attribution, and conclusions.  The original source, exact
-certificates, and build instructions are available at
-\href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
-Release \texttt{\RepoTag} is the historical certificate baseline.
-The analytic additions in this v2 are given in the present source and are
-separate from that release.
-
-\appendix
 
 \section{The distance spectrum of a Moore second sphere}
 \label{app:second-sphere-proof}
