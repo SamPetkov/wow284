@@ -1,3 +1,42 @@
+CURRENT V2 MANUSCRIPT VERIFICATION — 13 OCTOBER 2026
+===================================================
+
+The current manuscript and upload package are in arxiv/. The root manuscript,
+root MANIFEST.txt and root SHA256SUMS retain a historical July snapshot; they
+do not authenticate the current arxiv/ files. Current authoritative scoped
+records: arxiv/MANIFEST.txt, arxiv/SHA256SUMS and arxiv/README.md.
+
+Fresh manuscript checks: the exact four-file upload archive was extracted and
+compiled successfully with pdfLaTeX. The current PDF has 39 pages; no compiler
+warnings or errors, missing glyphs, unresolved citations/references, or box
+warnings were found. All fonts are embedded. Current PDF and source-archive
+digests are recorded in arxiv/SHA256SUMS, including the required stylesheet.
+
+The final GPT-6 Pro review found no new mathematical error in its inspected
+central written-proof dependencies and independent exact finite checks. It
+does not certify every source line, every appendix calculation, or Mathlib.
+
+Lean scope: the imported finite-coordinate/matrix and analytic LP development
+is distinguished from the graph-level conclusions proved in the paper.
+Appendix I describes that boundary. Unimported templates and the vacuous
+punctured-Moore skeleton contribute no completed theorem coverage.
+
+The fresh Lean replay is on Procida only, with Lean 4.31.0 and pinned Mathlib
+fabf563a7c95a166b8d7b6efca11c8b4dc9d911f, new project artifacts and reused
+Mathlib cache. Last retrieved corrected-run progress: 67/195 WOW production
+modules; no failure observed. SSH then timed out. Full closure, standalone,
+and individual endpoint axiom output remain unconfirmed in this fresh run.
+Archived source-identified successful compilation is historical evidence;
+do not infer the exact axiom subset of each endpoint without its raw output.
+No unpublished endpoint patch is counted as released.
+
+HISTORICAL JULY REPORT — PRESERVED WITH FORMALIZATION SCOPE CORRECTIONS
+======================================================================
+The following PASS entries record the earlier report, not fresh execution of
+all listed checks on the current manuscript. Its page count, root/arXiv
+synchronization, three-file ZIP, complete-inventory and checksum claims refer
+to that old snapshot and are not claims about the current v2 package.
+
 WOW-284 v2.2.8 RELEASE VERIFICATION
 ==================================
 
@@ -29,12 +68,17 @@ PASS  Every theorem-level computational certificate cited in main.tex uses
 
 LEAN 4.31 SCOPE
 ---------------
-PASS  The 50-vertex graph-level development checks the coordinate graph,
-      regularity, common-neighbour certificate, girth, distance identity,
-      exact diagonalization, least distance eigenvalue, and strict gap.
-PASS  Orders 38, 39, and 42 have shifted-positive-definiteness/eigenpair
-      certificates; order 40 has an exact invertible diagonalization,
-      multiplicities, attained least eigenvalue, dual degree, and gap.
+SCOPE The released order-50 core supplies finite coordinate and
+      common-neighbour/diameter certificates, identities for the case-defined
+      matrix, and exact diagonalization data. Identification with the graph's
+      actual shortest-path distance matrix and the least-real-eigenvalue/gap
+      conclusion are assembled in the paper, not exported by this release.
+      The separately prepared graph-distance endpoint patch is unpublished.
+SCOPE Orders 38, 39, and 42 have finite-matrix shifted-positive-
+      definiteness/eigenpair certificates. Order 40 has an exact invertible
+      diagonalization, multiplicities, an attained minimum diagonal entry,
+      dual-degree data and a scalar gap. These are not bundled theorems about
+      SimpleGraph.dist and the graph's real least distance eigenvalue.
 PASS  The separate analytic LP development proves the nonbacktracking
       recurrence, extremal coefficient witness, admissibility and attainment,
       dual moments and all positive slacks, the uniform Chebyshev tail,

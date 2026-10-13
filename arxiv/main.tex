@@ -2534,7 +2534,7 @@ gives
 \]
  Consequently \(T+2I\) is the Gram matrix of \(50\) vectors of norm
  \(\sqrt2\), with inner products in \(\{-1,0,1\}\) between distinct vectors.
- Its row sum is \(4\); the signed adjacency matrix \(T\) has row sum \(2\).  Its kernel is \(E_{-2}(A)\), so
+ Its row sum is \(4\); the signed adjacency matrix \(T\) has row sum \(2\).  The kernel of \(T+2I\) is \(E_{-2}(A)\), so
  Proposition~\ref{prop:order50-minus-two} gives
  \[
   \operatorname{rank}(T+2I)\ge30.
@@ -3631,7 +3631,7 @@ Lean also kernel-checks finite spectral certificates attached to the explicit
 constructions of orders \(38,39,40,42\).  At orders \(38,39,42\), they
 certify the dual-degree data and positive definiteness of the relevant shifted
 distance matrix.  At order \(40\), they certify an invertible exact
-diagonalization, multiplicities, least eigenvalue \(-5\), dual degree six,
+diagonalization, multiplicities, an attained minimum diagonal entry of \(-5\), dual degree six,
 and gap one.  These are finite matrix certificates rather than end-to-end
 \texttt{SimpleGraph.dist} formalizations.
 
@@ -3652,7 +3652,7 @@ it proves
 The formal development defines the coefficient family of the displayed
 quartic \(f_*\), proves that it is admissible and attains equality, and proves
 that the equality cases are exactly the positive scalar multiples of \(f_*\),
-both as polynomials and at coefficient level.  The public Lean development is
+both as polynomials and at coefficient level.  The imported release development is
 sorry-free and kernel-checked by Lean 4.31.
 
 This LP formalization is deliberately graph-independent.  It does not

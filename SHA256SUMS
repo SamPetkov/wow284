@@ -1,3 +1,6 @@
+# HISTORICAL JULY 2026 SNAPSHOT; not the current manuscript inventory.
+# Current v2 package: arxiv/MANIFEST.txt and arxiv/SHA256SUMS.
+# In particular the current package includes arxiv/petkov-preprint.sty.
 9c6b93b91ca04ce1ec77754d52c170f696631ce86db8b5600685dd5722e7aabd  .gitattributes
 b8293a19da15ba338d0449127639fba33197d39833c494873f96ed3d7db38204  .github/workflows/literature-audit-validation.yml
 c27a7e8ea9a619e4dc877ae90fd95504114f67ec6bce6cb8f4e06a05d57b3639  .github/workflows/materialize-v22.yml

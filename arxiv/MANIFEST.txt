@@ -1,0 +1,12 @@
+MANIFEST.txt
+README.md
+SHA256SUMS
+WOW284-v2-arxiv-upload.zip
+arxiv-abstract.txt
+arxiv-comments.txt
+main.bbl
+main.pdf
+main.tex
+petkov-preprint.sty
+references.bib
+wow284_arxiv_source.zip
