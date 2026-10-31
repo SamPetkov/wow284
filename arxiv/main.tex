@@ -538,7 +538,9 @@ The nonprincipal eigenvalue \(-k\) satisfies
  (-k+1)^2-(2k-2)=(k-1)(k-3)\ge0
  \qquad(k\ge3).
 \]
-Thus the required strict inequality fails, with equality exactly at \(k=3\).
+Thus the eigenvalue \(-k\) lies on the boundary of the shifted window
+when \(k=3\), and outside it when \(k>3\). In either case the strict
+window condition fails.
 \end{proof}
 
 \begin{proposition}[Higher-diameter transfer]\label{prop:higher-transfer}
@@ -568,10 +570,15 @@ In particular,
 \begin{proof}
 The polynomial matrices count walks with no immediate reversal of an
 edge at an internal step.  These are the nonbacktracking walks \cite[Theorem~1]{Nozaki2015}.
-The girth condition makes this count agree with distance: up to length
-\(d-1\), a nonbacktracking walk between two vertices is unique exactly
-when its length is their graph distance.  Thus the distance-\(i\)
-matrices are the corresponding polynomials in \(A\).
+The girth condition makes this count agree with distance. For
+\(1\le i\le d-1\), a repeated vertex in such a walk would produce a
+cycle of length at most \(i\), so the walk is a path. A shorter path
+between the same endpoints would produce a cycle of length at most
+\(2i-1\); two distinct paths of length \(i\) would produce one of length
+at most \(2i\). These lengths are below \(2d-1\), so neither is
+possible. Hence there is exactly one such walk when the endpoints have
+distance \(i\), and none otherwise. The case \(i=0\) is immediate,
+giving \(A_i=F_i(A)\) for \(0\le i\le d-1\).
 In the sum \(D=\sum_{i=0}^d iA_i\), the identity \(A_d=F_d(A)\) need not hold.
 Eliminate \(A_d\) using \(J=\sum_{i=0}^d A_i\).
 This proves the formula within the established distance-polynomial
@@ -2466,7 +2473,9 @@ If \(\tau\) is the number of five-cycles through \(v\), take one
 indicator vector for each layer and normalize it to have length one.
 The adjacency quadratic form on their span has a symmetric matrix,
 the layer compression.  This matrix is similar to the average row
-quotient.  Its characteristic polynomial is \((x-6)q_\tau(x)\), where
+quotient. Since the layer-indicator span contains \(\one\), regularity
+makes \(6\) an eigenvalue of the compression. Its characteristic
+polynomial is \((x-6)q_\tau(x)\), where
 \[
  195q_\tau(x)
  =195x^3+(2250-43\tau)x^2+(105-30\tau)x+228\tau-11250.
@@ -3208,7 +3217,7 @@ The incidence block therefore gives the orthogonal decomposition
  =\langle\one_m\rangle\perp
  C^{\mathsf T}(\one_K^\perp)\perp\ker C.
 \]
-The first space is the principal adjacency eigenspace, because
+The constant space carries the adjacency eigenvalue \(K-1\), because
 \(B\one_m=(K-1)\one_m\).  Transposing the identity for \(CB\)
 shows that \(B\) acts as \(-I\) on
 \(C^{\mathsf T}(\one_K^\perp)\).  The same identity makes
@@ -3461,6 +3470,9 @@ character \(t=1\), the adjacency block has form
  \quad b=2\cos\frac{4\pi}{q},
  \quad M_{ik}=\omega^{ik}.
 \]
+Every vector in this character space has coordinate sum zero, since
+\(\sum_{j\in\mathbb F_q}\omega^j=0\). Its adjacency eigenvalues are
+therefore nonprincipal.
 If \(\sigma\) is a singular value of \(M\), the associated two-dimensional
 invariant subspace carries
 \(\bigl(\begin{smallmatrix}a&\sigma\\\sigma&b\end{smallmatrix}\bigr)\).

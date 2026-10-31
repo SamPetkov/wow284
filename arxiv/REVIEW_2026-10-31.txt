@@ -232,3 +232,79 @@ file was read for revalidation or edited. The coordinating reviewer handles
 compilation, generated reading-copy synchronization, and publication.
 
 Final candidate and extracted-source builds passed; every changed page was visually inspected and all unchanged-text pages were raster-identical to the preceding reviewed PDF. The current README documentation and citation metadata were also reviewed. No Lean source or toolchain changed.
+
+THIRD FOCUSED REVIEW AND FINAL CROSS-CHECK
+===========================================
+WOW-284: THIRD FOCUSED TECHNICAL REVIEW
+31 October 2026
+
+Sources
+-------
+Published baseline: e8427ca4950f9c6ad913bab759aabab26e6404f3.
+Baseline file: repos/wow284/arxiv/main.tex.
+Baseline SHA-256: 3edf368644bb57bdbb5fecf3694348f5f044fe79795b9d20d1b03b26cbf8a9e3
+Revised file: candidate/wow284/main.tex.
+Frozen candidate SHA-256: 73b69ed692d4841ea9f039fa9bc52d3148120a47255be62b4c8a1cb9e731dc39
+Paths are relative to review_20261031.
+
+Scope and result
+----------------
+This was one bounded follow-up pass on compressed spectral arguments and
+boundary/equality wording. It reread the Moore and diameter-three transfer
+statements, the higher-diameter nonbacktracking argument, the bipartite
+endpoint observation, rational invariant-space steps in the three-to-one
+proof, the order-50 compression and signed-root discussion, the second-sphere
+decomposition, the equality criterion, and the Fourier exclusion.
+
+No new theorem-level flaw was found. The edits make existing justifications
+explicit; they do not add a new theorem, bound, classification, or computation.
+The prior strict edge bounds/sieve, strict six-cycle upper bound, all 266
+surviving order-50 profiles, and the unresolved existence question are retained.
+
+Five local changes
+------------------
+1. Bipartite boundary wording (cor:bipartite).
+   The proof now states exactly what the algebra shows: the eigenvalue -k
+   is at the shifted-window endpoint when k=3 and outside it when k>3.
+   This avoids reading equality of the test-eigenvalue comparison as an
+   assertion that the whole graph has equality in WOW-284.
+
+2. Higher-diameter transfer (prop:higher-transfer).
+   The proof now supplies the short-cycle argument for A_i=F_i(A), i<=d-1.
+   A repeated vertex in a nonbacktracking walk of length i produces a cycle
+   of length at most i. A shorter path with the same endpoints produces
+   a cycle of length at most 2i-1; two distinct paths of length i produce
+   one of length at most 2i. All are forbidden by girth at least 2d-1.
+   The i=0 case is stated separately. The cutoff at d-1 is preserved.
+
+3. Order-50 layer compression (thm:order50-feasibility).
+   The proof now explains why the compression has eigenvalue six: the
+   layer-indicator span contains the constant vector, and A1=6*1.
+   This fact needs regularity, not an assumption that the layer partition
+   is equitable. The existing interlacing argument remains unchanged.
+
+4. Moore second-sphere decomposition (app:second-sphere-proof).
+   Before connectedness has been established, the proof now says that the
+   constant space carries eigenvalue K-1. It no longer describes that space
+   as the full principal eigenspace solely from B1=(K-1)*1. The subsequent
+   invariant-space and diameter arguments are unchanged.
+
+5. Prime-field Fourier exclusion (thm:prime-field).
+   The proof now states that every vector in the nonzero character space
+   has coordinate sum zero, because sum_j omega^j=0. This makes explicit
+   why the eigenvalue obtained from that block is nonprincipal and can be
+   compared with the nonprincipal spectral window.
+
+Cross-checks and limits
+----------------------
+The added statements were checked directly against the hypotheses and the
+linear-algebra arguments around them. They preserve all numerical constants,
+polynomial identities, spectra, proof-case boundaries, section/theorem labels,
+computation pins, bibliography, attribution, and formalization scope.
+No unaffected verifier was replayed. No Lean command was run, no Lean file
+was edited, and the accepted released formalization was not reopened.
+The coordinating reviewer handles independent diff review, compilation,
+publication, and the master bundle. The generated Markdown reading copy will
+be refreshed separately from the frozen source and fresh compiled labels.
+
+The frozen final source passed an independent mathematical cross-check. Current candidate and extracted-source builds passed. Every text-changed page was visually inspected; all unchanged-text pages were pixel-identical to the preceding reviewed PDF. The current documentation and source bindings were refreshed. No Lean source or toolchain changed, and no Lean command was run.

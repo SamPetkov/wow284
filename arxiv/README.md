@@ -4,7 +4,7 @@ Prepared **31 October 2026** from the author's supplied upload pack. This direct
 
 ## Current files
 
-- [main.pdf](main.pdf): the reviewed 40-page paper.
+- [main.pdf](main.pdf): the reviewed 41-page paper.
 - [main.tex](main.tex), [main.bbl](main.bbl), [references.bib](references.bib), [petkov-preprint.sty](petkov-preprint.sty): the matching editable sources.
 - [WOW284-v2-arxiv-upload.zip](WOW284-v2-arxiv-upload.zip) and [wow284_arxiv_source.zip](wow284_arxiv_source.zip): identical four-file source ZIPs; existing alias names are retained for repository continuity.
 - [arxiv-abstract.txt](arxiv-abstract.txt) and [arxiv-comments.txt](arxiv-comments.txt): submission text.
@@ -16,11 +16,15 @@ Prepared **31 October 2026** from the author's supplied upload pack. This direct
 
 For the strict spectral window, Proposition 6.4 gives both `sigma_uv >= 2k-1` and `sigma_uv < U_{k,n}`; Corollary 6.5 records the corresponding integer sieve. At degree six and order 50, the upper six-cycle moment bound is strict because the localizing matrix is positive definite. Both displays and the exact enumeration script agree; the same 266 degree profiles survive. The introduction explicitly credits the published Moore-graph spectra and retains the Capy Build and Wilbanks–Annie counterexample records. Eigenspace notation and the disclosure heading are clearer. The abstract is unchanged.
 
+The third focused pass clarifies five short arguments: the bipartite boundary test, the girth argument for higher-diameter transfer, the constant-vector eigenvalue of the order-50 layer compression, the constant-space wording before connectivity is established, and the orthogonality of nonzero Fourier characters. The theorem statements, numerical bounds, 266 surviving profiles, and open order-50 existence question are unchanged.
+
 ## Verification
 
-Both the candidate source and the exact four-file ZIP extracted into an empty directory compiled successfully with pdfLaTeX via latexmk. The extracted build has 40 pages and byte-identical extracted PDF text to the delivered PDF. No LaTeX/BibTeX warning or error, unresolved reference or citation, box warning, or missing-glyph diagnostic was found in the final logs. All fonts are embedded. The PDF was reviewed in an all-page overview and at higher resolution on changed and affected pages.
+Both the candidate source and the exact four-file ZIP extracted into an empty directory compiled successfully with pdfLaTeX via latexmk. The extracted build has 41 pages and byte-identical extracted PDF text to the delivered PDF. No LaTeX/BibTeX warning or error, unresolved reference or citation, box warning, or missing-glyph diagnostic was found in the final logs. All fonts are embedded. The PDF was reviewed in an all-page overview and at higher resolution on changed and affected pages.
 
 In the first 31 October review, six selected exact-arithmetic audits were replayed: the two-sided LP, three-to-one theorem, nonpositive-r cases, disconnected signed complement at order 50, Hoffman–Singleton deletion robustness, and the updated order-50 feasibility enumeration. All passed. The feasibility verifier is pinned in the PDF to commit `ee387a20bb97c83d67f466c837e589509d6ad337`. The second review independently checked the analytic proof of the strict upper edge-cycle bound and its integer sieve; the unaffected verifiers were not rerun. The new upper bound is proved analytically.
+
+The third review independently checked all five clarifications. Both current source builds passed; every text-changed page was visually inspected, and all unchanged-text pages were pixel-identical to the preceding reviewed PDF. The generated Markdown reading copy was refreshed from the current TeX, bibliography, and compiled labels.
 
 ## Formalization boundary
 

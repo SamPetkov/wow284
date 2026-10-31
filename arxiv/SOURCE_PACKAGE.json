@@ -6,17 +6,17 @@
   "supplied_arxiv_id": "2607.27452",
   "live_arxiv_submission_state_checked": false,
   "arxiv_submission_performed": false,
-  "pages": 40,
+  "pages": 41,
   "figures": 0,
   "source_entry_point": "main.tex",
   "source_files_sha256": {
-    "main.tex": "3edf368644bb57bdbb5fecf3694348f5f044fe79795b9d20d1b03b26cbf8a9e3",
+    "main.tex": "73b69ed692d4841ea9f039fa9bc52d3148120a47255be62b4c8a1cb9e731dc39",
     "main.bbl": "032335dcc7347474630ddf6d1692ae8ae04e846fb6b84ecb42df23eee4465695",
     "references.bib": "e4797b4e27784a102a09d698b5e1dbbaa1cc919fb2fba0237374bd9c9a13850e",
     "petkov-preprint.sty": "be35fd01e7c78c5043fdbbd7fc452411f97c288018b8c07b6c1252135c2ea2e0"
   },
-  "pdf_sha256": "46375d119306e542ec923331ea8610ad1abef07d7ff94baf4c02a4e01a0be310",
-  "source_zip_sha256": "456ae063fb5d804b507db8037d55c7e274df0432053b3cf7863c4074eafe5a3f",
+  "pdf_sha256": "f66334f3c1cfa9d4e3cbd6629a8c0bf14081017cda120e2785f25ac96769fea7",
+  "source_zip_sha256": "0466228ac59da11a34b14571136b9516e018ef881fa9f22a22cfb8fffcba2194",
   "source_zip_aliases": [
     "WOW284-v2-arxiv-upload.zip",
     "wow284_arxiv_source.zip"
@@ -39,6 +39,20 @@
     "scope": "Focused technical, boundary, and documentation review after the previous improvements; no major rewrite.",
     "result": "No new blocking mathematical issue found in the reviewed material.",
     "changes": "The strict spectral window also implies sigma_uv < U_(k,n). Equality would force e_u+e_v into the slack-matrix kernel and then n=2(k+2)/3<k+1, a contradiction. The strict integer sieve uses ceil(U_(k,n))-1. Connectedness is explicit in the LP trace setup, and the moment appendix distinguishes quadratic and cubic support-rank requirements. Order-50/51 consequences, the 266 surviving degree profiles, and the open order-50 existence question are unchanged.",
+    "independent_math_cross_check": "PASS",
+    "candidate_and_extracted_package_builds": "PASS",
+    "visual_review": "PASS",
+    "fresh_lean_runs": 0,
+    "released_lean_sources_changed": false,
+    "fresh_exact_verifier_replays": 0,
+    "existing_exact_results_affected": false
+  },
+  "third_review": {
+    "date": "2026-10-31",
+    "baseline_commit": "e8427ca4950f9c6ad913bab759aabab26e6404f3",
+    "scope": "One further focused mathematical and prose pass; preserve structure and accepted Lean sources.",
+    "result": "No new blocking mathematical issue found in the reviewed material.",
+    "changes": "Five local proof clarifications address the bipartite test eigenvalue at k=3, the short-cycle argument for higher-diameter transfer, the constant-vector eigenvalue of the order-50 layer compression without an equitability assumption, constant-space wording before connectivity is established, and nonzero Fourier-character orthogonality. Theorem statements, numerical bounds, the 266 surviving profiles, computation pins, attribution and Lean scope are unchanged. Order-50 existence remains open. Natural reflow gives 41 pages.",
     "independent_math_cross_check": "PASS",
     "candidate_and_extracted_package_builds": "PASS",
     "visual_review": "PASS",
