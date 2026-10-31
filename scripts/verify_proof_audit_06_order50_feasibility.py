@@ -5,6 +5,13 @@ The script does not import either original order-50 verifier. It checks the
 layer compression, local walk/cycle identities, positive-semidefinite minors,
 shifted moments, Schur complements and exact profile enumeration. No
 floating-point arithmetic is used.
+
+The strict localizing upper bound uses an analytical input proved in the
+manuscript: diameter three gives at least three distinct nonprincipal shifted
+eigenvalues, and their weights 10-y_i^2 are positive in the open spectral
+window. Thus the localizing matrix is positive definite. This script checks
+the resulting algebra and integer bounds; it does not establish that graph
+support condition by finite computation.
 """
 from __future__ import annotations
 
@@ -342,11 +349,21 @@ def global_and_moment_audit() -> dict[str, str]:
         "shifted_moments": str(shifted),
         "moment_lower_N6": str(lower_n6),
         "localizing_upper_N6": str(upper_n6),
+        "moment_lower_relation": "N6 >= moment_lower_N6",
+        "localizing_upper_relation": "N6 < localizing_upper_N6",
+        "localizing_strictness_input": (
+            "Analytical manuscript proof: at least three distinct shifted "
+            "nonprincipal eigenvalues y_i and positive weights 10-y_i^2 "
+            "make the quadratic Gram matrix positive definite. The script "
+            "checks the consequent algebra, not this graph support condition."
+        ),
     }
 
 
 def profile_enumeration() -> dict[str, object]:
     profiles: list[tuple[int, int, int, int, int, int]] = []
+    weak_profiles: list[tuple[int, int, int, int, int, int]] = []
+    excluded_endpoints: set[tuple[int, int]] = set()
     for n2 in range(51):
         for n4 in range(51 - n2):
             n0 = 50 - n2 - n4
@@ -365,19 +382,50 @@ def profile_enumeration() -> dict[str, object]:
                 2000,
             )
             lower = max(Fraction(0), local_lower, moment_lower)
-            upper = min(local_upper, moment_upper)
-            if math.ceil(lower) <= math.floor(upper):
+            integer_lower = math.ceil(lower)
+            weak_integer_upper = min(
+                math.floor(local_upper), math.floor(moment_upper)
+            )
+            # N6 is integral and N6 < moment_upper, while the local upper
+            # and both lower bounds remain non-strict.
+            integer_upper = min(
+                math.floor(local_upper), math.ceil(moment_upper) - 1
+            )
+            if integer_lower <= weak_integer_upper:
+                weak_profiles.append(
+                    (n0, n2, n4, m, integer_lower, weak_integer_upper)
+                )
+                excluded_endpoints.update(
+                    (m, n6)
+                    for n6 in range(
+                        max(integer_lower, integer_upper + 1),
+                        weak_integer_upper + 1,
+                    )
+                )
+            if integer_lower <= integer_upper:
                 profiles.append(
-                    (n0, n2, n4, m, math.ceil(lower), math.floor(upper))
+                    (n0, n2, n4, m, integer_lower, integer_upper)
                 )
 
-    if len(profiles) != 266:
+    if len(weak_profiles) != 266 or len(profiles) != 266:
         raise AssertionError("wrong surviving profile count")
+    if {profile[:4] for profile in profiles} != {
+        profile[:4] for profile in weak_profiles
+    }:
+        raise AssertionError("strict moment bound changed the feasible profile set")
+    if excluded_endpoints != {(0, 2110), (100, 1965)}:
+        raise AssertionError("unexpected excluded integral moment endpoints")
     edge_counts = sorted({profile[3] for profile in profiles})
     if edge_counts != list(range(0, 101, 5)):
         raise AssertionError("wrong surviving high-edge counts")
     return {
         "surviving_profiles": len(profiles),
+        "weak_surviving_profiles": len(weak_profiles),
+        "profile_set_unchanged": True,
+        "integer_upper_rule": (
+            "min(floor(local_upper), ceil(moment_upper) - 1)"
+        ),
+        "excluded_integral_moment_endpoints": sorted(excluded_endpoints),
         "surviving_high_edge_counts": edge_counts,
         "first_profile": profiles[0],
         "last_profile": profiles[-1],
