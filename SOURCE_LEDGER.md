@@ -1,8 +1,8 @@
 # Source, novelty, and dependency ledger
 
 **Author:** Samuil Petkov<br>
-**Repository revision:** 29 July 2026; active PDF date suppressed<br>
-**Last targeted search:** 27 July 2026
+**Certificate baseline:** 29 July 2026; active manuscript in `arxiv/`<br>
+**Attribution review:** 31 October 2026; July search history retained below
 
 ## Claim-level source map
 
@@ -14,6 +14,8 @@
 | Hoffman-Singleton graph | A. J. Hoffman and R. R. Singleton, *IBM Journal of Research and Development* 4 (1960), 497-504, DOI `10.1147/rd.45.0497` | Historical source for the named graph; no named-graph theorem is used in the proof. |
 | Exact coordinate realization | Paul R. Hafner, *Journal of Algebraic Combinatorics* 18 (2003), Theorem 2.1, DOI `10.1023/A:1025136524481` | Published affine-coordinate form of Robertson's pentagon-and-pentagram construction; after reindexing the `Q`-layers by `k -> -k`, its adjacency rules are exactly those used here. |
 | Distance spectra of minimal cages | Aditi Howlader and Pratima Panigrahi, *Linear Algebra and its Applications* 636 (2022), Theorems 2.3 and 2.5(1), DOI `10.1016/j.laa.2021.11.014`, arXiv:2109.05274 | Prior distance-polynomial framework for minimal `(k,5)`-cages and explicit Petersen, Hoffman-Singleton, and hypothetical degree-57 spectra; explicitly credited. |
+| Public Hoffman-Singleton refutation transcript | Capy Build, *CE10: Refuting Graffiti 284*, agent run dated 22 July 2026, 18:14--18:22 UTC, [public transcript](https://tokiwa.space/f/more-front-minute.pdf) | Records the same explicit Hoffman-Singleton counterexample. The transcript and its displayed run date were checked on 31 October 2026; no exclusive discovery-priority conclusion is inferred. |
+| Exact verification of the Hoffman-Singleton refutation | Nathan Wilbanks and Annie, *Graffiti 284 Refuted by Hoffman–Singleton: An Independent Exact Verification*, AGNT Labs verification note dated 23 July 2026, [source](https://agnt.gg/whitepapers/graffiti-284-refutation) | Cited for the exact 50-vertex verification. The note's broader uniqueness and degree-57 claims are not used; those are separate from its valid Hoffman-Singleton computation. |
 | Classical 40-vertex `(6,5)`-cage | O'Keefe and Wong, *Journal of Combinatorial Theory B* 26 (1979), DOI `10.1016/0095-8956(79)90052-2`; Wong, *Journal of Graph Theory* 3 (1979), DOI `10.1002/jgt.3190030413` | Construction and uniqueness of the classical cage; this is a minimum-order statement among 6-regular girth-five graphs, not among WOW-284 counterexamples. |
 | Exhaustion of the `(5,5)`-cages | Markus Meringer, *Journal of Graph Theory* 30 (1999), 137--146, DOI `10.1002/(SICI)1097-0118(199902)30:2<137::AID-JGT7>3.0.CO;2-G` | External exhaustive input that the minimum order is 30 and exactly four nonisomorphic `(5,5)`-cages exist. The repository independently reconstructs and checks the four committed records but does not re-run the isomorph-free exhaustion. |
 | Petersen deletion realization | Klin, Muzychuk, and Ziv-Av, *Michigan Mathematical Journal* 58 (2009), Section 3.6, DOI `10.1307/mmj/1242071692` | Published structural context for obtaining the 40-vertex graph from Hoffman-Singleton. |
@@ -21,8 +23,8 @@
 | Jørgensen order-96 `(9,5)` graph | Leif K. Jørgensen, *Discrete Mathematics* 293 (2005), 177-184, DOI `10.1016/j.disc.2004.08.029`; author-hosted adjacency list at `https://people.math.aau.dk/~leif/research/girth5/96.html` | The published source supports the relative-difference-set construction, order 96, degree 9, and girth five. The stored 96-line adjacency list matches the author-hosted list after whitespace normalization. Diameter, transmission, distance polynomial, least distance eigenvalue `-9`, WOW equality, and deletion screens are repository computations, not claims attributed to the paper. The equality computation is included in the manuscript with this source boundary made explicit. |
 | Symbolic software | Meurer et al., *PeerJ Computer Science* 3 (2017), e103, DOI `10.7717/peerj-cs.103` | Citation for SymPy, used for exact characteristic polynomials, Sturm counts, and rational certificates. |
 | Graph software | Hagberg, Schult, and Swart, *Proceedings of SciPy 2008*, DOI `10.25080/TCWV9851` | Citation for NetworkX, used in the graph6-based integer-BFS audit and standard-family controls. |
-| Lean 4 | Leonardo de Moura and Sebastian Ullrich, CADE 28 (2021), DOI `10.1007/978-3-030-79876-5_37` | System reference for the verified explicit-counterexample formalization. |
-| Mathlib | The mathlib Community, CPP 2020, DOI `10.1145/3372885.3373824` | Library reference for the verified explicit-counterexample formalization. |
+| Lean 4 | Leonardo de Moura and Sebastian Ullrich, CADE 28 (2021), DOI `10.1007/978-3-030-79876-5_37` | System reference for the structural and finite-matrix certificates; the current manuscript states their formal scope. |
+| Mathlib | The mathlib Community, CPP 2020, DOI `10.1145/3372885.3373824` | Library reference for the structural and finite-matrix certificates; graph-distance assembly remains paper-side as described in the current manuscript. |
 | Current degree-57 status | Derek H. Smith and Roberto Montemanni, *Axioms* 15 (2026), 332, DOI `10.3390/axioms15050332` | Peer-reviewed 2026 confirmation that existence of the degree-57 Moore graph remains open; the paper rules out only a cyclic-derangement construction. |
 
 ## Exact relationship to prior work
@@ -39,14 +41,17 @@ beside WOW-284 yields
 
 Their general formulas also contain the spectral ingredients behind the
 degree-`k` calculation. Accordingly, this repository does **not** claim a new
-spectrum or a new Moore-graph spectral formula. Its defensible mathematical
-contribution is the sharp WOW-284 criterion `k > 3`, the explicit connection,
-the exact induced counterexamples and descendant-family certificates, the
-diameter-three criterion, and a compact self-contained reproducibility
-package. The classical graph spectra are credited to their published sources
-and are not claimed as new.
+spectrum or a new Moore-graph spectral formula. The explicit
+Hoffman-Singleton/WOW-284 connection is also recorded in the Capy Build
+transcript and Wilbanks–Annie note cited above. The manuscript develops
+smaller induced counterexamples and descendant-family certificates, the
+regular diameter-three spectral criterion, polynomial order bounds and
+integral-excess restrictions, and vertex-deletion spectra and stability
+results under their stated hypotheses. The classical graph spectra are
+credited to their published sources. This ledger does not claim an
+exhaustive novelty assessment of every extension.
 
-## Targeted novelty search
+## Historical search and subsequent attribution update
 
 The following searches were run on 21--23 July 2026:
 
@@ -62,18 +67,24 @@ The following searches were run on 21--23 July 2026:
 - GitHub public code search for `WOW-284` and the Hoffman-Singleton/dual-degree
   combinations.
 
-The searches found the 2014 conjecture statement and the 2022 prior spectral
-calculation, but no accessible source explicitly stating that the
-Hoffman-Singleton graph refutes WOW-284. Search coverage is never complete,
-particularly for unpublished notes, private correspondence, non-indexed
-reports, and differently worded observations.
+The July search record reported the 2014 conjecture statement and the 2022
+spectral calculation, without locating an explicit published connection to
+WOW-284. That is a historical search outcome, not the current literature
+boundary. The 31 October 2026 review checked the public Capy Build transcript
+whose run is dated 22 July 2026 and the Wilbanks–Annie verification note dated
+23 July 2026. Both explicitly record the same refutation and are now cited
+in the manuscript. Their stated dates do not settle all questions of
+discovery chronology or independence; this repository does not adjudicate
+priority. Search coverage remains incomplete, particularly for unpublished
+notes, private correspondence and non-indexed records.
 
 ## Permitted and forbidden novelty language
 
 Permitted:
 
 - "We record that the Hoffman-Singleton graph is a counterexample to WOW-284."
-- "A targeted search did not locate an earlier explicit connection."
+- "The same Hoffman-Singleton counterexample is recorded in the cited Capy
+  Build transcript and Wilbanks–Annie verification note."
 - "The note supplies a self-contained coordinate certificate."
 - "For diameter-two Moore graphs, the WOW-284 inequality fails precisely in
   realizable degrees greater than three."

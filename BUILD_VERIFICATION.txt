@@ -1,4 +1,14 @@
-CURRENT V2 MANUSCRIPT VERIFICATION — 14 OCTOBER 2026
+CURRENT MANUSCRIPT REVIEW — 31 OCTOBER 2026
+============================================
+
+The current 40-page manuscript and matching four-file upload ZIP are
+in arxiv/. See arxiv/REVIEW_2026-10-31.txt and arxiv/SOURCE_PACKAGE.json
+for the current mathematical changes, fresh exact checks, isolated
+source-package build, and precise formalization scope. No new Lean
+run or arXiv submission was performed. The following October 14 and
+July records are preserved as historical evidence.
+
+HISTORICAL MANUSCRIPT VERIFICATION — 14 OCTOBER 2026
 ===================================================
 
 The current manuscript and upload package are in arxiv/. The root manuscript,

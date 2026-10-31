@@ -137,12 +137,19 @@ The conjecture holds on these graphs exactly for \(k\le3\), with equality at
 \(k=3\), and fails for every realizable \(k>3\).  The degree-seven
 Hoffman--Singleton graph therefore gives a gap of three.
 
-The distance-polynomial viewpoint is established for minimal cages and
-distance-polynomial graphs
-\cite{HowladerPanigrahi2022,Fiol2016}.  Nonbacktracking linear-programming
-bounds are due to Nozaki \cite{Nozaki2015}; related spectral-Moore work appears
-in \cite{CioabaEtAl2016}.  We specialize these methods to the interval imposed by WOW-284 and to
-vertex deletion. Our examples are not claimed to exhaust all
+The same Hoffman--Singleton counterexample is recorded in a public Capy
+Build transcript~\cite{CapyBuild2026} and in a verification note by Wilbanks
+and Annie~\cite{WilbanksAnnie2026}.
+
+Howlader and Panigrahi already give the distance spectra of Moore graphs,
+including the Hoffman--Singleton graph
+\cite[Theorem~2.5(1)]{HowladerPanigrahi2022}. The distance-polynomial
+framework is developed in \cite{HowladerPanigrahi2022,Fiol2016}.
+Nonbacktracking linear-programming bounds are due to Nozaki
+\cite{Nozaki2015}; related spectral-Moore bounds appear in
+\cite{CioabaEtAl2016}. We use these methods to derive order restrictions
+from the WOW-284 spectral window and to study vertex deletion.
+Our examples are not claimed to exhaust all
 counterexamples, and the order-$38$ example is not claimed minimal.
 Appendix~\ref{sec:verification} records the exact computations and the
 scope of the Lean verification.
@@ -1475,6 +1482,8 @@ It has constant signed row sum \((n-r-4)/2\), and
 \[
  S+2I\succeq0,\qquad E_{-2}(S)=E_{-2}(A).
 \]
+Here \(E_\lambda(B):=\ker(B-\lambda I)\) denotes the
+\(\lambda\)-eigenspace of a square matrix \(B\).
 \end{proposition}
 
 \begin{proof}
@@ -1571,6 +1580,12 @@ Inclusion--exclusion and \(n=k^2+1+c\) now give
 directions, and radius-two bijection have also been checked independently and
 exactly.
 \end{proof}
+
+If the spectral window is strict, the lower bound improves to
+\(\sigma_{uv}\ge2k-1\). Indeed, the proof of
+Theorem~\ref{thm:integral-slack} gives
+\((g_k(A))_{uv}\ge h_k+1=6(k+2)+1\), whereas the edge calculation above
+gives \((g_k(A))_{uv}=4k+14+\sigma_{uv}\).
 
 For \(\ell\ge3\), let \(N_\ell\) denote the number of
 \(\ell\)-cycles in \(G\).
@@ -2289,9 +2304,10 @@ strict counterexample. The present results also do not determine the minimum
 order of a strict counterexample. Extending the regular-graph order bounds
 to irregular graphs is another direction.
 
+\paragraph{Disclosure and reproducibility.}
 OpenAI ChatGPT-5.6 Sol Pro assisted with adversarial proof checking, proof
-exploration, and Lean formalization.  Codex also assisted with English-language
-editing, organization, and supplementary proof arguments.  The author assumes full responsibility
+exploration, and Lean formalization.  Codex also assisted with
+organization and supplementary proof arguments.  The author assumes full responsibility
 for the mathematics, attribution, and conclusions.  The original source, exact
 certificates, and build instructions are available at
 \href{https://github.com/SamPetkov/wow284}{\texttt{github.com/SamPetkov/wow284}}.
@@ -2391,7 +2407,7 @@ Writing \(S_2=\sum_vd_H(v)^2\), one has
 \[
  \frac{43m^2-70200m+119632500}{58500}
  \le N_6
- \le\frac{4220000-2200m-7m^2}{2000}.
+ <\frac{4220000-2200m-7m^2}{2000}.
 \]
 Writing
 \[
@@ -2403,7 +2419,8 @@ exact enumeration leaves \(266\) triples \((n_0,n_2,n_4)\) such that
  n_0+n_2+n_4=50,\qquad
  m=n_2+2n_4\equiv0\pmod5,
 \]
-and at least one integer \(N_6\) satisfies all four displayed bounds.
+and at least one integer \(N_6\) satisfies all four displayed bounds,
+including the strict upper moment bound.
 \end{theorem}
 
 \begin{proof}
@@ -2508,7 +2525,7 @@ gives the upper bound; the spectral window makes the weights positive.
 Appendix~\ref{app:order50-moment-bounds} displays both matrices and their
 determinant calculations.
 The exact matrix calculations and enumeration are checked by
-\codefile{scripts/verify_proof_audit_06_order50_feasibility.py}.
+\href{https://github.com/SamPetkov/wow284/blob/ee387a20bb97c83d67f466c837e589509d6ad337/scripts/verify_proof_audit_06_order50_feasibility.py}{\path{scripts/verify_proof_audit_06_order50_feasibility.py}}.
 The $266$ surviving profiles neither establish nor rule out a graph.
 \end{proof}
 
@@ -3339,21 +3356,30 @@ rank-one matrix by \(10-y_i^2>0\).  The resulting localizing matrix is
  189&-177&261\\
  -177&261&-273-2m\\
  261&-273-2m&25689-12m-12N_6
- \end{pmatrix}\succeq0.
+ \end{pmatrix}\succ0.
 \]
-Expanding their determinants gives
+For strict positivity, diameter three implies that \(I,A,A^2,A^3\) are
+linearly independent: evaluate a linear relation successively at vertex
+pairs of distances three, two, one, and zero. Since \(A\) is symmetric,
+it has at least four distinct eigenvalues. Connectedness makes the
+principal eigenvalue simple, so at least three distinct values occur among
+the \(y_i\). A nonzero polynomial of degree at most two cannot vanish at all three.
+Together with \(10-y_i^2>0\), this shows that the quadratic form of
+\(\mathsf L\) is positive on every nonzero vector.
+
+Expanding the determinants gives
 \begin{align*}
  \det\mathsf M
  &=1200(58500N_6-43m^2+70200m-119632500),\\
  \det\mathsf L
  &=108(4220000-2200m-7m^2-2000N_6).
 \end{align*}
-Both determinants are nonnegative.  Dividing by the positive constants
-and isolating \(N_6\) gives exactly
+Thus \(\det\mathsf M\ge0\) and \(\det\mathsf L>0\).
+Dividing by the positive constants and isolating \(N_6\) gives
 \[
  \frac{43m^2-70200m+119632500}{58500}
  \le N_6
- \le\frac{4220000-2200m-7m^2}{2000}.
+ <\frac{4220000-2200m-7m^2}{2000}.
 \]
 
 \section{Spectral exclusions for two construction families}

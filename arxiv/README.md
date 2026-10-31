@@ -1,23 +1,43 @@
-# WOW-284: final v2 manuscript package
+# WOW-284: reviewed replacement manuscript
 
-Prepared 14 October 2026 after a fresh independent GPT-6 Pro release recheck of each exact current manuscript. Both reports recommend author-managed v2 release and identify no mathematical blocker within their stated coverage. Two useful optional prose corrections per paper were independently checked and applied; the abstracts, theorem statements and displayed mathematics are unchanged by this final recheck.
+Prepared **31 October 2026** from the author's supplied upload pack. No confirmed blocking theorem-level defect was found in the written mathematical review. The detailed changes and scope are recorded in `REVIEW_2026-10-31.txt`; this is a review result, not a new kernel certification.
 
-One introductory sentence now explicitly assumes regularity when identifying diameter-two Moore graphs. The standard coordinate vector and characteristic-polynomial symbols are introduced before use.
+## Current files
 
-- `main.pdf`: the current 39-page paper.
-- `main.tex`: editable source.
-- `WOW284-v2-arxiv-upload.zip`: arXiv upload package; `wow284_arxiv_source.zip` contains the same package.
-- `MANIFEST.txt` and `SHA256SUMS`: current scoped inventory and digests for this directory; the ledger excludes itself.
-- `arxiv-abstract.txt` and `arxiv-comments.txt`: separate submission metadata.
+- `main.pdf`: the reviewed 40-page paper.
+- `main.tex`, `main.bbl`, `references.bib`, `petkov-preprint.sty`: the matching editable sources.
+- `WOW284-v2-arxiv-upload.zip` and `wow284_arxiv_source.zip`: identical four-file source ZIPs; existing alias names are retained for repository continuity.
+- `arxiv-abstract.txt` and `arxiv-comments.txt`: submission text.
+- `SOURCE_PACKAGE.json`: exact source/PDF/ZIP bindings and check scope.
+- `MANIFEST.txt` and `SHA256SUMS`: current directory inventory and digests; the digest ledger excludes itself.
+- `main.md`: generated noncanonical reading copy; the TeX and PDF are authoritative.
 
-The upload ZIP contains exactly `main.tex`, `main.bbl`, `references.bib`, and `petkov-preprint.sty`. The exact extracted sources compiled successfully with pdfLaTeX, without warnings or errors, unresolved references/citations, box warnings or missing glyphs. All PDF fonts are embedded, and bookmarks plus coloured internal/external links are present. Both papers retain the same stylesheet.
+## Changes in this review
 
-## Formalization scope and evidence
+The strict spectral window now gives the edge five-cycle bound `sigma_uv >= 2k-1`. At degree six and order 50, the upper six-cycle moment bound is strict because the localizing matrix is positive definite. Both displays and the exact enumeration script agree; the same 266 degree profiles survive. The introduction explicitly credits the published Moore-graph spectra and retains the Capy Build and Wilbanks–Annie counterexample records. Eigenspace notation and the disclosure heading are clearer. The abstract is unchanged.
 
-Appendix I distinguishes the imported finite-coordinate and matrix certificates and full graph-independent LP optimum from graph-distance conclusions, the trace bridge and deletion theory proved in the paper.
+The prior requested removal of the English-language-editing claim from the AI disclosure is retained; the mathematical assistance disclosure remains.
 
-The author waived further Lean reruns and log retrieval on 13 October 2026. No new Lean run was performed in this recheck. The earlier fresh Procida replay's full completion remains unconfirmed after the SSH outage; its last retrieved corrected checkpoints were 67/195 WOW and 194/480 Erdős production modules, without observed failures. Archived source-identified compilation evidence remains historical. Unpublished endpoint patches, retired/vacuous modules and unimported templates are excluded from stronger coverage claims. No released Lean source or toolchain was changed in this publication, and no Lean was run on the PC in this recheck.
+## Verification
 
-The fresh Pro reviews are mathematical/editorial checks with explicit coverage limits, not new kernel verification or proof certification. No new AI-detector score is claimed. No arXiv submission has been made; these packages are ready for the author's replacement submission.
+Both the candidate source and the exact four-file ZIP extracted into an empty directory compiled successfully with pdfLaTeX via latexmk. The extracted build has 40 pages and byte-identical extracted PDF text to the delivered PDF. No LaTeX/BibTeX warning or error, unresolved reference or citation, box warning, or missing-glyph diagnostic was found in the final logs. All fonts are embedded. The PDF was reviewed in an all-page overview and at higher resolution on changed and affected pages.
 
-The root manuscript, root `MANIFEST.txt` and root `SHA256SUMS` are historical July records. Use this directory for the current manuscript and integrity records; root `BUILD_VERIFICATION.txt` explains the distinction and the precise formalization scope.
+Six selected exact-arithmetic audits were freshly replayed: the two-sided LP, three-to-one theorem, nonpositive-r cases, disconnected signed complement at order 50, Hoffman–Singleton deletion robustness, and the updated order-50 feasibility enumeration. All passed. The feasibility verifier is pinned in the PDF to commit `ee387a20bb97c83d67f466c837e589509d6ad337`.
+
+## Formalization boundary
+
+Appendix I distinguishes imported structural and finite-matrix certificates and the graph-independent LP optimum from the paper-side graph-distance identification, trace bridge, integral-slack and deletion results. The new cycle refinements are written results supported by the specified exact checks, not newly released Lean theorems.
+
+No new Lean run was performed and no released Lean source or toolchain was changed. The author had waived further Lean reruns and log retrieval. Earlier archived compilation evidence remains historical; the interrupted fresh replay is not promoted to a completed run.
+
+## Build and replacement
+
+From this directory, with a suitable TeX distribution:
+
+```bash
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
+```
+
+The ZIP contains exactly `main.tex`, `main.bbl`, `references.bib`, and `petkov-preprint.sty` at its root. It excludes the PDF, metadata, logs and audit files. Its supplied replacement destination is arXiv:2607.27452; the live account's version/submission state was not certified. No arXiv submission has been made in this review. The author should inspect the PDF generated by arXiv during replacement.
+
+The root WOW manuscript, root manifest and root checksum ledger retain a historical July snapshot. The older synchronization script takes that root manuscript as input and must not be used to rebuild this replacement. Current integrity records are scoped to this directory.

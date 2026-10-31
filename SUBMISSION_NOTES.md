@@ -1,4 +1,14 @@
-# arXiv metadata
+# Historical arXiv metadata — July 2026
+
+**Historical record, retained on 31 October 2026.** The page count, abstract,
+release identification and verification wording below describe the July
+package and are not the current replacement metadata. Use
+[`arxiv/README.md`](arxiv/README.md),
+[`arxiv/arxiv-abstract.txt`](arxiv/arxiv-abstract.txt) and
+[`arxiv/arxiv-comments.txt`](arxiv/arxiv-comments.txt), together with the
+current `arxiv/main.tex` and its verification appendix, for the replacement.
+In particular, the historical graph-level Lean wording below is superseded
+by the current statement of structural and finite-matrix certificate scope.
 
 **Release:** This manuscript corresponds to GitHub release `v2.2.8`.
 

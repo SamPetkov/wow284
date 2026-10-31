@@ -1,1 +1,1 @@
-39 pages, 0 figures. Revised exposition, expanded proof explanations and appendices; additional references and local mathematical refinements; main text shortened, with detailed calculations in appendices.
+40 pages, 0 figures. Revised exposition and attribution; strengthened strict-window cycle bounds; exact computations and detailed formalization scope.

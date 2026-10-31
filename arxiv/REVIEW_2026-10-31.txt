@@ -1,0 +1,140 @@
+WOW-284 — REVIEWED REPLACEMENT, 31 OCTOBER 2026
+================================================================
+
+Authoritative input: the wow284 manuscript in the author's
+Erdos593_625_WOW284_Manual_Upload_Pack_2026-10-31.zip.
+
+No confirmed blocking theorem-level defect was found in the written review.
+All substantive sections and appendices were inspected, together with the
+uploaded-source differences and final changes. This is not a comprehensive
+machine certification or an exhaustive novelty search.
+
+====================
+The manuscript consistently distinguishes the closed spectral window used
+for the polynomial order ceiling from the strict window needed for stronger
+integral-slack consequences. Its counterexamples and deletion results remain
+under their stated graph hypotheses. Two local sharpenings are now proved.
+
+1. Five-cycles through an edge
+------------------------------
+In the closed-window edge-cycle proposition the lower bound remains
+
+  sigma_uv >= 2k - 2.
+
+Under the strict window the integral-slack theorem gives
+
+  (g_k(A))_uv >= h_k + 1 = 6(k+2) + 1,
+
+whereas the edge calculation gives
+
+  (g_k(A))_uv = 4k + 14 + sigma_uv.
+
+Subtracting yields the stronger strict-window consequence
+
+  sigma_uv >= 2k - 1.
+
+The added paragraph states the strict hypothesis explicitly. It does not
+replace the weaker bound in the proposition that allows closed endpoints.
+
+2. Strict six-cycle upper bound at order 50
+------------------------------------------
+For the degree-six, order-50 situation, the displayed moment bounds now read
+
+  (43m^2 - 70200m + 119632500)/58500 <= N_6
+      < (4220000 - 2200m - 7m^2)/2000.
+
+The lower inequality remains weak. The upper inequality is strict because
+the 3-by-3 localizing matrix L is positive definite, not merely semidefinite.
+
+Diameter three makes I,A,A^2,A^3 linearly independent: evaluate a proposed
+linear relation at vertex pairs of distances three, two, one and zero.
+Since A is symmetric, it has at least four distinct eigenvalues. The
+connected regular graph has a simple principal eigenvalue, so there are
+at least three distinct shifted nonprincipal values y_i. The strict
+spectral window gives 10-y_i^2 > 0. A nonzero polynomial of degree at most
+two cannot vanish at all three values, so its positively weighted squared
+evaluation sum is positive. This is the quadratic form of L, proving L > 0.
+Consequently det L > 0 and the six-cycle upper bound is strict. No analogous
+four-support argument has been proved for the larger moment matrix M, so
+the lower bound correctly remains nonstrict.
+
+The exact verifier now uses ceil(moment upper)-1 for the integer upper
+endpoint and retains the weak lower endpoints. It confirms that the same
+266 degree profiles survive. Only the possible integer moment endpoints
+(m,N_6)=(0,2110) and (100,1965) are removed. This does not settle existence
+of a degree-six order-50 counterexample. Both copies of the displayed bound
+and the enumeration sentence were updated. The manuscript links to the
+immutable verifier commit ee387a20bb97c83d67f466c837e589509d6ad337.
+
+Most delicate parts checked
+---------------------------
+The audit checked the Moore threshold, explicit coordinate proof, transfer
+from adjacency to distance spectra, degree and diameter obstructions,
+two-sided nonbacktracking LP optimum and optimizer rigidity, and the
+separate exclusion of scalar equality by graph multiplicities. The integral
+slack and three-to-one excess arguments were examined with their
+classification hypotheses. The signed-complement arguments retain the
+distinction between invariant spaces and an equitable graph partition.
+
+The deletion analysis recomputes distances after deletion. The interlacing
+and perturbation signs were checked, along with the one- and two-puncture
+decompositions, the analytic three-deletion estimate, the exact universal
+five-deletion certificate, and the explicit six-deletion obstruction.
+The conditional degree-57 argument retains its existence hypothesis.
+
+Six fresh exact-arithmetic replays passed
+----------------------------------------
+The review bundle contains output from these current repository scripts:
+
+  verify_proof_audit_02_two_sided_lp.py
+  verify_proof_audit_14_three_to_one.py
+  the nonpositive-r audit
+  verify_order50_signed_complement_disconnected.py
+  verify_proof_audit_13_hs_robustness.py
+  verify_proof_audit_06_order50_feasibility.py (updated strict bound)
+
+The Hoffman–Singleton replay reconstructs an automorphism group of order
+252000 and obtains deletion-orbit counts 1,1,2,4,11,33 for sizes 0 through 5.
+All 52 representatives pass their exact positivity certificates, including
+the 44 representatives for sizes 4 and 5. The specified six-deletion graph
+has order 44, minimum dual degree 43/7, and the recorded comparison matrix
+has inertia (43 positive, 1 negative, 0 zero). Thus universal robustness
+through five and the existence of a failing six-deletion example are
+supported. It does not follow that every six-vertex deletion fails.
+
+Prose, notation and prior work
+------------------------------
+The abstract clearly states the graph hypotheses and distinguishes a
+counterexample, a spectral restriction, and a deletion theorem. The paper
+is still technically dense, but the density chiefly reflects its breadth.
+The most useful final edits concern precision, not wholesale shortening.
+
+The introduction explicitly cites Howlader and Panigrahi, Theorem 2.5(1),
+for the previously published Moore-graph distance spectra, including
+Hoffman–Singleton. The added Capy Build and Wilbanks–Annie records of the
+same explicit counterexample are retained, with their stated dates in the
+bibliography. The text makes no exclusive discovery-priority claim.
+These citations clarify what was already recorded and leave the paper's
+spectral restrictions, smaller examples and deletion analysis identifiable.
+This review does not establish exhaustive novelty of every extension.
+
+The eigenspace notation E_lambda(B)=ker(B-lambda I) is now defined where
+used. A disclosure/reproducibility heading separates the research questions
+from the tool-use statement. As in 625, the English-language-editing claim
+was removed while retaining the mathematical assistance disclosure.
+
+
+BUILD AND FORMALIZATION SCOPE
+----------------------------
+The final candidate and isolated extracted four-file archive both build
+successfully. Final page count: 40. LaTeX/BibTeX diagnostics: none.
+All fonts embedded. Extracted PDF text is byte-identical to the delivered
+PDF. The exact source and output hashes are in SOURCE_PACKAGE.json and
+SHA256SUMS. All-page PDF overviews and detailed changed-page checks found
+no remaining visual defect.
+
+Appendix I distinguishes imported structural and finite-matrix certificates and the graph-independent LP optimum from the paper-side graph-distance identification, trace bridge, integral-slack and deletion results. The new cycle refinements are written results supported by the specified exact checks, not newly released Lean theorems.
+
+No new Lean invocation was performed; no Lean source or toolchain changed.
+Historical evidence remains historical. The earlier interrupted fresh
+replay is not represented as complete. No arXiv submission was performed.

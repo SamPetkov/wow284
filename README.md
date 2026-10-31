@@ -3,8 +3,12 @@
 **Author:** Samuil Petkov<br>
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
-**Repository revision:** 29 July 2026 (`2026-07-29`); PDF date suppressed<br>
-**Repository status:** v2.2.8 expanded manuscript and reproducibility package
+**Publication review:** 31 October 2026; replacement manuscript prepared<br>
+**Certificate baseline:** historical release `v2.2.8` (29 July 2026)
+
+The current manuscript, PDF, bibliography and submission metadata are in
+[`arxiv/`](arxiv/README.md). The root manuscript and its release ledgers are
+historical July artifacts; use `arxiv/main.tex` for the current paper.
 
 This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
@@ -122,9 +126,14 @@ The distance-spectral input is not claimed as new. Howlader and Panigrahi
 published a distance-polynomial treatment of minimal `(k,5)`-cages and
 explicitly listed the Petersen, Hoffman-Singleton, and hypothetical degree-57
 Moore cases in 2022. Combining their `k = 7` calculation with regularity and
-girth already gives the counterexample. This note isolates the sharp `k > 3`
-criterion, records the WOW-284 connection, and supplies an independent,
-self-contained coordinate proof.
+girth already gives the counterexample. The same explicit refutation is
+recorded in a [Capy Build transcript](https://tokiwa.space/f/more-front-minute.pdf)
+whose run is dated 22 July 2026 and in a
+[verification note by Nathan Wilbanks and Annie](https://agnt.gg/whitepapers/graffiti-284-refutation)
+dated 23 July 2026. Both records were checked for the 31 October publication
+review and are cited in the manuscript; no exclusive discovery-priority
+claim is made. The paper gives a self-contained coordinate proof and
+develops the spectral restrictions and deletion results described above.
 
 The source search and literature boundary are documented in
 [`SOURCE_LEDGER.md`](SOURCE_LEDGER.md). Classical graph spectra are credited to
@@ -143,10 +152,11 @@ Primary links:
 
 ## Repository map
 
-- `main.tex` - authoritative manuscript source, A4 `amsart`, exact one-inch margins.
-- `main.pdf`, `main.bbl` - compiled publication artifacts.
-- `manuscript.md` - generated noncanonical reading copy.
-- `references.bib` - bibliography maintenance file.
+- `arxiv/main.tex` - current manuscript source, A4 `amsart`.
+- `arxiv/main.pdf`, `arxiv/main.bbl` - current publication artifacts.
+- `arxiv/references.bib`, `arxiv/petkov-preprint.sty` - current bibliography and stylesheet.
+- `main.tex`, `main.pdf`, `main.bbl`, `references.bib` - historical July manuscript artifacts.
+- `manuscript.md` - historical generated noncanonical reading copy.
 - `src/wow284_graph.py` - standard-library coordinate construction, BFS, girth, and dual-degree routines.
 - `src/wow284_induced40.py` - exact induced 40-vertex construction and structural certificate.
 - `scripts/verify_exact.py` - exact SymPy characteristic-polynomial and rational (LDL^{\mathsf T}) certificate.
@@ -175,10 +185,11 @@ Primary links:
 - `results/edges.csv`, `results/adjacency_matrix.csv`, `results/distance_matrix.csv` - complete graph data.
 - `data/graphs/` - machine-readable representations of the 38-, 39-, 40-, 42-, and 50-vertex graphs.
 - `supplement/extended_2026-07-23/` - checksum-preserved original extended handoff, report, code, data, and captured outputs.
-- `arxiv/wow284_arxiv_source.zip` - minimal arXiv source archive containing `main.tex`, `references.bib`, and `main.bbl` only.
+- `arxiv/wow284_arxiv_source.zip` - arXiv source archive containing `main.tex`, `references.bib`, `main.bbl`, and `petkov-preprint.sty`.
 - `SOURCE_LEDGER.md`, `REVIEW.md`, `PROVENANCE.md` - attribution, novelty, proof-audit, and provenance records.
 - `CITATION.cff`, `LICENSE`, `LICENSE_SCOPE.md` - citation and CC BY 4.0 metadata.
-- `BUILD_VERIFICATION.txt`, `MANIFEST.txt`, `SHA256SUMS` - release preflight and integrity records.
+- `arxiv/MANIFEST.txt`, `arxiv/SHA256SUMS` - integrity records for the current manuscript directory.
+- `BUILD_VERIFICATION.txt`, root `MANIFEST.txt`, root `SHA256SUMS` - historical release records and scope notes.
 - `lean/` - Lean 4.31/Mathlib 4.31 development and pinned project configuration.
 - `lean/Wow284Standalone.lean` - generated single-file form of all completed Lean certificate modules and trust reports.
 - `lean/Wow284/Induced39/` and `lean/Wow284/Induced42/` - checked-in,
@@ -189,12 +200,17 @@ Primary links:
 
 ## Formal verification
 
-The explicit 50-vertex counterexample is fully formalized and verified in
-Lean 4.31/Mathlib 4.31. The development checks the graph definition,
-simplicity, 7-regularity, the exhaustive common-neighbor certificate, girth
-five, the adjacency-square and distance-matrix identities, and an exact
-spectral diagonalization with multiplicities `91^1`, `(-4)^28`, and `1^21`.
-The scalar `k <= 3` threshold is formalized separately.
+For the explicit 50-vertex graph, Lean 4.31/Mathlib 4.31 checks structural
+and exact rational matrix certificates: the coordinate graph, simplicity,
+7-regularity, exhaustive common-neighbor counts, girth five, the
+adjacency-square identity, the algebraic formula for a case-defined
+`0/1/2` matrix, and its exact diagonalization with multiplicities `91^1`,
+`(-4)^28`, and `1^21`. The mathematical proof uses the diameter-two
+certificate to identify this matrix with the graph distance matrix and
+assembles the counterexample conclusion. The historical Lean release does
+not export that conclusion as one combined graph-distance theorem.
+The scalar `k <= 3` threshold is formalized separately. The current
+manuscript's verification appendix states the precise scope.
 
 Lean 4.31 also kernel-checks finite spectral certificates for the explicit
 38-, 39-, 40-, and 42-vertex constructions. For orders 38, 39, and 42, the
@@ -232,7 +248,9 @@ The spectral computation is sharded into bounded integer certificates and
 then assembled into a rational two-sided inverse and diagonalization. Within
 the documented formal scope, the public Lean development is sorry-free and
 kernel-checked by Lean/Mathlib 4.31. Full audit details remain available in
-the Lean documentation and release-verification report.
+the Lean documentation and release-verification report. These are statements
+about the documented release, not a claim of a fresh Lean replay in the
+31 October publication review.
 
 ## Audited research extensions
 
@@ -242,7 +260,7 @@ claim boundaries, and independent exact verifiers are indexed in
 [`research-notes/PROOF_AUDIT_REGISTRY.md`](research-notes/PROOF_AUDIT_REGISTRY.md).
 A consolidated map is given in
 [`research-notes/V2_COMPLETE_MATHEMATICAL_SYNTHESIS.md`](research-notes/V2_COMPLETE_MATHEMATICAL_SYNTHESIS.md).
-Only results explicitly stated in `main.tex` belong to the manuscript.
+Only results explicitly stated in `arxiv/main.tex` belong to the current manuscript.
 
 ## Reproduce the exact certificate
 
@@ -271,49 +289,44 @@ from the manuscript's spectral identities. To include the explicitly labelled
 numerical three-vertex screen, run
 `python scripts/verify_extended.py --include-exploratory`.
 
-## Build and synchronize the manuscript
+## Build the current manuscript
 
-A current TeX distribution with `latexmk` and BibTeX, plus Pandoc, is required.
-
-```bash
-python scripts/sync_manuscript_artifacts.py
-```
-
-This compiles in a short temporary directory, regenerates the Markdown copy,
-mirrors the arXiv files, creates the deterministic source ZIP, and refreshes
-the manifest and checksum ledger. Validate a frozen release without modifying
-it with:
+Compile `arxiv/main.tex` from the `arxiv/` directory using a current TeX
+distribution with `latexmk` and BibTeX:
 
 ```bash
-python scripts/sync_manuscript_artifacts.py --check
-python scripts/validate_repository.py
+cd arxiv
+latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-On Windows, `./build.ps1` runs the core exact certificate suite, tests,
-artifact synchronization, and repository validation.  `./build.sh` is the
-corresponding POSIX wrapper; `make check` performs the same read-only checks
-against already synchronized artifacts.  The complete audited command
-inventory and the separately established Lean status are recorded in
-`BUILD_VERIFICATION.txt`.
+The older `scripts/sync_manuscript_artifacts.py`, `build.ps1`, `build.sh`
+and associated root-ledger checks belong to the historical July workflow.
+The synchronization script takes the root `main.tex` as input and overwrites
+the arXiv mirror, so it must not be used to rebuild the current replacement.
+See [`arxiv/README.md`](arxiv/README.md) for the active package and review
+records; `BUILD_VERIFICATION.txt` retains the historical command inventory
+and formalization scope notes.
 
 ## arXiv package
 
 The upload archive is [`arxiv/wow284_arxiv_source.zip`](arxiv/wow284_arxiv_source.zip).
 It excludes PDFs, logs, caches, repository administration, proof audits, and
 code because arXiv asks authors not to include files that are unnecessary for
-TeX processing. The archive includes the matching `.bbl` and `.bib`; the main
+TeX processing. The archive includes the matching `.bbl`, `.bib` and stylesheet; the main
 file uses `\date{}` rather than a dynamic `\today`.
 
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
-This manuscript and source package correspond to GitHub release
-[`v2.2.8`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.8).
-Their contents are identified by `MANIFEST.txt` and `SHA256SUMS`.
+Release [`v2.2.8`](https://github.com/SamPetkov/wow284/releases/tag/v2.2.8)
+remains the historical certificate baseline. The current replacement source
+and package are identified by `arxiv/MANIFEST.txt` and `arxiv/SHA256SUMS`.
 
-Suggested arXiv primary category: `math.CO`. See
-[`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) for title, abstract, comments,
-license, and final account-level checks. This repository prepares the upload
-package but does not represent an arXiv submission or endorsement decision.
+Suggested arXiv primary category: `math.CO`. Use
+[`arxiv/arxiv-abstract.txt`](arxiv/arxiv-abstract.txt) and
+[`arxiv/arxiv-comments.txt`](arxiv/arxiv-comments.txt) for the current
+submission text, together with [`arxiv/README.md`](arxiv/README.md).
+[`SUBMISSION_NOTES.md`](SUBMISSION_NOTES.md) is historical. Preparing these
+files does not itself submit an arXiv replacement.
 
 ## License and responsibility
 
