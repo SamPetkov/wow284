@@ -10,13 +10,13 @@
   "figures": 0,
   "source_entry_point": "main.tex",
   "source_files_sha256": {
-    "main.tex": "382c0c2fdac36e5a24778633237ccf407c5ec33ec5a38026cb950aaf57254032",
+    "main.tex": "3edf368644bb57bdbb5fecf3694348f5f044fe79795b9d20d1b03b26cbf8a9e3",
     "main.bbl": "032335dcc7347474630ddf6d1692ae8ae04e846fb6b84ecb42df23eee4465695",
     "references.bib": "e4797b4e27784a102a09d698b5e1dbbaa1cc919fb2fba0237374bd9c9a13850e",
     "petkov-preprint.sty": "be35fd01e7c78c5043fdbbd7fc452411f97c288018b8c07b6c1252135c2ea2e0"
   },
-  "pdf_sha256": "7d12c54f4bf4e0e47a3baa2d952a289a9b3aa0e2556fc5e4815f6b962f017006",
-  "source_zip_sha256": "62f3cc571ba6f36a9132564484fa199b45c780b845a95c7210d33e0dfa35996f",
+  "pdf_sha256": "46375d119306e542ec923331ea8610ad1abef07d7ff94baf4c02a4e01a0be310",
+  "source_zip_sha256": "456ae063fb5d804b507db8037d55c7e274df0432053b3cf7863c4074eafe5a3f",
   "source_zip_aliases": [
     "WOW284-v2-arxiv-upload.zip",
     "wow284_arxiv_source.zip"
@@ -32,5 +32,19 @@
   "formalization_scope": "Appendix I distinguishes imported structural and finite-matrix certificates and the graph-independent LP optimum from the paper-side graph-distance identification, trace bridge, integral-slack and deletion results. The new cycle refinements are written results supported by the specified exact checks, not newly released Lean theorems.",
   "input_main_tex_sha256": "e4a0520d984d2de137106b208d404a4df536d81c8e6a9127dc255a2574f79e3b",
   "input_pdf_sha256": "528c2897f08ba4efbb647a51f04c6b932a8910dd530e22631645c42930dc0b90",
-  "order50_verifier_commit": "ee387a20bb97c83d67f466c837e589509d6ad337"
+  "order50_verifier_commit": "ee387a20bb97c83d67f466c837e589509d6ad337",
+  "second_review": {
+    "date": "2026-10-31",
+    "baseline_commit": "abf49e189c3a5dd7b9157d03f1f270aa826649c8",
+    "scope": "Focused technical, boundary, and documentation review after the previous improvements; no major rewrite.",
+    "result": "No new blocking mathematical issue found in the reviewed material.",
+    "changes": "The strict spectral window also implies sigma_uv < U_(k,n). Equality would force e_u+e_v into the slack-matrix kernel and then n=2(k+2)/3<k+1, a contradiction. The strict integer sieve uses ceil(U_(k,n))-1. Connectedness is explicit in the LP trace setup, and the moment appendix distinguishes quadratic and cubic support-rank requirements. Order-50/51 consequences, the 266 surviving degree profiles, and the open order-50 existence question are unchanged.",
+    "independent_math_cross_check": "PASS",
+    "candidate_and_extracted_package_builds": "PASS",
+    "visual_review": "PASS",
+    "fresh_lean_runs": 0,
+    "released_lean_sources_changed": false,
+    "fresh_exact_verifier_replays": 0,
+    "existing_exact_results_affected": false
+  }
 }

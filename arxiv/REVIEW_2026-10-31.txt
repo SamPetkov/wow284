@@ -138,3 +138,97 @@ Appendix I distinguishes imported structural and finite-matrix certificates and 
 No new Lean invocation was performed; no Lean source or toolchain changed.
 Historical evidence remains historical. The earlier interrupted fresh
 replay is not represented as complete. No arXiv submission was performed.
+
+SECOND FOCUSED REVIEW AFTER TECHNICAL IMPROVEMENTS
+=================================================
+WOW-284: FOCUSED SECOND MATHEMATICAL AUDIT
+31 October 2026
+
+Sources and scope
+-----------------
+Baseline: repos/wow284/arxiv/main.tex, the published source supplied by the
+coordinating reviewer at main abf49e1.
+Baseline SHA-256: 382c0c2fdac36e5a24778633237ccf407c5ec33ec5a38026cb950aaf57254032
+Revised candidate: candidate/wow284/main.tex.
+Frozen candidate SHA-256: 3edf368644bb57bdbb5fecf3694348f5f044fe79795b9d20d1b03b26cbf8a9e3
+All paths are relative to review_20261031.
+
+This was a bounded second review, not a new theorem search or a replay of the
+previous audit suite. It reread boundary and equality arguments in the LP
+bound, integral slack, edge-cycle sieve, degree/diameter exclusions, Moore
+puncture bounds, equality criterion, order-50 constraints, and the relevant
+moment and spectral appendices. It checked how the recent strict moment and
+cycle statements interact with those results. No new theorem-level defect
+was found in the reviewed material.
+
+Local improvements implemented
+------------------------------
+1. Strict upper endpoint for five-cycle counts.
+   Under the strict shifted adjacency window, the edge bounds now read
+     2k-1 <= sigma_uv < U_(k,n),
+     U_(k,n) = 2(k+2)^2(k^2+3)/n - 10k - 26.
+   The new upper strictness follows from the existing Gram matrix. If the
+   2x2 edge block with entries a,b had b=-a, positive semidefiniteness would
+   put e_u+e_v in its full kernel. In the strict window this kernel is
+   span(1) direct-sum ker(A+2I). Hence
+     w=e_u+e_v-(2/n)1
+   would satisfy Aw=-2w. The u-coordinate, for the edge uv, gives
+     1-2k/n=-2+4/n,
+   or n=2(k+2)/3<k+1 for k>=4, contradicting the elementary order bound for
+   a simple k-regular graph. Thus b>-a. The coordinating reviewer checked
+   this argument independently before adoption.
+
+2. Carry both strict endpoints into the edge-cycle divisibility sieve.
+   The closed-window statement is preserved. Under the strict window its
+   strengthened integer bounds are
+     ceil(max{2k-1, 2k^2-2k+2-n}) <= ceil(U_(k,n))-1.
+   If they coincide at s, the same edge-incidence argument gives
+     5 divides skn/2.
+   The proof explicitly explains the ceil(U)-1 rule for an integral count.
+
+3. State connectedness explicitly in the LP trace setup, aligning the local
+   discussion with the graph-order theorem and the single principal
+   eigendirection used by the trace argument.
+
+4. Explain the rank distinction in the six-cycle moment appendix.
+   Three distinct nonprincipal shifted eigenvalues and positive weights
+   make the 3x3 quadratic localizing matrix positive definite. This support
+   argument does not establish positive definiteness of the 4x4 matrix,
+   whose test polynomials have degree at most three. Its lower determinant
+   bound correctly remains non-strict.
+
+Cross-section and boundary conclusions
+-------------------------------------
+* At degree six, U_(6,50)=346/25 and U_(6,51)=202/17 are nonintegral. The new
+  strict upper bound has the same integer upper endpoints, 13 and 11.
+  The geometric lower endpoints are already 12 and 11. The order-50
+  classification {12,13} and order-51 obstruction therefore do not change.
+* The four order-50 six-cycle bounds, including the strict upper moment
+  bound, are unchanged. The count of 266 surviving profiles and the open
+  existence question remain unchanged. No new enumeration is needed.
+* The LP optimizer rigidity and the separate exclusion of graph equality
+  at the closed-window order ceiling retain their distinct roles. No
+  strict-window argument was imported into a closed-window hypothesis.
+* The three-to-one equality statement remains an arithmetic parameter
+  classification, not a graph existence assertion.
+* The small-puncture proof covers s=0 and s=k-1; all degree denominators
+  remain positive. The deletion estimates preserve the exact minimum dual
+  degree and the distinction between the universal Hoffman-Singleton
+  radius five and successful particular six-vertex deletions.
+* All degree-57 conclusions remain conditional on the existence of the
+  Moore graph. The general deletion bound through 56 vertices remains
+  unchanged.
+* The equality criterion, conjugate endpoint multiplicities, and the
+  puncture spectral comparisons retain their stated boundary conditions.
+
+Validation and limitations
+--------------------------
+The added edge argument is self-contained and analytical. It does not need
+new finite certificates, a verifier change, or a replay of the existing
+order-50 enumeration. Existing computation pins, bibliography, leading
+results, attribution, section/theorem structure, and formalization-scope
+statements were left intact. No Lean command was run, and no formalization
+file was read for revalidation or edited. The coordinating reviewer handles
+compilation, generated reading-copy synchronization, and publication.
+
+Final candidate and extracted-source builds passed; every changed page was visually inspected and all unchanged-text pages were raster-identical to the preceding reviewed PDF. The current README documentation and citation metadata were also reviewed. No Lean source or toolchain changed.

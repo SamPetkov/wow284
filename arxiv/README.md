@@ -1,38 +1,39 @@
 # WOW-284: reviewed replacement manuscript
 
-Prepared **31 October 2026** from the author's supplied upload pack. No confirmed blocking theorem-level defect was found in the written mathematical review. The detailed changes and scope are recorded in `REVIEW_2026-10-31.txt`; this is a review result, not a new kernel certification.
+Prepared **31 October 2026** from the author's supplied upload pack. This directory contains the current manuscript and matching source package. The mathematical review and build records are summarized in [REVIEW_2026-10-31.txt](REVIEW_2026-10-31.txt).
 
 ## Current files
 
-- `main.pdf`: the reviewed 40-page paper.
-- `main.tex`, `main.bbl`, `references.bib`, `petkov-preprint.sty`: the matching editable sources.
-- `WOW284-v2-arxiv-upload.zip` and `wow284_arxiv_source.zip`: identical four-file source ZIPs; existing alias names are retained for repository continuity.
-- `arxiv-abstract.txt` and `arxiv-comments.txt`: submission text.
-- `SOURCE_PACKAGE.json`: exact source/PDF/ZIP bindings and check scope.
-- `MANIFEST.txt` and `SHA256SUMS`: current directory inventory and digests; the digest ledger excludes itself.
-- `main.md`: generated noncanonical reading copy; the TeX and PDF are authoritative.
+- [main.pdf](main.pdf): the reviewed 40-page paper.
+- [main.tex](main.tex), [main.bbl](main.bbl), [references.bib](references.bib), [petkov-preprint.sty](petkov-preprint.sty): the matching editable sources.
+- [WOW284-v2-arxiv-upload.zip](WOW284-v2-arxiv-upload.zip) and [wow284_arxiv_source.zip](wow284_arxiv_source.zip): identical four-file source ZIPs; existing alias names are retained for repository continuity.
+- [arxiv-abstract.txt](arxiv-abstract.txt) and [arxiv-comments.txt](arxiv-comments.txt): submission text.
+- [SOURCE_PACKAGE.json](SOURCE_PACKAGE.json): exact source/PDF/ZIP bindings and check scope.
+- [MANIFEST.txt](MANIFEST.txt) and [SHA256SUMS](SHA256SUMS): current directory inventory and digests; the digest ledger excludes itself.
+- [main.md](main.md): generated noncanonical reading copy; the TeX and PDF are authoritative.
 
 ## Changes in this review
 
-The strict spectral window now gives the edge five-cycle bound `sigma_uv >= 2k-1`. At degree six and order 50, the upper six-cycle moment bound is strict because the localizing matrix is positive definite. Both displays and the exact enumeration script agree; the same 266 degree profiles survive. The introduction explicitly credits the published Moore-graph spectra and retains the Capy Build and Wilbanks–Annie counterexample records. Eigenspace notation and the disclosure heading are clearer. The abstract is unchanged.
-
-The prior requested removal of the English-language-editing claim from the AI disclosure is retained; the mathematical assistance disclosure remains.
+For the strict spectral window, Proposition 6.4 gives both `sigma_uv >= 2k-1` and `sigma_uv < U_{k,n}`; Corollary 6.5 records the corresponding integer sieve. At degree six and order 50, the upper six-cycle moment bound is strict because the localizing matrix is positive definite. Both displays and the exact enumeration script agree; the same 266 degree profiles survive. The introduction explicitly credits the published Moore-graph spectra and retains the Capy Build and Wilbanks–Annie counterexample records. Eigenspace notation and the disclosure heading are clearer. The abstract is unchanged.
 
 ## Verification
 
 Both the candidate source and the exact four-file ZIP extracted into an empty directory compiled successfully with pdfLaTeX via latexmk. The extracted build has 40 pages and byte-identical extracted PDF text to the delivered PDF. No LaTeX/BibTeX warning or error, unresolved reference or citation, box warning, or missing-glyph diagnostic was found in the final logs. All fonts are embedded. The PDF was reviewed in an all-page overview and at higher resolution on changed and affected pages.
 
-Six selected exact-arithmetic audits were freshly replayed: the two-sided LP, three-to-one theorem, nonpositive-r cases, disconnected signed complement at order 50, Hoffman–Singleton deletion robustness, and the updated order-50 feasibility enumeration. All passed. The feasibility verifier is pinned in the PDF to commit `ee387a20bb97c83d67f466c837e589509d6ad337`.
+In the first 31 October review, six selected exact-arithmetic audits were replayed: the two-sided LP, three-to-one theorem, nonpositive-r cases, disconnected signed complement at order 50, Hoffman–Singleton deletion robustness, and the updated order-50 feasibility enumeration. All passed. The feasibility verifier is pinned in the PDF to commit `ee387a20bb97c83d67f466c837e589509d6ad337`. The second review independently checked the analytic proof of the strict upper edge-cycle bound and its integer sieve; the unaffected verifiers were not rerun. The new upper bound is proved analytically.
 
 ## Formalization boundary
 
 Appendix I distinguishes imported structural and finite-matrix certificates and the graph-independent LP optimum from the paper-side graph-distance identification, trace bridge, integral-slack and deletion results. The new cycle refinements are written results supported by the specified exact checks, not newly released Lean theorems.
 
-No new Lean run was performed and no released Lean source or toolchain was changed. The author had waived further Lean reruns and log retrieval. Earlier archived compilation evidence remains historical; the interrupted fresh replay is not promoted to a completed run.
+The released Lean sources and toolchain are unchanged by this manuscript update. The released formalization and its reproduction instructions are documented in the [Lean README](../lean/README.md).
 
 ## Build and replacement
 
-From this directory, with a suitable TeX distribution:
+Use a TeX distribution with pdfLaTeX, BibTeX, `latexmk`, and the packages
+loaded by `main.tex` and `petkov-preprint.sty`. For a minimal installation,
+include `newtx`, its `kastrup` (`binhex.tex`) support, and the `tex-gyre` fonts.
+Keep all four source files together and run from this directory:
 
 ```bash
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex

@@ -361,7 +361,7 @@ The fourth-moment argument uses a quartic polynomial. We now allow higher degree
 
 </div>
 
-For a $k$-regular graph of girth at least five whose nonprincipal spectrum lies in $I_k$, one has $\operatorname{tr}F_i(A)=0$ for $1\le i\le4$, while $\operatorname{tr}F_i(A)\ge0$ for $i\ge5$, since these traces count closed nonbacktracking walks ([Nozaki 2015](#ref-Nozaki2015), Theorem 1 and Corollary 1). The coefficient conditions therefore give $nf_0\le\operatorname{tr}f(A)$. On the other hand, $f(\theta)\le0$ for every nonprincipal eigenvalue, so $\operatorname{tr}f(A)\le f(k)$. Thus $$nf_0\le\operatorname{tr}f(A)\le f(k),
+For a connected $k$-regular graph of girth at least five whose nonprincipal spectrum lies in $I_k$, one has $\operatorname{tr}F_i(A)=0$ for $1\le i\le4$, while $\operatorname{tr}F_i(A)\ge0$ for $i\ge5$, since these traces count closed nonbacktracking walks ([Nozaki 2015](#ref-Nozaki2015), Theorem 1 and Corollary 1). The coefficient conditions therefore give $nf_0\le\operatorname{tr}f(A)$. On the other hand, $f(\theta)\le0$ for every nonprincipal eigenvalue, so $\operatorname{tr}f(A)\le f(k)$. Thus $$nf_0\le\operatorname{tr}f(A)\le f(k),
  \qquad n\le\frac{f(k)}{f_0}.$$
 
 <div id="thm:lp-ceiling" class="theorem">
@@ -571,7 +571,8 @@ For the final bound, every radius-two ball has size $k^2+1$. The set $$\{u,v\}\c
 
 </div>
 
-If the spectral window is strict, the lower bound improves to $\sigma_{uv}\ge2k-1$. Indeed, the proof of Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">5.4</a> gives $(g_k(A))_{uv}\ge h_k+1=6(k+2)+1$, whereas the edge calculation above gives $(g_k(A))_{uv}=4k+14+\sigma_{uv}$.
+If the spectral window is strict, both endpoint bounds improve to $$2k-1\le\sigma_{uv}
+ <\frac{2(k+2)^2(k^2+3)}n-10k-26.$$ For the lower bound, the proof of Theorem <a href="#thm:integral-slack" data-reference-type="ref" data-reference="thm:integral-slack">5.4</a> gives $(g_k(A))_{uv}\ge h_k+1=6(k+2)+1$, whereas the edge calculation above gives $(g_k(A))_{uv}=4k+14+\sigma_{uv}$. For the upper bound, use $M,a,b$ from the proof above. Equality $b=-a$ would put $e_u+e_v$ in $\ker M$. In the strict window, $$\ker M=\langle\mathbf 1\rangle\oplus\ker(A+2I),$$ so $w=e_u+e_v-(2/n)\mathbf 1$ would satisfy $Aw=-2w$. At the $u$-coordinate, this gives $1-2k/n=-2+4/n$, hence $n=2(k+2)/3<k+1$, contradicting the order bound for a simple $k$-regular graph. Thus $b>-a$, proving the strict upper bound.
 
 For $\ell\ge3$, let $N_\ell$ denote the number of $\ell$-cycles in $G$.
 
@@ -579,7 +580,8 @@ For $\ell\ge3$, let $N_\ell$ denote the number of $\ell$-cycles in $G$.
 
 **Corollary 6.5** (Edge–cycle divisibility sieve). *Under the hypotheses of Proposition <a href="#prop:edge-cycle" data-reference-type="ref" data-reference="prop:edge-cycle">6.4</a>, put $$L_{k,n}=\max\{2k-2,\;2k^2-2k+2-n\},
  \qquad
- U_{k,n}=\frac{2(k+2)^2(k^2+3)}{n}-10k-26.$$ Necessarily $$\boxed{\lceil L_{k,n}\rceil\le\lfloor U_{k,n}\rfloor.}$$ If both sides equal an integer $s$, then every edge of $G$ lies in exactly $s$ five-cycles and $$\boxed{5\mid \frac{skn}{2}.}$$*
+ U_{k,n}=\frac{2(k+2)^2(k^2+3)}{n}-10k-26.$$ Necessarily $$\boxed{\lceil L_{k,n}\rceil\le\lfloor U_{k,n}\rfloor.}$$ If both sides equal an integer $s$, then every edge of $G$ lies in exactly $s$ five-cycles and $$\boxed{5\mid \frac{skn}{2}.}$$ Under the strict spectral window, put $L^{\mathrm{str}}_{k,n}=\max\{2k-1,\;2k^2-2k+2-n\}$. Then the stronger necessary condition is $$\lceil L^{\mathrm{str}}_{k,n}\rceil
+ \le\lceil U_{k,n}\rceil-1.$$ If these two integer bounds coincide at $s$, the same divisibility conclusion holds.*
 
 </div>
 
@@ -587,7 +589,7 @@ For $\ell\ge3$, let $N_\ell$ denote the number of $\ell$-cycles in $G$.
 
 *Proof.* Writing $n=k^2+1+c$, the two lower bounds in Proposition <a href="#prop:edge-cycle" data-reference-type="ref" data-reference="prop:edge-cycle">6.4</a> combine to $$\sigma_{uv}\ge
  \max\{2k-2,(k-1)^2-c\}=L_{k,n},$$ while its upper bound is $U_{k,n}$. Since $\sigma_{uv}$ is an integer, the first conclusion follows. If the two integer bounds coincide at $s$, then $\sigma_{uv}=s$ for every edge. Counting edge–five-cycle incidences gives $$5N_5=\sum_{uv\in E(G)}\sigma_{uv}
- =s|E(G)|=\frac{skn}{2},$$ which proves the divisibility condition. ◻
+ =s|E(G)|=\frac{skn}{2},$$ which proves the divisibility condition. The strict-window version follows from the strengthened edge bounds above: for integral $\sigma_{uv}$, the inequality $\sigma_{uv}<U_{k,n}$ is equivalent to $\sigma_{uv}\le\lceil U_{k,n}\rceil-1$. ◻
 
 </div>
 
@@ -1214,7 +1216,7 @@ For the lower bound, take the vectors $u_i=(1,y_i,y_i^2,y_i^3)^{\mathsf T}$. The
  189&-177&261\\
  -177&261&-273-2m\\
  261&-273-2m&25689-12m-12N_6
- \end{pmatrix}\succ0.$$ For strict positivity, diameter three implies that $I,A,A^2,A^3$ are linearly independent: evaluate a linear relation successively at vertex pairs of distances three, two, one, and zero. Since $A$ is symmetric, it has at least four distinct eigenvalues. Connectedness makes the principal eigenvalue simple, so at least three distinct values occur among the $y_i$. A nonzero polynomial of degree at most two cannot vanish at all three. Together with $10-y_i^2>0$, this shows that the quadratic form of $\mathsf L$ is positive on every nonzero vector.
+ \end{pmatrix}\succ0.$$ For strict positivity, diameter three implies that $I,A,A^2,A^3$ are linearly independent: evaluate a linear relation successively at vertex pairs of distances three, two, one, and zero. Since $A$ is symmetric, it has at least four distinct eigenvalues. Connectedness makes the principal eigenvalue simple, so at least three distinct values occur among the $y_i$. A nonzero polynomial of degree at most two cannot vanish at all three. Together with $10-y_i^2>0$, this shows that the quadratic form of $\mathsf L$ is positive on every nonzero vector. This support argument does not give positive definiteness of the four-by-four matrix $\mathsf M$, whose test polynomials have degree at most three.
 
 Expanding the determinants gives $$\begin{aligned}
  \det\mathsf M

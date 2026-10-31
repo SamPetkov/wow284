@@ -14,10 +14,10 @@ This repository studies WOW-284, the minimum-dual-degree conjecture recorded
 as Conjecture 7.16 in Aouchiche and Hansen's *Distance Spectra of Graphs: A
 Survey*. For every degree-`k` Moore graph of diameter two,
 
-\[
+$$
 \delta^*(G)=k,\qquad
 \partial_{k^2+1}(G)=-\frac{3+\sqrt{4k-3}}2.
-\]
+$$
 
 Consequently WOW-284 holds for `k = 2`, is an equality for `k = 3`, and
 fails for every realizable degree `k > 3`.
@@ -32,35 +32,35 @@ inequality, and a metric normal form for all punctures of size at most
 `k - 1`. In particular, every deletion of at most five vertices from the
 Hoffman--Singleton graph remains a strict counterexample.
 
-The optimal-slack excess parameter
+For a connected regular strict counterexample of diameter three and degree
+$k\ge6$, the optimal-slack excess parameter
 
-\[
+$$
 r=2(k+2)^2(k^2+3)-(12k+27)n
-\]
+$$
 
-is positive and satisfies \(n\le3r\). Consequently every diameter-three
-regular strict counterexample of degree \(k\ge6\) satisfies
+is positive and satisfies $n\le3r$. Consequently,
 
-\[
+$$
 n\le\left\lfloor
 \frac{3(k+2)^2(k^2+3)}{18k+41}
 \right\rfloor.
-\]
+$$
 
-For the explicitly constructed graph (G),
+For the Hoffman–Singleton graph $G$,
 
-\[
+$$
 g(G)=5,\qquad \delta^*(G)=7,\qquad
 \operatorname{Spec}D(G)=\{91^{(1)},1^{(21)},(-4)^{(28)}\}.
-\]
+$$
 
 Thus
 
-\[
+$$
 \delta^*(G)=7>4=-\partial_{50}(G),
-\]
+$$
 
-and the conjectured inequality fails by the strict gap (3).
+and the conjectured inequality fails by the strict gap $3$.
 
 ## A 40-vertex induced counterexample
 
@@ -68,15 +68,15 @@ Deleting the induced Petersen graph
 `{P_(0,j), Q_(0,j) : j in F_5}` leaves the classical 40-vertex `(6,5)`-cage.
 It is 6-regular, has girth five and diameter three, and has exact spectra
 
-\[
+$$
 \operatorname{Spec}A=
 \{6^{(1)},2^{(18)},1^{(4)},(-2)^{(5)},(-3)^{(12)}\},
-\]
+$$
 
-\[
+$$
 \operatorname{Spec}D=
 \{75^{(1)},3^{(5)},0^{(16)},(-5)^{(18)}\}.
-\]
+$$
 
 Therefore `delta*=6>5=-lambda_min(D)`, a strict gap of one. The manuscript
 gives a self-contained block-matrix proof, and `scripts/verify_40.py` checks
@@ -95,12 +95,12 @@ The precise formal scope is recorded in
 Reproducible exact Python programs verify strict counterexamples of orders 38,
 39, 40, 42, and 50. The explicit 38-vertex example has
 
-\[
+$$
 \delta^*=\frac{17}{3},\qquad
 \lambda_{\min}(D)=-3-\sqrt7,
 \qquad
 \delta^*+\lambda_{\min}(D)=\frac83-\sqrt7>0.
-\]
+$$
 
 Exact exhaustive computation proves that all 40 labelled single-vertex
 deletions of the 40-vertex graph and all 120 labelled edge-endpoint deletions
@@ -111,10 +111,10 @@ construction gives an unconditional infinite family.
 
 The degree-7 graph is the Hoffman-Singleton graph. The proof does not rely on
 that identification: it verifies directly from coordinates over
-\(\mathbb F_5\) that every adjacent pair has no common neighbor and every
+$\mathbb F_5$ that every adjacent pair has no common neighbor and every
 nonadjacent pair has exactly one. That certificate gives connectedness,
 diameter two, girth five, and the matrix identity
-\(A^2=6I-A+J\), from which the full spectrum follows.
+$A^2=6I-A+J$, from which the full spectrum follows.
 
 ## Prior work and scope
 
@@ -159,7 +159,7 @@ Primary links:
 - `manuscript.md` - historical generated noncanonical reading copy.
 - `src/wow284_graph.py` - standard-library coordinate construction, BFS, girth, and dual-degree routines.
 - `src/wow284_induced40.py` - exact induced 40-vertex construction and structural certificate.
-- `scripts/verify_exact.py` - exact SymPy characteristic-polynomial and rational (LDL^{\mathsf T}) certificate.
+- `scripts/verify_exact.py` - exact SymPy characteristic-polynomial and rational $LDL^{\mathsf T}$ certificate.
 - `scripts/verify_40.py` - exact block, spectrum, and positive-definiteness certificate for the 40-vertex graph.
 - `scripts/verify_extended.py` - cross-platform runner for all extended exact certificates.
 - `scripts/verify_wow284_38_40_42.py` - combined exact verifier for orders 38, 39, 40, and 42.
@@ -169,7 +169,7 @@ Primary links:
 - `scripts/verify_three_to_one_equality_rigidity.py` - exact audit of the unique arithmetic parameter triple at equality.
 - `scripts/verify_proof_audit_14_three_to_one.py` - independent replay of the three-to-one proof.
 - `scripts/verify_signed_complement_bridge.py` - exact audit of the signed-complement identities.
-- `scripts/verify_order50_minus_two_multiplicity.py` - exact moment audit of the order-50 adjacency \(-2\) multiplicity bound.
+- `scripts/verify_order50_minus_two_multiplicity.py` - exact moment audit of the order-50 adjacency $-2$ multiplicity bound.
 - `scripts/verify_order50_signed_complement_disconnected.py` - corrected exact trace, parity, rank, and coordinate-level audit of the order-50 disconnection theorem.
 - `scripts/verify_component_indicator_noninvariance.py` - exact guard showing that commutation alone does not make signed-component cells equitable.
 - `scripts/explore_generalizations.py` - exact controls plus a separately labelled numerical screen.
@@ -269,13 +269,13 @@ the pinned dependencies:
 
 ```bash
 python -m venv .venv
-python -m pip install -r requirements.txt -r requirements-dev.txt
 ```
 
-On Windows, activate with `.venv\Scripts\Activate.ps1`; on POSIX systems, use
-`source .venv/bin/activate`. Then run:
+In PowerShell, activate with `.\.venv\Scripts\Activate.ps1`; in Bash or Zsh, use
+`source .venv/bin/activate`. After activation, install the dependencies and run:
 
 ```bash
+python -m pip install -r requirements.txt -r requirements-dev.txt
 python -m pytest -q
 python scripts/verify_exact.py --output results/verification.json
 python scripts/verify_40.py --output results/verification_40.json
@@ -292,15 +292,19 @@ numerical three-vertex screen, run
 ## Build the current manuscript
 
 Compile `arxiv/main.tex` from the `arxiv/` directory using a current TeX
-distribution with `latexmk` and BibTeX:
+distribution with pdfLaTeX, BibTeX, and `latexmk`. The stylesheet requires
+`newtx`; a minimal installation also needs its `kastrup` (`binhex.tex`) support
+and the `tex-gyre` fonts. Keep all four source-package files together:
 
 ```bash
 cd arxiv
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The older `scripts/sync_manuscript_artifacts.py`, `build.ps1`, `build.sh`
-and associated root-ledger checks belong to the historical July workflow.
+The older `scripts/sync_manuscript_artifacts.py`, `build.ps1`, `build.sh`,
+and root `Makefile` belong to the historical July workflow. `make` and
+`make sync` invoke that synchronization, while `make pdf` builds the historical
+root manuscript.
 The synchronization script takes the root `main.tex` as input and overwrites
 the arXiv mirror, so it must not be used to rebuild the current replacement.
 See [`arxiv/README.md`](arxiv/README.md) for the active package and review

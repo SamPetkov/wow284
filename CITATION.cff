@@ -19,8 +19,9 @@ repository-code: "https://github.com/SamPetkov/wow284"
 license: CC-BY-4.0
 abstract: >-
   WOW-284 asserts a bound relating minimum dual degree and the least distance
-  eigenvalue for connected graphs of girth at least five. This release gives
-  exact counterexamples of orders 38, 39, 40, 42, and 50 and develops regular
+  eigenvalue for connected graphs of girth at least five. The repository gives
+  exact counterexamples of orders 38, 39, 40, 42, and 50. The current manuscript
+  develops regular
   spectral criteria, degree and diameter obstructions, the exact all-degree
   one-variable nonbacktracking linear-programming optimum, an integral
   optimal-slack hierarchy with a three-to-one excess bound, a signed-complement
