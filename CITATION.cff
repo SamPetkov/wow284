@@ -2,7 +2,9 @@ cff-version: 1.2.0
 message: >-
   Please cite the manuscript using the metadata below. Cite the published
   distance-spectrum calculation of Howlader and Panigrahi wherever that prior
-  result is used.
+  result is used. The software version identifies the historical certificate
+  release; the current manuscript and its precise formalization scope are in
+  the arxiv directory.
 title: "wow284: Reproducible artifacts for Counterexamples, Spectral Obstructions, and Deletion Stability for WOW-284"
 type: software
 authors:
@@ -25,10 +27,12 @@ abstract: >-
   bridge, arithmetic equality rigidity, an order-50 signed-complement
   disconnection theorem, Moore-graph puncture spectra, and deletion-stability
   results.
-  Lean 4.31 kernel-checks
-  the complete graph-level 50-vertex proof, finite spectral certificates for
-  orders 38, 39, 40, and 42, and the separate analytic LP optimum,
-  attainment, and coefficient-level optimizer rigidity.
+  Lean 4.31 checks structural and finite-matrix certificates for the
+  50-vertex construction, finite spectral certificates for orders 38, 39,
+  40, and 42, and the separate analytic LP optimum, attainment, and
+  coefficient-level optimizer rigidity. The identification with graph
+  distance and the combined counterexample conclusion are assembled in the
+  paper, as specified in its verification appendix.
 keywords:
   - distance spectrum
   - dual degree
