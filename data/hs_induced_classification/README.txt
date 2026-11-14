@@ -13,3 +13,12 @@ Reproduction:
   python scripts/small_order_hs_orbits.py --maxdepth 12 --rootdepth 7 --exact-max-order 49 --out depth12.json
   python scripts/small_order_hs_orbits.py --maxdepth 14 --rootdepth 8 --out depth14.json
 (Linux; the workers share the automorphism table by fork.)
+
+Direct check of the order-43 equality case (seconds, pure Python):
+  python scripts/verify_order43_equality.py
+It rebuilds E43 from the paper's definition and also reads
+order43_equality.graph6. For both it checks the order, edges, degrees, girth,
+diameter and delta* = 6, and certifies that D + 6I is positive semidefinite of
+rank 41: a 41 x 41 principal submatrix has an exact LDL^T factorization with
+positive pivots, and two explicit rational kernel vectors are checked entry by
+entry.

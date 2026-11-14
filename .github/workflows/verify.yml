@@ -34,6 +34,14 @@ jobs:
         run: python scripts/verify_extended.py
       - name: Run exact generalization checks and labelled exploratory screen
         run: python scripts/explore_generalizations.py
+      - name: Run the small-order and Hoffman-Singleton deletion certificates
+        run: |
+          mkdir -p tmp
+          python scripts/recertify_order40.py tmp/ci-recertify-order40.json
+          cmp tmp/ci-recertify-order40.json data/hs_order40_extra/recertify_order40.json
+          python scripts/verify_order43_equality.py
+          python scripts/verify_edge_deletion_dichotomy.py
+          git diff --exit-code -- data/hs_two_vertex_deletions/summary.json
       - name: Check generated Lean spectral data
         run: |
           python scripts/generate_lean_diagonalization.py --check
@@ -42,6 +50,7 @@ jobs:
           python scripts/generate_lean38_certificates.py --check
           python scripts/generate_lean38_ldl.py --check
           python scripts/generate_lean39_42.py --check
+          python scripts/generate_lean40_hs_extra.py --check
           python scripts/generate_lean_standalone.py --check
       - name: Regenerate graph data and compare
         run: |
@@ -126,6 +135,7 @@ jobs:
       - name: Check committed generated and standalone Lean sources
         run: |
           python scripts/generate_lean39_42.py --check
+          python scripts/generate_lean40_hs_extra.py --check
           python scripts/generate_lean_standalone.py --check
       - name: Audit generated source hygiene and import closure
         run: python scripts/static_lean_audit.py
