@@ -4,7 +4,7 @@ This directory contains the current manuscript and its source package, prepared 
 
 ## Files
 
-- [main.pdf](main.pdf): the 46-page paper.
+- [main.pdf](main.pdf): the 43-page paper.
 - [main.tex](main.tex), [main.bbl](main.bbl), [references.bib](references.bib), [petkov-preprint.sty](petkov-preprint.sty): the matching editable sources.
 - [anc/scripts/](anc/scripts/): the arXiv ancillary files.
   - `verify_round3_high_edge_filter.py`, `verify_round5_joint_pairs.py` and `verify_round6_layer_vector.py` reproduce the order-50 profile calculations of Appendix A.
