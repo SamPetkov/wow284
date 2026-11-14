@@ -38,6 +38,10 @@ permissions:
 env:
   PAPERFORGE_COMMIT: 726cc7d679441e28f39cfd52d3e2dd0251c79a6d
   PRETEXT_VERSION: 2.43.2
+  # lxml 6.1.3 makes PreTeXt 2.43.2 fail with "Entity 'entities' not defined"
+  # (report-publisher-variables.xsl); 6.1.1 was the current release when the
+  # site last built successfully on 31 July 2026.
+  LXML_VERSION: 6.1.1
 
 jobs:
   build:
@@ -67,8 +71,10 @@ jobs:
           git clone https://github.com/roed-math/paperforge.git "$PAPERFORGE_TOOL_ROOT"
           git -C "$PAPERFORGE_TOOL_ROOT" checkout --detach "$PAPERFORGE_COMMIT"
           python -m pip install --upgrade pip
-          python -m pip install "pretext==$PRETEXT_VERSION" pybtex
-          python -m pip install -e "$PAPERFORGE_TOOL_ROOT" -e "$PAPERFORGE_TOOL_ROOT/validators"
+          printf 'lxml==%s\n' "$LXML_VERSION" > "$RUNNER_TEMP/pip-constraints.txt"
+          python -m pip install -c "$RUNNER_TEMP/pip-constraints.txt" "pretext==$PRETEXT_VERSION" pybtex
+          python -m pip install -c "$RUNNER_TEMP/pip-constraints.txt" -e "$PAPERFORGE_TOOL_ROOT" -e "$PAPERFORGE_TOOL_ROOT/validators"
+          python -c "import lxml.etree as e; print('lxml', e.__version__, 'libxml2', e.LIBXML_VERSION)"
 
       - name: Complete the Paperforge instance scaffold
         env:
