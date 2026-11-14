@@ -34,6 +34,74 @@ def pdf_page_count(path: Path) -> int:
     return int(match.group(1))
 
 
+HISTORICAL_LEDGER_MARKER = (
+    "# HISTORICAL JULY 2026 SNAPSHOT; not the current manuscript inventory."
+)
+ARXIV_SOURCES = ("main.tex", "main.bbl", "references.bib", "petkov-preprint.sty")
+
+
+def validate_arxiv_package() -> None:
+    """Check the current manuscript package in arxiv/ against its own records.
+
+    The root manuscript and root ledgers are a historical July snapshot. The
+    current manuscript, PDF, source ZIP and ancillary files live in arxiv/,
+    with their own MANIFEST.txt, SHA256SUMS and SOURCE_PACKAGE.json.
+    """
+    arxiv = ROOT / "arxiv"
+    manifest = [
+        line
+        for line in (arxiv / "MANIFEST.txt").read_text(encoding="utf-8").splitlines()
+        if line
+    ]
+    require(manifest == sorted(set(manifest)),
+            "arxiv/MANIFEST.txt is not a sorted list of unique paths")
+    actual = sorted(
+        path.relative_to(arxiv).as_posix() for path in arxiv.rglob("*") if path.is_file()
+    )
+    require(
+        actual == manifest,
+        "arxiv/ inventory differs from arxiv/MANIFEST.txt: "
+        f"missing={sorted(set(manifest) - set(actual))}, "
+        f"unlisted={sorted(set(actual) - set(manifest))}",
+    )
+
+    def digest(relative: str) -> str:
+        return hashlib.sha256((arxiv / relative).read_bytes()).hexdigest()
+
+    ledger = (arxiv / "SHA256SUMS").read_text(encoding="utf-8").splitlines()
+    require(
+        ledger == [f"{digest(name)}  {name}" for name in manifest if name != "SHA256SUMS"],
+        "arxiv/SHA256SUMS does not match the files listed in arxiv/MANIFEST.txt",
+    )
+
+    package = json.loads((arxiv / "SOURCE_PACKAGE.json").read_text(encoding="utf-8"))
+    require(set(package["source_files_sha256"]) == set(ARXIV_SOURCES),
+            "arxiv/SOURCE_PACKAGE.json lists unexpected source files")
+    for name, value in package["source_files_sha256"].items():
+        require(digest(name) == value, f"arxiv/SOURCE_PACKAGE.json digest is stale: {name}")
+    require(digest("main.pdf") == package["pdf_sha256"],
+            "arxiv/SOURCE_PACKAGE.json PDF digest is stale")
+    aliases = package["source_zip_aliases"]
+    require("wow284_arxiv_source.zip" in aliases,
+            "wow284_arxiv_source.zip is not a recorded source ZIP alias")
+    ancillary = [name for name in manifest if name.startswith("anc/")]
+    for alias in aliases:
+        require(digest(alias) == package["source_zip_sha256"],
+                f"arXiv source ZIP differs from arxiv/SOURCE_PACKAGE.json: {alias}")
+        with zipfile.ZipFile(arxiv / alias) as archive:
+            members = archive.namelist()
+            require(
+                len(members) == len(set(members))
+                and sorted(members) == sorted([*ARXIV_SOURCES, *ancillary]),
+                f"unexpected arXiv ZIP members in {alias}: {members}",
+            )
+            for name in members:
+                require(archive.read(name) == (arxiv / name).read_bytes(),
+                        f"arXiv ZIP member differs from arxiv/{name} in {alias}")
+    require(r"\today" not in (arxiv / "main.tex").read_text(encoding="utf-8"),
+            "arXiv-unsafe dynamic date present in arxiv/main.tex")
+
+
 def main() -> None:
     expected = [
         "main.tex",
@@ -382,23 +450,9 @@ def main() -> None:
         require(len(rows) == 51, f"{name} row count mismatch")
         require(all(len(row) == 51 for row in rows), f"{name} column count mismatch")
 
-    with zipfile.ZipFile(ROOT / "arxiv" / "wow284_arxiv_source.zip") as archive:
-        require(
-            archive.namelist() == ["main.tex", "references.bib", "main.bbl"],
-            "arXiv archive contains unexpected files",
-        )
-        for name in ("main.tex", "references.bib", "main.bbl"):
-            canonical = (ROOT / name).read_text(encoding="utf-8")
-            payload = archive.read(name).decode("utf-8")
-            require(
-                payload == canonical.replace("\r\n", "\n").replace("\r", "\n"),
-                f"arXiv ZIP member differs from canonical source: {name}",
-            )
+    validate_arxiv_package()
     for name in ("main.tex", "references.bib", "main.bbl"):
-        canonical = (ROOT / name).read_bytes()
-        require((ROOT / "arxiv" / name).read_bytes() == canonical,
-                f"arXiv mirror is stale: {name}")
-        require((ROOT / "v22" / name).read_bytes() == canonical,
+        require((ROOT / "v22" / name).read_bytes() == (ROOT / name).read_bytes(),
                 f"v22 staging file is stale: {name}")
 
     cited_keys: set[str] = set()
@@ -435,39 +489,15 @@ def main() -> None:
         text = path.read_text(encoding="utf-8")
         require(not any(marker in text for marker in mojibake_markers), f"mojibake marker in {path}")
 
-    excluded = {".git", ".lake", ".venv", ".pytest_cache", "__pycache__", "tmp"}
-    inventory_result = subprocess.run(
-        ["git", "ls-files", "--cached", "--others", "--exclude-standard", "-z"],
-        cwd=ROOT,
-        check=True,
-        stdout=subprocess.PIPE,
-    )
-    release_files = sorted(
-        relative
-        for relative in inventory_result.stdout.decode("utf-8").split("\0")
-        if relative
-        and not any(part in excluded for part in Path(relative).parts)
-        and (ROOT / relative).is_file()
-        and relative not in {"MANIFEST.txt", "SHA256SUMS"}
-    )
-    expected_manifest = sorted([*release_files, "MANIFEST.txt", "SHA256SUMS"])
-    manifest = (ROOT / "MANIFEST.txt").read_text(encoding="utf-8").splitlines()
-    require(manifest == expected_manifest, "MANIFEST.txt is not the complete sorted inventory")
-    expected_hash_paths = sorted(item for item in expected_manifest if item != "SHA256SUMS")
-    checksum_lines = (ROOT / "SHA256SUMS").read_text(encoding="utf-8").splitlines()
-    parsed_checksums: list[tuple[str, str]] = []
-    for line in checksum_lines:
-        match = re.fullmatch(r"([0-9a-f]{64})  ([^\r\n]+)", line)
-        require(match is not None, f"malformed SHA256SUMS line: {line!r}")
-        parsed_checksums.append((match.group(1), match.group(2)))
-    require(
-        [relative for _, relative in parsed_checksums] == expected_hash_paths,
-        "SHA256SUMS is not a complete sorted one-entry-per-file ledger",
-    )
-    for digest, relative in parsed_checksums:
-        require((ROOT / relative).is_file(), f"checksum target missing: {relative}")
-        require(hashlib.sha256((ROOT / relative).read_bytes()).hexdigest() == digest,
-                f"checksum mismatch: {relative}")
+    # The root MANIFEST.txt and SHA256SUMS are the historical July 2026 snapshot
+    # and say so in their first line. The current integrity records are
+    # arxiv/MANIFEST.txt and arxiv/SHA256SUMS, checked by validate_arxiv_package().
+    for ledger_name in ("MANIFEST.txt", "SHA256SUMS"):
+        first_line = (ROOT / ledger_name).read_text(encoding="utf-8").splitlines()[0]
+        require(
+            first_line == HISTORICAL_LEDGER_MARKER,
+            f"root {ledger_name} is not marked as the historical July snapshot",
+        )
 
     require((ROOT / "main.pdf").stat().st_size > 25_000, "compiled PDF is unexpectedly small")
     print("repository release validation: PASS")

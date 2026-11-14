@@ -49,11 +49,11 @@ jobs:
           cmp tmp/export/edges.csv results/edges.csv
           cmp tmp/export/adjacency_matrix.csv results/adjacency_matrix.csv
           cmp tmp/export/distance_matrix.csv results/distance_matrix.csv
-      - name: Check synchronized release files on the release branch
+      - name: Check release files on the release branch
         if: github.ref == 'refs/heads/main'
-        run: |
-          python scripts/sync_manuscript_artifacts.py --check
-          python scripts/validate_repository.py
+        # scripts/sync_manuscript_artifacts.py belongs to the historical July
+        # workflow (root manuscript as source), so only the validator runs here.
+        run: python scripts/validate_repository.py
 
   manuscript:
     runs-on: ubuntu-latest
