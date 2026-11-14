@@ -43,9 +43,9 @@ ARXIV_SOURCES = ("main.tex", "main.bbl", "references.bib", "petkov-preprint.sty"
 def validate_arxiv_package() -> None:
     """Check the current manuscript package in arxiv/ against its own records.
 
-    The root manuscript and root ledgers are a historical July snapshot. The
+    The root manuscript and root SHA256SUMS are a historical July snapshot. The
     current manuscript, PDF, source ZIP and ancillary files live in arxiv/,
-    with their own MANIFEST.txt, SHA256SUMS and SOURCE_PACKAGE.json.
+    with their own MANIFEST.txt and SHA256SUMS.
     """
     arxiv = ROOT / "arxiv"
     manifest = [
@@ -74,30 +74,17 @@ def validate_arxiv_package() -> None:
         "arxiv/SHA256SUMS does not match the files listed in arxiv/MANIFEST.txt",
     )
 
-    package = json.loads((arxiv / "SOURCE_PACKAGE.json").read_text(encoding="utf-8"))
-    require(set(package["source_files_sha256"]) == set(ARXIV_SOURCES),
-            "arxiv/SOURCE_PACKAGE.json lists unexpected source files")
-    for name, value in package["source_files_sha256"].items():
-        require(digest(name) == value, f"arxiv/SOURCE_PACKAGE.json digest is stale: {name}")
-    require(digest("main.pdf") == package["pdf_sha256"],
-            "arxiv/SOURCE_PACKAGE.json PDF digest is stale")
-    aliases = package["source_zip_aliases"]
-    require("wow284_arxiv_source.zip" in aliases,
-            "wow284_arxiv_source.zip is not a recorded source ZIP alias")
     ancillary = [name for name in manifest if name.startswith("anc/")]
-    for alias in aliases:
-        require(digest(alias) == package["source_zip_sha256"],
-                f"arXiv source ZIP differs from arxiv/SOURCE_PACKAGE.json: {alias}")
-        with zipfile.ZipFile(arxiv / alias) as archive:
-            members = archive.namelist()
-            require(
-                len(members) == len(set(members))
-                and sorted(members) == sorted([*ARXIV_SOURCES, *ancillary]),
-                f"unexpected arXiv ZIP members in {alias}: {members}",
-            )
-            for name in members:
-                require(archive.read(name) == (arxiv / name).read_bytes(),
-                        f"arXiv ZIP member differs from arxiv/{name} in {alias}")
+    with zipfile.ZipFile(arxiv / "wow284_arxiv_source.zip") as archive:
+        members = archive.namelist()
+        require(
+            len(members) == len(set(members))
+            and sorted(members) == sorted([*ARXIV_SOURCES, *ancillary]),
+            f"unexpected arXiv ZIP members: {members}",
+        )
+        for name in members:
+            require(archive.read(name) == (arxiv / name).read_bytes(),
+                    f"arXiv ZIP member differs from arxiv/{name}")
     require(r"\today" not in (arxiv / "main.tex").read_text(encoding="utf-8"),
             "arXiv-unsafe dynamic date present in arxiv/main.tex")
 
@@ -107,27 +94,13 @@ def main() -> None:
         "main.tex",
         "main.pdf",
         "main.bbl",
-        "manuscript.md",
         "references.bib",
         "CITATION.cff",
         "LICENSE",
         "LICENSE_SCOPE.md",
         "README.md",
-        "REVIEW.md",
-        "PROVENANCE.md",
         "BUILD_VERIFICATION.txt",
-        "MANIFEST.txt",
         "SHA256SUMS",
-        "SUBMISSION_NOTES.md",
-        "RELEASE_NOTES_v2.2.2.md",
-        "RELEASE_NOTES_v2.2.3.md",
-        "RELEASE_NOTES_v2.2.4.md",
-        "RELEASE_NOTES_v2.2.5.md",
-        "RELEASE_NOTES_v2.2.6.md",
-        "RELEASE_NOTES_v2.2.7.md",
-        "RELEASE_NOTES_v2.2.8.md",
-        "cover_letter_template.md",
-        "SOURCE_LEDGER.md",
         "results/verification.json",
         "results/verification_40.json",
         "results/edges.csv",
@@ -145,9 +118,6 @@ def main() -> None:
         "data/graphs/G40.graph6",
         "data/graphs/G42.graph6",
         "data/graphs/G50.graph6",
-        "supplement/extended_2026-07-23/SHA256SUMS",
-        "archive/main_2026-07-19.tex",
-        "scripts/audit_v22_manuscript.py",
         "scripts/verify_proof_audit_11_diameter_four.py",
         "scripts/verify_proof_audit_12_small_puncture.py",
         "scripts/verify_proof_audit_13_hs_robustness.py",
@@ -162,16 +132,6 @@ def main() -> None:
         "scripts/verify_order50_minus_two_multiplicity.py",
         "scripts/verify_order50_signed_complement_disconnected.py",
         "scripts/verify_component_indicator_noninvariance.py",
-        "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
-        "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
-        "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
-        "research-notes/TWO_GRAM_HIERARCHIES.md",
-        "research-notes/THREE_TO_ONE_EXCESS_BOUND.md",
-        "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md",
-        "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md",
-        "research-notes/SIGNED_COMPLEMENT_BRIDGE.md",
-        "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md",
-        "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md",
         "lean/Wow284/LPDefinitions.lean",
         "lean/Wow284/LPRecurrence.lean",
         "lean/Wow284/LPPrimal.lean",
@@ -298,41 +258,7 @@ def main() -> None:
     require(r"\clearpage" in tex, "references do not start on a new page")
     require(r"\today" not in tex, "arXiv-unsafe dynamic date present")
 
-    manuscript_md = (ROOT / "manuscript.md").read_text(encoding="utf-8")
-    require(
-        "# Abstract" in manuscript_md and "WOW-284 asserts" in manuscript_md,
-        "Markdown reading copy does not contain the manuscript abstract",
-    )
-
-    cover_letter = (ROOT / "cover_letter_template.md").read_text(encoding="utf-8")
-    require(
-        RELEASE_TITLE in cover_letter
-        and "Exact Counterexamples and Spectral Mechanisms for WOW-284"
-        not in cover_letter,
-        "cover-letter template does not match the current manuscript",
-    )
-
-    submission_notes = (ROOT / "SUBMISSION_NOTES.md").read_text(encoding="utf-8")
-    require(
-        f"**Current public research release:** `{RELEASE_TAG}`" in submission_notes,
-        "submission metadata does not identify the current research release",
-    )
-    require(
-        RELEASE_TITLE in submission_notes
-        and "WOW-284 asserts" in submission_notes
-        and "$38,39,40,42$" in submission_notes,
-        "submission title or TeX abstract is not synchronized",
-    )
-    require(
-        "v2.0.5-arxiv" not in submission_notes
-        and "v2.1.0" not in submission_notes
-        and "withdrawn" not in submission_notes.lower(),
-        "submission metadata mentions superseded release history",
-    )
     pages = pdf_page_count(ROOT / "main.pdf")
-    require(f"**Comments:** {pages} pages." in submission_notes,
-            "submission metadata page count does not match main.pdf")
-
     build_report = (ROOT / "BUILD_VERIFICATION.txt").read_text(encoding="utf-8")
     require(f"PASS  PDF page count: {pages}." in build_report,
             "build report page count does not match main.pdf")
@@ -354,10 +280,6 @@ def main() -> None:
         is None,
         "build report duplicates the arXiv ZIP digest",
     )
-
-    archived_tex = (ROOT / "archive" / "main_2026-07-19.tex").read_text(encoding="utf-8")
-    require(r"\date{19 July 2026}" in archived_tex,
-            "historical 19 July manuscript snapshot is not dated correctly")
 
     require((ROOT / "lean" / "lean-toolchain").read_text(encoding="utf-8").strip() ==
             "leanprover/lean4:v4.31.0", "Lean toolchain is not pinned to 4.31.0")
@@ -451,9 +373,6 @@ def main() -> None:
         require(all(len(row) == 51 for row in rows), f"{name} column count mismatch")
 
     validate_arxiv_package()
-    for name in ("main.tex", "references.bib", "main.bbl"):
-        require((ROOT / "v22" / name).read_bytes() == (ROOT / name).read_bytes(),
-                f"v22 staging file is stale: {name}")
 
     cited_keys: set[str] = set()
     for match in re.finditer(r"\\cite\w*(?:\[[^\]]*\]){0,2}\{([^}]*)\}", tex):
@@ -463,17 +382,6 @@ def main() -> None:
     require(bbl_keys == cited_keys,
             f"BBL/citation key mismatch: missing={sorted(cited_keys - bbl_keys)}, "
             f"stale={sorted(bbl_keys - cited_keys)}")
-
-    supplement = ROOT / "supplement" / "extended_2026-07-23"
-    for line in (supplement / "SHA256SUMS").read_text(encoding="utf-8").splitlines():
-        match = re.fullmatch(r"([0-9a-fA-F]{64})\s+\*?(.+)", line)
-        require(match is not None, f"invalid supplement checksum line: {line!r}")
-        expected_hash, relative = match.groups()
-        payload = supplement / Path(relative)
-        require(payload.is_file(), f"missing supplement payload: {relative}")
-        actual_hash = hashlib.sha256(payload.read_bytes()).hexdigest()
-        require(actual_hash.lower() == expected_hash.lower(),
-                f"supplement checksum mismatch: {relative}")
 
     text_extensions = {".tex", ".bib", ".md", ".py", ".toml", ".txt", ".yml", ".cff", ".sh", ".ps1"}
     mojibake_markers = ("\ufffd", "\u00e2\u20ac", "\u00c3")
@@ -489,15 +397,14 @@ def main() -> None:
         text = path.read_text(encoding="utf-8")
         require(not any(marker in text for marker in mojibake_markers), f"mojibake marker in {path}")
 
-    # The root MANIFEST.txt and SHA256SUMS are the historical July 2026 snapshot
-    # and say so in their first line. The current integrity records are
-    # arxiv/MANIFEST.txt and arxiv/SHA256SUMS, checked by validate_arxiv_package().
-    for ledger_name in ("MANIFEST.txt", "SHA256SUMS"):
-        first_line = (ROOT / ledger_name).read_text(encoding="utf-8").splitlines()[0]
-        require(
-            first_line == HISTORICAL_LEDGER_MARKER,
-            f"root {ledger_name} is not marked as the historical July snapshot",
-        )
+    # The root SHA256SUMS is the historical July 2026 snapshot (published by the
+    # project site) and says so in its first line. The current integrity records
+    # are arxiv/MANIFEST.txt and arxiv/SHA256SUMS, checked by validate_arxiv_package().
+    first_line = (ROOT / "SHA256SUMS").read_text(encoding="utf-8").splitlines()[0]
+    require(
+        first_line == HISTORICAL_LEDGER_MARKER,
+        "root SHA256SUMS is not marked as the historical July snapshot",
+    )
 
     require((ROOT / "main.pdf").stat().st_size > 25_000, "compiled PDF is unexpectedly small")
     print("repository release validation: PASS")

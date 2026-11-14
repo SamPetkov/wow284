@@ -1,9 +1,6 @@
 MANIFEST.txt
 README.md
-REVIEW_2026-10-31.txt
 SHA256SUMS
-SOURCE_PACKAGE.json
-WOW284-v2-arxiv-upload.zip
 anc/scripts/WOW_JOINT_PILOT.json
 anc/scripts/verify_round3_high_edge_filter.py
 anc/scripts/verify_round5_joint_pairs.py
@@ -11,7 +8,6 @@ anc/scripts/verify_round6_layer_vector.py
 arxiv-abstract.txt
 arxiv-comments.txt
 main.bbl
-main.md
 main.pdf
 main.tex
 petkov-preprint.sty

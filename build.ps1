@@ -27,6 +27,5 @@ Invoke-CheckedPython (Join-Path $root 'scripts\verify_signed_complement_bridge.p
 Invoke-CheckedPython (Join-Path $root 'scripts\verify_order50_minus_two_multiplicity.py')
 Invoke-CheckedPython (Join-Path $root 'scripts\verify_order50_signed_complement_disconnected.py')
 Invoke-CheckedPython (Join-Path $root 'scripts\verify_component_indicator_noninvariance.py')
-Invoke-CheckedPython (Join-Path $root 'scripts\sync_manuscript_artifacts.py')
 Invoke-CheckedPython -m pytest -q $root
 Invoke-CheckedPython (Join-Path $root 'scripts\validate_repository.py')

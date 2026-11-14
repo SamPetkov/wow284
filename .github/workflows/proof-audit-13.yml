@@ -3,7 +3,6 @@ name: Proof Audit 13 verification
 on:
   pull_request:
     paths:
-      - "research-notes/PROOF_AUDIT_13_HS_ROBUSTNESS_RADIUS.md"
       - "scripts/verify_proof_audit_13_hs_robustness.py"
       - ".github/workflows/proof-audit-13.yml"
   workflow_dispatch:

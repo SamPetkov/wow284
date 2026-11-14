@@ -3,7 +3,6 @@ name: Proof Audit 10 verification
 on:
   pull_request:
     paths:
-      - "research-notes/PROOF_AUDIT_10_ENDPOINT_DIAMETER.md"
       - "scripts/verify_proof_audit_10_endpoint_diameter.py"
       - "scripts/audit_no_float_proof_paths.py"
       - ".github/workflows/proof-audit-10.yml"

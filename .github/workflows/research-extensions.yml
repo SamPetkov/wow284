@@ -33,7 +33,6 @@ on:
       - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
-      - "research-notes/**"
       - ".github/workflows/research-extensions.yml"
   push:
     branches:
@@ -69,7 +68,6 @@ on:
       - "scripts/verify_low_degree_windows.py"
       - "data/cages55/**"
       - "data/jorgensen96/**"
-      - "research-notes/**"
       - ".github/workflows/research-extensions.yml"
   workflow_dispatch:
 
