@@ -1,0 +1,170 @@
+{
+ "description": "Aut(HS)-orbits of deleted sets S (|S| = deleted) of the coordinate Hoffman-Singleton graph HS; counts of orbits, of the Burnside orbit count, of orbits with HS - S connected, and their exact WOW-284 status. certified_phi_negative: integer vector x with x^T(qD+pI)x < 0 (delta* = p/q); strict and phi_zero: Bareiss elimination / exact PSD-rank test. Produced by scripts/small_order_hs_orbits.py (--maxdepth 12 --exact-max-order 49, and --maxdepth 14).",
+ "rows": [
+  {
+   "deleted": 0,
+   "order": 50,
+   "orbits": 1,
+   "burnside": 1,
+   "connected": 1,
+   "certified_phi_negative": 0,
+   "strict": 1,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 1,
+   "order": 49,
+   "orbits": 1,
+   "burnside": 1,
+   "connected": 1,
+   "certified_phi_negative": 0,
+   "strict": 1,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 2,
+   "order": 48,
+   "orbits": 2,
+   "burnside": 2,
+   "connected": 2,
+   "certified_phi_negative": 0,
+   "strict": 2,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 3,
+   "order": 47,
+   "orbits": 4,
+   "burnside": 4,
+   "connected": 4,
+   "certified_phi_negative": 0,
+   "strict": 4,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 4,
+   "order": 46,
+   "orbits": 11,
+   "burnside": 11,
+   "connected": 11,
+   "certified_phi_negative": 0,
+   "strict": 11,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 5,
+   "order": 45,
+   "orbits": 33,
+   "burnside": 33,
+   "connected": 33,
+   "certified_phi_negative": 0,
+   "strict": 33,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 6,
+   "order": 44,
+   "orbits": 128,
+   "burnside": 128,
+   "connected": 128,
+   "certified_phi_negative": 18,
+   "strict": 110,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 7,
+   "order": 43,
+   "orbits": 562,
+   "burnside": 562,
+   "connected": 561,
+   "certified_phi_negative": 375,
+   "strict": 185,
+   "phi_zero": 1,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 8,
+   "order": 42,
+   "orbits": 2522,
+   "burnside": 2522,
+   "connected": 2521,
+   "certified_phi_negative": 2413,
+   "strict": 108,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 9,
+   "order": 41,
+   "orbits": 10802,
+   "burnside": 10802,
+   "connected": 10799,
+   "certified_phi_negative": 10777,
+   "strict": 22,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 10,
+   "order": 40,
+   "orbits": 42584,
+   "burnside": 42584,
+   "connected": 42575,
+   "certified_phi_negative": 42571,
+   "strict": 4,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 11,
+   "order": 39,
+   "orbits": 151845,
+   "burnside": 151845,
+   "connected": 151802,
+   "certified_phi_negative": 151801,
+   "strict": 1,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 12,
+   "order": 38,
+   "orbits": 488516,
+   "burnside": 488516,
+   "connected": 488298,
+   "certified_phi_negative": 488297,
+   "strict": 1,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 13,
+   "order": 37,
+   "orbits": 1420182,
+   "burnside": 1420182,
+   "connected": 1419003,
+   "certified_phi_negative": 1419003,
+   "strict": 0,
+   "phi_zero": 0,
+   "exactly_decided": true
+  },
+  {
+   "deleted": 14,
+   "order": 36,
+   "orbits": 3741810,
+   "burnside": 3741810,
+   "connected": 3736168,
+   "certified_phi_negative": 3736168,
+   "strict": 0,
+   "phi_zero": 0,
+   "exactly_decided": true
+  }
+ ]
+}

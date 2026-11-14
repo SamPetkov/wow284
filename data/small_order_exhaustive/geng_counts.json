@@ -1,0 +1,163 @@
+{
+ "description": "Exhaustive generation of connected graphs of girth >= 5 (nauty geng 2.8.9: -c connected, -t triangle-free, -f 4-cycle-free). Orders 3-14: every graph decided by scripts/small_order_certify_g6.py. Orders 15-19: maximum degree capped by Delta < (n-1)/(2+sqrt 2) and survivors of the exact filter delta* > 2+sqrt 2 decided by scripts/small_order_certify_g6.py; both restrictions are necessary conditions for a strict counterexample. phi_zero at n = 10 is the Petersen graph.",
+ "rows": [
+  {
+   "n": 3,
+   "geng": "geng -c -t -f 3",
+   "graphs": 1,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 1,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 4,
+   "geng": "geng -c -t -f 4",
+   "graphs": 2,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 2,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 5,
+   "geng": "geng -c -t -f 5",
+   "graphs": 4,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 4,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 6,
+   "geng": "geng -c -t -f 6",
+   "graphs": 8,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 8,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 7,
+   "geng": "geng -c -t -f 7",
+   "graphs": 18,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 18,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 8,
+   "geng": "geng -c -t -f 8",
+   "graphs": 47,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 47,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 9,
+   "geng": "geng -c -t -f 9",
+   "graphs": 137,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 137,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 10,
+   "geng": "geng -c -t -f 10",
+   "graphs": 464,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 464,
+   "strict": 0,
+   "phi_zero": 1
+  },
+  {
+   "n": 11,
+   "geng": "geng -c -t -f 11",
+   "graphs": 1793,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 1793,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 12,
+   "geng": "geng -c -t -f 12",
+   "graphs": 8167,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 8167,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 13,
+   "geng": "geng -c -t -f 13",
+   "graphs": 43645,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 43645,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 14,
+   "geng": "geng -c -t -f 14",
+   "graphs": 275480,
+   "filter": "none: every graph decided exactly",
+   "decided_exactly": 275480,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 15,
+   "geng": "geng -c -t -f -D4 15 res/8 (8 parts)",
+   "graphs": 1417899,
+   "filter": "delta* > 2 + sqrt 2 (scripts/small_order_g6filter.c)",
+   "filter_survivors": 0,
+   "decided_exactly": 0,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 16,
+   "geng": "geng -c -t -f -D4 16 res/8 (8 parts)",
+   "graphs": 11152778,
+   "filter": "delta* > 2 + sqrt 2 (scripts/small_order_g6filter.c)",
+   "filter_survivors": 1,
+   "decided_exactly": 1,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 17,
+   "geng": "geng -c -t -f -D4 17 res/8 (8 parts)",
+   "graphs": 98858189,
+   "filter": "delta* > 2 + sqrt 2 (scripts/small_order_g6filter.c)",
+   "filter_survivors": 19,
+   "decided_exactly": 19,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 18,
+   "geng": "geng -c -t -f -D4 18 res/8 (8 parts)",
+   "graphs": 977178397,
+   "filter": "delta* > 2 + sqrt 2 (scripts/small_order_g6filter.c)",
+   "filter_survivors": 221,
+   "decided_exactly": 221,
+   "strict": 0,
+   "phi_zero": 0
+  },
+  {
+   "n": 19,
+   "geng": "geng -c -t -f -D5 19 res/8 (8 parts)",
+   "graphs": 25975541173,
+   "filter": "delta* > 2 + sqrt 2 (scripts/small_order_g6filter.c)",
+   "filter_survivors": 7459,
+   "decided_exactly": 7459,
+   "strict": 0,
+   "phi_zero": 0
+  }
+ ]
+}

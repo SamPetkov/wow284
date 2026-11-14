@@ -1,0 +1,50 @@
+{
+ "R": {
+  "edge": {
+   "strict": 120,
+   "not_strict": 0,
+   "delta_star": [
+    "17/3"
+   ]
+  },
+  "non_edge": {
+   "strict": 0,
+   "not_strict": 660,
+   "delta_star": [
+    "17/3"
+   ]
+  }
+ },
+ "X42": {
+  "edge": {
+   "strict": 126,
+   "not_strict": 0,
+   "delta_star": [
+    "17/3"
+   ]
+  },
+  "non_edge": {
+   "strict": 0,
+   "not_strict": 735,
+   "delta_star": [
+    "17/3"
+   ]
+  }
+ },
+ "X42_edge_deletion_spectrum": {
+  "deleted_edge_indices_in_X42": [
+   0,
+   1
+  ],
+  "charpoly_factors": {
+   "x": 4,
+   "x + 5": 11,
+   "x**2 - 4*x + 2": 1,
+   "x**2 + 6*x + 2": 4,
+   "x**3 - 83*x**2 + 390*x - 414": 1,
+   "x**3 + 2*x**2 - 20*x - 4": 4
+  },
+  "least_root": "-3 - sqrt(7)",
+  "least_root_multiplicity": 4
+ }
+}
