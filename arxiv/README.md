@@ -1,36 +1,47 @@
-# WOW-284: reviewed replacement manuscript
+# WOW-284: revised replacement manuscript
 
-Prepared **31 October 2026** from the author's supplied upload pack. This directory contains the current manuscript and matching source package. The mathematical review and build records are summarized in [REVIEW_2026-10-31.txt](REVIEW_2026-10-31.txt).
+Prepared **14 November 2026** from the author's revised sources of 13 November 2026. This directory contains the current manuscript and matching source package. The manuscript is dated 29 July 2026, the date of the first arXiv posting. [REVIEW_2026-10-31.txt](REVIEW_2026-10-31.txt) records the review of the preceding version and does not cover this revision.
 
 ## Current files
 
-- [main.pdf](main.pdf): the reviewed 41-page paper.
+- [main.pdf](main.pdf): the 41-page paper.
 - [main.tex](main.tex), [main.bbl](main.bbl), [references.bib](references.bib), [petkov-preprint.sty](petkov-preprint.sty): the matching editable sources.
-- [WOW284-v2-arxiv-upload.zip](WOW284-v2-arxiv-upload.zip) and [wow284_arxiv_source.zip](wow284_arxiv_source.zip): identical four-file source ZIPs; existing alias names are retained for repository continuity.
+- [anc/scripts/](anc/scripts/): the arXiv ancillary files.
+  - `verify_round3_high_edge_filter.py`, `verify_round5_joint_pairs.py` and `verify_round6_layer_vector.py` reproduce the order-50 profile calculations of Appendix A.
+  - `WOW_JOINT_PILOT.json` is the data file read by `verify_round5_joint_pairs.py`.
+- [WOW284-v2-arxiv-upload.zip](WOW284-v2-arxiv-upload.zip) and [wow284_arxiv_source.zip](wow284_arxiv_source.zip): identical source ZIPs, containing the four source files and `anc/scripts/`. The existing alias names are retained for repository continuity.
 - [arxiv-abstract.txt](arxiv-abstract.txt) and [arxiv-comments.txt](arxiv-comments.txt): submission text.
 - [SOURCE_PACKAGE.json](SOURCE_PACKAGE.json): exact source/PDF/ZIP bindings and check scope.
 - [MANIFEST.txt](MANIFEST.txt) and [SHA256SUMS](SHA256SUMS): current directory inventory and digests; the digest ledger excludes itself.
-- [main.md](main.md): generated noncanonical reading copy; the TeX and PDF are authoritative.
+- [main.md](main.md): generated noncanonical reading copy of the 31 October version. It has not been regenerated for this revision; the TeX and PDF are authoritative.
 
-## Changes in this review
+## Changes in this revision
 
-For the strict spectral window, Proposition 6.4 gives both `sigma_uv >= 2k-1` and `sigma_uv < U_{k,n}`; Corollary 6.5 records the corresponding integer sieve. At degree six and order 50, the upper six-cycle moment bound is strict because the localizing matrix is positive definite. Both displays and the exact enumeration script agree; the same 266 degree profiles survive. The introduction explicitly credits the published Moore-graph spectra and retains the Capy Build and Wilbanks–Annie counterexample records. Eigenspace notation and the disclosure heading are clearer. The abstract is unchanged.
+Mathematics, both results in Appendix A:
 
-The third focused pass clarifies five short arguments: the bipartite boundary test, the girth argument for higher-diameter transfer, the constant-vector eigenvalue of the order-50 layer compression, the constant-space wording before connectivity is established, and the orthogonality of nonzero Fourier characters. The theorem statements, numerical bounds, 266 surviving profiles, and open order-50 existence question are unchanged.
+- **Proposition A.2.** Let `G` be a 6-regular graph of order 50, girth at least five and diameter three, and let `τ(v)` count the five-cycles through `v`. Then `Φ(G) ≤ (795 − 21τ(v))/377` for every vertex `v`.
+- **Corollary A.4.** Under the hypotheses of Theorem A.3, the high-edge graph is a disjoint union of cycles of length at least five and isolated vertices. Its necessary degree profiles are `(n_0, n_2, n_4) = (50 − 5j, 5j, 0)` for `j = 0, …, 10`.
+
+Exposition:
+
+- The abstract is rewritten.
+- The introduction and several sections are edited for clarity.
+- The text uses American spelling and contains no paper version numbers.
+- The AI-assistance disclosure of the first arXiv version is restored.
+- Inline references to individual scripts are replaced by one section on code and data (Section I.1).
+
+The display mathematics of the 13 November source is unchanged.
 
 ## Verification
 
-Both the candidate source and the exact four-file ZIP extracted into an empty directory compiled successfully with pdfLaTeX via latexmk. The extracted build has 41 pages and byte-identical extracted PDF text to the delivered PDF. No LaTeX/BibTeX warning or error, unresolved reference or citation, box warning, or missing-glyph diagnostic was found in the final logs. All fonts are embedded. The PDF was reviewed in an all-page overview and at higher resolution on changed and affected pages.
-
-In the first 31 October review, six selected exact-arithmetic audits were replayed: the two-sided LP, three-to-one theorem, nonpositive-r cases, disconnected signed complement at order 50, Hoffman–Singleton deletion robustness, and the updated order-50 feasibility enumeration. All passed. The feasibility verifier is pinned in the PDF to commit `ee387a20bb97c83d67f466c837e589509d6ad337`. The second review independently checked the analytic proof of the strict upper edge-cycle bound and its integer sieve; the unaffected verifiers were not rerun. The new upper bound is proved analytically.
-
-The third review independently checked all five clarifications. Both current source builds passed; every text-changed page was visually inspected, and all unchanged-text pages were pixel-identical to the preceding reviewed PDF. The generated Markdown reading copy was refreshed from the current TeX, bibliography, and compiled labels.
+- The source ZIP was extracted into an empty directory and compiled with pdfLaTeX (three passes, using the shipped `main.bbl`). The build had no LaTeX error, no undefined or multiply defined reference, and no overfull box. The resulting PDF has 41 pages.
+- `pdffonts` reports all 15 fonts of `main.pdf` as embedded.
+- The repository links in Section I.1 returned HTTP 200 when checked during this revision.
+- The PDF was not compared page by page with an independent rebuild. The ancillary scripts were not rerun for this revision. No arXiv submission has been made.
 
 ## Formalization boundary
 
-Appendix I distinguishes imported structural and finite-matrix certificates and the graph-independent LP optimum from the paper-side graph-distance identification, trace bridge, integral-slack and deletion results. The new cycle refinements are written results supported by the specified exact checks, not newly released Lean theorems.
-
-The released Lean sources and toolchain are unchanged by this manuscript update. The released formalization and its reproduction instructions are documented in the [Lean README](../lean/README.md).
+Appendix I distinguishes the Lean-checked finite certificates and the graph-independent LP optimum from the written graph-level arguments. The order-50 results above are written results supported by exact computation, not Lean theorems. The released Lean sources and toolchain are unchanged by this manuscript update; see the [Lean README](../lean/README.md).
 
 ## Build and replacement
 
@@ -43,6 +54,6 @@ Keep all four source files together and run from this directory:
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The ZIP contains exactly `main.tex`, `main.bbl`, `references.bib`, and `petkov-preprint.sty` at its root. It excludes the PDF, metadata, logs and audit files. Its supplied replacement destination is arXiv:2607.27452; the live account's version/submission state was not certified. No arXiv submission has been made in this review. The author should inspect the PDF generated by arXiv during replacement.
+The ZIP contains `main.tex`, `main.bbl`, `references.bib`, and `petkov-preprint.sty` at its root, and the ancillary files under `anc/scripts/`. arXiv lists the files under `anc/` separately as ancillary files. The ZIP excludes the PDF, metadata and logs. Its replacement destination is arXiv:2607.27452. No arXiv submission has been made. The author should inspect the PDF generated by arXiv during replacement.
 
 The root WOW manuscript, root manifest and root checksum ledger retain a historical July snapshot. The older synchronization script takes that root manuscript as input and must not be used to rebuild this replacement. Current integrity records are scoped to this directory.

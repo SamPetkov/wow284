@@ -6,6 +6,7 @@ Department of Physics, École normale supérieure, Université PSL, Paris, Franc
 
 > Reading copy generated on 31 October 2026 from `arxiv/main.tex` and its current bibliography.
 > The [TeX source](main.tex) and [compiled PDF](main.pdf) are authoritative if this rendering differs in notation, citations, or layout.
+> This copy has not been regenerated for the 14 November 2026 revision of the manuscript; read [main.pdf](main.pdf) for the current text.
 
 <a id="abstract"></a>
 

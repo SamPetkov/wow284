@@ -3,7 +3,7 @@
 **Author:** Samuil Petkov<br>
 **Affiliation:** Department of Physics, École normale supérieure, Université PSL, Paris, France<br>
 **Email:** <samuil.petkov@phys.ens.psl.eu><br>
-**Publication review:** 31 October 2026; replacement manuscript prepared<br>
+**Publication review:** 14 November 2026; replacement manuscript prepared<br>
 **Certificate baseline:** historical release `v2.2.8` (29 July 2026)
 
 The current manuscript, PDF, bibliography and submission metadata are in
@@ -185,7 +185,7 @@ Primary links:
 - `results/edges.csv`, `results/adjacency_matrix.csv`, `results/distance_matrix.csv` - complete graph data.
 - `data/graphs/` - machine-readable representations of the 38-, 39-, 40-, 42-, and 50-vertex graphs.
 - `supplement/extended_2026-07-23/` - checksum-preserved original extended handoff, report, code, data, and captured outputs.
-- `arxiv/wow284_arxiv_source.zip` - arXiv source archive containing `main.tex`, `references.bib`, `main.bbl`, and `petkov-preprint.sty`.
+- `arxiv/wow284_arxiv_source.zip` - arXiv source archive containing `main.tex`, `references.bib`, `main.bbl`, `petkov-preprint.sty`, and the ancillary files under `anc/scripts/` (mirrored in `arxiv/anc/scripts/`).
 - `SOURCE_LEDGER.md`, `REVIEW.md`, `PROVENANCE.md` - attribution, novelty, proof-audit, and provenance records.
 - `CITATION.cff`, `LICENSE`, `LICENSE_SCOPE.md` - citation and CC BY 4.0 metadata.
 - `arxiv/MANIFEST.txt`, `arxiv/SHA256SUMS` - integrity records for the current manuscript directory.
@@ -314,10 +314,12 @@ and formalization scope notes.
 ## arXiv package
 
 The upload archive is [`arxiv/wow284_arxiv_source.zip`](arxiv/wow284_arxiv_source.zip).
-It excludes PDFs, logs, caches, repository administration, proof audits, and
-code because arXiv asks authors not to include files that are unnecessary for
-TeX processing. The archive includes the matching `.bbl`, `.bib` and stylesheet; the main
-file uses `\date{}` rather than a dynamic `\today`.
+It excludes PDFs, logs, caches, repository administration and proof audits
+because arXiv asks authors not to include files that are unnecessary for TeX
+processing. The archive includes the matching `.bbl`, `.bib` and stylesheet,
+and three verification scripts with their data file as arXiv ancillary files
+under `anc/scripts/`. The main file has the fixed date 29 July 2026, the date
+of the first arXiv posting, rather than a dynamic `\today`.
 
 The pre-revision source dated 19 July 2026 is preserved as
 [`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
