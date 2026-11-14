@@ -179,8 +179,14 @@ lake env lean -DwarningAsError=true Wow284DiameterThreeMatrixAudit.lean
 Procida builds (Lean 4.31, pinned Mathlib packages, clean clones):
 `Wow284.DiameterThreeMatrix` single-file check job 68677; `Induced40X`
 job 68678; `Induced40Y` and `Induced40Z` job 68685 (`lake build --wfail`,
-exit 0). Every `#print axioms` report of these modules
-reads `[propext, Classical.choice, Quot.sound]`.
+exit 0). Job 68686 (commit `c8965c5`) ran `lake build --wfail`,
+`lake build --wfail Wow284Extension` and
+`lake env lean -DwarningAsError=true Wow284Standalone.lean` on the
+294-module standalone file (SHA-256
+`1b4f2e76ea49356103b6730d0ce4d366270bd1c7871c20ffc47ec09b5b1714aa`), all
+with exit 0. Every `#print axioms` report of these modules, and all 78
+reports printed by the standalone file, read
+`[propext, Classical.choice, Quot.sound]`.
 
 ## Standalone full development
 
