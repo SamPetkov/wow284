@@ -4,7 +4,7 @@ This directory contains the current manuscript and its source package, prepared 
 
 ## Files
 
-- [main.pdf](main.pdf): the 41-page paper.
+- [main.pdf](main.pdf): the 46-page paper.
 - [main.tex](main.tex), [main.bbl](main.bbl), [references.bib](references.bib), [petkov-preprint.sty](petkov-preprint.sty): the matching editable sources.
 - [anc/scripts/](anc/scripts/): the arXiv ancillary files.
   - `verify_round3_high_edge_filter.py`, `verify_round5_joint_pairs.py` and `verify_round6_layer_vector.py` reproduce the order-50 profile calculations of Appendix A.
@@ -15,16 +15,26 @@ This directory contains the current manuscript and its source package, prepared 
 
 ## Changes in this revision
 
-Both new results are in Appendix A:
+Appendix B is new. It contains:
+
+- **Theorem B.1.** For a connected graph of girth at least five and diameter at most three, `D = 3J − 3I − 2A − A² + Δ`, with `Δ` the diagonal degree matrix; hence `Φ(G) > 0` exactly when `3J + Δ + (δ*(G) − 2)I − (A + I)²` is positive definite. Proved, and checked in Lean (`Wow284.DiameterThreeMatrix`). Corollary B.2 is the corresponding form for deletions from a Moore graph.
+- **Theorem B.4.** Every strict counterexample has at least 15 vertices (written proof).
+- **Proposition B.5.** No strict counterexample has at most 19 vertices (exhaustive generation with nauty's `geng`; computer-assisted).
+- **Proposition B.6.** The strict induced subgraphs of the Hoffman–Singleton graph of orders 36 to 50, up to automorphism (computer-assisted). None has order 36 or 37.
+- **Proposition B.7.** Three irregular strict counterexamples of order 40 (computer-assisted; Lean certificates `Wow284.Induced40X`, `Induced40Y`, `Induced40Z`).
+- **Proposition B.8.** An irregular graph of order 43 with `Φ = 0` (computer-assisted).
+- **Proposition B.9** and **Conjecture B.10.** For `R` and `X42`, deleting two vertices leaves a strict counterexample exactly when they are adjacent (computer-assisted); the conjecture extends this to every 6-regular strict counterexample of girth five and diameter three.
+
+The new results in Appendix A are:
 
 - **Proposition A.2.** Let `G` be a 6-regular graph of order 50, girth at least five and diameter three, and let `τ(v)` count the five-cycles through `v`. Then `Φ(G) ≤ (795 − 21τ(v))/377` for every vertex `v`.
 - **Corollary A.4.** Under the hypotheses of Theorem A.3, the high-edge graph is a disjoint union of cycles of length at least five and isolated vertices. Its necessary degree profiles are `(n_0, n_2, n_4) = (50 − 5j, 5j, 0)` for `j = 0, …, 10`.
 
-The abstract is rewritten, several sections are edited for clarity, and inline references to individual scripts are replaced by one section on code and data (Section I.1).
+The abstract is rewritten, several sections are edited for clarity, and inline references to individual scripts are replaced by one section on code and data (Section J.1).
 
 ## Formalization boundary
 
-Appendix I distinguishes the Lean-checked finite certificates and the graph-independent LP optimum from the written graph-level arguments. The order-50 results above are written results supported by exact computation, not Lean theorems. See the [Lean README](../lean/README.md).
+Appendix J distinguishes the Lean-checked finite certificates, the graph-level diameter-three identities and the graph-independent LP optimum from the written graph-level arguments. In Appendix B, only Theorem B.1 and the certificates of Proposition B.7 are checked in Lean. The order-50 results above are written results supported by exact computation, not Lean theorems. See the [Lean README](../lean/README.md).
 
 ## Build
 

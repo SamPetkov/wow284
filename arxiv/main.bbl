@@ -1,15 +1,9 @@
-\begin{thebibliography}{28}
+\begin{thebibliography}{29}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
-
-\bibitem[Fajtlowicz(1998)]{Fajtlowicz1998}
-Siemion Fajtlowicz.
-\newblock Written on the wall: Conjectures derived on the basis of the program
-  {Galatea Gabriella Graffiti}.
-\newblock Technical report, University of Houston, 1998.
 
 \bibitem[Aouchiche and Hansen(2014)]{AouchicheHansen2014}
 Mustapha Aouchiche and Pierre Hansen.
@@ -17,6 +11,12 @@ Mustapha Aouchiche and Pierre Hansen.
 \newblock \emph{Linear Algebra and its Applications}, 458:\penalty0 301--386,
   2014.
 \newblock \doi{10.1016/j.laa.2014.06.010}.
+
+\bibitem[Fajtlowicz(1998)]{Fajtlowicz1998}
+Siemion Fajtlowicz.
+\newblock Written on the wall: Conjectures derived on the basis of the program
+  {Galatea Gabriella Graffiti}.
+\newblock Technical report, University of Houston, 1998.
 
 \bibitem[Hoffman and Singleton(1960)]{HoffmanSingleton1960}
 Alan~J. Hoffman and Robert~R. Singleton.
@@ -172,6 +172,12 @@ Gary Greaves, Jack~H. Koolen, Akihiro Munemasa, Yoshio Sano, and Tetsuji
 \newblock \emph{Journal of Combinatorial Theory, Series B}, 110:\penalty0
   90--111, 2015.
 \newblock \doi{10.1016/j.jctb.2014.07.006}.
+
+\bibitem[McKay and Piperno(2014)]{McKayPiperno2014}
+Brendan~D. McKay and Adolfo Piperno.
+\newblock Practical graph isomorphism, {II}.
+\newblock \emph{Journal of Symbolic Computation}, 60:\penalty0 94--112, 2014.
+\newblock arXiv:1301.1493.
 
 \bibitem[Abreu et~al.(2008)Abreu, Funk, Labbate, and Napolitano]{AbreuEtAl2008}
 Mari{\'e}n Abreu, Martin Funk, Domenico Labbate, and Vito Napolitano.

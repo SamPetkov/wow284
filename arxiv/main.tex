@@ -69,7 +69,7 @@ Universit\'e PSL, Paris, France}
 \begin{abstract}
 WOW-284 is a Graffiti conjecture asserting that every connected graph of order at least three and girth at least five has minimum dual degree at most \(-\lambda_{\min}(D)\), where \(D\) is the distance matrix and the dual degree of a vertex is the average degree of its neighbors. We refute it with exact counterexamples on \(38\), \(39\), \(40\), \(42\) and \(50\) vertices and study the structure of regular counterexamples. For a connected \(k\)-regular graph \(G\) of girth at least five and diameter three, we prove that \(\delta^*(G)+\lambda_{\min}(D)=2k-2-\max_\theta(\theta+1)^2\), the maximum being over the nonprincipal adjacency eigenvalues, so strict failure is a spectral window condition. The closed window \(|\theta+1|\le\sqrt{2k-2}\) alone, without any diameter assumption, forces \(|V(G)|<(k+2)(k^2+3)/6\) when \(k\ge4\), and an integral excess matrix derived from the optimal polynomial sharpens this bound for diameter-three counterexamples. Every regular strict counterexample has degree at least six and diameter at most four, and in degree six it has at most \(50\) vertices.
 
-Under vertex deletion, the Hoffman--Singleton graph remains a strict counterexample after the removal of any five vertices, while an explicit six-vertex deletion destroys strictness. A degree-\(57\) Moore graph, if one exists, remains a connected strict counterexample after the removal of any \(56\) vertices. All finite computations use exact arithmetic, and Lean checks the finite certificates for the explicit counterexamples and the optimality of the polynomial bound.
+Under vertex deletion, the Hoffman--Singleton graph remains a strict counterexample after the removal of any five vertices, while an explicit six-vertex deletion destroys strictness. A degree-\(57\) Moore graph, if one exists, remains a connected strict counterexample after the removal of any \(56\) vertices. Every strict counterexample has at least \(15\) vertices, and an exhaustive search excludes orders up to \(19\). The strict induced subgraphs of the Hoffman--Singleton graph of orders \(36\) to \(50\) are classified up to automorphism; among them are three further irregular counterexamples of order \(40\). All finite computations use exact arithmetic, and Lean checks the finite certificates for the explicit counterexamples and the optimality of the polynomial bound.
 \end{abstract}
 
 \maketitle
@@ -162,6 +162,11 @@ from the WOW-284 spectral window and to study vertex deletion.
 
 We do not claim that our examples exhaust all counterexamples, nor that the
 order-$38$ example is minimal.
+Appendix~\ref{app:small-orders} proves that a strict counterexample has at
+least \(15\) vertices, shows by exhaustive computation that none has at most
+\(19\), classifies the strict induced subgraphs of the Hoffman--Singleton
+graph of orders \(36\) to \(50\), and gives three further, irregular
+counterexamples of order \(40\).
 Appendix~\ref{sec:verification} records the exact computations and the
 scope of the Lean verification.
 
@@ -2370,7 +2375,9 @@ bounds above.
 
 The necessary conditions at degree six and order $50$ do not decide whether
 a strict counterexample with these parameters exists. The minimum order of a
-strict counterexample is also unknown. A further direction is to extend the
+strict counterexample is also unknown; by the computations of
+Appendix~\ref{app:small-orders} it is at least \(20\), and no induced subgraph
+of the Hoffman--Singleton graph of order \(36\) or \(37\) is strict. A further direction is to extend the
 order bounds for regular graphs to irregular graphs.
 
 \paragraph{Disclosure and reproducibility.}
@@ -2848,6 +2855,352 @@ The right-hand side is an integer.  Hence \(v\equiv24\pmod {32}\), which is impo
 \(30\le v\le51\).  All three level families are excluded, proving that \(T\)
 is disconnected.
 \end{proof}
+
+\section{Small orders, deletions of the Hoffman--Singleton graph, and an irregular identity}
+\label{app:small-orders}
+
+This appendix collects results on strict counterexamples that are not
+regular. Each statement carries one of four labels: \emph{proved} (a written
+proof is given here), \emph{computer-assisted} (an exhaustive computation in
+exact arithmetic, reproduced by the code of Section~\ref{sec:code-data}),
+\emph{Lean-checked} (with the Lean names and the scope stated in
+Appendix~\ref{sec:verification}), or \emph{conjectured}. None of these
+results decides whether \(38\) is the minimum order of a strict
+counterexample, and no infinite family of strict counterexamples is claimed.
+
+Throughout, \(M\) is the coordinate Hoffman--Singleton graph of
+Section~\ref{sec:examples}, and \(R\), \(H_{38}\), \(H_{39}\) and \(X_{42}\)
+are the graphs defined before Theorem~\ref{thm:explicit-examples}. For a
+graph \(G\), \(\Delta_G=\operatorname{diag}(d(v))\) is the diagonal degree
+matrix.
+
+\subsection{An irregular form of the diameter-three identity}
+
+\begin{theorem}[Irregular diameter-three identity; proved, Lean-checked]
+\label{thm:irregular-d3}
+Let \(G\) be a finite connected graph of girth at least five and diameter at
+most three, with adjacency matrix \(A\) and distance matrix \(D\). Then
+\[
+ D=3J-3I-2A-A^2+\Delta_G,
+ \qquad
+ D+tI=3J+\Delta_G+(t-2)I-(A+I)^2\quad(t\in\mathbb R).
+\]
+Consequently \(\Phi(G)>0\) if and only if
+\(3J+\Delta_G+(\delta^*(G)-2)I-(A+I)^2\) is positive definite.
+\end{theorem}
+
+\begin{proof}
+Since \(G\) has no triangle, adjacent vertices have no common neighbor; since
+it has no four-cycle, distinct vertices have at most one. Hence \((A^2)_{uu}=d(u)\),
+and for \(u\ne v\) the entry \((A^2)_{uv}\) is \(1\) if \(d_G(u,v)=2\) and \(0\)
+otherwise. Thus \(A_2=A^2-\Delta_G\) is the distance-two indicator, and the
+diameter bound gives \(A_3=J-I-A-A_2\) for the distance-three indicator.
+Substituting into \(D=A+2A_2+3A_3\) gives the first identity, and expanding
+\((A+I)^2\) gives the second. The last assertion is
+\(\lambda_{\min}(D)>-\delta^*(G)\), that is, positive definiteness of
+\(D+\delta^*(G)I\).
+\end{proof}
+
+For a \(k\)-regular graph of diameter three, \(\Delta_G=kI\) and the first
+identity is the one in Theorem~\ref{thm:diameter-three-score}. In the Lean
+module \texttt{Wow284.DiameterThreeMatrix}, the three assertions are
+\[
+\begin{array}{l}
+\texttt{distMatrix\_eq\_of\_diam\_le\_three},\\
+\texttt{distMatrix\_add\_smul\_one\_eq\_of\_diam\_le\_three},\\
+\texttt{posDef\_shift\_iff\_of\_diam\_le\_three};
+\end{array}
+\]
+the module also checks the
+regular identities, the transfer of zero-sum adjacency eigenvectors and the
+necessary direction of the spectral window
+(Appendix~\ref{sec:verification}).
+
+\begin{corollary}[Deletions from a Moore graph; proved]
+\label{cor:moore-deletion-form}
+Let \(M'\) be a Moore graph of diameter two and let \(S\subseteq V(M')\) be
+such that \(H=M'-S\) is connected of diameter at most three. Let \(C_S\) be
+the \(0/1\) matrix on \(V(H)\) whose \((x,y)\) entry is \(1\) exactly when
+\(x,y\) are nonadjacent and their unique common neighbor in \(M'\) lies in
+\(S\). Then
+\[
+ D(H)=2(J-I)-A(H)+C_S,
+\]
+so \(\Phi(H)>0\) if and only if \(2J-A(H)+C_S+(\delta^*(H)-2)I\) is positive
+definite.
+\end{corollary}
+
+\begin{proof}
+Nonadjacent vertices of \(M'\) have exactly one common neighbor. In \(H\), two
+vertices are at distance one if adjacent, at distance two if their common
+neighbor survives, and otherwise at distance at least three, hence exactly
+three by the diameter hypothesis.
+\end{proof}
+
+With \(B\) as in Theorem~\ref{thm:small-puncture}, \(C_S=BB^{\mathsf T}-
+\operatorname{diag}(BB^{\mathsf T})\); that theorem is the case \(|S|\le k-1\),
+where the diameter hypothesis holds automatically. Every Hoffman--Singleton
+example in this paper, including those below, is an instance of
+Corollary~\ref{cor:moore-deletion-form}. The corollary is a reformulation and
+not a classification: for \(|S|=6,7,8\) in Proposition~\ref{prop:hs-classification},
+the number of edges inside \(S\), the largest number of deleted neighbors of
+a surviving vertex, and the presence of a closed neighborhood in \(S\) do not
+separate strict from non-strict deletions.
+
+\subsection{A lower bound of fifteen vertices}
+
+We use the radius-two count of Proposition~\ref{prop:radius-two},
+\(|B_2(v)|=1+d(v)\,d^*(v)\), together with the following path constants,
+obtained from the exact characteristic polynomials
+\begin{align*}
+ \chi_{D(P_4)}&=(x^2-4x-6)(x^2+4x+2),&
+ \lambda_{\min}(D(P_4))&=-2-\sqrt2,\\
+ \chi_{D(P_6)}&=(x+1)(x^2+8x+4)(x^3-9x^2-36x-20),&
+ \lambda_{\min}(D(P_6))&=-4-2\sqrt3,
+\end{align*}
+and \(\lambda_{\min}(D(P_3))=-2\). A shortest path is an isometric subgraph,
+so its distance matrix is a principal submatrix of \(D\); Cauchy interlacing
+then bounds \(\lambda_{\min}(D)\) from above.
+
+\begin{lemma}[proved]\label{lem:small-diam-two}
+Let \(G\) be connected, of order at least three and girth at least five. If
+\(\diam(G)\le2\) and \(\Phi(G)>0\), then \(G\) is a Moore graph of degree
+\(7\) or \(57\); in particular \(|V(G)|\ge50\).
+\end{lemma}
+
+\begin{proof}
+Diameter one would make \(G\) complete, hence not triangle-free, so
+\(\diam(G)=2\). If \(G\) is a tree, it is a star \(K_{1,m}\) with \(m\ge2\):
+its center has \(d^*=1\), and a leaf, the center and another leaf form a
+shortest path, so \(\Phi(G)\le1-2<0\).
+
+Suppose that \(G\) contains a cycle. Let \(u,w\) be nonadjacent. They have
+a unique common neighbor \(c\). Each \(x\in N(u)\setminus\{c\}\) is not
+adjacent to \(w\), since otherwise \(u,x,w,c\) is a four-cycle, so \(x\) and
+\(w\) have a unique common neighbor \(f(x)\in N(w)\). We have \(f(x)\ne c\),
+since otherwise \(u,x,c\) is a triangle, and \(f\) is injective, since
+\(f(x)=f(x')\) with \(x\ne x'\) gives the four-cycle \(u,x,f(x),x'\). Hence
+\(d(u)\le d(w)\), and by symmetry nonadjacent vertices have equal degree.
+If \(w\) were a leaf with neighbor \(u\), every vertex would be adjacent to
+\(u\) and \(G\) would be a star; so every degree is at least two. Let
+\(u\sim w\), and choose \(x\in N(u)\setminus\{w\}\) and
+\(y\in N(w)\setminus\{u\}\); then \(x\ne y\) and \(x\not\sim y\). If every
+vertex were adjacent to \(u\) or to \(w\), a common neighbor \(z\) of \(x\)
+and \(y\) would satisfy \(z\notin\{u,w\}\) and would be adjacent to \(u\) or
+\(w\), closing a triangle. So some vertex \(z\) is adjacent to neither, and
+\(d(u)=d(z)=d(w)\). Thus \(G\) is \(k\)-regular, every ball \(B_2(v)\) is all
+of \(V(G)\), and Proposition~\ref{prop:radius-two} gives \(|V(G)|=k^2+1\): \(G\)
+is a Moore graph of diameter two. Theorem~\ref{thm:moore-threshold} and the
+Hoffman--Singleton theorem \cite{HoffmanSingleton1960} then force
+\(k\in\{7,57\}\).
+\end{proof}
+
+\begin{theorem}[proved]\label{thm:fifteen-vertices}
+Every strict counterexample to WOW-284 has at least \(15\) vertices. If
+\(G\) is a strict counterexample of order \(n<50\), then \(\diam(G)\ge3\),
+\[
+ \delta^*(G)>2+\sqrt2,
+ \qquad
+ \Delta(G)<\frac{n-1}{2+\sqrt2},
+\]
+where \(\Delta(G)\) is the maximum degree.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:small-diam-two}, a strict counterexample of diameter at most
+two has at least \(50\) vertices. Otherwise \(\diam(G)\ge3\), and the first
+four vertices of a diametral shortest path span an isometric \(P_4\), so
+\(\lambda_{\min}(D)\le-2-\sqrt2\) and
+\(\delta^*(G)>-\lambda_{\min}(D)\ge2+\sqrt2\). Let \(w\) have degree
+\(\Delta(G)\). Since \(d^*(w)\ge\delta^*(G)\),
+\[
+ n\ge|B_2(w)|=1+\Delta(G)\,d^*(w)>1+\Delta(G)(2+\sqrt2),
+\]
+which is the degree bound. Since \(\Delta(G)\ge d^*(v)\ge\delta^*(G)>3\) for
+every \(v\), we have \(\Delta(G)\ge4\) and \(n>9+4\sqrt2>14.6\).
+\end{proof}
+
+For orders at most \(37\), the same count gives
+\(\delta^*(G)\le\min\{\Delta(G),36/\Delta(G)\}\le6\), with equality only for a
+\(6\)-regular graph on \(37\) vertices, that is, a Moore graph of degree six,
+which does not exist \cite{HoffmanSingleton1960}. Hence \(\delta^*(G)<6\), an
+isometric \(P_6\) is excluded because \(-4-2\sqrt3<-6\), and a strict
+counterexample of order at most \(37\) has diameter three or four.
+
+\subsection{Exhaustive search on at most nineteen vertices}
+
+\begin{proposition}[computer-assisted]\label{prop:nineteen-vertices}
+No connected graph of girth at least five on at most \(19\) vertices is a
+strict counterexample.
+\end{proposition}
+
+The graphs were generated by \texttt{geng} from nauty
+\cite{McKayPiperno2014} with the options \texttt{-c -t -f} (connected,
+triangle-free, four-cycle-free), one graph per isomorphism class. For
+\(n\le14\), every generated graph was decided. For \(15\le n\le19\), the
+maximum degree was capped by Theorem~\ref{thm:fifteen-vertices}
+(\texttt{-D4} for \(n\le18\) and \texttt{-D5} for \(n=19\)), and only graphs
+with \(\delta^*>2+\sqrt2\) were kept, the test being done in integer
+arithmetic; both restrictions are necessary for strictness. A graph is
+decided as non-strict by an integer vector \(x\) with
+\(x^{\mathsf T}(qD+pI)x<0\), where \(\delta^*=p/q\), and otherwise by
+fraction-free elimination of \(qD+pI\).
+\[
+\begin{array}{lrrr}
+\toprule
+n&\text{graphs generated}&\text{decided}&\text{strict}\\
+\midrule
+3\text{--}14&329{,}766&329{,}766&0\\
+15&1{,}417{,}899&0&0\\
+16&11{,}152{,}778&1&0\\
+17&98{,}858{,}189&19&0\\
+18&977{,}178{,}397&221&0\\
+19&25{,}975{,}541{,}173&7{,}459&0\\
+\bottomrule
+\end{array}
+\]
+For \(15\le n\le19\) the column ``decided'' counts the graphs that pass the
+dual-degree test; a discarded graph has \(\delta^*<2+\sqrt2\) and therefore
+\(\Phi<0\) by Lemma~\ref{lem:small-diam-two} and the proof of
+Theorem~\ref{thm:fifteen-vertices}. Exactly one graph is not certified by an integer vector: the
+\(3\)-regular graph of girth five on ten vertices, the Petersen graph, for
+which \(\Phi=0\) by Theorem~\ref{thm:moore-threshold}. The proposition is a statement about orders at most \(19\);
+orders \(20\) to \(37\) are not covered by it.
+
+\subsection{Induced subgraphs of the Hoffman--Singleton graph}
+
+\begin{proposition}[computer-assisted]\label{prop:hs-classification}
+For \(0\le s\le14\), the \(\operatorname{Aut}(M)\)-orbits of \(s\)-subsets
+\(S\subseteq V(M)\) with \(M-S\) connected, and those with \(\Phi(M-S)>0\),
+number as follows (\(|S|=50-|V(M-S)|\)).
+\[
+\begin{array}{rrr@{\qquad}rrr}
+\toprule
+|V(M-S)|&\text{connected}&\text{strict}&|V(M-S)|&\text{connected}&\text{strict}\\
+\midrule
+50&1&1&42&2{,}521&108\\
+49&1&1&41&10{,}799&22\\
+48&2&2&40&42{,}575&4\\
+47&4&4&39&151{,}802&1\\
+46&11&11&38&488{,}298&1\\
+45&33&33&37&1{,}419{,}003&0\\
+44&128&110&36&3{,}736{,}168&0\\
+43&561&185&&&\\
+\bottomrule
+\end{array}
+\]
+Every other connected orbit has \(\Phi<0\), except one orbit of order \(43\)
+with \(\Phi=0\) (Proposition~\ref{prop:order43-equality}). In particular,
+\(M\) has no strict induced subgraph of order \(36\) or \(37\), and the strict
+induced subgraphs of orders \(38\) and \(39\) are, up to automorphisms of
+\(M\), exactly \(H_{38}\) and \(H_{39}\).
+\end{proposition}
+
+The orbits were enumerated by orderly generation. All \(252{,}000\)
+automorphisms of \(M\) were found by an exhaustive backtracking search over
+adjacency-preserving bijections. A set \(S\) is taken as the representative
+of its orbit when \(\sum_{s\in S}2^{49-s}\) is maximal over the orbit, the
+vertices being numbered as in Section~\ref{sec:examples}. If \(S\) is a
+representative and \(s=\max S\), then \(S\setminus\{s\}\) is a
+representative: otherwise some automorphism \(g\) gives
+\(S\setminus\{s\}\) a larger number, the first position \(p\) at which the two
+numbers differ satisfies \(p<s\), and \(g(S)\) then exceeds \(S\) at a
+position at most \(p\). Representatives of size \(s\) therefore arise from
+representatives of size \(s-1\) by adding a larger vertex. At every size the
+number of representatives equals the number of orbits obtained from the cycle
+index of the automorphism group. Each connected representative is decided as
+in Proposition~\ref{prop:nineteen-vertices}; the equality case is decided by
+the rank test of Proposition~\ref{prop:order43-equality}. The proposition
+concerns induced subgraphs of \(M\) of order at least \(36\) only.
+
+\begin{proposition}[computer-assisted, Lean-checked]\label{prop:order40-irregular}
+The graphs
+\begin{align*}
+ X_{40}&=M-\{P_{0,j},Q_{k,0}:j,k\in\F\}=X_{42}-\{P_{0,2},P_{0,3}\},\\
+ Y_{40}&=M-\{P_{0,j}:j\in\F\}-\{P_{1,0},Q_{0,0},Q_{0,2},Q_{2,2},Q_{4,4}\},\\
+ Z_{40}&=M-\{P_{0,j}:j\in\F\}-\{P_{1,0},Q_{0,0},Q_{0,2},Q_{1,1},Q_{1,4}\}
+\end{align*}
+are strict counterexamples of order \(40\), of girth five and diameter three:
+\[
+\begin{array}{lccc}
+\toprule
+G&\text{edges}&\text{degree counts}&\text{certificate}\\
+\midrule
+X_{40}&115&5^{10}\,6^{30}&\delta^*=17/3,\ 3D+17I\succ0\\
+Y_{40}&118&5^{9}\,6^{26}\,7^{5}&\delta^*=39/7,\ 7D+39I\succ0\\
+Z_{40}&118&5^{10}\,6^{24}\,7^{6}&\delta^*=39/7,\ 7D+39I\succ0\\
+\bottomrule
+\end{array}
+\]
+Together with \(R\), they represent the four strict orbits of order \(40\) in
+Proposition~\ref{prop:hs-classification}.
+\end{proposition}
+
+The four graphs are pairwise nonisomorphic: \(R\) is regular, \(X_{40}\) has
+\(115\) edges, and \(Y_{40}\), \(Z_{40}\) have different degree counts. The
+positive definiteness was checked twice, by fraction-free elimination and by
+an independent rational \(LDL^{\mathsf T}\) decomposition with all pivots
+positive. The Lean modules \texttt{Wow284.Induced40X},
+\texttt{Wow284.Induced40Y} and \texttt{Wow284.Induced40Z} check the degree
+data, the exact minimum dual degree, girth five through the embedding in
+\(M\), diameter three, the distance matrix, and positive definiteness of the
+displayed shift; their scope is that of the order-\(39\) and order-\(42\)
+certificates (Appendix~\ref{sec:verification}).
+
+\begin{proposition}[computer-assisted]\label{prop:order43-equality}
+Let \(E_{43}=M-\{P_{0,0},P_{0,2},P_{1,0},P_{1,2},P_{2,1},P_{4,1},Q_{1,4}\}\);
+the deleted set is independent. Then \(E_{43}\) has order \(43\), \(126\)
+edges, degree counts \(5^{21}\,6^{7}\,7^{15}\), girth five and diameter three,
+\(\delta^*(E_{43})=6\), and
+\[
+ \lambda_{\min}(D(E_{43}))=-6\quad\text{with multiplicity }2,
+ \qquad \Phi(E_{43})=0.
+\]
+\end{proposition}
+
+Fraction-free symmetric elimination of \(D+6I\) with diagonal pivoting shows
+that it is positive semidefinite of rank \(41\). This is an irregular case of
+equality in WOW-284; the equality example of
+Theorem~\ref{thm:equality-boundary} is regular. It is the only orbit with
+\(\Phi=0\) in Proposition~\ref{prop:hs-classification}. This proposition is
+not formalized in Lean.
+
+\subsection{Two-vertex deletions of \texorpdfstring{\(R\)}{R} and \texorpdfstring{\(X_{42}\)}{X42}}
+
+\begin{proposition}[computer-assisted]\label{prop:edge-deletion-dichotomy}
+Let \(G\in\{R,X_{42}\}\) and let \(u,v\) be distinct vertices of \(G\). Then
+\(G-\{u,v\}\) is a strict counterexample if and only if \(u\sim v\). Every
+such deletion has \(\delta^*=17/3\). For the edge \(P_{0,2}P_{0,3}\) of
+\(X_{42}\), that is, for \(X_{40}\),
+\[
+ \det(xI-D(X_{40}))=x^4(x+5)^{11}(x^2-4x+2)(x^2+6x+2)^4
+ (x^3-83x^2+390x-414)(x^3+2x^2-20x-4)^4,
+\]
+and the least root is \(-3-\sqrt7\), with multiplicity four, so
+\(\Phi(X_{40})=17/3-3-\sqrt7=\Phi(H_{38})\).
+\end{proposition}
+
+For \(R\), the edge half is part of Theorem~\ref{thm:explicit-examples}. The
+computation decides all \(780\) pairs of \(R\) (\(120\) edges) and all \(861\)
+pairs of \(X_{42}\) (\(126\) edges) exactly, and the least root of the
+displayed polynomial is located by exact real-root isolation. The value
+\(17/3\) is elementary: after the endpoints of an edge \(uv\) of a
+\(k\)-regular graph of girth five are deleted, the vertices of
+\(N(u)\cup N(v)\) keep \(d^*=k\), and every other vertex \(x\) has
+\(d^*(x)\ge k-2/k\), with equality exactly when \(x\) has a neighbor in
+\(N(u)\setminus\{v\}\) and one in \(N(v)\setminus\{u\}\).
+
+\begin{conjecture}[conjectured]\label{conj:edge-deletion}
+Let \(G\) be a connected \(6\)-regular graph of girth five and diameter three
+with \(\Phi(G)>0\). Then, for distinct vertices \(u,v\), the graph
+\(G-\{u,v\}\) is a strict counterexample if and only if \(u\sim v\).
+\end{conjecture}
+
+The conjecture is supported only by \(R\) and \(X_{42}\), the two known
+graphs satisfying its hypotheses. Both are induced subgraphs of \(M\), and
+for \(M\) itself an edge deletion has least distance eigenvalue
+\(-2-\sqrt7\) (Theorem~\ref{thm:edge-puncture}), so the pattern may be
+specific to the Hoffman--Singleton graph rather than to degree six.
 
 \section{Exact spectra after one or two vertex deletions}
 \label{app:small-deletion-spectra}
@@ -3806,8 +4159,26 @@ Theorem~\ref{thm:order50-feasibility} are checked by a script at commit
 \href{https://github.com/SamPetkov/wow284/tree/ee387a20bb97c83d67f466c837e589509d6ad337/scripts}{\texttt{ee387a2}}
 of the same repository. The scripts for the remaining order-fifty profile
 calculations of Appendix~\ref{app:order50-details} are included as ancillary
-files (\path{anc/scripts/}) with this article. Analytic results not covered
-by these computations are proved in the text.
+files (\path{anc/scripts/}) with this article. The computations of
+Appendix~\ref{app:small-orders} are reproduced by the scripts at commit
+\href{https://github.com/SamPetkov/wow284/tree/762da21908ee44b2cff364453e463ceab9d02156}{\texttt{762da21}}
+of the same repository: \path{scripts/small_order_core.py} (graph
+constructions and exact decisions), \path{scripts/small_order_hs_orbits.py}
+(the orbit enumeration of Proposition~\ref{prop:hs-classification}),
+\path{scripts/small_order_deletions.py} (labeled deletion screens),
+\path{scripts/small_order_g6filter.c} and
+\path{scripts/small_order_certify_g6.py} (the dual-degree filter and the
+exact decisions for the \texttt{geng} output of
+Proposition~\ref{prop:nineteen-vertices}), \path{scripts/recertify_order40.py}
+(the second check in Proposition~\ref{prop:order40-irregular}) and
+\path{scripts/verify_edge_deletion_dichotomy.py}
+(Proposition~\ref{prop:edge-deletion-dichotomy});
+\path{scripts/generate_lean40_hs_extra.py} generates the order-\(40\) Lean
+certificates. The orbit counts, representative graphs, generation counts and
+exact pivots are in \path{data/hs_induced_classification/},
+\path{data/small_order_exhaustive/}, \path{data/hs_order40_extra/} and
+\path{data/hs_two_vertex_deletions/} at the same commit. Analytic results not
+covered by these computations are proved in the text.
 
 \subsection{Lean verification}
 
@@ -3835,6 +4206,31 @@ diagonalization, multiplicities, an attained minimum diagonal entry of \(-5\), d
 and gap one.  These certificates concern the finite matrices supplied to
 Lean and do not provide end-to-end formalizations via
 \texttt{SimpleGraph.dist}.
+Certificates of the same kind are checked for the order-\(40\) graphs
+\(X_{40}\), \(Y_{40}\) and \(Z_{40}\) of
+Proposition~\ref{prop:order40-irregular}, in the modules
+\texttt{Wow284.Induced40X}, \texttt{Wow284.Induced40Y} and
+\texttt{Wow284.Induced40Z}: the degree data, the exact minimum dual degree,
+girth five through the embedding in the coordinate graph, diameter three, the
+distance matrix, and positive definiteness of \(3D+17I\), respectively
+\(7D+39I\).
+
+The module \texttt{Wow284.DiameterThreeMatrix} checks graph-level statements
+whose hypotheses use Mathlib's \texttt{SimpleGraph.Connected},
+\texttt{SimpleGraph.egirth} and \texttt{SimpleGraph.diam}, and whose distance
+matrix has the entries \texttt{SimpleGraph.dist}. For a connected graph of
+girth at least five and diameter at most three, it proves the identities of
+Theorem~\ref{thm:irregular-d3}. For a connected \(k\)-regular graph of girth
+at least five and diameter three, it proves the identities of
+Theorem~\ref{thm:diameter-three-score}, the transfer of a zero-sum adjacency
+eigenvector with eigenvalue \(\theta\) to a distance eigenvector with
+eigenvalue \(k-2-(\theta+1)^2\), the principal distance eigenvalue
+\(3n-k^2-k-3\), and, for every adjacency eigenvalue \(\theta\) with a nonzero
+zero-sum eigenvector, the implication from positive definiteness of \(D+kI\)
+to \(|\theta+1|<\sqrt{2k-2}\). The passage from these identities to the least
+distance eigenvalue, and hence to \(\Phi\), is not formalized. In
+Appendix~\ref{app:small-orders}, only Theorem~\ref{thm:irregular-d3} and the
+certificates of Proposition~\ref{prop:order40-irregular} are Lean-checked.
 
 Separately, Lean formalizes the analytic optimization statement in
 Theorem~\ref{thm:lp-ceiling}.  For every integer \(k\ge4\) and every admissible
