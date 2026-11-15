@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Direct exact check of the order-43 equality case (Proposition B.8).
+"""Direct exact check of the order-43 equality case (the irregular induced
+subgraph E43 of the Hoffman--Singleton graph with Phi = 0).
 
 E43 = HS - {P_(0,0), P_(0,2), P_(1,0), P_(1,2), P_(2,1), P_(4,1), Q_(1,4)},
 with HS the paper's coordinate Hoffman--Singleton graph.  Pure Python,
