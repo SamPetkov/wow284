@@ -3,16 +3,6 @@ name: Proof Audit 14 optimal-slack Gram hierarchy
 on:
   push:
     paths:
-      - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
-      - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
-      - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
-      - "research-notes/TWO_GRAM_HIERARCHIES.md"
-      - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
-      - "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md"
-      - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
-      - "research-notes/SIGNED_COMPLEMENT_BRIDGE.md"
-      - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
-      - "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
@@ -27,16 +17,6 @@ on:
       - ".github/workflows/proof-audit-14-optimal-slack.yml"
   pull_request:
     paths:
-      - "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md"
-      - "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md"
-      - "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md"
-      - "research-notes/TWO_GRAM_HIERARCHIES.md"
-      - "research-notes/THREE_TO_ONE_EXCESS_BOUND.md"
-      - "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md"
-      - "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md"
-      - "research-notes/SIGNED_COMPLEMENT_BRIDGE.md"
-      - "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md"
-      - "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md"
       - "scripts/verify_optimal_slack_gram_unification.py"
       - "scripts/verify_integral_optimal_slack_collapse.py"
       - "scripts/verify_optimal_slack_excess_matrix.py"
@@ -93,16 +73,6 @@ jobs:
           python - <<'PY'
           from pathlib import Path
           for name in (
-              "research-notes/OPTIMAL_SLACK_GRAM_UNIFICATION.md",
-              "research-notes/INTEGRAL_OPTIMAL_SLACK_COLLAPSE.md",
-              "research-notes/OPTIMAL_SLACK_EXCESS_MATRIX.md",
-              "research-notes/TWO_GRAM_HIERARCHIES.md",
-              "research-notes/THREE_TO_ONE_EXCESS_BOUND.md",
-              "research-notes/THREE_TO_ONE_EQUALITY_RIGIDITY.md",
-              "research-notes/PROOF_AUDIT_14_THREE_TO_ONE.md",
-              "research-notes/SIGNED_COMPLEMENT_BRIDGE.md",
-              "research-notes/ORDER50_SIGNED_COMPLEMENT_DISCONNECTED.md",
-              "research-notes/ORDER50_CUBIC_PRIMARY_STATUS.md",
               "scripts/verify_optimal_slack_gram_unification.py",
               "scripts/verify_integral_optimal_slack_collapse.py",
               "scripts/verify_optimal_slack_excess_matrix.py",

@@ -15,6 +15,5 @@ python scripts/verify_signed_complement_bridge.py
 python scripts/verify_order50_minus_two_multiplicity.py
 python scripts/verify_order50_signed_complement_disconnected.py
 python scripts/verify_component_indicator_noninvariance.py
-python scripts/sync_manuscript_artifacts.py
 python -m pytest -q
 python scripts/validate_repository.py

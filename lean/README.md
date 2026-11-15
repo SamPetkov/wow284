@@ -124,6 +124,70 @@ files:
 python scripts/generate_lean39_42.py --verify-only
 ```
 
+## Diameter-three distance identity and three order-40 certificates
+
+`Wow284.DiameterThreeMatrix` states its hypotheses with Mathlib notions
+(`SimpleGraph.Connected`, `5 ≤ G.egirth`, `G.diam`, `SimpleGraph.dist`) and
+proves, over any commutative ring:
+
+- `distMatrix_eq`, `distMatrix_add_smul_one_eq`: for connected `k`-regular
+  graphs of diameter three, `D = 3J + (k-3)I - 2A - A^2` and
+  `D + kI = 3J + (2k-2)I - (A+I)^2`;
+- `distMatrix_mulVec_of_adj_eigen`, `distMatrix_mulVec_real`,
+  `distMatrix_mulVec_const`: a zero-sum adjacency eigenvector for `θ` is a
+  distance eigenvector for `k - 2 - (θ+1)^2`, and the constant vector has
+  distance eigenvalue `3n - k^2 - k - 3`;
+- `abs_add_one_lt_of_posDef`: if `D + kI` is positive definite, every such
+  `θ` satisfies `|θ+1| < √(2k-2)`;
+- `distMatrix_eq_of_diam_le_three`,
+  `distMatrix_add_smul_one_eq_of_diam_le_three`,
+  `posDef_shift_iff_of_diam_le_three`: without regularity, for diameter at
+  most three, `D = 3J - 3I - 2A - A^2 + Δ` and
+  `D + tI = 3J + Δ + (t-2)I - (A+I)^2`, where `Δ` is the diagonal degree
+  matrix.
+
+It does not formalize the passage from these identities to the least
+distance eigenvalue.
+
+`Wow284.Induced40X`, `Wow284.Induced40Y` and `Wow284.Induced40Z` are generated
+by `python scripts/generate_lean40_hs_extra.py` (check mode: `--check`) with
+the unchanged order-39/42 renderers. They certify three irregular order-40
+induced subgraphs of the coordinate Hoffman--Singleton graph; graph6 records
+and exact rational `LDL^T` pivots (`scripts/recertify_order40.py`) are in
+`data/hs_order40_extra/`.
+
+| module | graph | degrees | minimum dual degree | positive definite |
+|---|---|---|---|---|
+| `Induced40X` | `HS - {P_(0,*), Q_(*,0)}` = `X42` minus the endpoints of the edge `P_(0,2)P_(0,3)` | 5 (10), 6 (30) | `17/3` | `3D + 17I` |
+| `Induced40Y` | `HS - {P_(0,*), P_(1,0), Q_(0,0), Q_(0,2), Q_(2,2), Q_(4,4)}` | 5 (9), 6 (26), 7 (5) | `39/7` | `7D + 39I` |
+| `Induced40Z` | `HS - {P_(0,*), P_(1,0), Q_(0,0), Q_(0,2), Q_(1,1), Q_(1,4)}` | 5 (10), 6 (24), 7 (6) | `39/7` | `7D + 39I` |
+
+Each `counterexample_endpoint` bundles the exact minimum dual degree
+(attained), positive definiteness of `qD + pI` over `ℚ`, and a strict positive
+WOW gap for every nonzero real eigenpair of the formal distance matrix;
+`degree_profile`, `no_triangle`, `no_four_cycle`, `diameter_at_most_three` and
+`semantic_distance_eq_Dcert` are separate finite lemmas, as for orders 39 and
+42. All four modules are imported by `Wow284Extended.lean`; their axiom
+reports are in `Wow284ExtensionAudit.lean`.
+
+```text
+cd lean
+lake build --wfail Wow284.DiameterThreeMatrix Wow284.Induced40X.Counterexample   Wow284.Induced40Y.Counterexample Wow284.Induced40Z.Counterexample
+lake env lean -DwarningAsError=true Wow284DiameterThreeMatrixAudit.lean
+```
+
+Procida builds (Lean 4.31, pinned Mathlib packages, clean clones):
+`Wow284.DiameterThreeMatrix` single-file check job 68677; `Induced40X`
+job 68678; `Induced40Y` and `Induced40Z` job 68685 (`lake build --wfail`,
+exit 0). Job 68686 (commit `c8965c5`) ran `lake build --wfail`,
+`lake build --wfail Wow284Extension` and
+`lake env lean -DwarningAsError=true Wow284Standalone.lean` on the
+294-module standalone file (SHA-256
+`1b4f2e76ea49356103b6730d0ce4d366270bd1c7871c20ffc47ec09b5b1714aa`), all
+with exit 0. Every `#print axioms` report of these modules, and all 78
+reports printed by the standalone file, read
+`[propext, Classical.choice, Quot.sound]`.
+
 ## Standalone full development
 
 The deterministic standalone generator flattens both the committed module

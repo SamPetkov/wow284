@@ -1,6 +1,6 @@
-.PHONY: all pdf verify data test sync check clean
+.PHONY: all pdf verify data test check clean
 
-all: sync
+all: check
 
 pdf:
 	latexmk -pdf -bibtex -interaction=nonstopmode -halt-on-error -file-line-error main.tex
@@ -25,9 +25,6 @@ data:
 test:
 	python -m pytest -q
 
-sync:
-	python scripts/sync_manuscript_artifacts.py
-
 check:
 	python -m pytest -q
 	python scripts/verify_exact.py --quiet
@@ -42,7 +39,6 @@ check:
 	python scripts/verify_order50_minus_two_multiplicity.py
 	python scripts/verify_order50_signed_complement_disconnected.py
 	python scripts/verify_component_indicator_noninvariance.py
-	python scripts/sync_manuscript_artifacts.py --check
 	python scripts/validate_repository.py
 
 clean:

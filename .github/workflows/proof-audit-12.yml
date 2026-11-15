@@ -3,7 +3,6 @@ name: Proof Audit 12 verification
 on:
   pull_request:
     paths:
-      - "research-notes/PROOF_AUDIT_12_SMALL_PUNCTURE_NORMAL_FORM.md"
       - "scripts/verify_proof_audit_12_small_puncture.py"
       - ".github/workflows/proof-audit-12.yml"
   workflow_dispatch:

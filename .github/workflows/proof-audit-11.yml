@@ -3,7 +3,6 @@ name: Proof Audit 11 verification
 on:
   pull_request:
     paths:
-      - "research-notes/PROOF_AUDIT_11_DIAMETER_FOUR.md"
       - "scripts/verify_proof_audit_11_diameter_four.py"
       - ".github/workflows/proof-audit-11.yml"
   workflow_dispatch:

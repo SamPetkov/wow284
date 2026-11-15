@@ -18,8 +18,8 @@ repository metadata.
 > <https://github.com/SamPetkov/wow284>, licensed
 > under CC BY 4.0. Changes were made.
 
-The earlier manuscript source dated 19 July 2026 is preserved at
-[`archive/main_2026-07-19.tex`](archive/main_2026-07-19.tex).
+The earlier manuscript source dated 19 July 2026 is preserved in release
+`v2.2.8`.
 
 For scholarly use, also follow [`CITATION.cff`](CITATION.cff). Credit
 Howlader and Panigrahi's prior published distance-spectrum calculation where

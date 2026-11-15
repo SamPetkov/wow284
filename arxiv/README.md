@@ -1,38 +1,47 @@
-# WOW-284: reviewed replacement manuscript
+# WOW-284: revised replacement manuscript
 
-Prepared **31 October 2026** from the author's supplied upload pack. This directory contains the current manuscript and matching source package. The mathematical review and build records are summarized in [REVIEW_2026-10-31.txt](REVIEW_2026-10-31.txt).
+This directory contains the current manuscript and its source package, prepared on 14 November 2026 from the author's revised sources of 13 November 2026. The manuscript is dated 29 July 2026, the date of the first arXiv posting.
 
-## Current files
+## Files
 
-- [main.pdf](main.pdf): the reviewed 41-page paper.
+- [main.pdf](main.pdf): the 44-page paper.
 - [main.tex](main.tex), [main.bbl](main.bbl), [references.bib](references.bib), [petkov-preprint.sty](petkov-preprint.sty): the matching editable sources.
-- [WOW284-v2-arxiv-upload.zip](WOW284-v2-arxiv-upload.zip) and [wow284_arxiv_source.zip](wow284_arxiv_source.zip): identical four-file source ZIPs; existing alias names are retained for repository continuity.
+- [anc/scripts/](anc/scripts/): the arXiv ancillary files.
+  - `verify_round3_high_edge_filter.py`, `verify_round5_joint_pairs.py` and `verify_round6_layer_vector.py` reproduce the order-50 profile calculations of Appendix F.
+  - `WOW_JOINT_PILOT.json` is the data file read by `verify_round5_joint_pairs.py`.
+- [wow284_arxiv_source.zip](wow284_arxiv_source.zip): the four source files and `anc/scripts/`, ready for arXiv.
 - [arxiv-abstract.txt](arxiv-abstract.txt) and [arxiv-comments.txt](arxiv-comments.txt): submission text.
-- [SOURCE_PACKAGE.json](SOURCE_PACKAGE.json): exact source/PDF/ZIP bindings and check scope.
-- [MANIFEST.txt](MANIFEST.txt) and [SHA256SUMS](SHA256SUMS): current directory inventory and digests; the digest ledger excludes itself.
-- [main.md](main.md): generated noncanonical reading copy; the TeX and PDF are authoritative.
+- [MANIFEST.txt](MANIFEST.txt) and [SHA256SUMS](SHA256SUMS): directory inventory and digests; the digest list excludes itself.
 
-## Changes in this review
+## Changes in this revision
 
-For the strict spectral window, Proposition 6.4 gives both `sigma_uv >= 2k-1` and `sigma_uv < U_{k,n}`; Corollary 6.5 records the corresponding integer sieve. At degree six and order 50, the upper six-cycle moment bound is strict because the localizing matrix is positive definite. Both displays and the exact enumeration script agree; the same 266 degree profiles survive. The introduction explicitly credits the published Moore-graph spectra and retains the Capy Build and Wilbanks–Annie counterexample records. Eigenspace notation and the disclosure heading are clearer. The abstract is unchanged.
+The paper is reorganized so that the main text follows its lines of argument. Long case analyses, exact spectra and finite certificates are in Appendices A–I, ordered by their first citation in the main text; Appendix J describes the computations and the Lean verification, and the references now precede the appendices. The reorganization changes no statement, constant, hypothesis or conclusion.
 
-The third focused pass clarifies five short arguments: the bipartite boundary test, the girth argument for higher-diameter transfer, the constant-vector eigenvalue of the order-50 layer compression, the constant-space wording before connectivity is established, and the orthogonality of nonzero Fourier characters. The theorem statements, numerical bounds, 266 surviving profiles, and open order-50 existence question are unchanged.
+The small-order results are new. Section 9 contains:
 
-## Verification
+- **Theorem 9.2.** Every strict counterexample has at least 15 vertices (written proof).
+- **Proposition 9.3.** No strict counterexample has at most 19 vertices (exhaustive generation with nauty's `geng`; computer-assisted).
+- **Proposition 9.4.** The strict induced subgraphs of the Hoffman–Singleton graph of orders 36 to 50, up to automorphism (computer-assisted). None has order 36 or 37.
+- **Proposition 9.5.** Three irregular strict counterexamples of order 40 (computer-assisted; Lean certificates `Wow284.Induced40X`, `Induced40Y`, `Induced40Z`).
 
-Both the candidate source and the exact four-file ZIP extracted into an empty directory compiled successfully with pdfLaTeX via latexmk. The extracted build has 41 pages and byte-identical extracted PDF text to the delivered PDF. No LaTeX/BibTeX warning or error, unresolved reference or citation, box warning, or missing-glyph diagnostic was found in the final logs. All fonts are embedded. The PDF was reviewed in an all-page overview and at higher resolution on changed and affected pages.
+Appendix H contains the methods behind these computations and:
 
-In the first 31 October review, six selected exact-arithmetic audits were replayed: the two-sided LP, three-to-one theorem, nonpositive-r cases, disconnected signed complement at order 50, Hoffman–Singleton deletion robustness, and the updated order-50 feasibility enumeration. All passed. The feasibility verifier is pinned in the PDF to commit `ee387a20bb97c83d67f466c837e589509d6ad337`. The second review independently checked the analytic proof of the strict upper edge-cycle bound and its integer sieve; the unaffected verifiers were not rerun. The new upper bound is proved analytically.
+- **Theorem H.1.** For a connected graph of girth at least five and diameter at most three, `D = 3J − 3I − 2A − A² + Δ`, with `Δ` the diagonal degree matrix; hence `Φ(G) > 0` exactly when `3J + Δ + (δ*(G) − 2)I − (A + I)²` is positive definite. Proved; the two identities and the positive-definiteness equivalence are checked in Lean (`Wow284.DiameterThreeMatrix`), and the final step to `Φ` is written. Corollary H.2 is the corresponding form for deletions from a Moore graph.
+- **Proposition H.3.** An irregular graph of order 43 with `Φ = 0` (computer-assisted; direct certificate in `scripts/verify_order43_equality.py`).
+- **Proposition H.4** and **Conjecture H.5.** For `R` and `X42`, deleting two vertices leaves a strict counterexample exactly when they are adjacent (computer-assisted); the conjecture extends this to every 6-regular strict counterexample of girth five and diameter three.
 
-The third review independently checked all five clarifications. Both current source builds passed; every text-changed page was visually inspected, and all unchanged-text pages were pixel-identical to the preceding reviewed PDF. The generated Markdown reading copy was refreshed from the current TeX, bibliography, and compiled labels.
+The new results in Appendix F are:
+
+- **Proposition F.4.** Let `G` be a 6-regular graph of order 50, girth at least five and diameter three, and let `τ(v)` count the five-cycles through `v`. Then `Φ(G) ≤ (795 − 21τ(v))/377` for every vertex `v`.
+- **Corollary F.6.** Under the hypotheses of Theorem F.5, the high-edge graph is a disjoint union of cycles of length at least five, covering `5j` vertices for some `j = 0, …, 10`, and `50 − 5j` isolated vertices.
+
+The abstract is rewritten, several sections are edited for clarity, and inline references to individual scripts are replaced by one section on code and data (Section J.1).
 
 ## Formalization boundary
 
-Appendix I distinguishes imported structural and finite-matrix certificates and the graph-independent LP optimum from the paper-side graph-distance identification, trace bridge, integral-slack and deletion results. The new cycle refinements are written results supported by the specified exact checks, not newly released Lean theorems.
+Appendix J distinguishes the Lean-checked finite certificates, the graph-level diameter-three identities and the graph-independent LP optimum from the written graph-level arguments. Among the small-order results (Section 9 and Appendix H), only the identities and the positive-definiteness equivalence of Theorem H.1 and the certificates of Proposition 9.5 are checked in Lean. The order-50 results above are written results supported by exact computation, not Lean theorems. See the [Lean README](../lean/README.md).
 
-The released Lean sources and toolchain are unchanged by this manuscript update. The released formalization and its reproduction instructions are documented in the [Lean README](../lean/README.md).
-
-## Build and replacement
+## Build
 
 Use a TeX distribution with pdfLaTeX, BibTeX, `latexmk`, and the packages
 loaded by `main.tex` and `petkov-preprint.sty`. For a minimal installation,
@@ -43,6 +52,4 @@ Keep all four source files together and run from this directory:
 latexmk -pdf -interaction=nonstopmode -halt-on-error main.tex
 ```
 
-The ZIP contains exactly `main.tex`, `main.bbl`, `references.bib`, and `petkov-preprint.sty` at its root. It excludes the PDF, metadata, logs and audit files. Its supplied replacement destination is arXiv:2607.27452; the live account's version/submission state was not certified. No arXiv submission has been made in this review. The author should inspect the PDF generated by arXiv during replacement.
-
-The root WOW manuscript, root manifest and root checksum ledger retain a historical July snapshot. The older synchronization script takes that root manuscript as input and must not be used to rebuild this replacement. Current integrity records are scoped to this directory.
+The ZIP contains `main.tex`, `main.bbl`, `references.bib`, and `petkov-preprint.sty` at its root, and the ancillary files under `anc/scripts/`. arXiv lists the files under `anc/` separately as ancillary files. Its replacement destination is arXiv:2607.27452.
