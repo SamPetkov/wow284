@@ -67,9 +67,9 @@ Universit\'e PSL, Paris, France}
 \begin{document}
 
 \begin{abstract}
-WOW-284 is a Graffiti conjecture asserting that every connected graph of order at least three and girth at least five has minimum dual degree at most \(-\lambda_{\min}(D)\), where \(D\) is the distance matrix and the dual degree of a vertex is the average degree of its neighbors. We refute it with exact counterexamples on \(38\), \(39\), \(40\), \(42\) and \(50\) vertices and study the structure of regular counterexamples. For a connected \(k\)-regular graph \(G\) of girth at least five and diameter three, we prove that \(\delta^*(G)+\lambda_{\min}(D)=2k-2-\max_\theta(\theta+1)^2\), the maximum being over the nonprincipal adjacency eigenvalues, so strict failure is a spectral window condition. The closed window \(|\theta+1|\le\sqrt{2k-2}\) alone, without any diameter assumption, forces \(|V(G)|<(k+2)(k^2+3)/6\) when \(k\ge4\), and an integral excess matrix derived from the optimal polynomial sharpens this bound for diameter-three counterexamples. Every regular strict counterexample has degree at least six and diameter at most four, and in degree six it has at most \(50\) vertices.
+WOW-284 is a Graffiti conjecture asserting that every connected graph of order at least three and girth at least five has minimum dual degree at most \(-\lambda_{\min}(D)\), where \(D\) is the distance matrix and the dual degree of a vertex is the average degree of its neighbors. We refute it with exact counterexamples on \(38\), \(39\), \(40\), \(42\) and \(50\) vertices and study the structure of regular counterexamples. For a connected \(k\)-regular graph \(G\) of girth at least five and diameter three, we prove that \(\delta^*(G)+\lambda_{\min}(D)=2k-2-\max_\theta(\theta+1)^2\), the maximum being over the nonprincipal adjacency eigenvalues, so strict failure is a spectral window condition. When \(k\ge4\), the closed window \(|\theta+1|\le\sqrt{2k-2}\) alone implies \(|V(G)|<(k+2)(k^2+3)/6\), without any diameter assumption. For diameter-three counterexamples, an integral excess matrix derived from the optimal polynomial gives a sharper bound. Every regular strict counterexample has degree at least six and diameter at most four, and in degree six it has at most \(50\) vertices.
 
-Under vertex deletion, the Hoffman--Singleton graph remains a strict counterexample after the removal of any five vertices, while an explicit six-vertex deletion destroys strictness. A degree-\(57\) Moore graph, if one exists, remains a connected strict counterexample after the removal of any \(56\) vertices. Every strict counterexample has at least \(15\) vertices, and an exhaustive search excludes orders up to \(19\). The strict induced subgraphs of the Hoffman--Singleton graph of orders \(36\) to \(50\) are classified up to automorphism; among them are three further irregular counterexamples of order \(40\).
+Under vertex deletion, the Hoffman--Singleton graph remains a strict counterexample after the removal of any five vertices, but not after the removal of an explicit set of six vertices. A degree-\(57\) Moore graph, if one exists, remains a connected strict counterexample after the removal of any \(56\) vertices. Every strict counterexample has at least \(15\) vertices, and an exhaustive search shows that none has at most \(19\). The strict induced subgraphs of the Hoffman--Singleton graph of orders \(36\) to \(50\) are classified up to automorphism; among them are three further irregular counterexamples of order \(40\).
 \end{abstract}
 
 \maketitle
@@ -141,16 +141,15 @@ a degree-\(K\) Moore graph is strict exactly when \(K\ge6\)
 (Theorem~\ref{thm:second-subconstituent}).
 
 The paper follows two lines of argument. For regular graphs of diameter
-three, the distance-polynomial identity turns strict failure of WOW-284 into
-an interval condition on the nonprincipal adjacency eigenvalues
+three, we use the distance-polynomial identity to rewrite strict failure of
+WOW-284 as an interval condition on the nonprincipal adjacency eigenvalues
 (Theorem~\ref{thm:diameter-three-score}). Taking the trace of a polynomial
 in the adjacency matrix then gives \(n<B_k=(k+2)(k^2+3)/6\) under the closed
 window alone when \(k\ge4\), and no polynomial of higher degree improves this
 bound (Proposition~\ref{prop:moment-bound}, Theorem~\ref{thm:lp-ceiling}).
-Evaluating the optimal polynomial at the adjacency
-matrix, subtracting a constant multiple of the all-ones matrix and adjusting
-the diagonal gives the integral excess matrix of
-Theorem~\ref{thm:integral-slack}.
+We obtain the integral excess matrix of Theorem~\ref{thm:integral-slack} by
+evaluating the optimal polynomial at the adjacency matrix, subtracting a
+constant multiple of the all-ones matrix and adjusting the diagonal.
 Its integer entries, together with the nonnegative principal minors of the
 associated slack matrix, give stronger order and cycle constraints. These lead to the
 three-to-one bound (Theorem~\ref{thm:three-to-one}) and to \(n\le50\) in
@@ -159,7 +158,7 @@ remains unresolved. The polynomial bound in
 Section~\ref{sec:lp} is optimal within the stated class of polynomials;
 we do not claim that the resulting graph-order bound is best possible.
 
-The degree and diameter restrictions narrow the search: every regular strict
+We also restrict the degree and the diameter: every regular strict
 counterexample has degree at least six and diameter at most four, and a
 diameter-four example would have degree at least ten
 (Theorems~\ref{thm:regular-degree-six}, \ref{thm:endpoint-diameter},
@@ -171,11 +170,13 @@ old distance matrix is not enough. For small deletions from a Moore graph,
 we identify exactly which distances increase. This correction gives general
 stability bounds (Section~\ref{sec:punctures});
 Appendix~\ref{app:small-deletion-spectra} gives the exact one- and
-two-deletion spectra. For Hoffman--Singleton, the bounds prove
-strictness through three deletions, and exact orbit certificates handle four
-and five. A six-vertex deletion then shows that five is the universal
-radius, the largest \(s\) such that deleting any \(s\) or fewer vertices
-leaves a strict counterexample (Theorem~\ref{thm:hs-radius}).
+two-deletion spectra. For the Hoffman--Singleton graph, these bounds give
+strictness after any three or fewer deletions. For four and five deletions,
+we check one representative of each orbit of deletion sets in exact
+arithmetic. We then give a set of six vertices whose deletion is not strict,
+so five is the universal radius, that is, the largest \(s\) such that
+deleting any \(s\) or fewer vertices leaves a strict counterexample
+(Theorem~\ref{thm:hs-radius}).
 For a hypothetical degree-\(57\) Moore graph, the same corrections give
 strictness after any \(56\) deletions
 (Proposition~\ref{prop:clique-deletion-bound}).
@@ -185,8 +186,8 @@ J{\o}rgensen's \(96\)-vertex graph attains it.
 We do not claim that our examples exhaust all counterexamples, nor that the
 order-$38$ example is minimal.
 Section~\ref{sec:small-order-bounds} proves that a strict counterexample has at
-least \(15\) vertices, shows by exhaustive computation that none has at most
-\(19\), classifies the strict induced subgraphs of the Hoffman--Singleton
+least \(15\) vertices and shows by exhaustive computation that none has at most
+\(19\). It also classifies the strict induced subgraphs of the Hoffman--Singleton
 graph of orders \(36\) to \(50\), and gives three further, irregular
 counterexamples of order \(40\).
 
@@ -211,8 +212,8 @@ from the WOW-284 spectral window and to study vertex deletion.
 Section~\ref{sec:moore} computes the score of every Moore graph of
 diameter two and gives the Hoffman--Singleton graph in coordinates.
 Section~\ref{sec:score-calculus} proves the diameter-three identity and
-identifies its equality case, and Section~\ref{sec:examples} uses it to
-certify the smaller counterexamples. Section~\ref{sec:obstructions} bounds
+identifies its equality case, and Section~\ref{sec:examples} applies it to
+the smaller counterexamples. Section~\ref{sec:obstructions} bounds
 the diameter of regular counterexamples, Section~\ref{sec:lp} proves the
 polynomial order bounds, and Section~\ref{sec:degree-six} combines them into
 the degree and order restrictions. Section~\ref{sec:punctures} treats vertex
@@ -220,7 +221,7 @@ deletion, Section~\ref{sec:small-order-bounds} treats small orders, and
 Section~\ref{sec:scope} lists open questions.
 
 The appendices contain the longer proofs and the finite certificates, in the
-order in which the main text first needs them: the deletion spectra of Moore
+order of their first use in the main text: the deletion spectra of Moore
 graphs and the proof of Theorem~\ref{thm:second-subconstituent}
 (Appendix~\ref{app:small-deletion-spectra}), the certificates for the
 explicit examples (Appendix~\ref{app:small-example-certificates}), three
@@ -253,7 +254,7 @@ Section~\ref{sec:examples} are its induced subgraphs.
 
 When triangles and four-cycles are absent, dual degree measures the size
 of a radius-two ball relative to the degree of its center. The same count
-explains why a regular graph of girth at least five and diameter two is a
+shows why a regular graph of girth at least five and diameter two is a
 Moore graph.
 
 A distance sphere consists of the vertices at a specified distance from
@@ -342,10 +343,10 @@ that every nonedge has distance two. Thus \(D=2J-2I-A\), and the
 least distance eigenvalue is \(-2-r=-(3+\sqrt{4k-3})/2\).
 Since regularity gives \(\delta^*=k\), the sign of \(\Phi(M)\) is that of
 \(2k-3-\sqrt{4k-3}\). For \(k\ge2\) both terms are positive, so it is the
-sign of \((2k-3)^2-(4k-3)\), and comparison with the dual degree
-reduces to
+sign of \((2k-3)^2-(4k-3)\). The comparison with the dual degree
+therefore reduces to
 \[
- (2k-3)^2-(4k-3)=4(k-1)(k-3)
+ (2k-3)^2-(4k-3)=4(k-1)(k-3).
 \]
 This gives the stated threshold.
 \end{proof}
@@ -411,15 +412,15 @@ multiplicity equations in its proof give adjacency multiplicities \(28\) at
 
 We now express the distance matrix in terms of the adjacency matrix.
 Let \(A_i\) have entry one on pairs of vertices at distance \(i\), and
-zero elsewhere. In diameter three, the girth assumption expresses the
-distance-two matrix as a quadratic in the adjacency matrix. The
+zero elsewhere. In diameter three, we use the girth assumption to express
+the distance-two matrix as a quadratic in the adjacency matrix. The
 distance-three matrix is what remains of the all-ones matrix after the
 closer pairs are removed. The nonprincipal distance eigenvalues therefore
 follow from the adjacency eigenvalues. We use this reformulation to
 derive spectral obstructions to WOW-284: it gives the distance spectra of
 the regular examples in Section~\ref{sec:examples} and underlies the order
-bounds of Section~\ref{sec:lp}. The end of this section identifies its
-equality case.
+bounds of Section~\ref{sec:lp}. We identify its equality case at the end of
+this section.
 
 \begin{theorem}[Diameter-three score formula]\label{thm:diameter-three-score}
 Let \(G\) be connected, \(k\)-regular, of girth at least five and diameter
@@ -444,20 +445,20 @@ Consequently
 Thus \(G\) is a strict counterexample exactly when every nonprincipal
 adjacency eigenvalue \(\theta\) satisfies
 \[
- |\theta+1|<\sqrt{2k-2}
+ |\theta+1|<\sqrt{2k-2}.
 \]
 \end{theorem}
 
 \begin{proof}
 We first count pairs at distance two.  Girth at least five means that
 distinct vertices have at most one common neighbor, and adjacent vertices
-have none.  The diagonal of the squared adjacency matrix counts the degree,
-so \(A_2=A^2-kI\).  Because the diameter is three, the other distinct
+have none.  Each diagonal entry of the squared adjacency matrix equals the
+degree, so \(A_2=A^2-kI\).  Because the diameter is three, the other distinct
 nonadjacent pairs are at distance three; thus \(A_3=J-I-A-A_2\).
 Putting these expressions into \(D=A+2A_2+3A_3\) proves both identities.
 
 To compute the spectrum, apply these identities to adjacency eigenvectors.
-Regularity and the identities make the constant vector an eigenvector of \(D\). Its
+By regularity and the identities, the constant vector is an eigenvector of \(D\). Its
 eigenvalue is positive and is the Perron root, because all off-diagonal
 entries of the distance matrix are positive.  On \(\one^\perp\), \(J\) acts as zero, so each
 nonprincipal adjacency eigenvalue gives the stated distance eigenvalue.
@@ -618,8 +619,8 @@ The Petersen identity \(B^2=2I-B+J\) and the blocks of the Moore identity give
  A_RC^{\mathsf T}=J_{40,10}-C^{\mathsf T}-C^{\mathsf T}B.
 \]
 The first identity shows that the image of \(C^{\mathsf T}\) has dimension ten.
-The second transfers Petersen eigenvectors to this image and determines the
-adjacency action there. Indeed, if \(Bz=\beta z\) and \(z\perp\one_{10}\),
+With the second, we transfer Petersen eigenvectors to this image and
+determine the adjacency action there. Indeed, if \(Bz=\beta z\) and \(z\perp\one_{10}\),
 then \(J_{40,10}z=0\), so \(A_RC^{\mathsf T}z=-(1+\beta)C^{\mathsf T}z\), and
 \(C^{\mathsf T}z\ne0\) because \(CC^{\mathsf T}=4I\); since
 \(C^{\mathsf T}\one_{10}=\one_{40}\), the same identity gives
@@ -645,9 +646,9 @@ multiplicities, then \(a+b=30\) and
 To apply the distance polynomial, we must also establish the diameter.
 Let \(x,y\in V(R)\) be nonadjacent. If their common neighbor in \(M\)
 survives, they remain at distance two. Otherwise they share a deleted
-Petersen neighbor. Choose \(a\in N_R(x)\). Girth five makes \(a,y\)
-nonadjacent, and makes the Petersen neighbor of \(a\) different from that
-of \(y\). Their unique common neighbor therefore lies in \(R\), giving a
+Petersen neighbor. Choose \(a\in N_R(x)\). Since the girth is five, \(a\)
+and \(y\) are nonadjacent, and the Petersen neighbor of \(a\) differs from
+that of \(y\). Their unique common neighbor therefore lies in \(R\), giving a
 path of length three from \(x\) to \(y\).
 Each deleted vertex has four neighbors in \(R\), so pairs whose common
 neighbor was deleted do occur. Thus \(R\) is connected with diameter three.
@@ -669,10 +670,11 @@ For the irregular examples, we check strictness directly. A degree count
 for \(H_{38}\) gives \(\delta^*=17/3\). The characteristic-polynomial factor
 \(x^2+6x+2\) has the root \(-3-\sqrt7\), and exact Sturm isolation shows
 that no smaller root occurs. For \(H_{39}\), the exact matrix \(6D+35I\)
-is positive definite, giving the required strict eigenvalue bound.  The exact checks verify the graph hypotheses, distances and dual degrees.
-Sturm counts isolate the real roots, while rational \(LDL^{\mathsf T}\)
-factorizations determine definiteness by an invertible triangular change of
-coordinates. These certificates are checked by exact computation.  The characteristic polynomials for the two labeled deletion families are
+is positive definite, giving the required strict eigenvalue bound.  We also verify the graph hypotheses, distances and dual degrees by exact checks.
+We isolate the real roots with Sturm counts, and we determine definiteness
+from rational \(LDL^{\mathsf T}\) factorizations, that is, by an invertible
+triangular change of coordinates. These certificates are checked by exact
+computation.  The characteristic polynomials for the two labeled deletion families are
 recorded in Appendix~\ref{app:small-example-certificates}.
 The labeled deletion families are enumerated exhaustively by computer.
 No transitivity or numerical root ordering is used.  Fixed graph6,
@@ -687,8 +689,8 @@ Theorem~\ref{thm:diameter-three-score} applies only in diameter three. This
 section shows that diameter three is the main case: a regular strict
 counterexample has diameter two, three or four, and diameter four requires
 degree at least ten (Corollary~\ref{cor:trichotomy}). Since
-Theorem~\ref{thm:moore-threshold} settles Moore graphs, the order bounds of
-Section~\ref{sec:lp} concentrate on diameter three.
+Theorem~\ref{thm:moore-threshold} settles Moore graphs, we concentrate on
+diameter three in the order bounds of Section~\ref{sec:lp}.
 A geodesic, or shortest path, gives an upper bound on the least distance
 eigenvalue. We begin with the geodesic bound.
 
@@ -863,7 +865,7 @@ Every strict counterexample therefore satisfies
 \end{proposition}
 
 \begin{proof}
-The shifted WOW window makes every summand nonnegative, so the identity
+Every summand is nonnegative on the shifted WOW window, so the identity
 will bound the order. With \(y=\theta+1\), each summand is a quartic in
 \(\theta\):
 \[
@@ -881,9 +883,9 @@ steps (\(k^2\) walks) or has the form \(u\,a\,c\,a\,u\) with \(c\ne u\)
 the principal eigenvalue \(\theta=k\), that is \(y=k+1\), contributes
 \(-(k+2)^2(k^2+3)\), and subtracting it gives the identity.
 In a strict counterexample, each factor \(2k-2-y_i^2\) is positive.
-To obtain a strict order bound, we must also exclude a zero sum: otherwise every nonprincipal adjacency eigenvalue would equal
+To obtain a strict order bound, we must also exclude a zero sum. Otherwise every nonprincipal adjacency eigenvalue would equal
 \(-2\), and \(\tr A=0\) would give
-\(k-2(n-1)=0\), or \(n=(k+2)/2\), incompatible with the elementary
+\(k-2(n-1)=0\), or \(n=(k+2)/2\), which is incompatible with the elementary
 bound \(n\ge k+1\) for a simple \(k\)-regular graph.
 \end{proof}
 
@@ -893,13 +895,13 @@ The summand in the proof of Proposition~\ref{prop:moment-bound} is \(-6(k+2)f_*(
 Theorem~\ref{thm:lp-ceiling}. We now ask whether a higher-degree polynomial
 can improve the fourth-moment bound. We minimize the order
 bound subject to the coefficient and sign conditions below; this is the
-one-variable nonbacktracking linear program (LP). To prove its optimum, we give
-an attaining polynomial and a positive weighted sum of point evaluations,
-the dual measure, that bounds every admissible polynomial. The same
-measure determines when equality can hold.
+one-variable nonbacktracking linear program (LP). To determine its optimal
+value, we give a polynomial that attains it and a positive weighted sum of
+point evaluations, the dual measure, that bounds every admissible polynomial. With the
+same measure, we determine when equality can hold.
 
-The linear program uses the following basis of nonbacktracking
-polynomials; they also express the distance matrix in higher diameter.
+We write the linear program in the following basis of nonbacktracking
+polynomials, which also express the distance matrix in higher diameter.
 
 \begin{proposition}[Higher-diameter transfer]\label{prop:higher-transfer}
 Let \(G\) be connected and \(k\)-regular, with diameter \(d\) and girth at
@@ -1009,7 +1011,8 @@ w_-&=\frac{k(k+2)(2k^2-6-3(k-1)\omega)}{24(2k-3)},\\
 w_0&=\frac{k(k-1)(k^2+3)}{6(2k-3)},\\
 w_+&=\frac{k(k+2)(2k^2-6+3(k-1)\omega)}{24(2k-3)}.
 \end{align*}
-\(w_-,w_0,w_+>0\).  For the only nontrivial inequality, this follows from
+All three weights are positive: \(w_-,w_0,w_+>0\).  For the only
+nontrivial inequality, this follows from
 \[
  (2k^2-6)^2-18(k-1)^3
  =2(k-3)(2k-3)(k^2+3)>0.
@@ -1046,23 +1049,23 @@ The measure cancels the first four nonconstant basis terms. For the remaining
 terms, define the slack \(a_i=\mu(F_i)+F_i(k)\). We need this slack to be
 strictly positive for \(i\ge5\). Appendix~\ref{app:lp-slack-positivity}
 verifies this positivity: the first
-five values follow from exact polynomial expansions, and a Chebyshev bound
-handles every later term. For an arbitrary admissible polynomial, expansion
+five values follow from exact polynomial expansions, and every later term is
+controlled by a Chebyshev bound. For an arbitrary admissible polynomial, expansion
 in the nonbacktracking basis gives
 \[
  \int f\,d\mu
  =B_kf_0-f(k)+\sum_{i\ge5}f_i a_i
  \ge B_kf_0-f(k).
 \]
-Here \(\int f\,d\mu=\sum_if_i\mu(F_i)\); by the identities above,
+Here \(\int f\,d\mu=\sum_if_i\mu(F_i)\). By the identities above, and since
 \(F_0(k)=1\) and \(\mu(F_i)=a_i-F_i(k)\) for \(i\ge5\), the terms
 \(-f_iF_i(k)\), \(i\ge0\), add up to \(-f(k)\).
-The coefficient condition and the slack positivity in
-Appendix~\ref{app:lp-slack-positivity} make the last sum nonnegative.
+By the coefficient condition and the slack positivity of
+Appendix~\ref{app:lp-slack-positivity}, the last sum is nonnegative.
 Also,
 \(f\le0\) on \(\operatorname{supp}\mu\), so \(\int f\,d\mu\le0\).
 These inequalities prove the lower bound for every admissible polynomial.
-Equality must hold in both inequalities.  Since every high-degree slack
+In the equality case, equality must hold in both inequalities.  Since every high-degree slack
 is strictly positive, \(f_i=0\) for \(i\ge5\).  The measure has positive
 weight at each support point, so \(f\) must vanish at
 \(\xi_-,-2,\xi_+\).  Its interior zero \(-2\) has even multiplicity,
@@ -1123,8 +1126,9 @@ On \(\one^\perp\), one has \(\mathcal S_k=I-\mathcal E_k\).  In particular,
 
 \begin{proof}
 Apply the scaled optimal LP polynomial \(g_k=6(k+2)f_*\) from
-Theorem~\ref{thm:lp-ceiling} to the adjacency matrix. The correction by the
-all-ones matrix makes \(\mathcal S_k\) vanish on \(\langle\one\rangle\).
+Theorem~\ref{thm:lp-ceiling} to the adjacency matrix. Because of the
+correction by the all-ones matrix, \(\mathcal S_k\) vanishes on
+\(\langle\one\rangle\).
 On a nonprincipal
 \(\theta\)-eigenspace, its eigenvalue is
 \[
@@ -1147,8 +1151,9 @@ principal minor on \(\{u,v\}\) gives
  \left|\frac{C_k}{n}-z_{uv}\right|\le a.
 \]
 We must exclude \(C_k/n-z_{uv}=a\), equivalently \(z_{uv}=h_k\). This would imply
-\((e_u-e_v)^{\mathsf T}\mathcal S_k(e_u-e_v)=0\), and positive semidefiniteness would then
-put \(e_u-e_v\in\ker\mathcal S_k\). The strict spectral window gives
+\((e_u-e_v)^{\mathsf T}\mathcal S_k(e_u-e_v)=0\), and by positive semidefiniteness
+we would then have \(e_u-e_v\in\ker\mathcal S_k\). Under the strict spectral
+window,
 \[
  \ker\mathcal S_k=\langle\one\rangle\oplus E_{-2}(A).
 \]
@@ -1206,13 +1211,13 @@ Consequently
 Appendix~\ref{app:three-to-one-proof} gives the complete case analysis. The
 \(2\times2\) principal minors of \(\mathcal S_k=I-\mathcal E_k+\rho J\), where
 \(\rho=(\varepsilon_{k,n}-1)/n\), bound the off-diagonal entries of
-\(\mathcal E_k\). If \(r\le0\), or if \(n>3r\), these bounds, together with a
-kernel argument or with a Gram-determinant estimate and a divisor check, make
-\(\mathcal E_k\) the adjacency matrix of a simple graph whose complement is
-regular with least eigenvalue at least \(-2\). Since \(n\ge k^2+2\ge38\), the
-classification of such graphs \cite{CameronEtAl1976}, together with counting
-arguments, reduces the complement and its components to complete graphs,
-cocktail-party graphs and line graphs. The remaining parameter families are
+\(\mathcal E_k\). If \(r\le0\), or if \(n>3r\), we combine these bounds with a
+kernel argument, or with a Gram-determinant estimate and a divisor check, to
+show that \(\mathcal E_k\) is the adjacency matrix of a simple graph whose
+complement is regular with least eigenvalue at least \(-2\). Since
+\(n\ge k^2+2\ge38\), we use the classification of such graphs
+\cite{CameronEtAl1976} and counting arguments to reduce the complement and
+its components to complete graphs, cocktail-party graphs and line graphs. The remaining parameter families are
 excluded by the radius-two bound, by divisibility conditions on \(4k+9\) and
 \(18k+41\), by the parity of \(kn\), or because a rational invariant space on
 which the adjacency operator satisfies an irreducible quartic would have
@@ -1270,21 +1275,23 @@ characteristic polynomial of the restricted operator must be a power of this
 quadratic. The dimension of the rational space must therefore be even, a
 contradiction.
 
-For \(k=5\), diameter two again fails the Moore multiplicity condition.
+For \(k=5\), diameter two again fails the multiplicity condition for Moore
+graphs.
 Diameter four can be excluded directly: a diametral geodesic gives the
-principal submatrix \(D(P_5)\). Its characteristic-polynomial factor \(x^2+6x+4\) supplies
-the eigenvalue \(-3-\sqrt5<-5\).  Cauchy interlacing therefore contradicts
-strictness.  In diameter three, Meringer's enumeration
-\cite[p.~142]{Meringer1999} (the \((5,5)\)-cages, of order \(30\), are the
-smallest \(5\)-regular graphs of girth five) and Proposition~\ref{prop:moment-bound}
-(\(B_5=98/3\)) leave
-\(n\in\{30,31,32\}\).  The handshake identity \(5n=2|E(G)|\) gives
-\(n\equiv0\pmod2\), leaving \(n\in\{30,32\}\). Both orders are excluded in Appendix~\ref{app:degree-five}: at \(n=32\)
-by compressing the adjacency matrix to the distance layers of a vertex,
-which forces \(\theta_2(A)>-1+\sqrt8\) for the second-largest adjacency
-eigenvalue \(\theta_2(A)\), contrary to
-Theorem~\ref{thm:diameter-three-score}; and at \(n=30\) by the four
-\((5,5)\)-cages, each of which has a distance eigenvalue at most \(-5\).
+principal submatrix \(D(P_5)\). Its characteristic polynomial has the factor
+\(x^2+6x+4\), with the root \(-3-\sqrt5<-5\). By Cauchy interlacing, this
+contradicts strictness.  In diameter three, two facts leave
+\(n\in\{30,31,32\}\): by Meringer's enumeration
+\cite[p.~142]{Meringer1999}, the \((5,5)\)-cages, of order \(30\), are the
+smallest \(5\)-regular graphs of girth five; and
+Proposition~\ref{prop:moment-bound} gives \(n<B_5=98/3\).  The handshake
+identity \(5n=2|E(G)|\) gives \(n\equiv0\pmod2\), leaving \(n\in\{30,32\}\).
+Appendix~\ref{app:degree-five} excludes both orders. At \(n=32\), we compress
+the adjacency matrix to the distance layers of a vertex; this forces
+\(\theta_2(A)>-1+\sqrt8\) for the second-largest adjacency eigenvalue
+\(\theta_2(A)\), contrary to Theorem~\ref{thm:diameter-three-score}. At
+\(n=30\), each of the four \((5,5)\)-cages has a distance eigenvalue at most
+\(-5\).
 \end{proof}
 
 \subsection{Order bounds in degrees six through nine}
@@ -1304,9 +1311,9 @@ attain the Moore bound, giving order \(37\) and adjacency characteristic polynom
 diameter is three. Strictness and Theorem~\ref{thm:diameter-three-score}
 give \(|\theta+1|<\sqrt{10}\) for every nonprincipal adjacency eigenvalue,
 so the hypotheses of Theorem~\ref{thm:integral-slack} hold with \(k=6\),
-\(C_6=8^2\cdot39=2496\) and \(h_6+1=49\); already that theorem gives
+\(C_6=8^2\cdot39=2496\) and \(h_6+1=49\). That theorem alone already gives
 \[
- n\le\left\lfloor\frac{8^2\cdot39}{49}\right\rfloor=50;
+ n\le\left\lfloor\frac{8^2\cdot39}{49}\right\rfloor=50.
 \]
 Theorem~\ref{thm:three-to-one} gives the same value, so this bound does not
 depend on the line-graph classification.
@@ -1359,9 +1366,9 @@ We identify these increases and use them to bound the change in the least
 distance eigenvalue. With these bounds we prove that the Hoffman--Singleton
 graph remains a strict counterexample after the deletion of any five
 vertices, while some six-vertex deletion is not strict
-(Theorem~\ref{thm:hs-radius}), and that a degree-\(57\) Moore graph, if one
-exists, remains one after the deletion of any \(56\) vertices
-(Proposition~\ref{prop:clique-deletion-bound}). The full one- and two-deletion spectra are given in
+(Theorem~\ref{thm:hs-radius}). We also prove that a degree-\(57\) Moore
+graph, if one exists, remains a strict counterexample after the deletion of
+any \(56\) vertices (Proposition~\ref{prop:clique-deletion-bound}). The full one- and two-deletion spectra are given in
 Appendix~\ref{app:small-deletion-spectra}.
 
 Let \(M\) be a degree-\(k\) Moore graph of diameter two.
@@ -1421,12 +1428,12 @@ where the last inequality follows from
  \left(k-\frac{s-t}{k-t}\right)-\left(k-\frac{s}{k}\right)
  =\frac{t(k-s)}{k(k-t)}\ge0.
 \]
-The intersection bound
+By the intersection bound
 \[
  \left|\bigcap_{z\in S}\Gamma_2(z)\right|
- \ge k^2+1-s(k+1)\ge2
+ \ge k^2+1-s(k+1)\ge2,
 \]
-provides a surviving vertex \(x\) at distance two from every deleted
+some surviving vertex \(x\) is at distance two from every deleted
 vertex.  This vertex attains the lower bound.  For \(z\in S\), let
 \(y_z\) be the unique common neighbor of \(x,z\).  It cannot be deleted:
 \(y_z\in S\) would, by the choice of \(x\), require \(d_M(x,y_z)=2\),
@@ -1532,12 +1539,13 @@ strictly below the endpoint of this inequality is
 
 \subsection{Deletions inside a neighborhood}
 
-The stability bound of Corollary~\ref{cor:uniform-deletion} handles many deletion
-sets without computing their full distance spectra. When the deleted
-vertices share a surviving neighbor, the distance correction has a more
-specific form, which gives a stronger bound. This proves stability through
-three deletions for Hoffman--Singleton. Exact orbit certificates then cover
-sizes four and five and determine the universal radius.
+With the stability bound of Corollary~\ref{cor:uniform-deletion}, we treat
+many deletion sets without computing their full distance spectra. When the
+deleted vertices share a surviving neighbor, the distance correction has a
+more specific form, which gives a stronger bound. This proves stability for
+the Hoffman--Singleton graph after any three or fewer deletions. We then
+cover sizes four and five with exact certificates, one for each orbit of
+deletion sets, and determine the universal radius.
 
 Each deleted vertex contributes a correction clique on its surviving
 neighbors. If the deleted vertices have a common surviving neighbor,
@@ -1680,11 +1688,12 @@ universal radius, since the deletion in Theorem~\ref{thm:hs-radius} fails.
 
 \subsection{Arbitrary deletions from a degree-\texorpdfstring{\(57\)}{57} Moore graph}
 
-For a hypothetical degree-\(57\) Moore graph,
-Corollary~\ref{cor:degree57-neighborhood} in
-Appendix~\ref{app:neighborhood-deletions} uses
-Proposition~\ref{prop:neighborhood-puncture} to show \(\Phi(M-S)>685/57\)
-whenever \(S\) lies in the neighborhood of a vertex and \(|S|\le56\).
+For a hypothetical degree-\(57\) Moore graph, we use
+Proposition~\ref{prop:neighborhood-puncture} in
+Corollary~\ref{cor:degree57-neighborhood} of
+Appendix~\ref{app:neighborhood-deletions} to show that
+\(\Phi(M-S)>685/57\) whenever \(S\) lies in the neighborhood of a vertex and
+\(|S|\le56\).
 For an arbitrary deletion set, we group the correction cliques that pass
 through one surviving vertex. The remaining cliques can be bounded
 separately, giving the following improvement.
@@ -1797,30 +1806,30 @@ Theorems~\ref{thm:one-puncture} and~\ref{thm:edge-puncture} give the
 complete spectra in Appendix~\ref{app:small-deletion-spectra}.
 For two nonadjacent deletions, Theorem~\ref{thm:nonadjacent-puncture}
 also gives a full factorization and proves strictness for every realizable
-integer \(k\ge6\). The stability bound above avoids these diagonalizations
-when only strictness is needed.
+integer \(k\ge6\). When only strictness is needed, we can use the stability
+bound above instead of these diagonalizations.
 
 \section{Small orders and induced subgraphs of the Hoffman--Singleton graph}
 \label{sec:small-order-bounds}
 
 This section treats graphs that need not be regular. Every strict
 counterexample has at least \(15\) vertices
-(Theorem~\ref{thm:fifteen-vertices}), an exhaustive search excludes orders up
-to \(19\) (Proposition~\ref{prop:nineteen-vertices}), and the strict induced
+(Theorem~\ref{thm:fifteen-vertices}), and an exhaustive search shows that none
+has at most \(19\) (Proposition~\ref{prop:nineteen-vertices}). The strict induced
 subgraphs of the Hoffman--Singleton graph of order at least \(36\) are
 classified up to automorphism (Proposition~\ref{prop:hs-classification});
 among them are three further irregular counterexamples of order \(40\)
 (Proposition~\ref{prop:order40-irregular}).
 
 Here and in Appendix~\ref{app:small-orders}, each statement
-carries one of four labels: \emph{proved} (a written
+has one of four labels: \emph{proved} (a written
 proof is given in the text), \emph{computer-assisted} (an exhaustive computation
 reproduced by the code described in Appendix~\ref{sec:verification}),
 \emph{Lean-checked} (with the Lean names and the scope stated in
 Appendix~\ref{sec:verification}), or \emph{conjectured}. In the
-computer-assisted results, floating-point computations only propose
-candidates and integer test vectors; every decision rests on an exact
-certificate. For a connected graph with \(\delta^*(G)=p/q\), an integer
+computer-assisted results, we use floating-point computations only to
+suggest candidates and integer test vectors; every decision is based on an
+exact certificate. For a connected graph with \(\delta^*(G)=p/q\), an integer
 vector \(x\) with \(x^{\mathsf T}(qD+pI)x<0\) certifies \(\Phi(G)<0\), and
 every graph without such a vector is decided by exact fraction-free
 elimination of \(qD+pI\). None of these
@@ -1920,7 +1929,7 @@ strict counterexample.
 
 The graphs were generated, one per isomorphism class, by \texttt{geng} from
 nauty \cite{McKayPiperno2014}. For \(15\le n\le19\), the maximum degree was
-capped by Theorem~\ref{thm:fifteen-vertices}, and only graphs with
+restricted by the bound of Theorem~\ref{thm:fifteen-vertices}, and only graphs with
 \(\delta^*>2+\sqrt2\) were kept; every remaining graph was decided exactly as
 described above. Appendix~\ref{app:small-orders} gives the options and the
 counts.
@@ -1987,8 +1996,8 @@ The four graphs are pairwise nonisomorphic: \(R\) is regular, \(X_{40}\) has
 \(115\) edges, and \(Y_{40}\), \(Z_{40}\) have different degree counts. The
 positive definiteness was checked twice, by fraction-free elimination and by
 an independent rational \(LDL^{\mathsf T}\) decomposition with all pivots
-positive. Lean checks the same data and the displayed positive-definite
-shifts (Appendix~\ref{sec:verification}).
+positive. The same data and the displayed positive-definite shifts are
+checked in Lean (Appendix~\ref{sec:verification}).
 
 \section{Open questions on spectral constraints and stability}\label{sec:scope}
 
@@ -2002,8 +2011,9 @@ order bounds for regular graphs to irregular graphs.
 
 Appendix~\ref{app:excluded-constructions} defines a balanced prime-field
 family of girth-five graphs and rules out strict counterexamples in that
-family when the diameter is three. It also rules out every layer-respecting
-perfect-matching deletion of Hoffman--Singleton considered there.  These calculations test the
+family when the diameter is three. It also rules out the deletions of
+layer-respecting perfect matchings from the Hoffman--Singleton graph that it
+considers.  These calculations test the
 window criterion but are not needed for the counterexamples or the deletion
 bounds above.
 
@@ -2036,8 +2046,8 @@ Here \(M\) is any degree-\(k\) Moore graph of diameter two, not only the
 coordinate graph of Proposition~\ref{prop:hs-coordinate}, and
 \(\Delta=\sqrt{4k-3}\).
 
-Every distance matrix below uses shortest-path distances in the surviving
-graph. The correction to the original distances is given by
+In every distance matrix below, the distances are shortest-path distances
+in the surviving graph. The correction to the original distances is given by
 Theorem~\ref{thm:small-puncture}:
 a surviving nonadjacent pair moves from distance two to distance three
 exactly when its unique common neighbor was deleted.
@@ -2181,7 +2191,7 @@ For an adjacent deleted pair, put
  C=V(M)\setminus\bigl(\{u,v\}\cup A\cup B\bigr).
 \]
 Only pairs inside \(A\) or inside \(B\) lose a length-two path.  Since \(k\ge3\), Theorem~\ref{thm:small-puncture} applies to the
-two deleted vertices and makes the new distance of each such pair three.
+two deleted vertices, and by it the new distance of each such pair is three.
 Vectors with opposite constant values on the two neighbor cells and zero
 on the third cell form an invariant line with eigenvalue
 \(k-4\). On the remaining cell-constant directions, the two neighbor-cell
@@ -2209,7 +2219,7 @@ Moore identity gives
 The transpose maps of \(R_A\) and \(R_B\), restricted to their cell
 zero-sum spaces, are injective and have orthogonal images.  Pair each zero-sum vector in its original cell with the vector obtained
 from its neighbor sums. Each pair spans an invariant two-dimensional
-space carrying
+space on which the distance operator has the matrix
 \(\bigl(\begin{smallmatrix}-3&-(k-1)\\-1&-1\end{smallmatrix}\bigr)\),
 as in the one-vertex calculation.  The residual space
 \[
@@ -2249,9 +2259,9 @@ diagonal entry is positive, and
 The shifted symmetric quotients are therefore positive definite.  The
 constant-quotient eigenvalues lie strictly above the incidence root,
 completing the comparison.
-Exact quotient normalization, trace-to-multiplicity equations, replacement
-paths, and all least-root comparisons are independently checked by
-exact computation.
+The quotient normalizations, the trace-to-multiplicity equations, the
+replacement paths and all least-root comparisons are independently checked
+by exact computation.
 \end{proof}
 
 \subsection{The distance spectrum of a Moore second sphere}
@@ -2411,8 +2421,8 @@ and define
  \qquad
  W_\eta^C=\operatorname{span}\{u_\eta^C,v_\eta^C\}.
 \]
-The incidence identities make the relevant maps injective, so each displayed
-span is two-dimensional. They also show that these spaces are mutually
+By the incidence identities, the relevant maps are injective, so each
+displayed span is two-dimensional. The same identities show that these spaces are mutually
 orthogonal and orthogonal to the five-dimensional cell-constant space
 \(W_{\mathrm{const}}\).
 For the residual space
@@ -2486,9 +2496,9 @@ greater than
  \frac{13-23/5-15/2}{2}-\frac13=\frac7{60}>0.
 \]
 Thus \(\Phi(H)>0\) for every realizable integer \(k\ge6\).
-The direct-sum decomposition, injectivity, orthogonality, all recomputed
-distances, and the strict comparison
-are independently checked by two exact computations.
+We check the direct-sum decomposition, the injectivity, the orthogonality,
+all recomputed distances and the strict comparison independently, by two
+exact computations.
 \end{proof}
 
 
@@ -2502,17 +2512,18 @@ The graph encodings are part of the data described in
 Appendix~\ref{sec:verification}; the coordinate definitions of the small counterexamples
 are given above Theorem~\ref{thm:explicit-examples}.
 
-For \(H_{38}\), the factor \(x^2+6x+2\), together with the exact Sturm
-count, identifies the least distance root as \(-3-\sqrt7\).
+For \(H_{38}\), the factor \(x^2+6x+2\) has the root \(-3-\sqrt7\), and the
+exact Sturm count shows that this is the least distance root.
 An independent rational \(LDL^{\mathsf T}\) decomposition of
 \(3D(H_{38})+17I\) has inertia \((38,0,0)\), where the entries count
 positive, negative and zero eigenvalues.
 For \(H_{39}\), the decomposition of \(6D(H_{39})+35I\) has inertia
-\((39,0,0)\). Thus each shift is positive definite and proves strictness.
+\((39,0,0)\). Thus each shifted matrix is positive definite, which proves
+strictness.
 For \(R\) and \(X_{42}\), the exact spectra in
 Theorem~\ref{thm:explicit-examples} identify the least eigenvalue \(-5\).
-These graph, metric, dual-degree and matrix checks are reproduced by
-exact computation.
+The checks of the graphs, distances, dual degrees and matrices are
+reproduced by exact computation.
 
 The two labeled deletion families of \(R\) have the following common
 distance characteristic polynomials.
@@ -2610,7 +2621,7 @@ required positivity for every remaining slack.
 \begin{proof}[Completion of the proof of Theorem~\ref{thm:lp-ceiling}]
 We use the notation of that proof and of the trace bound before it.
 The polynomial bound includes the endpoints of \(I_k\).
-We must therefore rule out graph equality separately. Suppose \(n=B_k\).
+We must therefore rule out equality for graphs separately. Suppose \(n=B_k\).
 Equality in the trace bound for the optimal quartic forces every
 nonprincipal eigenvalue to belong to
 \[
@@ -2711,7 +2722,7 @@ removed.
 
 First suppose \(r\le0\). We show that \(\mathcal E\) is the adjacency matrix
 of a simple graph, then exclude its complement by classifying graphs with
-bounded least eigenvalue and checking rational eigenspace dimensions.
+bounded least eigenvalue and checking the dimensions of rational eigenspaces.
 After proving \(r>0\), we suppose \(n>3r\) and exclude the following four
 cases:
 \begin{enumerate}
@@ -2756,7 +2767,7 @@ We first prove positivity of \(r\).  Suppose \(r\le0\).  A
  \mathcal E_{uv}\le2+\frac rn\qquad(u\ne v).
 \]
 Thus \(\mathcal E\) is the adjacency matrix of a simple graph when \(r<0\).
-If \(r=0\) and \(\mathcal E_{uv}=2\), positivity puts \(e_u+e_v\) in
+If \(r=0\) and \(\mathcal E_{uv}=2\), then by positivity \(e_u+e_v\) lies in
 \(\ker\mathcal S_k\).  After subtracting its projection onto \(\one\), the
 strict spectral window gives a \((-2)\)-eigenvector of \(A\).  Its
 \(u\)-coordinate would require
@@ -2780,9 +2791,9 @@ commutes with \(A\). Each rational eigenspace of \(\mathcal E\) is therefore
 \(A\)-invariant.
 
 The graph \(X\) is now simple and regular, and its order is
-\(n\ge38\).  If it is connected, the classification of connected regular
-graphs of order greater than \(28\) and least eigenvalue at least
-\(-2\) makes it a line graph or a cocktail-party graph
+\(n\ge38\).  If it is connected, then it is a line graph or a
+cocktail-party graph, by the classification of connected regular graphs of
+order greater than \(28\) and least eigenvalue at least \(-2\)
 \cite{CameronEtAl1976}; see also
 \cite[Theorems~4.1.1 and~4.1.5]{CvetkovicEtAl2004} and
 \cite[Introduction]{KoolenEtAl2025}.
@@ -2837,8 +2848,9 @@ cocktail-party graph.  Thus \(\mathcal E\) has eigenvalue \(-1\) with
 
 In each of the three exceptional cases, the eigenspace just found is
 rational, orthogonal to the constant vector and preserved by the adjacency
-operator. The excess matrix acts there as minus the identity. Its defining
-relation therefore makes \(g_k(x)+2\) vanish on that space.  This quartic is irreducible over
+operator. The excess matrix acts there as minus the identity. By the
+defining relation of the excess matrix, \(g_k(x)+2\) therefore vanishes on
+that space.  This quartic is irreducible over
 \(\mathbb Q\) for every integer \(k\ge6\), except \(k=7\).  To check
 irreducibility, substitute \(y=x+2\), giving
  \[
@@ -2862,7 +2874,7 @@ show that the excess matrix is the adjacency matrix of a simple graph.  The \(2\
 Cauchy--Schwarz, applied to \(e_u+e_v\) and \(e_w\) in the Gram matrix
 \(\mathcal S_k\), gives
 \[
- (1+x-s_w)^2\le x(3+x),
+ (1+x-s_w)^2\le x(3+x).
 \]
 Thus the nonnegative integer \(s_w\) belongs to \(\{1,2\}\).  Summing
 over the rows shows that exactly \(r\) vertices satisfy \(s_w=2\).
@@ -2919,8 +2931,8 @@ dichotomy as above. If \(Y\) is \(q\)-regular on \(v\) vertices, then
  \]
  so \(b<6\).  Connectedness excludes \(p=1\).  For \(b=2\), the
  left side of the displayed identity is zero while the right side is
- positive.  For \(b=5\), the degree-sum inequality makes the sum of the
- reciprocals of the part sizes greater than one third.  The larger part
+ positive.  For \(b=5\), by the degree-sum inequality, the sum of the
+ reciprocals of the part sizes is greater than one third.  The larger part
  therefore has at most seven vertices, and the root has at most thirty-five
  edges, below the required line-graph order thirty-eight.  The case \(b=4\) leaves only
  \[
@@ -3096,11 +3108,11 @@ where \(\theta_2(A)\) is the second-largest adjacency eigenvalue; this
 contradicts the bound \(\theta_2(A)<-1+\sqrt8\) given by
 Theorem~\ref{thm:diameter-three-score}.  At \(n=30\),
 Meringer's isomorph-free enumeration leaves exactly four
-\((5,5)\)-cages \cite[p.~142]{Meringer1999}; each fixed record has an exact
-distance eigenvalue at most \(-5\). The characteristic-polynomial factors and their
-roots are listed below;
-the classification ensures that the four records cover every case; the factors give the
-distance-spectral obstruction.
+\((5,5)\)-cages \cite[p.~142]{Meringer1999}, and each fixed record has an exact
+distance eigenvalue at most \(-5\). The factors of the characteristic
+polynomials and their roots are listed below. By the classification, the four
+records cover every case, and the factors give the obstruction from the
+distance spectrum.
 The accompanying release contains an independent exact check of the complete
 case split and of the four fixed graph6 records.
 \end{proof}
@@ -3122,8 +3134,8 @@ least eigenvalue is needed.
 \end{array}
 \]
 The records have order \(30\), degree five, girth five and diameter three,
-and are pairwise nonisomorphic. Meringer's classification
-\cite[p.~142]{Meringer1999} supplies completeness.
+and are pairwise nonisomorphic. Completeness follows from Meringer's
+classification \cite[p.~142]{Meringer1999}.
 The integer characteristic polynomials, graph properties and
 nonisomorphism checks are reproduced by exact computation.
 
@@ -3134,7 +3146,7 @@ We collect necessary conditions for the degree-six, order-fifty case left
 open by the main order bound. The first subsection holds in every degree:
 it applies the principal-minor method of Section~\ref{sec:lp} to the
 number of five-cycles through an edge. The second bounds the multiplicity
-of the adjacency eigenvalue minus two without assuming strictness. The
+of the adjacency eigenvalue \(-2\) without assuming strictness. The
 remaining subsections assume a strict counterexample and derive local
 cycle and signed-graph restrictions.
 
@@ -3212,7 +3224,7 @@ Theorem~\ref{thm:integral-slack} gives
 gives \((g_k(A))_{uv}=4k+14+\sigma_{uv}\).
 For the upper bound, use \(\mathcal S_k,a,b\) from the proof above. For a
 positive semidefinite matrix, a vector with zero quadratic form lies in the
-kernel. Thus equality \(b=-a\) would put \(e_u+e_v\) in \(\ker\mathcal S_k\).
+kernel. Thus, if \(b=-a\), then \(e_u+e_v\) would lie in \(\ker\mathcal S_k\).
 In the strict window,
 \[
  \ker\mathcal S_k=\langle\one\rangle\oplus\ker(A+2I),
@@ -3522,15 +3534,14 @@ Since \(d_H(v)\in\{0,2\}\), \(S_2=4m\), and the first upper bound is
 \(2200-7m/6\).
 For the second pair, we evaluate polynomials on the shifted nonprincipal
 spectrum. A positive semidefinite Gram matrix gives the lower bound. For the
-strict upper bound, the spectral window gives positive weights, and diameter
-three ensures that the weighted Gram matrix is positive definite.
+strict upper bound, the spectral window gives positive weights, and because
+the diameter is three, the weighted Gram matrix is positive definite.
 The last subsection of this appendix gives this support argument, both
 matrices and their determinant calculations.
 For each of the eleven profiles the second pair is sharper; it leaves
 \(2045\le N_6\le2109\) at \(m=0\) and \(1987\le N_6\le2046\) at \(m=50\).
-The exact matrix calculations for the four $N_6$ bounds, the
-layer-vector calculation and the eleven-profile check are reproduced by
-exact computation.
+We reproduce by exact computation the matrix calculations for the four
+$N_6$ bounds, the layer-vector calculation and the eleven-profile check.
 These eleven profiles are necessary data, not constructions of graphs.
 \end{proof}
 
@@ -3689,10 +3700,10 @@ Comparing it with the signed-edge count shows that \(P_-\) is odd.
 
 We show that connectedness is incompatible with this parity.  Suppose
 \(T\) is connected.  Proposition~\ref{prop:order50-minus-two} gives
-\(\operatorname{rank}(T+2I)\ge30\).  The representation theorem for
+\(\operatorname{rank}(T+2I)\ge30\).  By the representation theorem for
 connected edge-signed graphs with smallest eigenvalue at least \(-2\)
-\cite[Theorem~2]{GreavesEtAl2015} (see also \cite{CameronEtAl1976})
-represents \(T+2I\) in a root system of
+\cite[Theorem~2]{GreavesEtAl2015} (see also \cite{CameronEtAl1976}),
+\(T+2I\) is represented in a root system of
 type \(D_\ell\) or \(E_8\).  The exceptional root system has rank eight. The rank bound therefore
 rules out \(E_8\), leaving
 \[
@@ -3869,8 +3880,8 @@ matrix, also called the localizing matrix:
 To show that this weighted moment matrix is positive definite, note that diameter three implies that \(I,A,A^2,A^3\) are
 linearly independent: evaluate a linear relation successively at vertex
 pairs of distances three, two, one, and zero. Since \(A\) is symmetric,
-it has at least four distinct eigenvalues. Connectedness makes the
-principal eigenvalue simple, so at least three distinct values occur among
+it has at least four distinct eigenvalues. By connectedness, the
+principal eigenvalue is simple, so at least three distinct values occur among
 the \(y_i\). A nonzero polynomial of degree at most two cannot vanish at all three.
 Together with \(10-y_i^2>0\), this shows that the quadratic form of
 \(\mathsf L\) is positive on every nonzero vector.
@@ -3918,8 +3929,8 @@ surviving parents.  Their sizes are
 \[
  1,\qquad1,\qquad36,\qquad6.
 \]
-The Moore property gives no edge between children of the same parent and
-exactly one neighbor in every other child class.  Indeed, if \(x\) has
+By the Moore property, there is no edge between children of the same
+parent, and each child has exactly one neighbor in every other child class.  Indeed, if \(x\) has
 parent \(p\) and \(q\in N_M(w)\setminus\{p\}\), the unique common
 neighbor of the nonadjacent pair \(x,q\) belongs to \(\Gamma_2(w)\)
 and has parent \(q\).
@@ -3942,15 +3953,15 @@ acts by the following row-sum quotient, in the order
  \end{pmatrix}.
 \]
 The distances in the original Moore graph, restricted to the surviving vertices, are given by
-\(D_0=2(J-I)-A(H)\).  Proposition~\ref{prop:neighborhood-puncture} changes
-only the distances from \(w\) to \(\mathcal B\) and between two children of
-the same deleted parent, adding one in each case.
+\(D_0=2(J-I)-A(H)\).  By Proposition~\ref{prop:neighborhood-puncture}, the
+only distances that change are those from \(w\) to \(\mathcal B\) and those
+between two children of the same deleted parent, and each increases by one.
 
 Let \(U\) be the four-dimensional space of vectors constant on each part.
 Its orthogonal complement \(U^\perp\) consists of vectors whose coordinates
 sum to zero separately on each part. Both \(D_0\) and the distance-increase
-matrix \(E_S\) preserve \(U\). Their symmetry also makes
-\(U^\perp\) invariant. We can therefore check the shifted distance matrix
+matrix \(E_S\) preserve \(U\). Since both are symmetric, \(U^\perp\) is
+also invariant. We can therefore check the shifted distance matrix
 on these two spaces separately.
 
 We first bound the correction on \(U^\perp\). The \(w\)-coordinate is zero
@@ -3992,7 +4003,8 @@ These successful six-vertex deletions do not increase the universal radius:
 the deletion in Theorem~\ref{thm:hs-radius} still fails.
 
 For a hypothetical degree-\(57\) Moore graph, the neighborhood
-calculation reaches the endpoint of the small-puncture theorem.
+calculation applies up to the largest deletion size allowed by the
+small-puncture theorem.
 
 \begin{corollary}[Degree-\(57\) neighborhood punctures]
 \label{cor:degree57-neighborhood}
@@ -4006,8 +4018,8 @@ WOW-284.
 \end{corollary}
 
 \begin{proof}
-Theorem~\ref{thm:moore-threshold} gives the original Moore graph a score of \(48\), which
-handles \(S=\varnothing\).  For nonempty \(S\), put \(s=|S|\).
+By Theorem~\ref{thm:moore-threshold}, the original Moore graph has score
+\(48\), which settles the case \(S=\varnothing\).  For nonempty \(S\), put \(s=|S|\).
 Theorem~\ref{thm:small-puncture} applies through \(s=56\): the survivor
 graph is connected and has minimum dual degree \(57-s/57\).  Its order
 is at least \(3194\), and it inherits girth at least five.
@@ -4099,16 +4111,16 @@ three by the diameter hypothesis.
 With \(B\) as in Theorem~\ref{thm:small-puncture}, \(C_S=BB^{\mathsf T}-
 \operatorname{diag}(BB^{\mathsf T})\); that theorem is the case \(|S|\le k-1\),
 where the diameter hypothesis holds automatically. Every strict induced
-subgraph of \(M\) found in Section~\ref{sec:small-order-bounds}, and the
-equality graph \(E_{43}\) of
-Proposition~\ref{prop:order43-equality}, has diameter at most three and is an
-instance of Corollary~\ref{cor:moore-deletion-form}; connected induced
+subgraph of \(M\) found in Section~\ref{sec:small-order-bounds} has diameter
+at most three and is an instance of Corollary~\ref{cor:moore-deletion-form}.
+The same holds for the equality graph \(E_{43}\) of
+Proposition~\ref{prop:order43-equality}. Connected induced
 subgraphs of larger diameter already occur for \(|S|=7\). The corollary is a
 reformulation and not a classification: for \(|S|=6,7,8\) in
-Proposition~\ref{prop:hs-classification},
-the number of edges inside \(S\), the largest number of deleted neighbors of
-a surviving vertex, and the presence of a closed neighborhood in \(S\) do not
-separate strict from non-strict deletions.
+Proposition~\ref{prop:hs-classification}, strict and non-strict deletions
+are not separated by the number of edges inside \(S\), by the largest number
+of deleted neighbors of a surviving vertex, or by the presence of a closed
+neighborhood in \(S\).
 
 \subsection{The search on at most nineteen vertices}
 
@@ -4117,10 +4129,10 @@ The graphs were generated by \texttt{geng} from nauty
 \cite{McKayPiperno2014} with the options \texttt{-c -t -f} (connected,
 triangle-free, four-cycle-free), one graph per isomorphism class. For
 \(n\le14\), every generated graph was decided. For \(15\le n\le19\), the
-maximum degree was capped by Theorem~\ref{thm:fifteen-vertices}
+maximum degree was restricted by the bound of Theorem~\ref{thm:fifteen-vertices}
 (\texttt{-D4} for \(n\le18\) and \texttt{-D5} for \(n=19\)), and only graphs
-with \(\delta^*>2+\sqrt2\) were kept, the test being done in integer
-arithmetic; both restrictions are necessary for strictness. Graphs are
+with \(\delta^*>2+\sqrt2\) were kept; this test was done in integer
+arithmetic. Both restrictions are necessary for strictness. Graphs are
 decided as described at the start of Section~\ref{sec:small-order-bounds}.
 \[
 \begin{array}{lrrr}
@@ -4225,11 +4237,12 @@ with \(\Phi(G)>0\). Then, for distinct vertices \(u,v\), the graph
 \end{conjecture}
 
 The conjecture is supported only by \(R\) and \(X_{42}\), the two known
-graphs satisfying its hypotheses. Both are induced subgraphs of \(M\), and
-the least root \(-3-\sqrt7\) of the edge deletions of \(R\) (the polynomial
+graphs satisfying its hypotheses. Both are induced subgraphs of \(M\).
+The least root \(-3-\sqrt7\) of the edge deletions of \(R\) (the polynomial
 \(P_{38}\) of Appendix~\ref{app:small-example-certificates}) and of
-\(X_{40}\) carries the degree of \(M\), as does \(-2-\sqrt7\) for an edge
-deletion of \(M\) itself (Theorem~\ref{thm:edge-puncture}). The pattern may
+\(X_{40}\) contains \(\sqrt7\), where \(7\) is the degree of \(M\); so does
+the least root \(-2-\sqrt7\) of an edge deletion of \(M\) itself
+(Theorem~\ref{thm:edge-puncture}). The pattern may
 therefore be specific to the Hoffman--Singleton graph rather than to degree
 six.
 
@@ -4240,7 +4253,7 @@ We consider two possible sources of new examples: a prime-field
 construction and certain perfect-matching deletions from Hoffman--Singleton.
 The first gives no strict counterexample of diameter three, and none of the
 deletions in the second family is strict. We give the definitions and proofs
-together so these exclusions can be read independently of the main results.
+together so that these exclusions can be read independently of the main results.
 
 \subsection{The prime-field construction in diameter three}
 
@@ -4253,8 +4266,8 @@ Q_{k,\ell}&\sim Q_{k,\ell\pm2},\\
 P_{i,j}&\sim Q_{k,ik+j}.
 \end{align*}
 This is a balanced specialization of known finite-field girth-five
-constructions \cite{AbreuEtAl2008}.  It is \((m+2)\)-regular.  A coordinate
-common-neighbor calculation shows that it has no triangle or \(4\)-cycle for
+constructions \cite{AbreuEtAl2008}.  It is \((m+2)\)-regular.  A calculation
+of common neighbors in coordinates shows that it has no triangle or \(4\)-cycle for
 \(q\ge7\): for a cross pair, the possible same-side common neighbors require
 residues in the disjoint sets \(\{\pm1\}\) and \(\{\pm2\}\).
 
@@ -4277,8 +4290,8 @@ the shifted WOW window leaves only \(m\in\{4,5,6\}\)
 We decompose vectors into Fourier modes in the second coordinate. A mode
 assigns values proportional to successive powers of a root of unity as that
 coordinate varies. The vectors just tested form the zero-frequency block.
-A nonzero mode supplies the remaining restriction and excludes the last
-three cases.
+We obtain the remaining restriction from a nonzero mode, which excludes the
+last three cases.
 Let \(\omega=e^{2\pi\mathrm i/q}\).  On the nonzero
 character \(t=1\), the adjacency block has form
 \[
@@ -4291,8 +4304,8 @@ The star in the block matrix denotes conjugate transpose. Every vector
 in this character space has coordinate sum zero, since
 \(\sum_{j\in\mathbb F_q}\omega^j=0\). Its adjacency eigenvalues are
 therefore nonprincipal.
-If \(\sigma\) is a singular value of \(M\), the associated two-dimensional
-invariant subspace carries
+If \(\sigma\) is a singular value of \(M\), the adjacency block acts on the
+associated two-dimensional invariant subspace by
 \(\bigl(\begin{smallmatrix}a&\sigma\\\sigma&b\end{smallmatrix}\bigr)\),
 whose larger eigenvalue
 \(\frac{a+b}2+\sqrt{(\frac{a-b}2)^2+\sigma^2}\) is at least
@@ -4300,7 +4313,7 @@ whose larger eigenvalue
 We need only the largest singular value, rather than the full Fourier
 spectrum. The squared Frobenius norm is the sum of the squared singular
 values. Since \(\|M\|_F^2=m^2\), one singular value satisfies
-\(\sigma^2\ge m\).  Its two-dimensional block therefore supplies a
+\(\sigma^2\ge m\).  Its two-dimensional block therefore gives a
 nonprincipal eigenvalue at least
 \[
  \sqrt m+\frac{a+b}{2}
@@ -4316,9 +4329,9 @@ Moreover \(\cos(\pi/7)>\sqrt3/2\), and
  <\frac{27}{20}<\frac{\sqrt3+1}{2}.
 \]
 Thus the displayed nonprincipal eigenvalue lies above
-\(-1+\sqrt{2m+2}\) for \(m=4,5,6\).  The common-neighbor
-case split, Fourier reduction, radical comparisons, and exact \(q=7\) controls
-are independently checked by exact computation.
+\(-1+\sqrt{2m+2}\) for \(m=4,5,6\).  The case split for common neighbors,
+the Fourier reduction, the comparisons of radicals and the exact control
+computations at \(q=7\) are independently checked by exact computation.
 \end{proof}
 
 \subsection{Why layer-respecting edge deletions satisfy WOW-284}
@@ -4362,17 +4375,16 @@ Explicit type-preserving and type-swapping coordinate automorphisms generate
 orbits of sizes \(20\) and \(100\).  The representatives have different
 adjacency characteristic polynomials, so the orbits are distinct isomorphism
 classes.  Exact distance characteristic polynomials and Sturm separators give
-the stated least roots.  All \(120\) matchings, \(400\) coordinate maps,
-\(48{,}000\) matching images, orbit coverage, graph hypotheses, and root
-certificates are checked
-by exact computation.
+the stated least roots.  We check by exact computation all \(120\)
+matchings, the \(400\) coordinate maps, the \(48{,}000\) matching images,
+the orbit coverage, the graph hypotheses and the root certificates.
 \end{proof}
 
 \section{Computations, code, and the scope of Lean verification}\label{sec:verification}
 
-The computer-assisted arguments verify the labeled finite graphs, check
-the complete enumeration of the stated finite orbit families, and evaluate the
-symbolic identities derived in the text. All signs and eigenvalue orderings
+In the computer-assisted arguments, we verify the labeled finite graphs,
+check the complete enumeration of the stated finite orbit families, and
+evaluate the symbolic identities derived in the text. All signs and eigenvalue orderings
 used in the theorems are established by exact arithmetic.  The computations use
 SymPy and NetworkX \cite{MeurerEtAl2017,HagbergSchultSwart2008}.
 For J{\o}rgensen's graph after Theorem~\ref{thm:equality-boundary}, an exact computation
