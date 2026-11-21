@@ -465,6 +465,10 @@ nonprincipal adjacency eigenvalue gives the stated distance eigenvalue.
 Taking the least of these values and using \(\delta^*=k\) gives the score formula.
 \end{proof}
 
+We call the set of real \(\theta\) with \(|\theta+1|<\sqrt{2k-2}\) the
+\emph{strict spectral window}, and its closure, where
+\(|\theta+1|\le\sqrt{2k-2}\), the \emph{closed window}.
+
 \begin{corollary}[Bipartite obstruction]\label{cor:bipartite}
 A connected \(k\)-regular bipartite graph of girth at least five and diameter
 three is not a strict counterexample for \(k\ge3\).
@@ -476,15 +480,15 @@ The nonprincipal eigenvalue \(-k\) satisfies
  (-k+1)^2-(2k-2)=(k-1)(k-3)\ge0
  \qquad(k\ge3).
 \]
-Thus the eigenvalue \(-k\) lies on the boundary of the shifted window
-when \(k=3\), and outside it when \(k>3\). In either case the strict
-window condition fails.
+Thus the eigenvalue \(-k\) lies on the boundary of the spectral window
+when \(k=3\), and outside it when \(k>3\). In either case it lies outside
+the strict spectral window.
 \end{proof}
 
 \subsection{The equality boundary and a graph attaining it}
 \label{sec:controls}
 
-The boundary of the shifted adjacency window corresponds to equality in
+The boundary of the spectral window corresponds to equality in
 WOW-284. The following criterion identifies this boundary, and an explicit
 graph shows that it can be attained.
 
@@ -865,7 +869,7 @@ Every strict counterexample therefore satisfies
 \end{proposition}
 
 \begin{proof}
-Every summand is nonnegative on the shifted WOW window, so the identity
+Every summand is nonnegative on the spectral window, so the identity
 will bound the order. With \(y=\theta+1\), each summand is a quartic in
 \(\theta\):
 \[
@@ -1179,7 +1183,7 @@ order bound.
 
 \subsection{The three-to-one excess bound}
 
-Up to a positive factor, the trace of \(\mathcal S_k\) is the gap between
+Up to a positive factor, the trace of the slack matrix \(\mathcal S_k\) is the gap between
 the graph order and the scalar LP bound. Its entries contain further
 information: \(2\times2\) principal minors constrain individual entries,
 and larger minors relate several of them. In the integral excess matrix,
@@ -1475,7 +1479,7 @@ eigenvalue is \(\gamma\).  Principal-submatrix interlacing
 \(\lambda_{\min}(D_0+aI)\ge\gamma\).
 Weyl's inequality bounds the least eigenvalue after adding \(E_S\),
 and subtracting \((a-b)I\) shifts every eigenvalue by \(-(a-b)\).
-This gives the stated bound.  For Moore punctures, \(E_S\) is the
+This gives the stated bound.  For deletions from a Moore graph, \(E_S\) is the
 explicit distance-increase matrix specified in Theorem~\ref{thm:small-puncture}.
 \end{proof}
 
@@ -1590,7 +1594,7 @@ therefore give the asserted cliques, with \(k(k-s)\) remaining vertices.
 
 We take the coordinate vector at the center and the indicator vector of
 all noncentral clique vertices.  Their span is invariant under the
-correction matrix.  After normalizing both vectors to have length one,
+distance-increase matrix.  After normalizing both vectors to have length one,
 the matrix on this span is the normalized symmetric quotient
 \[
  \begin{pmatrix}
@@ -1695,8 +1699,8 @@ Appendix~\ref{app:neighborhood-deletions} to show that
 \(\Phi(M-S)>685/57\) whenever \(S\) lies in the neighborhood of a vertex and
 \(|S|\le56\).
 For an arbitrary deletion set, we group the correction cliques that pass
-through one surviving vertex. The remaining cliques can be bounded
-separately, giving the following improvement.
+through one surviving vertex. Bounding the remaining cliques separately
+gives the following improvement.
 
 \begin{proposition}[Splitting the distance correction at a vertex]
 \label{prop:clique-deletion-bound}
@@ -1754,7 +1758,7 @@ and put \(Z=N_M(w)\cap S\).  Every deleted vertex has a surviving
 neighbor, since \(s<k\), so \(1\le|Z|=\tau\le k-1\).
 We group the \(\tau\) clique matrices indexed by \(Z\) and estimate
 the remaining \(s-\tau\) separately.
-The correction matrix for deleting \(Z\) alone is
+The distance-increase matrix for deleting \(Z\) alone is
 \[
  F_Z=D(M-Z)-D(M)[V(M-Z)].
 \]
@@ -2710,7 +2714,7 @@ Put \(\mathcal E=\mathcal E_k\), \(C=C_k\), \(h=h_k\), and
  \rho=\frac{\varepsilon-1}{n}
       =\frac{1+r/n}{2}.
 \]
-The optimal slack matrix has the form
+The slack matrix has the form
 \[
  \mathcal S_k=I-\mathcal E+\rho J\succeq0.
 \]
@@ -3225,7 +3229,7 @@ gives \((g_k(A))_{uv}=4k+14+\sigma_{uv}\).
 For the upper bound, use \(\mathcal S_k,a,b\) from the proof above. For a
 positive semidefinite matrix, a vector with zero quadratic form lies in the
 kernel. Thus, if \(b=-a\), then \(e_u+e_v\) would lie in \(\ker\mathcal S_k\).
-In the strict window,
+Under the strict spectral window,
 \[
  \ker\mathcal S_k=\langle\one\rangle\oplus\ker(A+2I),
 \]
@@ -3492,7 +3496,7 @@ Here \(g_6(x)=x^4+6x^3+3x^2-28x-36\) and \(C_6/50=2496/50\). Girth five gives
 \((A^2)_{uu}=6\), \((A^4)_{uu}=66\) and, on an edge, \((A^3)_{uv}=11\),
 \((A^4)_{uv}=\sigma_{uv}\). Hence \(g_6(A)\) has diagonal entries \(48\), edge
 entries \(38+\sigma_{uv}=50+h_{uv}\), and entry \(19+R_{uvw}\) at \(\{u,w\}\).
-Substitution into the centered slack matrix gives
+Substitution into the slack matrix gives
 \[
  25\mathcal S_6[\{u,v,w\}]=
  \begin{pmatrix}
@@ -3504,7 +3508,7 @@ Substitution into the centered slack matrix gives
 The \(2\times2\) minors give \(R_{uvw}\in\{29,30,31,32\}\).
 At \(R_{uvw}=29\), the Gram norm of \(e_u-e_w\) vanishes, so this
 vector lies in the kernel of \(\mathcal S_6\). On \(\one^\perp\),
-\(\mathcal S_6=-g_6(A)\). The strict shifted window excludes the
+\(\mathcal S_6=-g_6(A)\). The strict spectral window excludes the
 endpoint zeros of \(g_6\), leaving only its double zero at \(-2\).
 Thus \(A(e_u-e_w)=-2(e_u-e_w)\), which is impossible: its
 \(u\)-coordinate would have to be both zero and \(-2\).
@@ -3609,7 +3613,7 @@ Appendix~\ref{app:three-to-one-proof}, when \(\mathcal E_k\) is a
 To identify the shared eigenspace, use the fact that \(A\) and \(S\)
 commute. A nonprincipal adjacency eigenvector with eigenvalue \(\theta\)
 is an eigenvector of \(S\) with eigenvalue \(-2-g_k(\theta)\).
-Inside the open shifted WOW window, \(g_k\) vanishes only at
+In the strict spectral window, \(g_k\) vanishes only at
 \(\theta=-2\), since its other zeros are the excluded endpoints.
 The eigenvalue of \(S\) on the constant vector is
 \((n-r-4)/2>-2\), since \(r<n\).
@@ -3877,7 +3881,7 @@ matrix, also called the localizing matrix:
  261&-273-2m&25689-12m-12N_6
  \end{pmatrix}\succ0.
 \]
-To show that this weighted moment matrix is positive definite, note that diameter three implies that \(I,A,A^2,A^3\) are
+To show that this weighted moment matrix is positive definite, we use the fact that diameter three implies that \(I,A,A^2,A^3\) are
 linearly independent: evaluate a linear relation successively at vertex
 pairs of distances three, two, one, and zero. Since \(A\) is symmetric,
 it has at least four distinct eigenvalues. By connectedness, the
@@ -4250,7 +4254,7 @@ six.
 \label{app:excluded-constructions}
 
 We consider two possible sources of new examples: a prime-field
-construction and certain perfect-matching deletions from Hoffman--Singleton.
+construction and certain perfect-matching deletions from the Hoffman--Singleton graph.
 The first gives no strict counterexample of diameter three, and none of the
 deletions in the second family is strict. We give the definitions and proofs
 together so that these exclusions can be read independently of the main results.
@@ -4283,7 +4287,7 @@ consider vectors that assign the same value to all vertices of a given
 type with a fixed first coordinate.  Taking neighbor sums leaves these
 vectors constant on the same sets.  The restricted adjacency matrix has
 eigenvalues \(m+2\), \(2-m\), and \(2\) with multiplicity \(2m-2\);
-the shifted WOW window leaves only \(m\in\{4,5,6\}\)
+the strict spectral window leaves only \(m\in\{4,5,6\}\)
 (\(\theta=2\) needs \(3<\sqrt{2m+2}\), i.e.\ \(m\ge4\); \(\theta=2-m\) needs
 \((m-3)^2<2m+2\), i.e.\ \(m\le6\)).
 
@@ -4310,8 +4314,7 @@ associated two-dimensional invariant subspace by
 whose larger eigenvalue
 \(\frac{a+b}2+\sqrt{(\frac{a-b}2)^2+\sigma^2}\) is at least
 \(\frac{a+b}2+\sigma\).
-We need only the largest singular value, rather than the full Fourier
-spectrum. The squared Frobenius norm is the sum of the squared singular
+We need only the largest singular value of \(M\). The squared Frobenius norm is the sum of the squared singular
 values. Since \(\|M\|_F^2=m^2\), one singular value satisfies
 \(\sigma^2\ge m\).  Its two-dimensional block therefore gives a
 nonprincipal eigenvalue at least
@@ -4524,7 +4527,7 @@ formalize the trace interpretation of the \(F_i(A)\), the girth-five
 vanishing and nonnegativity statements, or the passage from the LP inequality
 to graph-order bounds.  The integral-slack consequences, signed-complement
 theory, the high-edge profile filter in
-Corollary~\ref{cor:high-edge-profile-filter}, puncture spectra, and the
+Corollary~\ref{cor:high-edge-profile-filter}, deletion spectra, and the
 general deletion theorems lie outside this Lean
 development.  They are proved in the text using the analytic and, where
 explicitly identified, exact computer-assisted components.  The paper makes
